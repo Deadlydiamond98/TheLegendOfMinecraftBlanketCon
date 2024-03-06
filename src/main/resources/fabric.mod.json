@@ -1,9 +1,9 @@
 {
 	"schemaVersion": 1,
-	"id": "modid",
+	"id": "zeldacraft",
 	"version": "${version}",
-	"name": "Example mod",
-	"description": "This is an example description! Tell everyone what your mod is about!",
+	"name": "The Legend of Minecraft: The Adventure of Steve",
+	"description": "Zelda-like things, but in minecraft",
 	"authors": [
 		"Me!"
 	],
@@ -16,22 +16,22 @@
 	"environment": "*",
 	"entrypoints": {
 		"main": [
-			"com.example.ExampleMod"
+			"net.deadlydiamond98.ZeldaCraft"
 		],
 		"client": [
-			"com.example.ExampleModClient"
+			"net.deadlydiamond98.ZeldaCraftClient"
 		]
 	},
 	"mixins": [
-		"modid.mixins.json",
+		"zeldacraft.mixins.json",
 		{
-			"config": "modid.client.mixins.json",
+			"config": "zeldacraft.client.mixins.json",
 			"environment": "client"
 		}
 	],
 	"depends": {
 		"fabricloader": ">=0.15.0",
-		"minecraft": "~1.20.4",
+		"minecraft": "~1.20.1",
 		"java": ">=17",
 		"fabric-api": "*"
 	},
