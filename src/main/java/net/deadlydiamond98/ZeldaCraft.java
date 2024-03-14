@@ -1,6 +1,8 @@
 package net.deadlydiamond98;
 
+import net.deadlydiamond98.events.TickEvents;
 import net.deadlydiamond98.items.ZeldaItems;
+import net.deadlydiamond98.sounds.ZeldaSounds;
 import net.fabricmc.api.ModInitializer;
 
 import org.slf4j.Logger;
@@ -20,6 +22,8 @@ public class ZeldaCraft implements ModInitializer {
 		// Proceed with mild caution.
 
 		ZeldaItems.registerItems();
+		ZeldaSounds.registerSounds();
+		TickEvents.registerTickEvent();
 		LOGGER.info("Mod Loaded");
 	}
 }

@@ -1,0 +1,14 @@
+{
+  "emeraldshardpickedup": {
+    "subtitle": "sounds.zeldacraft.emeraldshardpickedup",
+    "sounds": [
+      "zeldacraft:emerald_shard_picked_up"
+    ]
+  },
+  "musicdisclegend": {
+    "subtitle": "sounds.zeldacraft.musicdisclegend",
+    "sounds": [
+      "zeldacraft:music_disc_legend"
+    ]
+  }
+}

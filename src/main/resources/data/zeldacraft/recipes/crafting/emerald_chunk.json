@@ -1,0 +1,33 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "zeldacraft:emerald_shard"
+    },
+    {
+      "item": "zeldacraft:emerald_shard"
+    },
+    {
+      "item": "zeldacraft:emerald_shard"
+    },
+    {
+      "item": "zeldacraft:emerald_shard"
+    },
+    {
+      "item": "zeldacraft:emerald_shard"
+    },
+    {
+      "item": "zeldacraft:emerald_shard"
+    },
+    {
+      "item": "zeldacraft:emerald_shard"
+    },
+    {
+      "item": "zeldacraft:emerald_shard"
+    }
+  ],
+  "result": {
+    "item": "zeldacraft:emerald_chunk",
+    "count": 1
+  }
+}
