@@ -1,5 +1,7 @@
 package net.deadlydiamond98.events;
 
+import net.deadlydiamond98.entities.SwordBeamEntity;
+import net.deadlydiamond98.entities.ZeldaEntities;
 import net.deadlydiamond98.items.MagicSword;
 import net.deadlydiamond98.items.ZeldaItems;
 import net.deadlydiamond98.sounds.ZeldaSounds;
@@ -26,13 +28,11 @@ public class TickEvents {
                 // Attacking with Item Logic, for things like Sword Beams
                 if ((player.handSwingTicks == 1) && player.getAttackCooldownProgress(0.5f) < 1) {
                     if (player.getMainHandStack().getItem() instanceof MagicSword) {
-
-                        // Change Projectile Later, this is a placeholder
-                        FireballEntity projectile = new FireballEntity(EntityType.FIREBALL, world);
+                        SwordBeamEntity projectile = new SwordBeamEntity(ZeldaEntities.Sword_Beam, world);
                         projectile.setOwner(player);
                         projectile.setPosition(player.getX(), player.getY() + player.getEyeHeight(player.getPose()), player.getZ());
                         Vec3d vec3d = player.getRotationVec(1.0F);
-                        projectile.setVelocity(vec3d.x, vec3d.y, vec3d.z, 1.5F, 0.0F);
+                        projectile.setVelocity(vec3d.x, vec3d.y, vec3d.z, 0.5F, 0.0F);
                         world.spawnEntity(projectile);
                     }
                 }
