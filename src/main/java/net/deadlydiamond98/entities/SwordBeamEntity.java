@@ -12,36 +12,31 @@ import net.minecraft.entity.projectile.ProjectileUtil;
 import net.minecraft.text.Text;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
 public class SwordBeamEntity extends ProjectileEntity {
     public SwordBeamEntity(EntityType<SwordBeamEntity> entityType, World world) {
         super(entityType, world);
-
-        if(this.getOwner() != null) {
-            this.prevYaw = this.getOwner().prevYaw;
-            if(this.getOwner() instanceof PlayerEntity player) {
-                this.prevYaw = player.prevHeadYaw;
-            }
-
-            this.prevPitch = this.getOwner().prevPitch;
-            this.setPitch(this.getOwner().prevPitch);
-            this.setYaw(this.getOwner().prevYaw);
+        this.age++;
+        if (this.age >= 6000) {
+            this.discard();
         }
+
     }
 
 
     @Override
     protected void onBlockCollision(BlockState state) {
-        this.discard();
         super.onBlockCollision(state);
+        this.discard();
     }
 
     @Override
     protected void onEntityHit(EntityHitResult entityHitResult) {
-        entityHitResult.getEntity().sendMessage(Text.literal("testing touch"));
         super.onEntityHit(entityHitResult);
+        entityHitResult.getEntity().sendMessage(Text.literal("testing touch"));
     }
 
     @Override
@@ -53,13 +48,11 @@ public class SwordBeamEntity extends ProjectileEntity {
         double d = this.getX() + vec3d.x;
         double e = this.getY() + vec3d.y;
         double f = this.getZ() + vec3d.z;
-        this.updateRotation();
-        this.setVelocity(vec3d.multiply(0.9900000095367432));
         this.setPosition(d, e, f);
-        this.age++;
-        if (this.age >= 6000) {
-            this.discard();
-        }
+
+        this.setPitch(0);
+        this.setYaw(0);
+
     }
 
     @Override

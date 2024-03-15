@@ -33,13 +33,19 @@ public class ZeldaItems {
 
     public static void addCombat(FabricItemGroupEntries entry) {
         entry.add(Kokiri_Sword);
+        entry.add(Magic_Sword);
     }
     public static void addTools(FabricItemGroupEntries entry) {
         entry.add(Music_Disc_Legend);
+    }
+    public static void addMaterials(FabricItemGroupEntries entry) {
+        entry.add(Emerald_Shard);
+        entry.add(Emerald_Chunk);
     }
     public static void registerItems() {
         ZeldaCraft.LOGGER.debug("Registering Items for" + ZeldaCraft.MOD_ID);
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.COMBAT).register(ZeldaItems::addCombat);
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.TOOLS).register(ZeldaItems::addTools);
+        ItemGroupEvents.modifyEntriesEvent(ItemGroups.INGREDIENTS).register(ZeldaItems::addMaterials);
     }
 }

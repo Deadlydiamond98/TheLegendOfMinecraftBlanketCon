@@ -26,9 +26,9 @@ public class SwordBeamRenderer<T extends Entity> extends EntityRenderer<SwordBea
         matrices.scale(1.0F, -1.0F, 1.0F);
         matrices.translate(0.0D, 0.0D, 0.0D);
 
-        matrices.multiply(RotationAxis.POSITIVE_X.rotation((float)entity.getRotationVector().x));
-        matrices.multiply(RotationAxis.POSITIVE_Y.rotation((float)entity.getRotationVector().y));
-        matrices.multiply(RotationAxis.POSITIVE_Z.rotation((float)entity.getRotationVector().z));
+
+        matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees(135));
+        matrices.multiply(RotationAxis.NEGATIVE_Y.rotationDegrees(90));
 
         VertexConsumer vertexConsumer = vertexConsumers.getBuffer(RenderLayer.getEntityTranslucent(getTexture(entity)));
         MatrixStack.Entry matrixEntry = matrices.peek();

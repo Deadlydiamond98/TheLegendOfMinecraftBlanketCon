@@ -32,7 +32,7 @@ public class TickEvents {
                         projectile.setOwner(player);
                         projectile.setPosition(player.getX(), player.getY() + player.getEyeHeight(player.getPose()), player.getZ());
                         Vec3d vec3d = player.getRotationVec(1.0F);
-                        projectile.setVelocity(vec3d.x, vec3d.y, vec3d.z, 0.5F, 0.0F);
+                        projectile.setVelocity(vec3d.x, vec3d.y, vec3d.z, 0.005F, 0.0F);
                         world.spawnEntity(projectile);
                     }
                 }
