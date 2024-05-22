@@ -10,6 +10,8 @@ import net.minecraft.util.Identifier;
 public class ZeldaSounds {
     public static SoundEvent EmeraldShardPickedUp = registerSoundEvent("emeraldshardpickedup");
     public static SoundEvent MusicDiscLegend = registerSoundEvent("musicdisclegend");
+    public static SoundEvent SwordShoot = registerSoundEvent("swordshoot");
+    public static SoundEvent SwordRecharge = registerSoundEvent("swordrecharge");
 
     public static SoundEvent registerSoundEvent(String name) {
         Identifier id = new Identifier(ZeldaCraft.MOD_ID, name);

@@ -16,8 +16,10 @@ import org.joml.Matrix3f;
 import org.joml.Matrix4f;
 
 public class SwordBeamRenderer<T extends Entity> extends EntityRenderer<SwordBeamEntity> {
+    private static int amount;
     public SwordBeamRenderer(EntityRendererFactory.Context ctx) {
         super(ctx);
+        amount = 0;
     }
 
     @Override
@@ -27,19 +29,31 @@ public class SwordBeamRenderer<T extends Entity> extends EntityRenderer<SwordBea
         matrices.translate(0.0D, 0.0D, 0.0D);
 
 
-        matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees(135));
-        matrices.multiply(RotationAxis.NEGATIVE_Y.rotationDegrees(90));
+        Vec3d velocity = entity.getVelocity();
+        float yawAngle = (float) (Math.atan2(velocity.z, velocity.x) * (180 / Math.PI));
+        float pitchAngle = (float) (Math.atan2(velocity.y, Math.sqrt(velocity.x * velocity.x + velocity.z * velocity.z)) * (180 / Math.PI));
+        matrices.translate(0.0D, 0.0D, 0.0D);
+        matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(-yawAngle));
+        matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(-pitchAngle + 45));
 
         VertexConsumer vertexConsumer = vertexConsumers.getBuffer(RenderLayer.getEntityTranslucent(getTexture(entity)));
         MatrixStack.Entry matrixEntry = matrices.peek();
         Matrix4f modelMatrix = matrixEntry.getPositionMatrix();
         Matrix3f normalMatrix = matrixEntry.getNormalMatrix();
 
+        float v = 0.25f * amount;
+        amount++;
+
+        if (amount >= 4) {
+            amount = 0;
+        }
+
         //Render
-        vertexConsumer.vertex(modelMatrix, -0.25F, 0.25F, 0.0F).color(255, 255, 255, 255).texture(0.0F, 1.0F).overlay(OverlayTexture.DEFAULT_UV).light(light).normal(normalMatrix, 0, 1, 0).next();
-        vertexConsumer.vertex(modelMatrix, 0.25F, 0.25F, 0.0F).color(255, 255, 255, 255).texture(1.0F, 1.0F).overlay(OverlayTexture.DEFAULT_UV).light(light).normal(normalMatrix, 0, 1, 0).next();
-        vertexConsumer.vertex(modelMatrix, 0.25F, -0.25F, 0.0F).color(255, 255, 255, 255).texture(1.0F, 0.0F).overlay(OverlayTexture.DEFAULT_UV).light(light).normal(normalMatrix, 0, 1, 0).next();
-        vertexConsumer.vertex(modelMatrix, -0.25F, -0.25F, 0.0F).color(255, 255, 255, 255).texture(0.0F, 0.0F).overlay(OverlayTexture.DEFAULT_UV).light(light).normal(normalMatrix, 0, 1, 0).next();
+        int emissiveLight = 15728880;
+        vertexConsumer.vertex(modelMatrix, -0.25F, 0.25F, 0.0F).color(255, 255, 255, 255).texture(0.0F, v + 0.25f).overlay(OverlayTexture.DEFAULT_UV).light(emissiveLight).normal(normalMatrix, 0, 1, 0).next();
+        vertexConsumer.vertex(modelMatrix, 0.25F, 0.25F, 0.0F).color(255, 255, 255, 255).texture(1.0F, v + 0.25f).overlay(OverlayTexture.DEFAULT_UV).light(emissiveLight).normal(normalMatrix, 0, 1, 0).next();
+        vertexConsumer.vertex(modelMatrix, 0.25F, -0.25F, 0.0F).color(255, 255, 255, 255).texture(1.0F, v).overlay(OverlayTexture.DEFAULT_UV).light(emissiveLight).normal(normalMatrix, 0, 1, 0).next();
+        vertexConsumer.vertex(modelMatrix, -0.25F, -0.25F, 0.0F).color(255, 255, 255, 255).texture(0.0F, v).overlay(OverlayTexture.DEFAULT_UV).light(emissiveLight).normal(normalMatrix, 0, 1, 0).next();
 
         matrices.pop();
         super.render(entity, yaw, tickDelta, matrices, vertexConsumers, light);

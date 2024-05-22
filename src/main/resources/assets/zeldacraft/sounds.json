@@ -10,5 +10,17 @@
     "sounds": [
       "zeldacraft:music_disc_legend"
     ]
+  },
+  "swordshoot": {
+    "subtitle": "sounds.zeldacraft.sword_shoot",
+    "sounds": [
+      "zeldacraft:sword_shoot"
+    ]
+  },
+  "swordrecharge": {
+    "subtitle": "sounds.zeldacraft.sword_recharge",
+    "sounds": [
+      "zeldacraft:sword_recharge"
+    ]
   }
 }
