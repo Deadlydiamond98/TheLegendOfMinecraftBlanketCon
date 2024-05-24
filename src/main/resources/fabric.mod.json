@@ -20,6 +20,9 @@
 		],
 		"client": [
 			"net.deadlydiamond98.ZeldaCraftClient"
+		],
+		"fabric-datagen": [
+			"net.deadlydiamond98.ZeldaDataGenerator"
 		]
 	},
 	"mixins": [

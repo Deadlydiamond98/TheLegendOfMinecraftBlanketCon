@@ -1,10 +1,9 @@
 {
-	"credit": "Made with Blockbench",
 	"textures": {
-		"0": "block/spore_blossom_base",
-		"1": "bomb_leaf",
-		"2": "bomb_plant",
-		"particle": "block/spore_blossom_base"
+		"0": "minecraft:block/spore_blossom_base",
+		"1": "zeldacraft:block/bomb_leaf",
+		"2": "zeldacraft:block/bomb_plant",
+		"particle": "minecraft:block/spore_blossom_base"
 	},
 	"elements": [
 		{
