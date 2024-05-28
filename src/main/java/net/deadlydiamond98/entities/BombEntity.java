@@ -2,6 +2,8 @@ package net.deadlydiamond98.entities;
 
 import io.netty.buffer.Unpooled;
 import net.deadlydiamond98.ZeldaCraft;
+import net.deadlydiamond98.blocks.SecretStone;
+import net.deadlydiamond98.sounds.ZeldaSounds;
 import net.deadlydiamond98.util.ZeldaTags;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
@@ -12,6 +14,7 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.sound.SoundCategory;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -71,6 +74,7 @@ public class BombEntity extends TntEntity {
         if (!this.getWorld().isClient) {
             this.getWorld().createExplosion(this, this.getX(), this.getY(), this.getZ(), power, false, World.ExplosionSourceType.NONE);
 
+            boolean playSecret = false;
             int radius = (int) power;
             for (int x = -radius; x <= radius; x++) {
                 for (int y = -radius; y <= radius; y++) {
@@ -79,9 +83,16 @@ public class BombEntity extends TntEntity {
                         Block block = this.getWorld().getBlockState(blockPos).getBlock();
                         if (block.getRegistryEntry().isIn(ZeldaTags.Blocks.Bomb_Breakable)) {
                             this.getWorld().breakBlock(blockPos, true);
+                            if (block instanceof SecretStone) {
+                                playSecret = true;
+                            }
                         }
                     }
                 }
+            }
+
+            if (playSecret) {
+                this.getWorld().playSound(null, this.getBlockPos(), ZeldaSounds.SecretRoom, SoundCategory.BLOCKS, 1.0f, 1.0f);
             }
         }
     }

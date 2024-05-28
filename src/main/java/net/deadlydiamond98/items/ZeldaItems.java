@@ -26,6 +26,8 @@ public class ZeldaItems {
             new FabricItemSettings(), 3, 50));
     public static final Item Super_Bomb = registerItem("super_bomb", new BombItem(
             new FabricItemSettings(), 5, 80));
+    public static final Item Bomb_Bag = registerItem("bomb_bag", new Item(
+            new FabricItemSettings().maxCount(1)));
 
     public static final Item Music_Disc_Legend = registerItem("music_disc_legend", new MusicDiscItem(
             16, ZeldaSounds.MusicDiscLegend, new FabricItemSettings().rarity(Rarity.RARE)
@@ -42,6 +44,7 @@ public class ZeldaItems {
         entry.add(Magic_Sword);
         entry.add(Bomb);
         entry.add(Super_Bomb);
+        entry.add(Bomb_Bag);
     }
     public static void addTools(FabricItemGroupEntries entry) {
         entry.add(Music_Disc_Legend);

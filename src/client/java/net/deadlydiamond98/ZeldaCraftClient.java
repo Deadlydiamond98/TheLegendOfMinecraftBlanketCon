@@ -2,6 +2,7 @@ package net.deadlydiamond98;
 
 import net.deadlydiamond98.blocks.ZeldaBlocks;
 import net.deadlydiamond98.entities.ZeldaEntities;
+import net.deadlydiamond98.items.ZeldaItems;
 import net.deadlydiamond98.model.entity.BombEntityModel;
 import net.deadlydiamond98.networking.ZeldaClientPackets;
 import net.deadlydiamond98.renderer.entity.BombEntityRenderer;
@@ -12,6 +13,7 @@ import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.minecraft.client.color.world.BiomeColors;
+import net.minecraft.client.color.world.GrassColors;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactories;
 
@@ -28,15 +30,26 @@ public class ZeldaCraftClient implements ClientModInitializer {
 
 		ZeldaClientPackets.registerS2CPackets();
 
+		registerTintables();
+	}
+
+	public void registerModelLayers() {
+		EntityModelLayerRegistry.registerModelLayer(BombEntityModel.LAYER_LOCATION, BombEntityModel::getTexturedModelData);
+	}
+
+	public void registerTintables() {
 		ColorProviderRegistry.BLOCK.register(((state, world, pos, tintIndex) -> {
 			if (tintIndex == 0) {
 				return BiomeColors.getGrassColor(world, pos);
 			}
 			return -1;
 		}), ZeldaBlocks.Loot_Grass);
-	}
 
-	public void registerModelLayers() {
-		EntityModelLayerRegistry.registerModelLayer(BombEntityModel.LAYER_LOCATION, BombEntityModel::getTexturedModelData);
+		ColorProviderRegistry.ITEM.register(((stack, tintIndex) -> {
+			if (tintIndex == 0) {
+				return GrassColors.getDefaultColor();
+			}
+			return -1;
+		}), ZeldaBlocks.Loot_Grass.asItem());
 	}
 }

@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "minecraft:cracked_stone_bricks"
+    "minecraft:cracked_stone_bricks",
+    "zeldacraft:secret_cracked_stone_bricks"
   ]
 }

@@ -18,12 +18,16 @@ import net.minecraft.util.Identifier;
 public class ZeldaBlocks {
 
     public static final Block Bomb_Flower = registerBlock("bomb_flower",
-            new BombFlower(FabricBlockSettings.copyOf(Blocks.MOSS_BLOCK).strength(1.5F, 0F)
+            new BombFlower(FabricBlockSettings.copyOf(Blocks.MOSS_BLOCK).strength(1.5F, 0.0F)
                     .sounds(BlockSoundGroup.SPORE_BLOSSOM).luminance(5).nonOpaque().noCollision().breakInstantly()));
 
     public static final Block Loot_Grass = registerBlock("loot_grass",
-            new LootGrass(FabricBlockSettings.copyOf(Blocks.MOSS_BLOCK).strength(0.3F, 0F)
+            new LootGrass(FabricBlockSettings.copyOf(Blocks.MOSS_BLOCK).strength(0.3F, 0.0F)
                     .sounds(BlockSoundGroup.GRASS).nonOpaque().luminance(2).noCollision()));
+
+    public static final Block Secret_Cracked_Brick = registerBlock("secret_cracked_stone_bricks",
+            new SecretStone(FabricBlockSettings.copyOf(Blocks.CRACKED_STONE_BRICKS).strength(1.5F, 6.0F)
+                    .sounds(BlockSoundGroup.STONE)));
 
 
 
@@ -48,6 +52,7 @@ public class ZeldaBlocks {
 
     public static void addItemsToPlantGroup(FabricItemGroupEntries entry) {
         entry.add(Bomb_Flower);
+        entry.add(Loot_Grass);
     }
 
     public static void registerBlocks() {

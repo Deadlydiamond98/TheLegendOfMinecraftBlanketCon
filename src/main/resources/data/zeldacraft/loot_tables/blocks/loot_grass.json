@@ -1,0 +1,34 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "zeldacraft:emerald_shard",
+          "weight": 50
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:arrow",
+          "weight": 25
+        },
+        {
+          "type": "minecraft:item",
+          "name": "zeldacraft:bomb",
+          "weight": 4
+        }
+      ],
+      "conditions": [
+        {
+          "condition": "minecraft:block_state_property",
+          "block": "zeldacraft:loot_grass",
+          "properties": {
+            "age": 1
+          }
+        }
+      ]
+    }
+  ]
+}

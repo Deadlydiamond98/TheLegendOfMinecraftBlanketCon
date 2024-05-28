@@ -22,5 +22,11 @@
     "sounds": [
       "zeldacraft:sword_recharge"
     ]
+  },
+  "secretroom": {
+    "subtitle": "sounds.zeldacraft.secret_room",
+    "sounds": [
+      "zeldacraft:secret"
+    ]
   }
 }

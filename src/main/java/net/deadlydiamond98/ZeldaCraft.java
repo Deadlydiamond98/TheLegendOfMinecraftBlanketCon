@@ -8,6 +8,7 @@ import net.deadlydiamond98.sounds.ZeldaSounds;
 import net.deadlydiamond98.world.ZeldaFeatures;
 import net.fabricmc.api.ModInitializer;
 
+import net.fabricmc.loader.api.FabricLoader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,5 +26,9 @@ public class ZeldaCraft implements ModInitializer {
 		TickEvents.registerTickEvent();
 		ZeldaFeatures.register();
 		LOGGER.info("Mod Loaded");
+	}
+
+	public static boolean isModLoaded(String modid) {
+		return FabricLoader.getInstance().isModLoaded(modid);
 	}
 }
