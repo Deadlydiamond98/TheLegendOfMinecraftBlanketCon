@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "age=1": {
+      "model": "zeldacraft:block/loot_grass_1"
+    },
+    "age=0": {
+      "model": "zeldacraft:block/loot_grass_0"
+    }
+  }
+}

@@ -22,10 +22,10 @@ public class ZeldaItems {
     public static final Item Emerald_Chunk = registerItem("emerald_chunk", new EmeraldItem(
             new FabricItemSettings()));
 
-    public static final Item Bomb = registerItem("bomb", new Item(
-            new FabricItemSettings()));
-    public static final Item Super_Bomb = registerItem("super_bomb", new Item(
-            new FabricItemSettings()));
+    public static final Item Bomb = registerItem("bomb", new BombItem(
+            new FabricItemSettings(), 3, 50));
+    public static final Item Super_Bomb = registerItem("super_bomb", new BombItem(
+            new FabricItemSettings(), 5, 80));
 
     public static final Item Music_Disc_Legend = registerItem("music_disc_legend", new MusicDiscItem(
             16, ZeldaSounds.MusicDiscLegend, new FabricItemSettings().rarity(Rarity.RARE)

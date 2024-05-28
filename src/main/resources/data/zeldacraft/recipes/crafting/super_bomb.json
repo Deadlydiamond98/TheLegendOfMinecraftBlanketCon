@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "grg",
+    "rBr",
+    "grg"
+  ],
+  "key": {
+    "B": {
+      "item": "zeldacraft:bomb"
+    },
+    "r": {
+      "item": "minecraft:redstone"
+    },
+    "g": {
+      "item": "minecraft:gunpowder"
+    }
+  },
+  "result": {
+    "item": "zeldacraft:super_bomb",
+    "count": 1
+  }
+}

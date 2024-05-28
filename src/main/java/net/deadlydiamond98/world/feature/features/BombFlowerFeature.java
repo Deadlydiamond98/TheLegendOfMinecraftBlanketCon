@@ -10,26 +10,28 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.StructureWorldAccess;
 import net.minecraft.world.WorldAccess;
 import net.minecraft.world.gen.feature.Feature;
+import net.minecraft.world.gen.feature.RandomPatchFeatureConfig;
 import net.minecraft.world.gen.feature.SimpleBlockFeatureConfig;
 import net.minecraft.world.gen.feature.util.FeatureContext;
 
-public class BombFlowerFeature extends Feature<SimpleBlockFeatureConfig> {
+public class BombFlowerFeature extends Feature<RandomPatchFeatureConfig> {
 
-    public BombFlowerFeature(Codec<SimpleBlockFeatureConfig> configCodec) {
+    public BombFlowerFeature(Codec<RandomPatchFeatureConfig> configCodec) {
         super(configCodec);
     }
 
     @Override
-    public boolean generate(FeatureContext<SimpleBlockFeatureConfig> context) {
+    public boolean generate(FeatureContext<RandomPatchFeatureConfig> context) {
         StructureWorldAccess world = context.getWorld();
         BlockPos pos = context.getOrigin();
 
         if (canPlaceAt(world, pos)) {
             BlockPos blockPosBelow = pos.down();
+            BlockState stateAtPos = world.getBlockState(pos);
+            BlockState stateAbovePos = world.getBlockState(pos.up());
             BlockState stateBelowPos = world.getBlockState(blockPosBelow);
 
-            if (stateBelowPos.isIn(BlockTags.BASE_STONE_OVERWORLD)) {
-                world.setBlockState(pos, ZeldaBlocks.Bomb_Flower.getDefaultState(), 3);
+            if (isExposedToAir(world::getBlockState, pos) && isStone(stateBelowPos)) {
                 return true;
             }
         }

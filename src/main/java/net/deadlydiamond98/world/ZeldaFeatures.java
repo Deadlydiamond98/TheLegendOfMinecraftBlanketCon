@@ -10,11 +10,12 @@ import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.gen.GenerationStep;
+import net.minecraft.world.gen.feature.RandomPatchFeatureConfig;
 import net.minecraft.world.gen.feature.SimpleBlockFeatureConfig;
 
 public class ZeldaFeatures {
     public static final Identifier BOMB_FLOWER_FEATURE_ID = new Identifier(ZeldaCraft.MOD_ID, "bomb_flower_feature");
-    public static final BombFlowerFeature BOMB_FLOWER_FEATURE = new BombFlowerFeature(SimpleBlockFeatureConfig.CODEC);
+    public static final BombFlowerFeature BOMB_FLOWER_FEATURE = new BombFlowerFeature(RandomPatchFeatureConfig.CODEC);
 
     public static void register() {
         Registry.register(Registries.FEATURE, BOMB_FLOWER_FEATURE_ID, BOMB_FLOWER_FEATURE);

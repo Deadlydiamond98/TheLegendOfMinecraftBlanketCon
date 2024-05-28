@@ -18,8 +18,12 @@ import net.minecraft.util.Identifier;
 public class ZeldaBlocks {
 
     public static final Block Bomb_Flower = registerBlock("bomb_flower",
-            new BombFlower(FabricBlockSettings.copyOf(Blocks.MOSS_BLOCK).strength(1.5F, 1.5F)
+            new BombFlower(FabricBlockSettings.copyOf(Blocks.MOSS_BLOCK).strength(1.5F, 0F)
                     .sounds(BlockSoundGroup.SPORE_BLOSSOM).luminance(5).nonOpaque().noCollision().breakInstantly()));
+
+    public static final Block Loot_Grass = registerBlock("loot_grass",
+            new LootGrass(FabricBlockSettings.copyOf(Blocks.MOSS_BLOCK).strength(0.3F, 0F)
+                    .sounds(BlockSoundGroup.GRASS).nonOpaque().luminance(2).noCollision()));
 
 
 
