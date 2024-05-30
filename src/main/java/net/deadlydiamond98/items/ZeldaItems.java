@@ -32,9 +32,9 @@ public class ZeldaItems {
     public static final Item Bomb_Bag = registerItem("bomb_bag", new BombBag(
             new FabricItemSettings().maxCount(1),640,
             List.of(Bomb, Super_Bomb)));
-    public static final Item Quiver = registerItem("quiver", new CustomBundle(
+    public static final Item Quiver = registerItem("quiver", new Quiver(
             new FabricItemSettings().maxCount(1),640,
-            List.of(Items.ARROW, Items.TIPPED_ARROW, Items.SPECTRAL_ARROW)));
+            List.of(Items.ARROW)));
 
     public static final Item Music_Disc_Legend = registerItem("music_disc_legend", new MusicDiscItem(
             16, ZeldaSounds.MusicDiscLegend, new FabricItemSettings().rarity(Rarity.RARE)

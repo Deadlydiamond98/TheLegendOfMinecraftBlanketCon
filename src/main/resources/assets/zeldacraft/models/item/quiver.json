@@ -4,6 +4,7 @@
         "layer0": "zeldacraft:item/quiver"
     },
     "overrides": [
-        { "predicate": { "filled": 0.0000001 }, "model": "zeldacraft:item/quiver_filled"}
+        { "predicate": { "filled": 1.0 }, "model": "zeldacraft:item/quiver_filled"},
+        { "predicate": { "filled": 0.0 }, "model": "zeldacraft:item/quiver"}
     ]
 }

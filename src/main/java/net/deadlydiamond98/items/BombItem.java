@@ -38,4 +38,12 @@ public class BombItem extends Item {
 
         return TypedActionResult.success(user.getStackInHand(hand));
     }
+
+    public int getFuse() {
+        return fuse;
+    }
+
+    public float getPower() {
+        return power;
+    }
 }

@@ -1,5 +1,5 @@
 {
-    "parent": "item/bundle",
+    "parent": "item/quiver",
     "textures": {
         "layer0": "zeldacraft:item/quiver_filled"
     }
