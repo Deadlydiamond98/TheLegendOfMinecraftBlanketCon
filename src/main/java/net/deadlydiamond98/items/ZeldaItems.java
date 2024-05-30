@@ -1,6 +1,7 @@
 package net.deadlydiamond98.items;
 
 import net.deadlydiamond98.ZeldaCraft;
+import net.deadlydiamond98.items.custombundle.CustomBundle;
 import net.deadlydiamond98.sounds.ZeldaSounds;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroupEntries;
@@ -10,6 +11,8 @@ import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Rarity;
+
+import java.util.List;
 
 public class ZeldaItems {
     public static final Item Kokiri_Sword = registerItem("kokiri_sword", new SwordItem(
@@ -26,8 +29,12 @@ public class ZeldaItems {
             new FabricItemSettings(), 3, 50));
     public static final Item Super_Bomb = registerItem("super_bomb", new BombItem(
             new FabricItemSettings(), 5, 80));
-    public static final Item Bomb_Bag = registerItem("bomb_bag", new Item(
-            new FabricItemSettings().maxCount(1)));
+    public static final Item Bomb_Bag = registerItem("bomb_bag", new BombBag(
+            new FabricItemSettings().maxCount(1),640,
+            List.of(Bomb, Super_Bomb)));
+    public static final Item Quiver = registerItem("quiver", new CustomBundle(
+            new FabricItemSettings().maxCount(1),640,
+            List.of(Items.ARROW, Items.TIPPED_ARROW, Items.SPECTRAL_ARROW)));
 
     public static final Item Music_Disc_Legend = registerItem("music_disc_legend", new MusicDiscItem(
             16, ZeldaSounds.MusicDiscLegend, new FabricItemSettings().rarity(Rarity.RARE)

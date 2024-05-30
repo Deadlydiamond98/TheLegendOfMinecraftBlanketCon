@@ -32,6 +32,7 @@ public class BombItem extends Item {
         world.spawnEntity(bombEntity);
         user.getStackInHand(hand).decrement(1);
         user.getItemCooldownManager().set(this, 20);
+        user.getItemCooldownManager().set(ZeldaItems.Bomb_Bag, 20);
 
         user.playSound(SoundEvents.ENTITY_SPLASH_POTION_THROW, SoundCategory.PLAYERS, 1, 1);
 
