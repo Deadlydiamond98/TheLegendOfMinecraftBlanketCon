@@ -8,28 +8,42 @@ import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
+import net.minecraft.registry.tag.BiomeTags;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.gen.GenerationStep;
+import net.minecraft.world.gen.feature.RandomPatchFeature;
 import net.minecraft.world.gen.feature.RandomPatchFeatureConfig;
 import net.minecraft.world.gen.feature.SimpleBlockFeatureConfig;
 
 public class ZeldaFeatures {
     public static final Identifier BOMB_FLOWER_FEATURE_ID = new Identifier(ZeldaCraft.MOD_ID, "bomb_flower_feature");
+    public static final Identifier LOOT_GRASS_FEATURE_ID = new Identifier(ZeldaCraft.MOD_ID, "loot_grass_feature");
     public static final BombFlowerFeature BOMB_FLOWER_FEATURE = new BombFlowerFeature(RandomPatchFeatureConfig.CODEC);
+    public static final RandomPatchFeature LOOT_GRASS_FEATURE = new RandomPatchFeature(RandomPatchFeatureConfig.CODEC);
 
     public static void register() {
         Registry.register(Registries.FEATURE, BOMB_FLOWER_FEATURE_ID, BOMB_FLOWER_FEATURE);
+        Registry.register(Registries.FEATURE, LOOT_GRASS_FEATURE_ID, LOOT_GRASS_FEATURE);
 
         addToBiomes();
     }
 
     public static void addToBiomes() {
         BiomeModifications.addFeature(
-                BiomeSelectors.all(),
+                BiomeSelectors.foundInOverworld(),
                 GenerationStep.Feature.UNDERGROUND_DECORATION,
                 RegistryKey.of(
                         RegistryKeys.PLACED_FEATURE,
                         new Identifier(ZeldaCraft.MOD_ID, "bomb_flower_feature_placed")
+                )
+        );
+
+        BiomeModifications.addFeature(
+                BiomeSelectors.foundInOverworld(),
+                GenerationStep.Feature.VEGETAL_DECORATION,
+                RegistryKey.of(
+                        RegistryKeys.PLACED_FEATURE,
+                        new Identifier(ZeldaCraft.MOD_ID, "loot_grass_feature_placed")
                 )
         );
     }

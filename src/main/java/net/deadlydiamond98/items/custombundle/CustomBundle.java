@@ -95,7 +95,7 @@ public class CustomBundle extends Item {
         return ITEM_BAR_COLOR;
     }
 
-    private int addToBundle(ItemStack bundle, ItemStack stack) {
+    public int addToBundle(ItemStack bundle, ItemStack stack) {
         if (!stack.isEmpty() && itemInsertable.contains(stack.getItem()) && stack.getItem().canBeNested()) {
             NbtCompound nbtCompound = bundle.getOrCreateNbt();
             if (!nbtCompound.contains(ITEMS_KEY)) {
@@ -141,7 +141,7 @@ public class CustomBundle extends Item {
         return 64 / stack.getMaxCount();
     }
 
-    private static int getBundleOccupancy(ItemStack stack) {
+    protected static int getBundleOccupancy(ItemStack stack) {
         NbtCompound nbtCompound = stack.getNbt();
         if (nbtCompound == null) {
             return 0;
@@ -157,7 +157,7 @@ public class CustomBundle extends Item {
         return occupancy;
     }
 
-    private Optional<ItemStack> removeFirstStack(ItemStack stack) {
+    protected Optional<ItemStack> removeFirstStack(ItemStack stack) {
         NbtCompound nbtCompound = stack.getOrCreateNbt();
         if (!nbtCompound.contains(ITEMS_KEY)) {
             return Optional.empty();
@@ -218,6 +218,27 @@ public class CustomBundle extends Item {
         }
 
         return Optional.empty();
+    }
+
+    public Optional<ItemStack> getFirstItem(ItemStack stack) {
+        NbtCompound nbtCompound = stack.getOrCreateNbt();
+        if (!nbtCompound.contains(ITEMS_KEY)) {
+            return Optional.empty();
+        }
+
+        NbtList nbtList = nbtCompound.getList(ITEMS_KEY, 10);
+        if (nbtList.isEmpty()) {
+            return Optional.empty();
+        }
+
+        NbtCompound firstItemNbt = nbtList.getCompound(0);
+        BundledItemData bundledItemData = new BundledItemData(firstItemNbt);
+        ItemStack itemStack = new ItemStack(bundledItemData.getItem(), bundledItemData.getCount());
+        if (firstItemNbt.contains("tag")) {
+            itemStack.setNbt(firstItemNbt.getCompound("tag"));
+        }
+
+        return Optional.of(itemStack);
     }
 
     private static Stream<ItemStack> getBundledStacks(ItemStack stack) {

@@ -4,9 +4,17 @@
 
   "item.zeldacraft.bomb": "Bomb",
   "item.zeldacraft.super_bomb": "Super Bomb",
+  "item.zeldacraft.bomb_bag": "Bomb Bag",
   "block.zeldacraft.bomb_flower": "Bomb Flower Seeds",
 
+  "block.zeldacraft.loot_grass": "Loot Grass",
+
+  "block.zeldacraft.secret_cracked_stone_bricks": "Secret Cracked Stone Bricks",
+
+  "item.zeldacraft.quiver": "Quiver",
+
   "item.zeldacraft.kokiri_sword": "Kokiri Sword",
+  "item.zeldacraft.magic_sword": "Magic Sword",
 
   "item.zeldacraft.music_disc_legend": "Music Disc",
   "item.zeldacraft.music_disc_legend.desc": "Deadlydiamond98 - Legend"

@@ -20,10 +20,15 @@ public class ZeldaItems {
     public static final Item Magic_Sword = registerItem("magic_sword", new MagicSword(
             ToolMaterials.IRON, 3, -0.5F, new FabricItemSettings()));
 
+    public static final Item Wooden_Boomerang = registerItem("wooden_boomerang", new Item(
+            new FabricItemSettings()
+    ));
+
     public static final Item Emerald_Shard = registerItem("emerald_shard", new EmeraldItem(
             new FabricItemSettings()));
     public static final Item Emerald_Chunk = registerItem("emerald_chunk", new EmeraldItem(
             new FabricItemSettings()));
+
 
     public static final Item Bomb = registerItem("bomb", new BombItem(
             new FabricItemSettings(), 3, 50));
@@ -34,7 +39,7 @@ public class ZeldaItems {
             List.of(Bomb, Super_Bomb)));
     public static final Item Quiver = registerItem("quiver", new Quiver(
             new FabricItemSettings().maxCount(1),640,
-            List.of(Items.ARROW)));
+            List.of(Items.ARROW, Items.TIPPED_ARROW, Items.SPECTRAL_ARROW)));
 
     public static final Item Music_Disc_Legend = registerItem("music_disc_legend", new MusicDiscItem(
             16, ZeldaSounds.MusicDiscLegend, new FabricItemSettings().rarity(Rarity.RARE)
@@ -49,9 +54,11 @@ public class ZeldaItems {
     public static void addCombat(FabricItemGroupEntries entry) {
         entry.add(Kokiri_Sword);
         entry.add(Magic_Sword);
+        entry.add(Wooden_Boomerang);
         entry.add(Bomb);
         entry.add(Super_Bomb);
         entry.add(Bomb_Bag);
+        entry.add(Quiver);
     }
     public static void addTools(FabricItemGroupEntries entry) {
         entry.add(Music_Disc_Legend);

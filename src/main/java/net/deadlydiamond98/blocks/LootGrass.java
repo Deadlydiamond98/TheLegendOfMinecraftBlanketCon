@@ -11,6 +11,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.SwordItem;
 import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.registry.tag.FluidTags;
 import net.minecraft.server.world.ServerWorld;
@@ -70,7 +71,7 @@ public class LootGrass extends PlantBlock {
     @Override
     public void onBlockBreakStart(BlockState state, World world, BlockPos pos, PlayerEntity player) {
 
-        if (isMature(state)) {
+        if (isMature(state) && player.getMainHandStack().getItem() instanceof SwordItem) {
             this.spawnBreakParticles(world, player, pos, state);
             world.setBlockState(pos, state.with(AGE, 0), 2);
 

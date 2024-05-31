@@ -47,7 +47,7 @@ public class ZeldaBlocks {
                 new BlockItem(block, new FabricItemSettings()));
     }
     public static void addItemsToGroup(FabricItemGroupEntries entry) {
-        //entry.add(Bomb_Flower);
+        entry.add(Secret_Cracked_Brick);
     }
 
     public static void addItemsToPlantGroup(FabricItemGroupEntries entry) {
