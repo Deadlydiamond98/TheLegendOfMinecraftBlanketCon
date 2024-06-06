@@ -7,6 +7,7 @@ import net.deadlydiamond98.networking.ZeldaServerPackets;
 import net.deadlydiamond98.sounds.ZeldaSounds;
 import net.deadlydiamond98.util.ZeldaTags;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.MovementType;
@@ -15,6 +16,7 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
+import net.minecraft.entity.mob.ShulkerEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
@@ -22,20 +24,25 @@ import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
 import java.util.List;
 
-public class BombchuEntity extends TntEntity {
+public class BombchuEntity extends Entity {
 
     private float power;
+    private static final TrackedData<Integer> FUSE;
+    protected static final TrackedData<Direction> ATTACHED_FACE;
     private float entitySpeed;
+    private int ceilingTickCounter;
 
-    public BombchuEntity(EntityType<? extends TntEntity> entityType, World world) {
+    public BombchuEntity(EntityType<? extends Entity> entityType, World world) {
         super(entityType, world);
         power = 0;
         entitySpeed = 0;
+        ceilingTickCounter = 0;
     }
 
     public BombchuEntity(World world, double x, double y, double z, float power, int fuse, float entitySpeed) {
@@ -44,32 +51,33 @@ public class BombchuEntity extends TntEntity {
         this.power = power;
         this.setFuse(fuse);
         this.entitySpeed = entitySpeed;
+        ceilingTickCounter = 0;
     }
+
     public void tick() {
-        this.move(MovementType.SELF, this.getVelocity());
+
         if (this.horizontalCollision) {
-            if (isAtCorner()) {
-                rotateVelocityToNewWallDirection();
+            this.setVelocity(this.getVelocity().x, entitySpeed, this.getVelocity().z);
+            if (this.verticalCollision) {
+                if (ceilingTickCounter >= 1) {
+                    ceilingTickCounter = 0;
+                    this.setVelocity(this.getVelocity().multiply(-1, 1, -1));
+                }
+
             }
         }
         else {
             updateVelocityFromDirection();
         }
         manageFuse();
-    }
-    private boolean isAtCorner() {
-        BlockPos pos = this.getBlockPos();
-        boolean collisionX = !this.getWorld().getBlockState(pos.add(this.getVelocity().x > 0 ? 1 : -1, 0, 0)).isAir();
-        boolean collisionZ = !this.getWorld().getBlockState(pos.add(0, 0, this.getVelocity().z > 0 ? 1 : -1)).isAir();
-        return collisionX && collisionZ;
+        super.tick();
+        this.move(MovementType.SELF, this.getVelocity());
+
+        this.prevYaw = this.getYaw();
+        this.prevPitch = this.getPitch();
+        this.getWorld().getProfiler().pop();
     }
 
-    private void rotateVelocityToNewWallDirection() {
-        Vec3d currentVelocity = this.getVelocity();
-        double newX = currentVelocity.z;
-        double newZ = -currentVelocity.x;
-        this.setVelocity(newX, currentVelocity.y, newZ);
-    }
     private void updateVelocityFromDirection() {
         float yaw = this.getYaw();
         double x = -Math.sin(Math.toRadians(yaw)) * entitySpeed;
@@ -122,5 +130,39 @@ public class BombchuEntity extends TntEntity {
                 this.getWorld().playSound(null, this.getBlockPos(), ZeldaSounds.SecretRoom, SoundCategory.BLOCKS, 1.0f, 1.0f);
             }
         }
+    }
+    @Override
+    protected void initDataTracker() {
+        this.dataTracker.startTracking(FUSE, 80);
+        this.dataTracker.startTracking(ATTACHED_FACE, Direction.DOWN);
+    }
+    @Override
+    protected void writeCustomDataToNbt(NbtCompound nbt) {
+        nbt.putShort("Fuse", (short)this.getFuse());
+    }
+
+    @Override
+    protected void readCustomDataFromNbt(NbtCompound nbt) {
+        this.setFuse(nbt.getShort("Fuse"));
+    }
+    public void setFuse(int fuse) {
+        this.dataTracker.set(FUSE, fuse);
+    }
+
+    public int getFuse() {
+        return (Integer)this.dataTracker.get(FUSE);
+    }
+
+    public Direction getAttachedFace() {
+        return (Direction)this.dataTracker.get(ATTACHED_FACE);
+    }
+
+    private void setAttachedFace(Direction face) {
+        this.dataTracker.set(ATTACHED_FACE, face);
+    }
+
+    static {
+        FUSE = DataTracker.registerData(BombchuEntity.class, TrackedDataHandlerRegistry.INTEGER);
+        ATTACHED_FACE = DataTracker.registerData(BombchuEntity.class, TrackedDataHandlerRegistry.FACING);
     }
 }

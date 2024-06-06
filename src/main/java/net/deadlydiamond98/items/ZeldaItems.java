@@ -56,8 +56,6 @@ public class ZeldaItems {
             16, ZeldaSounds.MusicDiscLegend, new FabricItemSettings().rarity(Rarity.RARE)
             .maxCount(1), 86));
 
-
-    //Register Item + Loading in Items txt
     private static Item registerItem(String itemName, Item item) {
         return Registry.register(Registries.ITEM, new Identifier(ZeldaCraft.MOD_ID, itemName), item);
     }

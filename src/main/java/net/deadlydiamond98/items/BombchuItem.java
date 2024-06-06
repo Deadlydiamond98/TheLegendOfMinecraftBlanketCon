@@ -26,10 +26,9 @@ public class BombchuItem extends Item {
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
 
-        BombchuEntity bombEntity = new BombchuEntity(world, user.getX(), user.getY() + user.getEyeHeight(user.getPose()), user.getZ(),
+        BombchuEntity bombEntity = new BombchuEntity(world, user.getX(), user.getY(), user.getZ(),
                 power, fuse, speed);
         Vec3d vec3d = user.getRotationVec(1.0F);
-        bombEntity.setVelocity(vec3d.x, vec3d.y, vec3d.z);
         bombEntity.setYaw(user.headYaw);
         world.spawnEntity(bombEntity);
         user.getStackInHand(hand).decrement(1);

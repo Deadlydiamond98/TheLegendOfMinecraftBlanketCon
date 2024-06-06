@@ -27,7 +27,8 @@ public class BombchuEntityRenderer extends EntityRenderer<BombchuEntity> {
 
     @Override
     public void render(BombchuEntity entity, float yaw, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light) {
-        matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(entity.getYaw()));
+        matrices.multiply(RotationAxis.NEGATIVE_Y.rotationDegrees(entity.getYaw() + 180));
+        matrices.multiply(RotationAxis.NEGATIVE_X.rotationDegrees(entity.getPitch()));
         VertexConsumer vertexConsumer = vertexConsumers.getBuffer(this.entityModel.getLayer(getTexture(entity)));
         this.entityModel.render(matrices, vertexConsumer, light, OverlayTexture.DEFAULT_UV, 1.0F, 1.0F, 1.0F, 1.0F);
         super.render(entity, yaw, tickDelta, matrices, vertexConsumers, light);
