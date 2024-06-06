@@ -13,10 +13,9 @@ import net.minecraft.entity.Entity;
 import net.minecraft.util.Identifier;
 
 public class BombEntityRenderer extends EntityRenderer<BombEntity> {
-    private static final Identifier TEXTURE = new Identifier(ZeldaCraft.MOD_ID, "textures/entity/bomb_entity.png");
-    private static final Identifier TEXTURE_SUPER = new Identifier(ZeldaCraft.MOD_ID, "textures/entity/super_bomb_entity.png");
+    private static final Identifier TEXTURE_I = new Identifier(ZeldaCraft.MOD_ID, "textures/entity/bomb_entity.png");
+    private static final Identifier TEXTURE_II = new Identifier(ZeldaCraft.MOD_ID, "textures/entity/super_bomb_entity.png");
 
-    private float entityPower;
     private final BombEntityModel<BombEntity> entityModel;
     public BombEntityRenderer(EntityRendererFactory.Context ctx) {
         super(ctx);
@@ -26,23 +25,15 @@ public class BombEntityRenderer extends EntityRenderer<BombEntity> {
     @Override
     public void render(BombEntity entity, float yaw, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light) {
         super.render(entity, yaw, tickDelta, matrices, vertexConsumers, light);
-        VertexConsumer vertexConsumer = vertexConsumers.getBuffer(this.entityModel.getLayer(TEXTURE));
+        VertexConsumer vertexConsumer = vertexConsumers.getBuffer(this.entityModel.getLayer(getTexture(entity)));
         this.entityModel.render(matrices, vertexConsumer, light, OverlayTexture.DEFAULT_UV, 1.0F, 1.0F, 1.0F, 1.0F);
-
-        ZeldaCraft.LOGGER.info("Rendering BombEntity with power: " + entity.getPower());
-        ZeldaCraft.LOGGER.info("Using texture: " + getTexture(entity).toString());
-
-        entityPower = entity.getPower();
-
     }
 
     @Override
     public Identifier getTexture(BombEntity entity) {
-        if (entityPower == 3.0f) {
-            return TEXTURE_SUPER;
+        if (entity.getBombType() == 2) {
+            return TEXTURE_II;
         }
-        else {
-            return TEXTURE;
-        }
+        return TEXTURE_I;
     }
 }

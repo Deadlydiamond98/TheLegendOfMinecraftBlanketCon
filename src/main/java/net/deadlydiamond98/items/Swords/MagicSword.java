@@ -1,19 +1,16 @@
-package net.deadlydiamond98.items;
+package net.deadlydiamond98.items.Swords;
 
+import net.deadlydiamond98.entities.SwordBeamEntity;
+import net.deadlydiamond98.entities.ZeldaEntities;
 import net.deadlydiamond98.sounds.ZeldaSounds;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUsageContext;
-import net.minecraft.item.SwordItem;
-import net.minecraft.item.ToolMaterial;
+import net.minecraft.item.*;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.text.Text;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.util.TypedActionResult;
-import net.minecraft.util.UseAction;
+import net.minecraft.util.*;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
 public class MagicSword extends SwordItem {

@@ -1,77 +1,83 @@
 package net.deadlydiamond98.entities;
 
-import io.netty.buffer.Unpooled;
-import net.deadlydiamond98.ZeldaCraft;
 import net.deadlydiamond98.blocks.SecretStone;
+import net.deadlydiamond98.items.BombchuItem;
 import net.deadlydiamond98.items.Swords.CrackedBat;
 import net.deadlydiamond98.networking.ZeldaServerPackets;
-import net.deadlydiamond98.particle.ZeldaParticles;
 import net.deadlydiamond98.sounds.ZeldaSounds;
 import net.deadlydiamond98.util.ZeldaTags;
-import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
-import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
-import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
-import net.minecraft.entity.*;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.MovementType;
+import net.minecraft.entity.TntEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
-import net.minecraft.entity.passive.BeeEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.network.PacketByteBuf;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundCategory;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.TimeHelper;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
 import java.util.List;
 
-public class BombEntity extends TntEntity {
+public class BombchuEntity extends TntEntity {
 
     private float power;
-    private static final TrackedData<Integer> bombTypeData;
+    private float entitySpeed;
 
-    public BombEntity(EntityType<? extends TntEntity> entityType, World world) {
+    public BombchuEntity(EntityType<? extends TntEntity> entityType, World world) {
         super(entityType, world);
         power = 0;
+        entitySpeed = 0;
     }
 
-    public BombEntity(World world, double x, double y, double z, float power, int fuse, int bombType) {
-        this(ZeldaEntities.Bomb_Entity, world);
+    public BombchuEntity(World world, double x, double y, double z, float power, int fuse, float entitySpeed) {
+        this(ZeldaEntities.Bombchu_Entity, world);
         this.setPosition(x, y, z);
         this.power = power;
-        setBombType(bombType);
         this.setFuse(fuse);
+        this.entitySpeed = entitySpeed;
     }
-
-    @Override
-    protected void initDataTracker() {
-        super.initDataTracker();
-        this.dataTracker.startTracking(bombTypeData, 1);
-    }
-
     public void tick() {
+        this.move(MovementType.SELF, this.getVelocity());
+        if (this.horizontalCollision) {
+            if (isAtCorner()) {
+                rotateVelocityToNewWallDirection();
+            }
+        }
+        else {
+            updateVelocityFromDirection();
+        }
+        manageFuse();
+    }
+    private boolean isAtCorner() {
+        BlockPos pos = this.getBlockPos();
+        boolean collisionX = !this.getWorld().getBlockState(pos.add(this.getVelocity().x > 0 ? 1 : -1, 0, 0)).isAir();
+        boolean collisionZ = !this.getWorld().getBlockState(pos.add(0, 0, this.getVelocity().z > 0 ? 1 : -1)).isAir();
+        return collisionX && collisionZ;
+    }
+
+    private void rotateVelocityToNewWallDirection() {
+        Vec3d currentVelocity = this.getVelocity();
+        double newX = currentVelocity.z;
+        double newZ = -currentVelocity.x;
+        this.setVelocity(newX, currentVelocity.y, newZ);
+    }
+    private void updateVelocityFromDirection() {
+        float yaw = this.getYaw();
+        double x = -Math.sin(Math.toRadians(yaw)) * entitySpeed;
+        double z = Math.cos(Math.toRadians(yaw)) * entitySpeed;
+        this.setVelocity(x, this.getVelocity().y, z);
         if (!this.hasNoGravity()) {
             this.setVelocity(this.getVelocity().add(0.0, -0.04, 0.0));
         }
-
-        this.move(MovementType.SELF, this.getVelocity());
-        this.setVelocity(this.getVelocity().multiply(0.98));
-        if (this.isOnGround()) {
-            this.setVelocity(this.getVelocity().multiply(0.5, -0.5, 0.5));
-        }
-
-        manageFuse();
-
     }
 
     private void manageFuse() {
@@ -89,7 +95,6 @@ public class BombEntity extends TntEntity {
             }
         }
     }
-
     private void explode() {
         if (!this.getWorld().isClient) {
             this.getWorld().createExplosion(this, this.getX(), this.getY(), this.getZ(), power, false, World.ExplosionSourceType.NONE);
@@ -117,33 +122,5 @@ public class BombEntity extends TntEntity {
                 this.getWorld().playSound(null, this.getBlockPos(), ZeldaSounds.SecretRoom, SoundCategory.BLOCKS, 1.0f, 1.0f);
             }
         }
-    }
-
-    @Override
-    public boolean damage(DamageSource source, float amount) {
-        Entity sourceEntity = source.getAttacker();
-        if (sourceEntity instanceof PlayerEntity) {
-            PlayerEntity player = (PlayerEntity) sourceEntity;
-            ItemStack heldItem = player.getMainHandStack();
-            if (heldItem.getItem() instanceof CrackedBat) {
-                Vec3d lookVec = player.getRotationVec(1.0f);
-                double launchPower = 1.0;
-                double upwardBoost = 0.5;
-                this.setVelocity(lookVec.x * launchPower, lookVec.y * launchPower + upwardBoost, lookVec.z * launchPower);
-                return true;
-            }
-        }
-        return super.damage(source, amount);
-    }
-
-    public int getBombType() {
-        return (Integer)this.dataTracker.get(bombTypeData);
-    }
-
-    public void setBombType(int bombType) {
-        this.dataTracker.set(bombTypeData, bombType);
-    }
-    static {
-        bombTypeData = DataTracker.registerData(BombEntity.class, TrackedDataHandlerRegistry.INTEGER);
     }
 }

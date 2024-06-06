@@ -15,6 +15,8 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
 import net.minecraft.util.ClickType;
 import net.minecraft.util.Formatting;
+import net.minecraft.util.Hand;
+import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
@@ -184,6 +186,31 @@ public class CustomBundle extends Item {
         return Optional.of(itemStack);
     }
 
+    protected Optional<ItemStack> cycleStack(ItemStack stack) {
+        NbtCompound nbtCompound = stack.getOrCreateNbt();
+        if (!nbtCompound.contains(ITEMS_KEY)) {
+            return Optional.empty();
+        }
+
+        NbtList nbtList = nbtCompound.getList(ITEMS_KEY, 10);
+        if (nbtList.size() <= 1) {
+            return Optional.empty();
+        }
+
+        NbtCompound firstItemNbt = nbtList.getCompound(0);
+        nbtList.remove(0);
+
+        nbtList.add(firstItemNbt);
+        nbtCompound.put(ITEMS_KEY, nbtList);
+
+        BundledItemData bundledItemData = new BundledItemData(firstItemNbt);
+        ItemStack movedItemStack = new ItemStack(bundledItemData.getItem(), bundledItemData.getCount());
+        if (firstItemNbt.contains("tag")) {
+            movedItemStack.setNbt(firstItemNbt.getCompound("tag"));
+        }
+        return Optional.of(movedItemStack);
+    }
+
     public Optional<ItemStack> removeOneItem(ItemStack stack, Item item) {
         NbtCompound nbtCompound = stack.getOrCreateNbt();
         if (!nbtCompound.contains(ITEMS_KEY)) {
@@ -284,5 +311,15 @@ public class CustomBundle extends Item {
 
     private void playInsertSound(Entity entity) {
         entity.playSound(SoundEvents.ITEM_BUNDLE_INSERT, 0.8F, 0.8F + entity.getWorld().getRandom().nextFloat() * 0.4F);
+    }
+
+    @Override
+    public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
+        if (user.isSneaking()) {
+            this.cycleStack(user.getStackInHand(hand));
+            playInsertSound(user);
+            return TypedActionResult.success(user.getStackInHand(hand));
+        }
+        return super.use(world, user, hand);
     }
 }

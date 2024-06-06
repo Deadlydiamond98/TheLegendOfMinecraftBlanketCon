@@ -2,8 +2,9 @@ package net.deadlydiamond98;
 
 import net.deadlydiamond98.blocks.ZeldaBlocks;
 import net.deadlydiamond98.entities.ZeldaEntities;
-import net.deadlydiamond98.events.TickEvents;
 import net.deadlydiamond98.items.ZeldaItems;
+import net.deadlydiamond98.networking.ZeldaServerPackets;
+import net.deadlydiamond98.particle.ZeldaParticles;
 import net.deadlydiamond98.sounds.ZeldaSounds;
 import net.deadlydiamond98.world.ZeldaFeatures;
 import net.fabricmc.api.ModInitializer;
@@ -23,7 +24,9 @@ public class ZeldaCraft implements ModInitializer {
 		ZeldaBlocks.registerBlocks();
 		ZeldaSounds.registerSounds();
 		ZeldaEntities.registerEntities();
-		TickEvents.registerTickEvent();
+		//ServerTickEvent.registerTickEvent();
+		ZeldaServerPackets.registerS2CPackets();
+		ZeldaParticles.registerParticles();
 		ZeldaFeatures.register();
 		LOGGER.info("Mod Loaded");
 	}

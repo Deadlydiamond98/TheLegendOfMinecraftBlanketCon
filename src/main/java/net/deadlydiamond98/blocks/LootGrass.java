@@ -69,36 +69,6 @@ public class LootGrass extends PlantBlock {
     }
 
     @Override
-    public void onBlockBreakStart(BlockState state, World world, BlockPos pos, PlayerEntity player) {
-
-        if (isMature(state) && player.getMainHandStack().getItem() instanceof SwordItem) {
-            this.spawnBreakParticles(world, player, pos, state);
-            world.setBlockState(pos, state.with(AGE, 0), 2);
-
-            if (!world.isClient()) {
-                int random = (((int) (Math.random() * 6)));
-                if (random == 1 && ZeldaCraft.isModLoaded("healpgood")) {
-                    EntityType<?> entityType = EntityType.get("healpgood:health").orElse(null);
-                    if (entityType != null) {
-                        entityType.spawn((ServerWorld) world, null, null, pos,
-                                SpawnReason.NATURAL, true, true);
-                    }
-                }
-                else {
-                    List<ItemStack> drops = Block.getDroppedStacks(state, (ServerWorld) world, pos, null, player, player.getMainHandStack());
-                    for (ItemStack drop : drops) {
-                        ItemScatterer.spawn(world, pos.getX(), pos.getY(), pos.getZ(), drop);
-                    }
-                }
-            }
-        }
-
-        super.onBlockBreakStart(state, world, pos, player);
-    }
-
-
-
-    @Override
     public BlockRenderType getRenderType(BlockState state) {
         return BlockRenderType.MODEL;
     }

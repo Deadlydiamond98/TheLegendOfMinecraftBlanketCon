@@ -1,26 +1,20 @@
 package net.deadlydiamond98.networking.packets;
 
-import net.deadlydiamond98.entities.BombEntity;
+import net.deadlydiamond98.particle.ZeldaParticles;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
-import net.minecraft.entity.Entity;
 import net.minecraft.network.PacketByteBuf;
 
-public class PowerBombS2CPacket {
-
+public class SmaaashParticleS2CPacket {
     public static void recieve(MinecraftClient client, ClientPlayNetworkHandler handler, PacketByteBuf buf,
                                PacketSender responseSender) {
-        int entityId = buf.readInt();
-        float newBombPower = buf.readFloat();
+        double x = buf.readDouble();
+        double y = buf.readDouble();
+        double z = buf.readDouble();
 
         client.execute(() -> {
-            if (client.world != null) {
-                Entity entity = client.world.getEntityById(entityId);
-                if (entity instanceof BombEntity) {
-                    ((BombEntity) entity).setPower(newBombPower);
-                }
-            }
+            MinecraftClient.getInstance().world.addImportantParticle(ZeldaParticles.Smaaash_Particle, x, y, z, 0, 0, 0);
         });
     }
 }

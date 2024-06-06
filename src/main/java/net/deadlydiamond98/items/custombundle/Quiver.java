@@ -1,4 +1,4 @@
-package net.deadlydiamond98.items;
+package net.deadlydiamond98.items.custombundle;
 
 import net.deadlydiamond98.ZeldaCraft;
 import net.deadlydiamond98.items.custombundle.CustomBundle;
@@ -10,6 +10,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.util.ClickType;
+import net.minecraft.util.Hand;
+import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
 
 import java.util.List;

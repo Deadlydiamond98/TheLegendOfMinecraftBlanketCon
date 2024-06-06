@@ -23,6 +23,12 @@
       "zeldacraft:sword_recharge"
     ]
   },
+  "smaaash_sound": {
+    "subtitle": "sounds.zeldacraft.smaaash_sound",
+    "sounds": [
+      "zeldacraft:smaaash_sound"
+    ]
+  },
   "secretroom": {
     "subtitle": "sounds.zeldacraft.secret_room",
     "sounds": [

@@ -1,15 +1,34 @@
 package net.deadlydiamond98.networking;
 
 import net.deadlydiamond98.ZeldaCraft;
-import net.deadlydiamond98.networking.packets.PowerBombS2CPacket;
+import net.deadlydiamond98.networking.packets.BombParticleS2CPacket;
+import net.deadlydiamond98.networking.packets.SmaaashParticleS2CPacket;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
+import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
+import net.minecraft.block.BlockState;
+import net.minecraft.network.PacketByteBuf;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.hit.BlockHitResult;
+import net.minecraft.util.math.BlockPos;
 
 public class ZeldaClientPackets {
+    public static final Identifier SmaaashPacket = new Identifier(ZeldaCraft.MOD_ID, "smaaash_particle_packet");
+    public static final Identifier BombPacket = new Identifier(ZeldaCraft.MOD_ID, "bomb_particle_packet");
+    public static final Identifier ShootBeamPacket = new Identifier(ZeldaCraft.MOD_ID, "shoot_beam_packet");
+    public static final Identifier SmashLootGrassPacket = new Identifier(ZeldaCraft.MOD_ID, "smash_loot_grass_packet");
 
-    public static final Identifier PowerBomb = new Identifier(ZeldaCraft.MOD_ID, "power_bomb");
+    public static void registerC2SPackets() {
+        ClientPlayNetworking.registerGlobalReceiver(SmaaashPacket, SmaaashParticleS2CPacket::recieve);
+        ClientPlayNetworking.registerGlobalReceiver(BombPacket, BombParticleS2CPacket::recieve);
+    }
 
-    public static void registerS2CPackets() {
-        ClientPlayNetworking.registerGlobalReceiver(ZeldaClientPackets.PowerBomb, PowerBombS2CPacket::recieve);
+    public static void sendSwordBeamPacket() {
+        PacketByteBuf buf = PacketByteBufs.create();
+        ClientPlayNetworking.send(ShootBeamPacket, buf);
+    }
+    public static void sendSmashLootGrassPacket(BlockPos lookingBlock) {
+        PacketByteBuf buf = PacketByteBufs.create();
+        buf.writeBlockPos(lookingBlock);
+        ClientPlayNetworking.send(SmashLootGrassPacket, buf);
     }
 }

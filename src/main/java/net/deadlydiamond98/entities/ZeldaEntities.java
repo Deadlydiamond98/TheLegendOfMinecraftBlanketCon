@@ -29,4 +29,27 @@ public class ZeldaEntities {
                     .dimensions(EntityDimensions.fixed(0.5f,0.5f))
                     .build()
     );
+    public static final EntityType<BombchuEntity> Bombchu_Entity = Registry.register(
+            Registries.ENTITY_TYPE,
+            new Identifier(ZeldaCraft.MOD_ID, "bombchu_entity"),
+            FabricEntityTypeBuilder.create(SpawnGroup.MISC, (EntityType<BombchuEntity> type, World world) ->
+                            new BombchuEntity(type, world))
+                    .dimensions(EntityDimensions.fixed(0.5f,0.5f))
+                    .build()
+    );
+    public static final EntityType<BoomerangProjectile> Boomerang_Entity = Registry.register(
+            Registries.ENTITY_TYPE,
+            new Identifier(ZeldaCraft.MOD_ID, "boomerang_entity"),
+            FabricEntityTypeBuilder.create(SpawnGroup.MISC, BoomerangProjectile::new)
+                    .dimensions(EntityDimensions.fixed(0.1f,0.1f))
+                    .build()
+    );
+    public static final EntityType<BaseBallEntity> Baseball_Entity = Registry.register(
+            Registries.ENTITY_TYPE,
+            new Identifier(ZeldaCraft.MOD_ID, "baseball_entity"),
+            FabricEntityTypeBuilder.create(SpawnGroup.MISC, (EntityType<BaseBallEntity> type, World world) ->
+            new BaseBallEntity(type, world))
+                    .dimensions(EntityDimensions.fixed(0.5f,0.5f))
+                    .build()
+    );
 }

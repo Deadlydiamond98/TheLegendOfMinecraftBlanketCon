@@ -1,9 +1,9 @@
 package net.deadlydiamond98.mixin;
 
-import net.deadlydiamond98.items.BombBag;
+import net.deadlydiamond98.items.custombundle.BombBag;
 import net.deadlydiamond98.items.BombItem;
 import net.deadlydiamond98.items.EmeraldItem;
-import net.deadlydiamond98.items.Quiver;
+import net.deadlydiamond98.items.custombundle.Quiver;
 import net.deadlydiamond98.items.custombundle.CustomBundle;
 import net.deadlydiamond98.sounds.ZeldaSounds;
 import net.minecraft.entity.ItemEntity;
@@ -21,7 +21,6 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Mixin(ItemEntity.class)

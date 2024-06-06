@@ -1,16 +1,12 @@
 package net.deadlydiamond98.mixin;
 
-import net.deadlydiamond98.ZeldaCraft;
-import net.deadlydiamond98.items.Quiver;
-import net.deadlydiamond98.items.custombundle.CustomBundle;
+import net.deadlydiamond98.items.custombundle.Quiver;
 import net.deadlydiamond98.util.PlayerData;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.item.RangedWeaponItem;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
@@ -31,18 +27,20 @@ public abstract class RangedWeaponMixin {
                 if (stack.getItem() instanceof Quiver) {
                     Quiver customBundle = (Quiver) stack.getItem();
                     Optional<ItemStack> arrowStack = customBundle.getFirstItem(stack);
-                    if (accessor.hasArrowBeenRemoved()) {
-                        ItemStack arrowToRemove = arrowStack.get();
-                        cir.setReturnValue(arrowToRemove);
-                        customBundle.removeOneItem(stack, arrowToRemove.getItem());
-                        accessor.setArrowRemoved(false);
-                        return;
-                    }
                     if (arrowStack.isPresent()) {
-                        ItemStack arrowToRemove = arrowStack.get();
-                        cir.setReturnValue(arrowToRemove);
-                        accessor.setArrowRemoved(true);
-                        return;
+                        if (accessor.hasArrowBeenRemoved()) {
+                            ItemStack arrowToRemove = arrowStack.get();
+                            cir.setReturnValue(arrowToRemove);
+                            customBundle.removeOneItem(stack, arrowToRemove.getItem());
+                            accessor.setArrowRemoved(false);
+                            return;
+                        }
+                        if (arrowStack.isPresent()) {
+                            ItemStack arrowToRemove = arrowStack.get();
+                            cir.setReturnValue(arrowToRemove);
+                            accessor.setArrowRemoved(true);
+                            return;
+                        }
                     }
                 }
             }

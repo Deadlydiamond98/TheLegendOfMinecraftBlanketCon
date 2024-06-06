@@ -26,7 +26,6 @@ public class SwordBeamRenderer<T extends Entity> extends EntityRenderer<SwordBea
     public void render(SwordBeamEntity entity, float yaw, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light) {
         matrices.push();
         matrices.scale(1.0F, -1.0F, 1.0F);
-        matrices.translate(0.0D, 0.0D, 0.0D);
 
 
         Vec3d velocity = entity.getVelocity();
