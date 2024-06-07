@@ -49,9 +49,15 @@ public class BombFlower extends PlantBlock {
     private IntProperty getAgeProperty() {
         return AGE;
     }
+    private DirectionProperty getFacingProperty() {
+        return FACING;
+    }
 
     public int getAge(BlockState state) {
         return (Integer) state.get(this.getAgeProperty());
+    }
+    public Direction getFacing(BlockState state) {
+        return (Direction) state.get(this.getFacingProperty());
     }
 
     @Override

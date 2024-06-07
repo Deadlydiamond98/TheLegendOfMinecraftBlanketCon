@@ -2,7 +2,9 @@ package net.deadlydiamond98.entities;
 
 import io.netty.buffer.Unpooled;
 import net.deadlydiamond98.ZeldaCraft;
+import net.deadlydiamond98.blocks.BombFlower;
 import net.deadlydiamond98.blocks.SecretStone;
+import net.deadlydiamond98.blocks.ZeldaBlocks;
 import net.deadlydiamond98.items.Swords.CrackedBat;
 import net.deadlydiamond98.networking.ZeldaServerPackets;
 import net.deadlydiamond98.particle.ZeldaParticles;
@@ -30,17 +32,22 @@ import net.minecraft.sound.SoundCategory;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.TimeHelper;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
 import java.util.List;
 
-public class BombEntity extends TntEntity {
+import static net.deadlydiamond98.blocks.BombFlower.AGE;
+
+public class BombEntity extends Entity {
 
     private float power;
     private static final TrackedData<Integer> bombTypeData;
 
-    public BombEntity(EntityType<? extends TntEntity> entityType, World world) {
+    private static final TrackedData<Integer> FUSE;
+
+    public BombEntity(EntityType<? extends Entity> entityType, World world) {
         super(entityType, world);
         power = 0;
     }
@@ -55,7 +62,7 @@ public class BombEntity extends TntEntity {
 
     @Override
     protected void initDataTracker() {
-        super.initDataTracker();
+        this.dataTracker.startTracking(FUSE, 80);
         this.dataTracker.startTracking(bombTypeData, 1);
     }
 
@@ -70,8 +77,12 @@ public class BombEntity extends TntEntity {
             this.setVelocity(this.getVelocity().multiply(0.5, -0.5, 0.5));
         }
 
-        manageFuse();
+        this.manageFuse();
+        super.tick();
 
+        this.prevYaw = this.getYaw();
+        this.prevPitch = this.getPitch();
+        this.getWorld().getProfiler().pop();
     }
 
     private void manageFuse() {
@@ -92,10 +103,6 @@ public class BombEntity extends TntEntity {
 
     private void explode() {
         if (!this.getWorld().isClient) {
-            this.getWorld().createExplosion(this, this.getX(), this.getY(), this.getZ(), power, false, World.ExplosionSourceType.NONE);
-            ZeldaServerPackets.sendBombParticlePacket((List<ServerPlayerEntity>) this.getWorld().getPlayers(), this.getX(),
-                    this.getEyeY(), this.getZ());
-
             boolean playSecret = false;
             int radius = (int) power;
             for (int x = -radius; x <= radius; x++) {
@@ -103,10 +110,19 @@ public class BombEntity extends TntEntity {
                     for (int z = -radius; z <= radius; z++) {
                         BlockPos blockPos = new BlockPos((int) (this.getX() + x), (int) (this.getY() + y), (int) (this.getZ() + z));
                         Block block = this.getWorld().getBlockState(blockPos).getBlock();
-                        if (block.getRegistryEntry().isIn(ZeldaTags.Blocks.Bomb_Breakable)) {
+                        if (block.getDefaultState().isIn(ZeldaTags.Blocks.Bomb_Breakable)) {
                             this.getWorld().breakBlock(blockPos, true);
                             if (block instanceof SecretStone) {
                                 playSecret = true;
+                            }
+                        }
+                        if (block.getDefaultState().isOf(ZeldaBlocks.Bomb_Flower)) {
+                            if (((BombFlower) block).getAge(getWorld().getBlockState(blockPos)) == 3) {
+                                this.getWorld().setBlockState(blockPos, block.getDefaultState().with(AGE, 0));
+                                BombEntity bombEntity = new BombEntity(this.getWorld(), blockPos.getX() + 0.5, blockPos.getY() + 0.2,
+                                        blockPos.getZ()  + 0.5, 2, 20, 1);
+                                bombEntity.setYaw((((BombFlower) block).getFacing(getWorld().getBlockState(blockPos))).getHorizontal() - 90);
+                                this.getWorld().spawnEntity(bombEntity);
                             }
                         }
                     }
@@ -116,6 +132,10 @@ public class BombEntity extends TntEntity {
             if (playSecret) {
                 this.getWorld().playSound(null, this.getBlockPos(), ZeldaSounds.SecretRoom, SoundCategory.BLOCKS, 1.0f, 1.0f);
             }
+
+            this.getWorld().createExplosion(this, this.getX(), this.getY(), this.getZ(), power, false, World.ExplosionSourceType.NONE);
+            ZeldaServerPackets.sendBombParticlePacket((List<ServerPlayerEntity>) this.getWorld().getPlayers(), this.getX(),
+                    this.getEyeY(), this.getZ());
         }
     }
 
@@ -127,6 +147,7 @@ public class BombEntity extends TntEntity {
             ItemStack heldItem = player.getMainHandStack();
             if (heldItem.getItem() instanceof CrackedBat) {
                 Vec3d lookVec = player.getRotationVec(1.0f);
+                this.setYaw(player.getHeadYaw());
                 double launchPower = 1.0;
                 double upwardBoost = 0.5;
                 this.setVelocity(lookVec.x * launchPower, lookVec.y * launchPower + upwardBoost, lookVec.z * launchPower);
@@ -134,6 +155,29 @@ public class BombEntity extends TntEntity {
             }
         }
         return super.damage(source, amount);
+    }
+
+    @Override
+    public boolean canHit() {
+        return true;
+    }
+
+    @Override
+    protected void writeCustomDataToNbt(NbtCompound nbt) {
+        nbt.putShort("Fuse", (short)this.getFuse());
+    }
+
+    @Override
+    protected void readCustomDataFromNbt(NbtCompound nbt) {
+        this.setFuse(nbt.getShort("Fuse"));
+    }
+
+    public void setFuse(int fuse) {
+        this.dataTracker.set(FUSE, fuse);
+    }
+
+    public int getFuse() {
+        return (Integer)this.dataTracker.get(FUSE);
     }
 
     public int getBombType() {
@@ -144,6 +188,7 @@ public class BombEntity extends TntEntity {
         this.dataTracker.set(bombTypeData, bombType);
     }
     static {
+        FUSE = DataTracker.registerData(BombEntity.class, TrackedDataHandlerRegistry.INTEGER);
         bombTypeData = DataTracker.registerData(BombEntity.class, TrackedDataHandlerRegistry.INTEGER);
     }
 }

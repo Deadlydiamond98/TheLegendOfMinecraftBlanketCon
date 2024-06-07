@@ -12,6 +12,7 @@ import net.minecraft.client.render.entity.EntityRenderer;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RotationAxis;
 import org.joml.Vector3f;
@@ -27,8 +28,17 @@ public class BombchuEntityRenderer extends EntityRenderer<BombchuEntity> {
 
     @Override
     public void render(BombchuEntity entity, float yaw, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light) {
-        matrices.multiply(RotationAxis.NEGATIVE_Y.rotationDegrees(entity.getYaw() + 180));
         matrices.multiply(RotationAxis.NEGATIVE_X.rotationDegrees(entity.getPitch()));
+        Direction floorDirection = entity.getAttachedFace();
+        switch (floorDirection) {
+            case NORTH -> matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(entity.getPitch() + 90));
+            case SOUTH -> matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(entity.getPitch() + 270));
+            case WEST -> matrices.multiply(RotationAxis.NEGATIVE_Z.rotationDegrees(90));
+            case EAST -> matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(90));
+            case UP -> matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(entity.getYaw() + 180));
+            case DOWN -> matrices.multiply(RotationAxis.NEGATIVE_Y.rotationDegrees(entity.getYaw() + 180));
+        }
+
         VertexConsumer vertexConsumer = vertexConsumers.getBuffer(this.entityModel.getLayer(getTexture(entity)));
         this.entityModel.render(matrices, vertexConsumer, light, OverlayTexture.DEFAULT_UV, 1.0F, 1.0F, 1.0F, 1.0F);
         super.render(entity, yaw, tickDelta, matrices, vertexConsumers, light);

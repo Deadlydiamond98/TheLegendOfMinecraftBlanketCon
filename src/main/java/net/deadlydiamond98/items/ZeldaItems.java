@@ -12,6 +12,8 @@ import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.item.*;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
+import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Rarity;
 
@@ -44,10 +46,10 @@ public class ZeldaItems {
     public static final Item Super_Bomb = registerItem("super_bomb", new BombItem(
             new FabricItemSettings(), 5, 80, 2));
     public static final Item Bombchu = registerItem("bombchu", new BombchuItem(
-            new FabricItemSettings(), 5, 600, 0.2F));
+            new FabricItemSettings(), 3, 100, 0.25F));
     public static final Item Bomb_Bag = registerItem("bomb_bag", new BombBag(
             new FabricItemSettings().maxCount(1),192,
-            List.of(Bomb, Super_Bomb)));
+            List.of(Bomb, Super_Bomb, Bombchu)));
     public static final Item Quiver = registerItem("quiver", new Quiver(
             new FabricItemSettings().maxCount(1),640,
             List.of(Items.ARROW, Items.SPECTRAL_ARROW, Items.TIPPED_ARROW)));
@@ -55,6 +57,8 @@ public class ZeldaItems {
     public static final Item Music_Disc_Legend = registerItem("music_disc_legend", new MusicDiscItem(
             16, ZeldaSounds.MusicDiscLegend, new FabricItemSettings().rarity(Rarity.RARE)
             .maxCount(1), 86));
+    public static final Item Music_Disc_Legend_Fragment = registerItem("music_disc_legend_fragment", new ToolTipItem(
+            new FabricItemSettings()));
 
     private static Item registerItem(String itemName, Item item) {
         return Registry.register(Registries.ITEM, new Identifier(ZeldaCraft.MOD_ID, itemName), item);
@@ -79,6 +83,7 @@ public class ZeldaItems {
         entry.add(Emerald_Shard);
         entry.add(Emerald_Chunk);
         entry.add(Baseball);
+        entry.add(Music_Disc_Legend_Fragment);
     }
     public static void registerItems() {
         ZeldaCraft.LOGGER.debug("Registering Items for" + ZeldaCraft.MOD_ID);

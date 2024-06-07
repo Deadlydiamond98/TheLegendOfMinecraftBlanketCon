@@ -4,6 +4,7 @@
 
   "item.zeldacraft.bomb": "Bomb",
   "item.zeldacraft.super_bomb": "Super Bomb",
+  "item.zeldacraft.bombchu": "Bombchu",
   "item.zeldacraft.bomb_bag": "Bomb Bag",
   "block.zeldacraft.bomb_flower": "Bomb Flower Seeds",
 
@@ -15,10 +16,14 @@
 
   "item.zeldacraft.kokiri_sword": "Kokiri Sword",
   "item.zeldacraft.magic_sword": "Magic Sword",
+  "item.zeldacraft.magic_sword.tooltip": "Shoots Sword Beams",
   "item.zeldacraft.master_sword": "Master Sword",
   "item.zeldacraft.cracked_bat": "Cracked Bat",
+  "item.zeldacraft.cracked_bat.tooltip": "25% Chance to do Smaaaash!! attacks",
   "item.zeldacraft.baseball": "Baseball",
 
   "item.zeldacraft.music_disc_legend": "Music Disc",
-  "item.zeldacraft.music_disc_legend.desc": "Deadlydiamond98 - Legend"
+  "item.zeldacraft.music_disc_legend.desc": "Deadlydiamond98 - Legend",
+  "item.zeldacraft.music_disc_legend_fragment": "Disc Fragment",
+  "item.zeldacraft.music_disc_legend_fragment.tooltip": "Music Disc - Legend"
 }

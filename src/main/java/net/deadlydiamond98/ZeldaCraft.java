@@ -24,7 +24,6 @@ public class ZeldaCraft implements ModInitializer {
 		ZeldaBlocks.registerBlocks();
 		ZeldaSounds.registerSounds();
 		ZeldaEntities.registerEntities();
-		//ServerTickEvent.registerTickEvent();
 		ZeldaServerPackets.registerS2CPackets();
 		ZeldaParticles.registerParticles();
 		ZeldaFeatures.register();

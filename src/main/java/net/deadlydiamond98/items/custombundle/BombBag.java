@@ -1,7 +1,9 @@
 package net.deadlydiamond98.items.custombundle;
 
 import net.deadlydiamond98.entities.BombEntity;
+import net.deadlydiamond98.entities.BombchuEntity;
 import net.deadlydiamond98.items.BombItem;
+import net.deadlydiamond98.items.BombchuItem;
 import net.deadlydiamond98.items.ZeldaItems;
 import net.deadlydiamond98.items.custombundle.CustomBundle;
 import net.minecraft.entity.player.PlayerEntity;
@@ -28,21 +30,34 @@ public class BombBag extends CustomBundle {
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
 
         if (!user.isSneaking()) {
-            Optional<ItemStack> bomb = this.removeOneItem(user.getStackInHand(hand), ZeldaItems.Bomb);
-            if (bomb.isPresent()) {
+            Optional<ItemStack> bombStack = this.getFirstItem(user.getStackInHand(hand));
+            Optional<ItemStack> bomb = this.removeOneItem(user.getStackInHand(hand), bombStack.get().getItem());
+            if (bomb.isPresent() && (bombStack.get().isOf(ZeldaItems.Bomb) || bombStack.get().isOf(ZeldaItems.Super_Bomb))) {
                 createBomb(world, user, bomb);
                 return TypedActionResult.success(user.getStackInHand(hand));
             }
-            else {
-                Optional<ItemStack> super_bomb = this.removeOneItem(user.getStackInHand(hand), ZeldaItems.Super_Bomb);
-                if (super_bomb.isPresent()) {
-                    createBomb(world, user, super_bomb);
-                    return TypedActionResult.success(user.getStackInHand(hand));
-                }
+            else if (bomb.isPresent() && bombStack.get().isOf(ZeldaItems.Bombchu)) {
+                createBombchu(world, user, bomb);
+                return TypedActionResult.success(user.getStackInHand(hand));
             }
             return TypedActionResult.fail(user.getStackInHand(hand));
         }
         return super.use(world, user, hand);
+    }
+
+    private void createBombchu(World world, PlayerEntity user, Optional<ItemStack> bomb) {
+        BombchuEntity bombEntity = new BombchuEntity(world, user.getX(), user.getY() + user.getEyeHeight(user.getPose()), user.getZ(),
+                ((BombchuItem) bomb.get().getItem()).getPower(), ((BombchuItem) bomb.get().getItem()).getFuse(), ((BombchuItem) bomb.get().getItem()).getSpeed(),
+                true);
+        Vec3d vec3d = user.getRotationVec(1.0F);
+        bombEntity.setYaw(user.headYaw);
+        bombEntity.setVelocity(vec3d.x * ((BombchuItem) bomb.get().getItem()).getSpeed(), vec3d.y, vec3d.z * ((BombchuItem) bomb.get().getItem()).getSpeed());
+        world.spawnEntity(bombEntity);
+        user.getItemCooldownManager().set(this, 40);
+        user.getItemCooldownManager().set(ZeldaItems.Bomb, 20);
+        user.getItemCooldownManager().set(ZeldaItems.Super_Bomb, 20);
+        user.getItemCooldownManager().set(ZeldaItems.Bombchu, 20);
+        user.playSound(SoundEvents.ENTITY_SPLASH_POTION_THROW, SoundCategory.PLAYERS, 1, 1);
     }
 
     private void createBomb(World world, PlayerEntity user, Optional<ItemStack> bomb) {
@@ -51,9 +66,12 @@ public class BombBag extends CustomBundle {
                 ((BombItem) bomb.get().getItem()).getType());
         Vec3d vec3d = user.getRotationVec(1.0F);
         bombEntity.setVelocity(vec3d.x, vec3d.y, vec3d.z);
+        bombEntity.setYaw(user.getHeadYaw());
         world.spawnEntity(bombEntity);
         user.getItemCooldownManager().set(this, 40);
         user.getItemCooldownManager().set(ZeldaItems.Bomb, 20);
+        user.getItemCooldownManager().set(ZeldaItems.Super_Bomb, 20);
+        user.getItemCooldownManager().set(ZeldaItems.Bombchu, 20);
         user.playSound(SoundEvents.ENTITY_SPLASH_POTION_THROW, SoundCategory.PLAYERS, 1, 1);
     }
 }

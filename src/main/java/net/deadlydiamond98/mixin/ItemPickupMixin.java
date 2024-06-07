@@ -1,5 +1,6 @@
 package net.deadlydiamond98.mixin;
 
+import net.deadlydiamond98.items.BombchuItem;
 import net.deadlydiamond98.items.custombundle.BombBag;
 import net.deadlydiamond98.items.BombItem;
 import net.deadlydiamond98.items.EmeraldItem;
@@ -53,7 +54,7 @@ public abstract class ItemPickupMixin {
 
 			if (item instanceof ArrowItem) {
 				addItemToBag(player, itemEntity, itemStack, Quiver.class, ci);
-			} else if (item instanceof BombItem) {
+			} else if (item instanceof BombItem || item instanceof BombchuItem) {
 				addItemToBag(player, itemEntity, itemStack, BombBag.class, ci);
 			}
 		}

@@ -26,10 +26,11 @@ public class BombchuItem extends Item {
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
 
-        BombchuEntity bombEntity = new BombchuEntity(world, user.getX(), user.getY(), user.getZ(),
-                power, fuse, speed);
+        BombchuEntity bombEntity = new BombchuEntity(world, user.getX(), user.getY() + user.getEyeHeight(user.getPose()), user.getZ(),
+                power, fuse, speed, true);
         Vec3d vec3d = user.getRotationVec(1.0F);
         bombEntity.setYaw(user.headYaw);
+        bombEntity.setVelocity(vec3d.x * speed, vec3d.y, vec3d.z * speed);
         world.spawnEntity(bombEntity);
         user.getStackInHand(hand).decrement(1);
         user.getItemCooldownManager().set(this, 20);
@@ -46,5 +47,9 @@ public class BombchuItem extends Item {
 
     public float getPower() {
         return power;
+    }
+
+    public float getSpeed() {
+        return speed;
     }
 }

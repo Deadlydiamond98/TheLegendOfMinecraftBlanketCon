@@ -34,7 +34,7 @@ public class ZeldaEntities {
             new Identifier(ZeldaCraft.MOD_ID, "bombchu_entity"),
             FabricEntityTypeBuilder.create(SpawnGroup.MISC, (EntityType<BombchuEntity> type, World world) ->
                             new BombchuEntity(type, world))
-                    .dimensions(EntityDimensions.fixed(0.5f,0.5f))
+                    .dimensions(EntityDimensions.fixed(0.3f,0.3f))
                     .build()
     );
     public static final EntityType<BoomerangProjectile> Boomerang_Entity = Registry.register(

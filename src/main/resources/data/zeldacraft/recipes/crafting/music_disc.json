@@ -1,0 +1,33 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "zeldacraft:music_disc_legend_fragment"
+    },
+    {
+      "item": "zeldacraft:music_disc_legend_fragment"
+    },
+    {
+      "item": "zeldacraft:music_disc_legend_fragment"
+    },
+    {
+      "item": "zeldacraft:music_disc_legend_fragment"
+    },
+    {
+      "item": "zeldacraft:music_disc_legend_fragment"
+    },
+    {
+      "item": "zeldacraft:music_disc_legend_fragment"
+    },
+    {
+      "item": "zeldacraft:music_disc_legend_fragment"
+    },
+    {
+      "item": "zeldacraft:music_disc_legend_fragment"
+    }
+  ],
+  "result": {
+    "item": "minecraft:music_disc_legend",
+    "count": 1
+  }
+}

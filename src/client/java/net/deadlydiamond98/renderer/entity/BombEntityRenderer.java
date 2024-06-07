@@ -11,6 +11,8 @@ import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.RotationAxis;
 
 public class BombEntityRenderer extends EntityRenderer<BombEntity> {
     private static final Identifier TEXTURE_I = new Identifier(ZeldaCraft.MOD_ID, "textures/entity/bomb_entity.png");
@@ -24,6 +26,10 @@ public class BombEntityRenderer extends EntityRenderer<BombEntity> {
 
     @Override
     public void render(BombEntity entity, float yaw, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light) {
+        float time = entity.age + tickDelta;
+        float scale = 1.0f + 0.05f * MathHelper.sin(time * 0.2f);
+        matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(entity.getYaw() + 90));
+        matrices.scale(scale, scale, scale);
         super.render(entity, yaw, tickDelta, matrices, vertexConsumers, light);
         VertexConsumer vertexConsumer = vertexConsumers.getBuffer(this.entityModel.getLayer(getTexture(entity)));
         this.entityModel.render(matrices, vertexConsumer, light, OverlayTexture.DEFAULT_UV, 1.0F, 1.0F, 1.0F, 1.0F);
