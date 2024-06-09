@@ -54,7 +54,7 @@ public class LootGrass extends PlantBlock {
     }
     @Override
     public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
-        if (!isMature(state) && random.nextInt(16) == 0) {
+        if (!isMature(state) && random.nextInt(32) == 0) {
             world.setBlockState(pos, state.with(AGE, 1), 2);
         }
     }

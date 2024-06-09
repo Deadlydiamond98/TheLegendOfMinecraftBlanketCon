@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "zeldacraft:block/brown_dungeoncite_tile_tbl",
+      "y": 270
+    },
+    "facing=north": {
+      "model": "zeldacraft:block/brown_dungeoncite_tile_tbl",
+      "y": 180
+    },
+    "facing=south": {
+      "model": "zeldacraft:block/brown_dungeoncite_tile_tbl"
+    },
+    "facing=west": {
+      "model": "zeldacraft:block/brown_dungeoncite_tile_tbl",
+      "y": 90
+    }
+  }
+}

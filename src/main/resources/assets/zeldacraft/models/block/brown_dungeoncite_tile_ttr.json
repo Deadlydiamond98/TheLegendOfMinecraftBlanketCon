@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "zeldacraft:block/brown_dungeoncite_tile_ttr"
+  }
+}

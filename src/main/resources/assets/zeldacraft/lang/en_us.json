@@ -9,6 +9,7 @@
   "block.zeldacraft.bomb_flower": "Bomb Flower Seeds",
 
   "block.zeldacraft.loot_grass": "Loot Grass",
+  "block.zeldacraft.plain_pot": "Pot",
 
   "block.zeldacraft.secret_cracked_stone_bricks": "Secret Cracked Stone Bricks",
 
@@ -25,5 +26,8 @@
   "item.zeldacraft.music_disc_legend": "Music Disc",
   "item.zeldacraft.music_disc_legend.desc": "Deadlydiamond98 - Legend",
   "item.zeldacraft.music_disc_legend_fragment": "Disc Fragment",
-  "item.zeldacraft.music_disc_legend_fragment.tooltip": "Music Disc - Legend"
+  "item.zeldacraft.music_disc_legend_fragment.tooltip": "Music Disc - Legend",
+
+  "key.category.zeldacraft.zeldacraftkeys": "The Legend of Steve",
+  "key.zeldacraft.sworddash": "Perform Sword Dash"
 }

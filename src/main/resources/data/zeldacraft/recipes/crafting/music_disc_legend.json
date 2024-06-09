@@ -24,10 +24,13 @@
     },
     {
       "item": "zeldacraft:music_disc_legend_fragment"
+    },
+    {
+      "item": "zeldacraft:music_disc_legend_fragment"
     }
   ],
   "result": {
-    "item": "minecraft:music_disc_legend",
+    "item": "zeldacraft:music_disc_legend",
     "count": 1
   }
 }

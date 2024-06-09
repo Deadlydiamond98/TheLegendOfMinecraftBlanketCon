@@ -45,6 +45,7 @@ public class BombchuEntityModel<T extends BombchuEntity> extends EntityModel<Bom
 	}
 	@Override
 	public void setAngles(BombchuEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+		this.tail.yaw = (float) Math.sin(ageInTicks * 5);
 	}
 	@Override
 	public void render(MatrixStack matrices, VertexConsumer vertexConsumer, int light, int overlay, float red, float green, float blue, float alpha) {

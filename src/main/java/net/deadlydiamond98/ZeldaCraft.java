@@ -1,6 +1,7 @@
 package net.deadlydiamond98;
 
 import net.deadlydiamond98.blocks.ZeldaBlocks;
+import net.deadlydiamond98.blocks.entities.ZeldaBlockEntities;
 import net.deadlydiamond98.entities.ZeldaEntities;
 import net.deadlydiamond98.items.ZeldaItems;
 import net.deadlydiamond98.networking.ZeldaServerPackets;
@@ -24,6 +25,7 @@ public class ZeldaCraft implements ModInitializer {
 		ZeldaBlocks.registerBlocks();
 		ZeldaSounds.registerSounds();
 		ZeldaEntities.registerEntities();
+		ZeldaBlockEntities.registerBlockEntities();
 		ZeldaServerPackets.registerS2CPackets();
 		ZeldaParticles.registerParticles();
 		ZeldaFeatures.register();

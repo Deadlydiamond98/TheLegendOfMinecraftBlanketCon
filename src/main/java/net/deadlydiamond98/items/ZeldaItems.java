@@ -9,6 +9,7 @@ import net.deadlydiamond98.sounds.ZeldaSounds;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroupEntries;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
+import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.item.*;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
@@ -53,6 +54,10 @@ public class ZeldaItems {
     public static final Item Quiver = registerItem("quiver", new Quiver(
             new FabricItemSettings().maxCount(1),640,
             List.of(Items.ARROW, Items.SPECTRAL_ARROW, Items.TIPPED_ARROW)));
+
+    public static final Item Pegasus_Boots = registerItem("pegasus_boots", new PegasusBoots(
+            ArmorMaterials.LEATHER, ArmorItem.Type.BOOTS, new FabricItemSettings().maxCount(1)
+    ));
 
     public static final Item Music_Disc_Legend = registerItem("music_disc_legend", new MusicDiscItem(
             16, ZeldaSounds.MusicDiscLegend, new FabricItemSettings().rarity(Rarity.RARE)

@@ -2,6 +2,8 @@
   "replace": false,
   "values": [
     "minecraft:cracked_stone_bricks",
-    "zeldacraft:secret_cracked_stone_bricks"
+    "zeldacraft:secret_cracked_stone_bricks",
+    "zeldacraft:secret_cracked_brown_dungeoncite_bricks",
+    "zeldacraft:cracked_brown_dungeoncite_bricks"
   ]
 }

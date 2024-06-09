@@ -12,11 +12,16 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.util.InputUtil;
+import net.minecraft.text.Text;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.HitResult;
 import org.lwjgl.glfw.GLFW;
 
 public class ClientTickEvent {
+    public static final String ZELDACRAFT_KEY_CATEGORY = "key.category.zeldacraft.zeldacraftkeys";
+    public static final String SWORD_DASH_KEY = "key.zeldacraft.sworddash";
+
+    public static KeyBinding swordDashKey;
     public static void endTickEvent() {
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
             if (client.options.attackKey.isPressed()) {
@@ -28,14 +33,23 @@ public class ClientTickEvent {
                     }
                 }
             }
+            if (swordDashKey.wasPressed()) {
+                client.player.sendMessage(Text.literal("test"));
+            }
         });
     }
 
     public static void registerTickEvent() {
-        endTickEvent();
         registerKeybindings();
+        endTickEvent();
     }
 
     public static void registerKeybindings() {
+        swordDashKey = KeyBindingHelper.registerKeyBinding(new KeyBinding(
+                SWORD_DASH_KEY,
+                InputUtil.Type.KEYSYM,
+                GLFW.GLFW_KEY_R,
+                ZELDACRAFT_KEY_CATEGORY
+        ));
     }
 }

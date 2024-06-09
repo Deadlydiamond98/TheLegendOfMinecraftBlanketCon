@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " g ",
+    "gBg",
+    " g "
+  ],
+  "key": {
+    "B": {
+      "item": "zeldacraft:emerald_shard"
+    },
+    "g": {
+      "item": "minecraft:brick"
+    }
+  },
+  "result": {
+    "item": "zeldacraft:plain_pot",
+    "count": 4
+  }
+}

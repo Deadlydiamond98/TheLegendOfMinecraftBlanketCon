@@ -1,0 +1,35 @@
+{
+  "type": "minecraft:chest",
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "zeldacraft:emerald_shard",
+          "weight": 100
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:arrow",
+          "weight": 100
+        },
+        {
+          "type": "minecraft:item",
+          "name": "zeldacraft:bomb",
+          "weight": 25
+        },
+        {
+          "type": "minecraft:item",
+          "name": "zeldacraft:bombchu",
+          "weight": 15
+        },
+        {
+          "type": "minecraft:item",
+          "name": "zeldacraft:music_disc_legend_fragment",
+          "weight": 1
+        }
+      ]
+    }
+  ]
+}
