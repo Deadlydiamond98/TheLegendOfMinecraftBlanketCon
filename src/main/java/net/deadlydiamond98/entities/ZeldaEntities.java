@@ -1,6 +1,7 @@
 package net.deadlydiamond98.entities;
 
 import net.deadlydiamond98.ZeldaCraft;
+import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
 import net.minecraft.entity.EntityDimensions;
 import net.minecraft.entity.EntityType;
@@ -50,6 +51,13 @@ public class ZeldaEntities {
             FabricEntityTypeBuilder.create(SpawnGroup.MISC, (EntityType<BaseBallEntity> type, World world) ->
             new BaseBallEntity(type, world))
                     .dimensions(EntityDimensions.fixed(0.5f,0.5f))
+                    .build()
+    );
+    public static final EntityType<KeeseEntity> Keese_Entity = Registry.register(
+            Registries.ENTITY_TYPE,
+            new Identifier(ZeldaCraft.MOD_ID, "keese"),
+            FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, KeeseEntity::new)
+                    .dimensions(EntityDimensions.fixed(0.75f,0.75f))
                     .build()
     );
 }

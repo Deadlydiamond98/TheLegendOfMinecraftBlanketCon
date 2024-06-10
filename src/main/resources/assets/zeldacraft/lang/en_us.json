@@ -12,8 +12,21 @@
   "block.zeldacraft.plain_pot": "Pot",
 
   "block.zeldacraft.secret_cracked_stone_bricks": "Secret Cracked Stone Bricks",
+  "block.zeldacraft.secret_cracked_brown_dungeoncite_bricks": "Secret Cracked Brown Dungeoncite Bricks",
+
+
+  "block.zeldacraft.cracked_brown_dungeoncite_bricks": "Cracked Brown Dungeoncite Bricks",
+  "block.zeldacraft.mossy_brown_dungeoncite_bricks": "Mossy Brown Dungeoncite Bricks",
+  "block.zeldacraft.brown_dungeoncite_bricks": "Brown Dungeoncite Bricks",
+  "block.zeldacraft.reinforced_brown_dungeoncite": "Reinforced Brown Dungeoncite",
+  "block.zeldacraft.brown_dungeoncite_tile": "Brown Dungeoncite Tile",
+  "block.zeldacraft.brown_dungeoncite_tile_ttl": "Brown Dungeoncite Triforce A",
+  "block.zeldacraft.brown_dungeoncite_tile_ttr": "Brown Dungeoncite Triforce B",
+  "block.zeldacraft.brown_dungeoncite_tile_tbl": "Brown Dungeoncite Triforce C",
+  "block.zeldacraft.brown_dungeoncite_tile_tbr": "Brown Dungeoncite Triforce D",
 
   "item.zeldacraft.quiver": "Quiver",
+  "item.zeldacraft.hylian_shield": "Hylian Shield",
 
   "item.zeldacraft.kokiri_sword": "Kokiri Sword",
   "item.zeldacraft.magic_sword": "Magic Sword",

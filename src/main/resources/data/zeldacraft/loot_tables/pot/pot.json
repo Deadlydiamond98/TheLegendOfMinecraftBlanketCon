@@ -7,12 +7,22 @@
         {
           "type": "minecraft:item",
           "name": "zeldacraft:emerald_shard",
-          "weight": 100
+          "weight": 150
         },
         {
           "type": "minecraft:item",
           "name": "minecraft:arrow",
-          "weight": 100
+          "weight": 150
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:spectral_arrow",
+          "weight": 50
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:emerald",
+          "weight": 50
         },
         {
           "type": "minecraft:item",
@@ -22,12 +32,12 @@
         {
           "type": "minecraft:item",
           "name": "zeldacraft:bombchu",
-          "weight": 15
+          "weight": 25
         },
         {
           "type": "minecraft:item",
           "name": "zeldacraft:music_disc_legend_fragment",
-          "weight": 1
+          "weight": 5
         }
       ]
     }

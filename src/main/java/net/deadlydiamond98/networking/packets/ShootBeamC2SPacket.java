@@ -1,6 +1,5 @@
 package net.deadlydiamond98.networking.packets;
 
-import net.deadlydiamond98.ZeldaCraft;
 import net.deadlydiamond98.entities.SwordBeamEntity;
 import net.deadlydiamond98.entities.ZeldaEntities;
 import net.deadlydiamond98.items.Swords.MagicSword;
@@ -13,7 +12,6 @@ import net.minecraft.server.network.ServerPlayNetworkHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
-import net.minecraft.text.Text;
 import net.minecraft.util.math.Vec3d;
 
 public class ShootBeamC2SPacket {

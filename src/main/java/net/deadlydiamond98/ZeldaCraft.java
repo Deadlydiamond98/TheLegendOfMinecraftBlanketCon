@@ -2,6 +2,7 @@ package net.deadlydiamond98;
 
 import net.deadlydiamond98.blocks.ZeldaBlocks;
 import net.deadlydiamond98.blocks.entities.ZeldaBlockEntities;
+import net.deadlydiamond98.entities.KeeseEntity;
 import net.deadlydiamond98.entities.ZeldaEntities;
 import net.deadlydiamond98.items.ZeldaItems;
 import net.deadlydiamond98.networking.ZeldaServerPackets;
@@ -10,6 +11,7 @@ import net.deadlydiamond98.sounds.ZeldaSounds;
 import net.deadlydiamond98.world.ZeldaFeatures;
 import net.fabricmc.api.ModInitializer;
 
+import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 import net.fabricmc.loader.api.FabricLoader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,11 +27,16 @@ public class ZeldaCraft implements ModInitializer {
 		ZeldaBlocks.registerBlocks();
 		ZeldaSounds.registerSounds();
 		ZeldaEntities.registerEntities();
+		registerEntityAttributes();
 		ZeldaBlockEntities.registerBlockEntities();
 		ZeldaServerPackets.registerS2CPackets();
 		ZeldaParticles.registerParticles();
 		ZeldaFeatures.register();
 		LOGGER.info("Mod Loaded");
+	}
+
+	private void registerEntityAttributes() {
+		FabricDefaultAttributeRegistry.register(ZeldaEntities.Keese_Entity, KeeseEntity.createCustomBatAttributes());
 	}
 
 	public static boolean isModLoaded(String modid) {

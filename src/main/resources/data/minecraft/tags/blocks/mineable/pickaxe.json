@@ -1,0 +1,16 @@
+{
+  "replace": false,
+  "values": [
+    "zeldacraft:secret_cracked_stone_bricks",
+    "zeldacraft:brown_dungeoncite_bricks",
+    "zeldacraft:cracked_brown_dungeoncite_bricks",
+    "zeldacraft:secret_cracked_brown_dungeoncite_bricks",
+    "zeldacraft:mossy_brown_dungeoncite_bricks",
+    "zeldacraft:brown_dungeoncite_tile",
+    "zeldacraft:brown_dungeoncite_tile_ttl",
+    "zeldacraft:brown_dungeoncite_tile_ttr",
+    "zeldacraft:brown_dungeoncite_tile_tbl",
+    "zeldacraft:brown_dungeoncite_tile_tbr",
+    "zeldacraft:reinforced_brown_dungeoncite"
+  ]
+}

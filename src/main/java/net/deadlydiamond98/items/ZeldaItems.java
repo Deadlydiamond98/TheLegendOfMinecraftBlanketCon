@@ -3,6 +3,7 @@ package net.deadlydiamond98.items;
 import net.deadlydiamond98.ZeldaCraft;
 import net.deadlydiamond98.items.Swords.CrackedBat;
 import net.deadlydiamond98.items.Swords.MagicSword;
+import net.deadlydiamond98.items.Swords.MasterSword;
 import net.deadlydiamond98.items.custombundle.BombBag;
 import net.deadlydiamond98.items.custombundle.Quiver;
 import net.deadlydiamond98.sounds.ZeldaSounds;
@@ -59,6 +60,9 @@ public class ZeldaItems {
             ArmorMaterials.LEATHER, ArmorItem.Type.BOOTS, new FabricItemSettings().maxCount(1)
     ));
 
+    public static final Item Hylain_Shield = registerItem("hylian_shield", new ShieldItem(
+            new FabricItemSettings().maxDamage(663)));
+
     public static final Item Music_Disc_Legend = registerItem("music_disc_legend", new MusicDiscItem(
             16, ZeldaSounds.MusicDiscLegend, new FabricItemSettings().rarity(Rarity.RARE)
             .maxCount(1), 86));
@@ -80,6 +84,7 @@ public class ZeldaItems {
         entry.add(Bombchu);
         entry.add(Bomb_Bag);
         entry.add(Quiver);
+        entry.add(Hylain_Shield);
     }
     public static void addTools(FabricItemGroupEntries entry) {
         entry.add(Music_Disc_Legend);
