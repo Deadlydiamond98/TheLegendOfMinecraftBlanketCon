@@ -27,11 +27,14 @@
 
   "item.zeldacraft.quiver": "Quiver",
   "item.zeldacraft.hylian_shield": "Hylian Shield",
+  "item.zeldacraft.hylian_shield.tooltip": "Isn't harmed by Explosions",
+  "item.zeldacraft.mirror_shield": "Mirror Shield",
 
   "item.zeldacraft.kokiri_sword": "Kokiri Sword",
   "item.zeldacraft.magic_sword": "Magic Sword",
   "item.zeldacraft.magic_sword.tooltip": "Shoots Sword Beams",
   "item.zeldacraft.master_sword": "Master Sword",
+  "item.zeldacraft.master_sword.tooltip": "Shoots Piercing Sword Beams",
   "item.zeldacraft.cracked_bat": "Cracked Bat",
   "item.zeldacraft.cracked_bat.tooltip": "25% Chance to do Smaaaash!! attacks",
   "item.zeldacraft.baseball": "Baseball",
@@ -42,5 +45,8 @@
   "item.zeldacraft.music_disc_legend_fragment.tooltip": "Music Disc - Legend",
 
   "key.category.zeldacraft.zeldacraftkeys": "The Legend of Steve",
-  "key.zeldacraft.sworddash": "Perform Sword Dash"
+  "key.zeldacraft.sworddash": "Perform Sword Dash",
+
+
+  "entity.zeldacraft.keese": "Keese"
 }

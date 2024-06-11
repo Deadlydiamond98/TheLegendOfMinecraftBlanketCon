@@ -1,5 +1,6 @@
-package net.deadlydiamond98.entities;
+package net.deadlydiamond98.entities.projectiles;
 
+import net.deadlydiamond98.entities.ZeldaEntities;
 import net.deadlydiamond98.items.Swords.CrackedBat;
 import net.deadlydiamond98.items.ZeldaItems;
 import net.deadlydiamond98.networking.ZeldaServerPackets;

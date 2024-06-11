@@ -1,7 +1,7 @@
 {
 	"texture_size": [32, 32],
 	"textures": {
-		"0": "zeldacraft:item/hylian_shield_model"
+		"0": "zeldacraft:item/mirror_shield_model"
 	},
 	"elements": [
 		{

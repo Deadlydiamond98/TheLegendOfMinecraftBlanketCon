@@ -34,7 +34,7 @@ public class MasterSword extends SwordItem {
 
     @Override
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-        tooltip.add(Text.translatable("item.zeldacraft.magic_sword.tooltip").formatted(Formatting.GREEN));
+        tooltip.add(Text.translatable("item.zeldacraft.master_sword.tooltip").formatted(Formatting.GREEN));
     }
 
     public void setSoundPlay(boolean soundPlay) {

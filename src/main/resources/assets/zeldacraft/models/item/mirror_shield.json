@@ -1,7 +1,7 @@
 {
 	"texture_size": [32, 32],
 	"textures": {
-		"0": "zeldacraft:item/hylian_shield_model"
+		"0": "zeldacraft:item/mirror_shield_model"
 	},
 	"elements": [
 		{
@@ -45,22 +45,20 @@
 	"gui_light": "front",
 	"display": {
 		"thirdperson_righthand": {
-			"rotation": [ 45, 135, 0 ],
-			"translation": [ 3.5, -3.25, -3.5]
+			"rotation": [91, 90, -90],
+			"translation": [3.5, -5.25, 4]
 		},
 		"thirdperson_lefthand": {
-			"rotation": [ 45, 135, 0 ],
-			"translation": [ 3.5, -3.25, -3.5]
+			"rotation": [91, 90, -90],
+			"translation": [3.5, -5.25, 4]
 		},
 		"firstperson_righthand": {
-			"rotation": [ 0, 180, -5 ],
-			"translation": [ 0, -5.5, 0],
-			"scale": [ 1.25, 1.25, 1.25 ]
+			"rotation": [0, -180, 3],
+			"translation": [0, -6, 0]
 		},
 		"firstperson_lefthand": {
-			"rotation": [ 0, 180, -5 ],
-			"translation": [0, -5.5, 0],
-			"scale": [ 1.25, 1.25, 1.25 ]
+			"rotation": [0, -180, 3],
+			"translation": [0, -6, 0]
 		},
 		"ground": {
 			"rotation": [-23, 0, 0],
@@ -76,5 +74,13 @@
 			"rotation": [0, -180, 0],
 			"translation": [0, -2, 0]
 		}
-	}
+	},
+	"overrides": [
+		{
+			"predicate": {
+				"blocking": 1
+			},
+			"model": "zeldacraft:item/mirror_shield_blocking"
+		}
+	]
 }

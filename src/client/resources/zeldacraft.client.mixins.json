@@ -3,7 +3,7 @@
 	"package": "net.deadlydiamond98.mixin.client",
 	"compatibilityLevel": "JAVA_17",
 	"client": [
-		"ExampleClientMixin"
+      "LivingEntityRendererMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

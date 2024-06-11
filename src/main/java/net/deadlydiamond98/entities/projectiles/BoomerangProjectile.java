@@ -1,4 +1,4 @@
-package net.deadlydiamond98.entities;
+package net.deadlydiamond98.entities.projectiles;
 
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.projectile.ProjectileEntity;

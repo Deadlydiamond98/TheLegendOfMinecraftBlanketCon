@@ -18,6 +18,7 @@ public class ZeldaServerPackets {
     public static final Identifier BombPacket = new Identifier(ZeldaCraft.MOD_ID, "bomb_particle_packet");
     public static final Identifier ShootBeamPacket = new Identifier(ZeldaCraft.MOD_ID, "shoot_beam_packet");
     public static final Identifier SmashLootGrassPacket = new Identifier(ZeldaCraft.MOD_ID, "smash_loot_grass_packet");
+    public static final Identifier DekuStunOverlayPacket = new Identifier(ZeldaCraft.MOD_ID, "deku_stun_overlay_packet");
 
     public static void registerS2CPackets() {
         ServerPlayNetworking.registerGlobalReceiver(ShootBeamPacket, ShootBeamC2SPacket::receive);
@@ -39,5 +40,11 @@ public class ZeldaServerPackets {
         for (ServerPlayerEntity playerEntity : player) {
             ServerPlayNetworking.send(playerEntity, BombPacket, buf);
         }
+    }
+    public static void sendDekuStunOverlayPacket(ServerPlayerEntity player, int entityId, boolean hasEffect) {
+        PacketByteBuf buf = PacketByteBufs.create();
+        buf.writeInt(entityId);
+        buf.writeBoolean(hasEffect);
+        ServerPlayNetworking.send(player, DekuStunOverlayPacket, buf);
     }
 }

@@ -1,8 +1,7 @@
 package net.deadlydiamond98.items;
 
-import net.deadlydiamond98.entities.BaseBallEntity;
+import net.deadlydiamond98.entities.projectiles.BaseBallEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.projectile.thrown.SnowballEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.sound.SoundCategory;

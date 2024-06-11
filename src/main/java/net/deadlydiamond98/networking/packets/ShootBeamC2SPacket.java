@@ -1,8 +1,10 @@
 package net.deadlydiamond98.networking.packets;
 
-import net.deadlydiamond98.entities.SwordBeamEntity;
+import net.deadlydiamond98.entities.projectiles.MasterSwordBeamEntity;
+import net.deadlydiamond98.entities.projectiles.SwordBeamEntity;
 import net.deadlydiamond98.entities.ZeldaEntities;
 import net.deadlydiamond98.items.Swords.MagicSword;
+import net.deadlydiamond98.items.Swords.MasterSword;
 import net.deadlydiamond98.sounds.ZeldaSounds;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
 import net.minecraft.item.Item;
@@ -26,14 +28,30 @@ public class ShootBeamC2SPacket {
                 if (item instanceof MagicSword) {
                     SwordBeamEntity projectile = new SwordBeamEntity(ZeldaEntities.Sword_Beam, world);
                     projectile.setOwner(player);
-                    projectile.setPosition(player.getX(), player.getY() + player.getEyeHeight(player.getPose()), player.getZ());
+                    projectile.setPosition(
+                            player.getX() + player.getHandPosOffset(item).x,
+                            player.getY() + player.getEyeHeight(player.getPose()),
+                            player.getZ() + player.getHandPosOffset(item).z);
                     Vec3d vec3d = player.getRotationVec(1.0F);
-                    projectile.setVelocity(vec3d.x, vec3d.y, vec3d.z, 0.75F, 0.0F);
+                    projectile.setVelocity(vec3d.x, vec3d.y, vec3d.z, 0.75F, 0.1F);
                     world.spawnEntity(projectile);
 
                     player.getItemCooldownManager().set(item, 20);
                     ((MagicSword) item).setSoundPlay(true);
                     player.playSound(ZeldaSounds.SwordShoot, SoundCategory.PLAYERS, 1, 1);
+                }
+                else if (item instanceof MasterSword) {
+                    MasterSwordBeamEntity master_projectile = new MasterSwordBeamEntity(ZeldaEntities.Master_Sword_Beam, world);
+                    master_projectile.setOwner(player);
+                    master_projectile.setPosition(player.getX(), player.getY() + player.getEyeHeight(player.getPose()) -0.5, player.getZ());
+                    Vec3d vec3d = player.getRotationVec(1.0F);
+                    master_projectile.setVelocity(vec3d.x, vec3d.y, vec3d.z, 0.9F, 0.1F);
+                    world.spawnEntity(master_projectile);
+
+                    player.getItemCooldownManager().set(item, 20);
+                    ((MasterSword) item).setSoundPlay(true);
+                    player.playSound(ZeldaSounds.SwordShoot, SoundCategory.PLAYERS, 1, 1);
+
                 }
             }
         });

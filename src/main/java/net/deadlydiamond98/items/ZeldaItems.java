@@ -26,7 +26,7 @@ public class ZeldaItems {
             ToolMaterials.IRON, 4, -2.0F, new FabricItemSettings()));
     public static final Item Magic_Sword = registerItem("magic_sword", new MagicSword(
             ToolMaterials.IRON, 3, -0.5F, new FabricItemSettings()));
-    public static final Item Master_Sword = registerItem("master_sword", new MagicSword(
+    public static final Item Master_Sword = registerItem("master_sword", new MasterSword(
             ToolMaterials.IRON, 6, -0.5F, new FabricItemSettings()));
     public static final Item Cracked_Bat = registerItem("cracked_bat", new CrackedBat(
             ToolMaterials.IRON, 3, -2.2F, new FabricItemSettings()));
@@ -43,6 +43,8 @@ public class ZeldaItems {
             new FabricItemSettings()));
 
 
+    public static final Item Deku_Nut = registerItem("deku_nut", new DekuNutItem(
+            new FabricItemSettings()));
     public static final Item Bomb = registerItem("bomb", new BombItem(
             new FabricItemSettings(), 3, 50, 1));
     public static final Item Super_Bomb = registerItem("super_bomb", new BombItem(
@@ -62,6 +64,8 @@ public class ZeldaItems {
 
     public static final Item Hylain_Shield = registerItem("hylian_shield", new ShieldItem(
             new FabricItemSettings().maxDamage(663)));
+    public static final Item Mirror_Shield = registerItem("mirror_shield", new ShieldItem(
+            new FabricItemSettings().maxDamage(663)));
 
     public static final Item Music_Disc_Legend = registerItem("music_disc_legend", new MusicDiscItem(
             16, ZeldaSounds.MusicDiscLegend, new FabricItemSettings().rarity(Rarity.RARE)
@@ -80,11 +84,13 @@ public class ZeldaItems {
         entry.add(Cracked_Bat);
         entry.add(Wooden_Boomerang);
         entry.add(Bomb);
+        entry.add(Deku_Nut);
         entry.add(Super_Bomb);
         entry.add(Bombchu);
         entry.add(Bomb_Bag);
         entry.add(Quiver);
         entry.add(Hylain_Shield);
+        entry.add(Mirror_Shield);
     }
     public static void addTools(FabricItemGroupEntries entry) {
         entry.add(Music_Disc_Legend);

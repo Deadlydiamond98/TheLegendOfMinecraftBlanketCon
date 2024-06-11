@@ -1,8 +1,11 @@
 package net.deadlydiamond98.renderer.entity;
 
 import net.deadlydiamond98.ZeldaCraft;
-import net.deadlydiamond98.entities.projectiles.SwordBeamEntity;
-import net.minecraft.client.render.*;
+import net.deadlydiamond98.entities.projectiles.MasterSwordBeamEntity;
+import net.minecraft.client.render.OverlayTexture;
+import net.minecraft.client.render.RenderLayer;
+import net.minecraft.client.render.VertexConsumer;
+import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.EntityRenderer;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.util.math.MatrixStack;
@@ -13,23 +16,23 @@ import net.minecraft.util.math.Vec3d;
 import org.joml.Matrix3f;
 import org.joml.Matrix4f;
 
-public class SwordBeamRenderer<T extends Entity> extends EntityRenderer<SwordBeamEntity> {
-    public SwordBeamRenderer(EntityRendererFactory.Context ctx) {
+public class MasterSwordBeamRenderer<T extends Entity> extends EntityRenderer<MasterSwordBeamEntity> {
+    public MasterSwordBeamRenderer(EntityRendererFactory.Context ctx) {
         super(ctx);
     }
 
     @Override
-    public void render(SwordBeamEntity entity, float yaw, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light) {
+    public void render(MasterSwordBeamEntity entity, float yaw, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light) {
         matrices.push();
-        matrices.scale(1.0F, 1.0F, 1.0F);
+        matrices.scale(2.0F, 2.0F, 2.0F);
 
 
         Vec3d velocity = entity.getVelocity();
         float yawAngle = (float) (Math.atan2(velocity.z, velocity.x) * (180 / Math.PI));
         float pitchAngle = (float) (Math.atan2(velocity.y, Math.sqrt(velocity.x * velocity.x + velocity.z * velocity.z)) * (180 / Math.PI));
-        matrices.translate(0.0D, 0.0D, 0.0D);
-        matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(-yawAngle));
-        matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(pitchAngle + 45));
+        matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(-yawAngle + 90));
+        matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees(-pitchAngle + 90));
+        matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(45));
 
         VertexConsumer vertexConsumer = vertexConsumers.getBuffer(RenderLayer.getEntityTranslucent(getTexture(entity)));
         MatrixStack.Entry matrixEntry = matrices.peek();
@@ -50,7 +53,7 @@ public class SwordBeamRenderer<T extends Entity> extends EntityRenderer<SwordBea
     }
 
     @Override
-    public Identifier getTexture(SwordBeamEntity entity) {
-        return new Identifier(ZeldaCraft.MOD_ID, "textures/entity/sword_beam.png");
+    public Identifier getTexture(MasterSwordBeamEntity entity) {
+        return new Identifier(ZeldaCraft.MOD_ID, "textures/entity/master_sword_beam.png");
     }
 }

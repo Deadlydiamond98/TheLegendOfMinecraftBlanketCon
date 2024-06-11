@@ -2,12 +2,13 @@ package net.deadlydiamond98;
 
 import net.deadlydiamond98.blocks.ZeldaBlocks;
 import net.deadlydiamond98.blocks.entities.ZeldaBlockEntities;
-import net.deadlydiamond98.entities.KeeseEntity;
+import net.deadlydiamond98.entities.monsters.KeeseEntity;
 import net.deadlydiamond98.entities.ZeldaEntities;
 import net.deadlydiamond98.items.ZeldaItems;
 import net.deadlydiamond98.networking.ZeldaServerPackets;
 import net.deadlydiamond98.particle.ZeldaParticles;
 import net.deadlydiamond98.sounds.ZeldaSounds;
+import net.deadlydiamond98.statuseffects.ZeldaStatusEffects;
 import net.deadlydiamond98.world.ZeldaFeatures;
 import net.fabricmc.api.ModInitializer;
 
@@ -31,6 +32,7 @@ public class ZeldaCraft implements ModInitializer {
 		ZeldaBlockEntities.registerBlockEntities();
 		ZeldaServerPackets.registerS2CPackets();
 		ZeldaParticles.registerParticles();
+		ZeldaStatusEffects.registerStatusEffects();
 		ZeldaFeatures.register();
 		LOGGER.info("Mod Loaded");
 	}

@@ -1,6 +1,6 @@
 package net.deadlydiamond98.renderer.entity;
 
-import net.deadlydiamond98.entities.BoomerangProjectile;
+import net.deadlydiamond98.entities.projectiles.BoomerangProjectile;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.EntityRenderer;
 import net.minecraft.client.render.entity.EntityRendererFactory;
