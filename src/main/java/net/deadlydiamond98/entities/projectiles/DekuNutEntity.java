@@ -8,6 +8,7 @@ import net.deadlydiamond98.entities.ZeldaEntities;
 import net.deadlydiamond98.items.Swords.CrackedBat;
 import net.deadlydiamond98.items.ZeldaItems;
 import net.deadlydiamond98.networking.ZeldaServerPackets;
+import net.deadlydiamond98.sounds.ZeldaSounds;
 import net.deadlydiamond98.statuseffects.ZeldaStatusEffects;
 import net.deadlydiamond98.util.ZeldaTags;
 import net.minecraft.block.Block;
@@ -25,6 +26,8 @@ import net.minecraft.particle.ItemStackParticleEffect;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
@@ -69,16 +72,22 @@ public class DekuNutEntity extends ThrownItemEntity {
     }
 
     private void stun() {
-        int radius = 3;
-        Box box = new Box(this.getX() - radius, this.getY() - radius, this.getZ() - radius,
-                this.getX() + radius, this.getY() + radius, this.getZ() + radius);
+        if (!this.getWorld().isClient()) {
+            int radius = 2;
+            Box box = new Box(this.getX() - radius, this.getY() - radius, this.getZ() - radius,
+                    this.getX() + radius, this.getY() + radius, this.getZ() + radius);
 
-        List<LivingEntity> entities = this.getWorld().getEntitiesByClass(LivingEntity.class, box, entity -> true);
+            List<LivingEntity> entities = this.getWorld().getEntitiesByClass(LivingEntity.class, box, entity -> true);
 
-        for (LivingEntity entity : entities) {
-            entity.addStatusEffect(new StatusEffectInstance(ZeldaStatusEffects.Stun_Status_Effect, 100, 4));
+            for (LivingEntity entity : entities) {
+                entity.addStatusEffect(new StatusEffectInstance(ZeldaStatusEffects.Stun_Status_Effect, 50, 0));
+            }
+            ZeldaServerPackets.sendSnapParticlePacket((List<ServerPlayerEntity>) this.getWorld().getPlayers(), this.getX(),
+                    this.getEyeY(), this.getZ());
+            this.getWorld().playSound(null, this.getBlockPos(), SoundEvents.ITEM_FLINTANDSTEEL_USE, SoundCategory.BLOCKS, 2.0f, 2.0f);
+            this.getWorld().playSound(null, this.getBlockPos(), SoundEvents.ITEM_FLINTANDSTEEL_USE, SoundCategory.BLOCKS, 2.0f, 1.0f);
+            this.getWorld().playSound(null, this.getBlockPos(), SoundEvents.ITEM_FLINTANDSTEEL_USE, SoundCategory.BLOCKS, 2.0f, 0.5f);
+            this.discard();
         }
-
-        this.discard();
     }
 }

@@ -13,6 +13,7 @@ import net.minecraft.util.math.Vec3d;
 import org.jetbrains.annotations.Nullable;
 
 public class StunStatusEffect extends StatusEffect {
+
     protected StunStatusEffect() {
         super(StatusEffectCategory.HARMFUL, 0x2d3a9c);
     }
@@ -43,6 +44,7 @@ public class StunStatusEffect extends StatusEffect {
                 }
             }
         }
+        entity.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED).setBaseValue(entity.getMovementSpeed());
     }
 
     @Override
@@ -53,11 +55,20 @@ public class StunStatusEffect extends StatusEffect {
     @Override
     public void applyUpdateEffect(LivingEntity entity, int amplifier) {
         super.applyUpdateEffect(entity, amplifier);
-        if (entity instanceof ServerPlayerEntity player) {
-            player.networkHandler.requestTeleport(player.getX(), player.getY(), player.getZ(), player.getYaw(), player.getPitch());
+        for (PlayerEntity player : entity.getWorld().getPlayers()) {
+            if (player instanceof ServerPlayerEntity) {
+                ServerPlayerEntity serverPlayer = (ServerPlayerEntity) player;
+                double distance = entity.squaredDistanceTo(serverPlayer);
+                if (distance < 10000) {
+                    ZeldaServerPackets.sendDekuStunOverlayPacket(serverPlayer, entity.getId(), true);
+                }
+            }
         }
-        entity.setVelocity(0, 0, 0);
-        entity.setPitch(entity.getPitch());
-        entity.setYaw(entity.getYaw());
+        entity.setVelocity(entity.getVelocity().add(0,-0.08,0).multiply(0, 1, 0));
+        entity.setPitch(entity.prevPitch);
+        entity.setYaw(entity.prevYaw);
+        if (!(entity instanceof PlayerEntity)) {
+            entity.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED).setBaseValue(-0.001);
+        }
     }
 }

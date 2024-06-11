@@ -31,6 +31,7 @@ public class BombchuItem extends Item {
         Vec3d vec3d = user.getRotationVec(1.0F);
         bombEntity.setYaw(user.headYaw);
         bombEntity.setVelocity(vec3d.x * speed, vec3d.y, vec3d.z * speed);
+        bombEntity.setOwner(user);
         world.spawnEntity(bombEntity);
         user.getStackInHand(hand).decrement(1);
         user.getItemCooldownManager().set(this, 20);

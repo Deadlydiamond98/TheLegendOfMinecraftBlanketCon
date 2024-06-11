@@ -14,6 +14,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.StairsBlock;
 import net.minecraft.entity.*;
+import net.minecraft.entity.ai.TargetPredicate;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
@@ -44,12 +45,12 @@ import java.util.function.Predicate;
 
 import static net.deadlydiamond98.blocks.BombFlower.AGE;
 
-public class BombchuEntity extends Entity {
+public class BombchuEntity extends Entity implements Ownable {
 
     private float power;
+    private Entity owner;
     private static final TrackedData<Integer> FUSE;
     protected static final TrackedData<Direction> ATTACHED_FACE;
-    private Direction prevFace;
     private float entitySpeed;
     private boolean gravity;
     private boolean thrown;
@@ -60,7 +61,6 @@ public class BombchuEntity extends Entity {
         entitySpeed = 0;
         gravity = false;
         thrown = false;
-        prevFace = getAttachedFace();
     }
 
     public BombchuEntity(World world, double x, double y, double z, float power, int fuse, float entitySpeed, boolean thrown) {
@@ -71,10 +71,27 @@ public class BombchuEntity extends Entity {
         this.entitySpeed = entitySpeed;
         this.thrown = thrown;
         this.gravity = false;
-        prevFace = getAttachedFace();
     }
 
     public void tick() {
+        LivingEntity nearestEntity = this.getWorld().getClosestEntity(
+                LivingEntity.class,
+                TargetPredicate.DEFAULT,
+                null,
+                this.getX(),
+                this.getY(),
+                this.getZ(),
+                this.getBoundingBox().expand(2));
+
+        if (nearestEntity != null && nearestEntity != getOwner()) {
+            if (this.distanceTo(nearestEntity) < 0.5f) {
+                this.discard();
+                if (!this.getWorld().isClient) {
+                    this.explode();
+                }
+            }
+        }
+
         if (this.gravity || this.thrown) {
             this.setVelocity(this.getVelocity().add(0.0, -0.04, 0.0));
 
@@ -208,8 +225,7 @@ public class BombchuEntity extends Entity {
     @Override
     public boolean damage(DamageSource source, float amount) {
         Entity sourceEntity = source.getAttacker();
-        if (sourceEntity instanceof PlayerEntity) {
-            PlayerEntity player = (PlayerEntity) sourceEntity;
+        if (sourceEntity instanceof PlayerEntity player) {
             ItemStack heldItem = player.getMainHandStack();
             if (heldItem.getItem() instanceof CrackedBat) {
                 this.setYaw(player.getYaw());
@@ -259,5 +275,15 @@ public class BombchuEntity extends Entity {
     static {
         FUSE = DataTracker.registerData(BombchuEntity.class, TrackedDataHandlerRegistry.INTEGER);
         ATTACHED_FACE = DataTracker.registerData(BombchuEntity.class, TrackedDataHandlerRegistry.FACING);
+    }
+
+    @Nullable
+    @Override
+    public Entity getOwner() {
+        return this.owner;
+    }
+
+    public void setOwner(Entity owner) {
+        this.owner = owner;
     }
 }

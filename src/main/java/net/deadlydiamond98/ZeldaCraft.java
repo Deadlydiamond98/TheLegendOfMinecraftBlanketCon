@@ -4,6 +4,7 @@ import net.deadlydiamond98.blocks.ZeldaBlocks;
 import net.deadlydiamond98.blocks.entities.ZeldaBlockEntities;
 import net.deadlydiamond98.entities.monsters.KeeseEntity;
 import net.deadlydiamond98.entities.ZeldaEntities;
+import net.deadlydiamond98.events.EntityDamagedEvent;
 import net.deadlydiamond98.items.ZeldaItems;
 import net.deadlydiamond98.networking.ZeldaServerPackets;
 import net.deadlydiamond98.particle.ZeldaParticles;
@@ -33,6 +34,7 @@ public class ZeldaCraft implements ModInitializer {
 		ZeldaServerPackets.registerS2CPackets();
 		ZeldaParticles.registerParticles();
 		ZeldaStatusEffects.registerStatusEffects();
+		EntityDamagedEvent.register();
 		ZeldaFeatures.register();
 		LOGGER.info("Mod Loaded");
 	}

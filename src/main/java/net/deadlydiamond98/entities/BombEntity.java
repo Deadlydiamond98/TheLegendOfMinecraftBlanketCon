@@ -35,14 +35,16 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
 import static net.deadlydiamond98.blocks.BombFlower.AGE;
 
-public class BombEntity extends Entity {
+public class BombEntity extends Entity implements Ownable{
 
     private float power;
+    private Entity owner;
     private static final TrackedData<Integer> bombTypeData;
 
     private static final TrackedData<Integer> FUSE;
@@ -190,5 +192,15 @@ public class BombEntity extends Entity {
     static {
         FUSE = DataTracker.registerData(BombEntity.class, TrackedDataHandlerRegistry.INTEGER);
         bombTypeData = DataTracker.registerData(BombEntity.class, TrackedDataHandlerRegistry.INTEGER);
+    }
+
+    public void setOwner(Entity owner) {
+        this.owner = owner;
+    }
+
+    @Nullable
+    @Override
+    public Entity getOwner() {
+        return this.owner;
     }
 }

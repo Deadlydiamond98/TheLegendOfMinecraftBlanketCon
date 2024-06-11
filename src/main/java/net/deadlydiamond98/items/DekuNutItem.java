@@ -26,7 +26,7 @@ public class DekuNutItem extends Item {
         dekuNut.setYaw(user.getHeadYaw());
         world.spawnEntity(dekuNut);
         user.getStackInHand(hand).decrement(1);
-        user.getItemCooldownManager().set(this, 20);
+        user.getItemCooldownManager().set(this, 100);
 
         user.playSound(SoundEvents.ENTITY_SNOWBALL_THROW, SoundCategory.PLAYERS, 1, 1);
 

@@ -4,7 +4,9 @@
   "package": "net.deadlydiamond98.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "EntityNavigationMixin",
     "ItemPickupMixin",
+    "MobEntityMixin",
     "PlayerEntityMixin",
     "RangedWeaponMixin"
   ],
