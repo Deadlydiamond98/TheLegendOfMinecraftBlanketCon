@@ -10,6 +10,7 @@ import net.deadlydiamond98.networking.ZeldaServerPackets;
 import net.deadlydiamond98.sounds.ZeldaSounds;
 import net.deadlydiamond98.util.RaycastUtil;
 import net.deadlydiamond98.util.ZeldaTags;
+import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.StairsBlock;
@@ -25,6 +26,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.registry.tag.BlockTags;
+import net.minecraft.registry.tag.TagKey;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
@@ -57,10 +59,10 @@ public class BombchuEntity extends Entity implements Ownable {
 
     public BombchuEntity(EntityType<? extends Entity> entityType, World world) {
         super(entityType, world);
-        power = 0;
-        entitySpeed = 0;
-        gravity = false;
-        thrown = false;
+        this.power = 0;
+        this.entitySpeed = 0;
+        this.gravity = false;
+        this.thrown = false;
     }
 
     public BombchuEntity(World world, double x, double y, double z, float power, int fuse, float entitySpeed, boolean thrown) {
@@ -134,7 +136,7 @@ public class BombchuEntity extends Entity implements Ownable {
             BlockState downBlock = this.getWorld().getBlockState(((BlockHitResult) downHit).getBlockPos());
             BlockState frontBlock = this.getWorld().getBlockState(((BlockHitResult) frontHit).getBlockPos());
             if (downBlock.isSolid() && frontBlock.isSolid()) {
-                if (frontBlock.isIn(BlockTags.FENCES) || frontBlock.isIn(BlockTags.FENCES)) {
+                if (frontBlock.isIn(BlockTags.FENCES) || frontBlock.isIn(BlockTags.FENCE_GATES) || frontBlock.isIn(BlockTags.WALLS)) {
                     this.discard();
                     if (!this.getWorld().isClient) {
                         this.explode();
@@ -156,6 +158,10 @@ public class BombchuEntity extends Entity implements Ownable {
                 this.setVelocity(this.getVelocity().add(0, 0.04, 0));
             }
             this.setAttachedFace(Direction.DOWN);
+        }
+
+        if (this.getAttachedFace() == Direction.DOWN) {
+            this.applyGravity(true);
         }
     }
 
@@ -180,9 +186,6 @@ public class BombchuEntity extends Entity implements Ownable {
             }
         } else {
             this.updateWaterState();
-            if (this.getWorld().isClient) {
-                this.getWorld().addParticle(ParticleTypes.SMOKE, this.getX(), this.getY() + 0.5, this.getZ(), 0.0, 0.0, 0.0);
-            }
         }
     }
     private void explode() {

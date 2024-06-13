@@ -1,18 +1,21 @@
 package net.deadlydiamond98.statuseffects;
 
 import net.deadlydiamond98.networking.ZeldaServerPackets;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.AttributeContainer;
+import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.util.math.Vec3d;
-import org.jetbrains.annotations.Nullable;
 
 public class StunStatusEffect extends StatusEffect {
+    private static final EntityAttributeModifier Stun_Modifier = new EntityAttributeModifier(
+            "stunModifier",
+            0.0f,
+            EntityAttributeModifier.Operation.MULTIPLY_TOTAL
+    );
 
     protected StunStatusEffect() {
         super(StatusEffectCategory.HARMFUL, 0x2d3a9c);
@@ -30,6 +33,7 @@ public class StunStatusEffect extends StatusEffect {
                 }
             }
         }
+        entity.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED).addPersistentModifier(Stun_Modifier);
     }
 
     @Override
@@ -44,7 +48,7 @@ public class StunStatusEffect extends StatusEffect {
                 }
             }
         }
-        entity.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED).setBaseValue(entity.getMovementSpeed());
+        entity.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED).removeModifier(Stun_Modifier);
     }
 
     @Override
@@ -64,11 +68,6 @@ public class StunStatusEffect extends StatusEffect {
                 }
             }
         }
-        entity.setVelocity(entity.getVelocity().add(0,-0.08,0).multiply(0, 1, 0));
-        entity.setPitch(entity.prevPitch);
-        entity.setYaw(entity.prevYaw);
-        if (!(entity instanceof PlayerEntity)) {
-            entity.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED).setBaseValue(-0.001);
-        }
+        entity.setVelocity(0, 0, 0);
     }
 }

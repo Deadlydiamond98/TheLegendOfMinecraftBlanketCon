@@ -37,7 +37,7 @@
         {
           "type": "minecraft:item",
           "name": "zeldacraft:music_disc_legend_fragment",
-          "weight": 5
+          "weight": 10
         }
       ]
     }

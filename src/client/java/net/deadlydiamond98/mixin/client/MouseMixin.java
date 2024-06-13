@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public abstract class MouseMixin {
     @Inject(method = "onMouseButton", at = @At("HEAD"), cancellable = true)
     private void onMouseButton(long window, int button, int action, int mods, CallbackInfo callbackInfo) {
-        if ((MinecraftClient.getInstance().player) != null && !MinecraftClient.getInstance().isPaused()) {
+        if ((MinecraftClient.getInstance().player) != null && !MinecraftClient.getInstance().isPaused() && (MinecraftClient.getInstance().player).isAlive()) {
             if ((MinecraftClient.getInstance().player).hasStatusEffect(ZeldaStatusEffects.Stun_Status_Effect)) {
                 KeyBinding.unpressAll();
                 callbackInfo.cancel();
@@ -23,7 +23,7 @@ public abstract class MouseMixin {
 
     @Inject(method = "onMouseScroll", at = @At("HEAD"), cancellable = true)
     private void onMouseScroll(long window, double horizontal, double vertical, CallbackInfo callbackInfo) {
-        if ((MinecraftClient.getInstance().player) != null && !MinecraftClient.getInstance().isPaused()) {
+        if ((MinecraftClient.getInstance().player) != null && !MinecraftClient.getInstance().isPaused() && (MinecraftClient.getInstance().player).isAlive()) {
             if ((MinecraftClient.getInstance().player).hasStatusEffect(ZeldaStatusEffects.Stun_Status_Effect)) {
                 KeyBinding.unpressAll();
                 callbackInfo.cancel();

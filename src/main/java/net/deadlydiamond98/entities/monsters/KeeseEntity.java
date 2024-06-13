@@ -75,7 +75,7 @@ public class KeeseEntity extends HostileEntity implements Monster {
 
     public static DefaultAttributeContainer.Builder createCustomBatAttributes() {
         return HostileEntity.createHostileAttributes()
-                .add(EntityAttributes.GENERIC_MAX_HEALTH, 5.0)
+                .add(EntityAttributes.GENERIC_MAX_HEALTH, 7.0)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 4.0)
                 .add(EntityAttributes.GENERIC_FLYING_SPEED, 0.6)
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.3);
@@ -131,7 +131,7 @@ public class KeeseEntity extends HostileEntity implements Monster {
 
         }
     }
-    class KeeseWanderAroundGoal extends Goal {
+    static class KeeseWanderAroundGoal extends Goal {
         private static final int MAX_DISTANCE = 22;
         private final KeeseEntity keese;
 

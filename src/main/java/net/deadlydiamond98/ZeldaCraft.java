@@ -2,6 +2,7 @@ package net.deadlydiamond98;
 
 import net.deadlydiamond98.blocks.ZeldaBlocks;
 import net.deadlydiamond98.blocks.entities.ZeldaBlockEntities;
+import net.deadlydiamond98.entities.monsters.BubbleEntity;
 import net.deadlydiamond98.entities.monsters.KeeseEntity;
 import net.deadlydiamond98.entities.ZeldaEntities;
 import net.deadlydiamond98.events.EntityDamagedEvent;
@@ -41,6 +42,7 @@ public class ZeldaCraft implements ModInitializer {
 
 	private void registerEntityAttributes() {
 		FabricDefaultAttributeRegistry.register(ZeldaEntities.Keese_Entity, KeeseEntity.createCustomBatAttributes());
+		FabricDefaultAttributeRegistry.register(ZeldaEntities.Bubble_Entity, BubbleEntity.createCustomBatAttributes());
 	}
 
 	public static boolean isModLoaded(String modid) {

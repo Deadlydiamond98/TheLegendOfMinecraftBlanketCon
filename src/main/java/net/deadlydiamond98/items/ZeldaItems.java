@@ -1,6 +1,7 @@
 package net.deadlydiamond98.items;
 
 import net.deadlydiamond98.ZeldaCraft;
+import net.deadlydiamond98.entities.ZeldaEntities;
 import net.deadlydiamond98.items.Swords.CrackedBat;
 import net.deadlydiamond98.items.Swords.MagicSword;
 import net.deadlydiamond98.items.Swords.MasterSword;
@@ -72,7 +73,25 @@ public class ZeldaItems {
             .maxCount(1), 86));
     public static final Item Music_Disc_Legend_Fragment = registerItem("music_disc_legend_fragment", new ToolTipItem(
             new FabricItemSettings()));
+    public static final Item Loot_Grass_Seeds = registerItem("loot_grass_seeds", new LootGrassSeedBag(
+            new FabricItemSettings()));
 
+
+
+
+
+
+
+    //SPAWN EGGGGGSSSSSSSSSSSSSSSSS
+    public static final Item Bubble_Spawn_Egg = registerItem("bubble_spawn_egg", new SpawnEggItem(
+            ZeldaEntities.Bubble_Entity, 0x979797, 0x610717, new FabricItemSettings()));
+    public static final Item Keese_Spawn_Egg = registerItem("keese_spawn_egg", new SpawnEggItem(
+            ZeldaEntities.Keese_Entity, 0x1412a8, 0x9390fe, new FabricItemSettings()));
+
+
+
+
+    //Registration stuff
     private static Item registerItem(String itemName, Item item) {
         return Registry.register(Registries.ITEM, new Identifier(ZeldaCraft.MOD_ID, itemName), item);
     }
@@ -101,10 +120,15 @@ public class ZeldaItems {
         entry.add(Baseball);
         entry.add(Music_Disc_Legend_Fragment);
     }
+    public static void addEggs(FabricItemGroupEntries entry) {
+        entry.add(Bubble_Spawn_Egg);
+        entry.add(Keese_Spawn_Egg);
+    }
     public static void registerItems() {
         ZeldaCraft.LOGGER.debug("Registering Items for" + ZeldaCraft.MOD_ID);
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.COMBAT).register(ZeldaItems::addCombat);
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.TOOLS).register(ZeldaItems::addTools);
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.INGREDIENTS).register(ZeldaItems::addMaterials);
+        ItemGroupEvents.modifyEntriesEvent(ItemGroups.SPAWN_EGGS).register(ZeldaItems::addEggs);
     }
 }

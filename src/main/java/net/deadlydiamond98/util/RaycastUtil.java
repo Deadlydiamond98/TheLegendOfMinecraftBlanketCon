@@ -1,7 +1,10 @@
 package net.deadlydiamond98.util;
 
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
+import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.HitResult;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.RaycastContext;
 import net.minecraft.world.World;
@@ -12,7 +15,7 @@ public final class RaycastUtil {
         Vec3d direction = getDirection(entity);
         Vec3d endPos = startPos.add(direction.multiply(range));
 
-        RaycastContext context = new RaycastContext(startPos, endPos, RaycastContext.ShapeType.OUTLINE, RaycastContext.FluidHandling.NONE, entity);
+        RaycastContext context = new RaycastContext(startPos, endPos, RaycastContext.ShapeType.COLLIDER, RaycastContext.FluidHandling.NONE, entity);
         World world = entity.getWorld();
         return world.raycast(context);
     }
@@ -22,7 +25,7 @@ public final class RaycastUtil {
         Vec3d direction = getDownwardDirection(entity);
         Vec3d endPos = startPos.add(direction.multiply(range));
 
-        RaycastContext context = new RaycastContext(startPos, endPos, RaycastContext.ShapeType.OUTLINE, RaycastContext.FluidHandling.NONE, entity);
+        RaycastContext context = new RaycastContext(startPos, endPos, RaycastContext.ShapeType.COLLIDER, RaycastContext.FluidHandling.NONE, entity);
         World world = entity.getWorld();
         return world.raycast(context);
     }

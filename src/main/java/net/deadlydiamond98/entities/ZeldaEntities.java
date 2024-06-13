@@ -1,6 +1,7 @@
 package net.deadlydiamond98.entities;
 
 import net.deadlydiamond98.ZeldaCraft;
+import net.deadlydiamond98.entities.monsters.BubbleEntity;
 import net.deadlydiamond98.entities.monsters.KeeseEntity;
 import net.deadlydiamond98.entities.projectiles.*;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
@@ -43,7 +44,7 @@ public class ZeldaEntities {
             new Identifier(ZeldaCraft.MOD_ID, "bombchu_entity"),
             FabricEntityTypeBuilder.create(SpawnGroup.MISC, (EntityType<BombchuEntity> type, World world) ->
                             new BombchuEntity(type, world))
-                    .dimensions(EntityDimensions.fixed(0.3f,0.3f))
+                    .dimensions(EntityDimensions.fixed(0.4f,0.4f))
                     .build()
     );
     public static final EntityType<BoomerangProjectile> Boomerang_Entity = Registry.register(
@@ -74,6 +75,13 @@ public class ZeldaEntities {
             new Identifier(ZeldaCraft.MOD_ID, "keese"),
             FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, KeeseEntity::new)
                     .dimensions(EntityDimensions.fixed(0.75f,0.75f))
+                    .build()
+    );
+    public static final EntityType<BubbleEntity> Bubble_Entity = Registry.register(
+            Registries.ENTITY_TYPE,
+            new Identifier(ZeldaCraft.MOD_ID, "bubble"),
+            FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, BubbleEntity::new)
+                    .dimensions(EntityDimensions.fixed(0.6f,0.6f))
                     .build()
     );
 }

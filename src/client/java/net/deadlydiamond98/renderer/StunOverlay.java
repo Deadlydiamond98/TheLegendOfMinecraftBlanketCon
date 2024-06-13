@@ -14,8 +14,8 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.Identifier;
 
 public class StunOverlay<T extends LivingEntity, M extends EntityModel<T>> extends FeatureRenderer<T, M> {
-    private static final Identifier Stun_OVERLAY_TEXTURE = new Identifier(ZeldaCraft.MOD_ID, "textures/entity/stun_overlay.png");
-    private static final RenderLayer STUN_OVERLAY_LAYER = RenderLayer.getEntityTranslucent(Stun_OVERLAY_TEXTURE);
+    private static final Identifier Stun_Overlay_Texture = new Identifier(ZeldaCraft.MOD_ID, "textures/entity/stun_overlay.png");
+    private static final RenderLayer Stun_Overlay_Layer = RenderLayer.getEntityTranslucent(Stun_Overlay_Texture);
     public StunOverlay(FeatureRendererContext<T, M> context) {
         super(context);
     }
@@ -23,7 +23,7 @@ public class StunOverlay<T extends LivingEntity, M extends EntityModel<T>> exten
     @Override
     public void render(MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, T entity, float limbAngle, float limbDistance, float tickDelta, float animationProgress, float headYaw, float headPitch) {
         if (entity.hasStatusEffect(ZeldaStatusEffects.Stun_Status_Effect)) {
-            VertexConsumer vertexConsumer = vertexConsumers.getBuffer(STUN_OVERLAY_LAYER);
+            VertexConsumer vertexConsumer = vertexConsumers.getBuffer(Stun_Overlay_Layer);
             if (vertexConsumer != null) {
 
                 this.getContextModel().render(matrices, vertexConsumer, light, OverlayTexture.DEFAULT_UV, 1.0F, 1.0F, 1.0F, 0.5F);

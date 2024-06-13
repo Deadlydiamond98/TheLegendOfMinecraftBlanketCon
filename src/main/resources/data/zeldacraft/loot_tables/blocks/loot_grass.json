@@ -22,7 +22,12 @@
         {
           "type": "minecraft:item",
           "name": "zeldacraft:bombchu",
-          "weight": 15
+          "weight": 5
+        },
+        {
+          "type": "minecraft:item",
+          "name": "zeldacraft:deku_nut",
+          "weight": 5
         },
         {
           "type": "minecraft:item",

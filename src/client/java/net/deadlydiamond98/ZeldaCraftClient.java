@@ -6,6 +6,7 @@ import net.deadlydiamond98.events.ClientTickEvent;
 import net.deadlydiamond98.items.ZeldaItems;
 import net.deadlydiamond98.model.entity.BombEntityModel;
 import net.deadlydiamond98.model.entity.BombchuEntityModel;
+import net.deadlydiamond98.model.entity.BubbleEntityModel;
 import net.deadlydiamond98.model.entity.KeeseEntityModel;
 import net.deadlydiamond98.networking.ZeldaClientPackets;
 import net.deadlydiamond98.particle.ZeldaParticleFactory;
@@ -63,6 +64,7 @@ public class ZeldaCraftClient implements ClientModInitializer {
 		EntityRendererRegistry.register(ZeldaEntities.Sword_Beam, SwordBeamRenderer::new);
 		EntityRendererRegistry.register(ZeldaEntities.Master_Sword_Beam, MasterSwordBeamRenderer::new);
 		EntityRendererRegistry.register(ZeldaEntities.Keese_Entity, KeeseRenderer::new);
+		EntityRendererRegistry.register(ZeldaEntities.Bubble_Entity, BubbleRenderer::new);
 		EntityRendererRegistry.register(ZeldaEntities.Baseball_Entity, BaseballRenderer::new);
 		EntityRendererRegistry.register(ZeldaEntities.Deku_Nut_Entity, DekuNutRenderer::new);
 		EntityRendererRegistry.register(ZeldaEntities.Boomerang_Entity, BoomerangProjectileRenderer::new);
@@ -74,6 +76,7 @@ public class ZeldaCraftClient implements ClientModInitializer {
 		EntityModelLayerRegistry.registerModelLayer(BombEntityModel.LAYER_LOCATION, BombEntityModel::getTexturedModelData);
 		EntityModelLayerRegistry.registerModelLayer(BombchuEntityModel.LAYER_LOCATION, BombchuEntityModel::getTexturedModelData);
 		EntityModelLayerRegistry.registerModelLayer(KeeseEntityModel.LAYER_LOCATION, BatEntityModel::getTexturedModelData);
+		EntityModelLayerRegistry.registerModelLayer(BubbleEntityModel.LAYER_LOCATION, BubbleEntityModel::getTexturedModelData);
 	}
 
 	public void registerTintables() {

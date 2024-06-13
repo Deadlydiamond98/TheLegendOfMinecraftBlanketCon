@@ -127,6 +127,9 @@ public class BombEntity extends Entity implements Ownable{
                                 this.getWorld().spawnEntity(bombEntity);
                             }
                         }
+                        if (this.power > 3 & block.getDefaultState().isOf(Blocks.SPAWNER)) {
+                            this.getWorld().breakBlock(blockPos, true);
+                        }
                     }
                 }
             }
