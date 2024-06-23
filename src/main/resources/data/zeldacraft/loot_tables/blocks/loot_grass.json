@@ -16,6 +16,11 @@
         },
         {
           "type": "minecraft:item",
+          "name": "zeldacraft:magic_jar",
+          "weight": 40
+        },
+        {
+          "type": "minecraft:item",
           "name": "zeldacraft:bomb",
           "weight": 25
         },

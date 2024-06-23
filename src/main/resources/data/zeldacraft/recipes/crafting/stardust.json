@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "zeldacraft:star_fragment"
+    }
+  ],
+  "result": {
+    "item": "zeldacraft:stardust",
+    "count": 8
+  }
+}

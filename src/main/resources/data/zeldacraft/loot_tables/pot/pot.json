@@ -31,13 +31,23 @@
         },
         {
           "type": "minecraft:item",
-          "name": "zeldacraft:bombchu",
+          "name": "zeldacraft:magic_jar",
           "weight": 25
+        },
+        {
+          "type": "minecraft:item",
+          "name": "zeldacraft:bombchu",
+          "weight": 15
         },
         {
           "type": "minecraft:item",
           "name": "zeldacraft:music_disc_legend_fragment",
           "weight": 10
+        },
+        {
+          "type": "minecraft:item",
+          "name": "zeldacraft:star_fragment",
+          "weight": 2
         }
       ]
     }

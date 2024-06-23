@@ -8,6 +8,8 @@ import net.deadlydiamond98.items.custom.Swords.MagicSword;
 import net.deadlydiamond98.items.custom.Swords.MasterSword;
 import net.deadlydiamond98.items.custom.custombundle.BombBag;
 import net.deadlydiamond98.items.custom.custombundle.Quiver;
+import net.deadlydiamond98.items.custom.manaItems.FireRod;
+import net.deadlydiamond98.items.custom.manaItems.MagicJar;
 import net.deadlydiamond98.items.custom.manaItems.MagicPowder;
 import net.deadlydiamond98.items.custom.manaItems.StarFragment;
 import net.deadlydiamond98.sounds.ZeldaSounds;
@@ -79,9 +81,13 @@ public class ZeldaItems {
             new FabricItemSettings()));
     public static final Item Star_Fragment = registerItem("star_fragment", new StarFragment(
             new FabricItemSettings(), 25));
-    public static final Item Magic_Jar = registerItem("magic_jar", new StarFragment(
-            new FabricItemSettings().food(new FoodComponent.Builder().build()), 15));
+    public static final Item Stardust = registerItem("stardust", new Item(
+            new FabricItemSettings()));
+    public static final Item Magic_Jar = registerItem("magic_jar", new MagicJar(
+            new FabricItemSettings().food(new FoodComponent.Builder().build()), 10));
     public static final Item Magic_Powder = registerItem("magic_powder", new MagicPowder(
+            new FabricItemSettings().maxCount(16)));
+    public static final Item Fire_Crystal = registerItem("fire_rod", new FireRod(
             new FabricItemSettings().maxCount(16)));
 
 
@@ -121,6 +127,7 @@ public class ZeldaItems {
         entry.add(Quiver);
         entry.add(Hylain_Shield);
         entry.add(Mirror_Shield);
+        entry.add(Fire_Crystal);
     }
     public static void addTools(FabricItemGroupEntries entry) {
         entry.add(Magic_Powder);
@@ -133,11 +140,15 @@ public class ZeldaItems {
         entry.add(Music_Disc_Legend_Fragment);
         entry.add(Dungeon_Key);
         entry.add(Star_Fragment);
+        entry.add(Stardust);
     }
     public static void addEggs(FabricItemGroupEntries entry) {
         entry.add(Beamos_Spawn_Egg);
         entry.add(Bubble_Spawn_Egg);
         entry.add(Keese_Spawn_Egg);
+    }
+    public static void addConsumables(FabricItemGroupEntries entry) {
+        entry.add(Magic_Jar);
     }
     public static void registerItems() {
         ZeldaCraft.LOGGER.debug("Registering Items for" + ZeldaCraft.MOD_ID);
@@ -145,5 +156,6 @@ public class ZeldaItems {
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.TOOLS).register(ZeldaItems::addTools);
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.INGREDIENTS).register(ZeldaItems::addMaterials);
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.SPAWN_EGGS).register(ZeldaItems::addEggs);
+        ItemGroupEvents.modifyEntriesEvent(ItemGroups.FOOD_AND_DRINK).register(ZeldaItems::addConsumables);
     }
 }

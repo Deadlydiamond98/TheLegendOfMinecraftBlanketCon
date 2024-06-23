@@ -12,7 +12,10 @@
 
 
   "item.zeldacraft.star_fragment": "Star Fragment",
+  "item.zeldacraft.stardust": "Stardust",
+  "item.zeldacraft.magic_jar": "Magic Jar",
   "item.zeldacraft.magic_powder": "Magic Powder",
+  "item.zeldacraft.fire_rod": "Fire Rod",
 
   "block.zeldacraft.loot_grass": "Loot Grass",
   "block.zeldacraft.plain_pot": "Pot",
@@ -56,6 +59,8 @@
   "key.zeldacraft.sworddash": "Perform Sword Dash",
 
   "effect.zeldacraft.stunned": "Stunned",
+
+  "effect.zeldacraft.instant_degeneration": "Degeneration",
 
   "effect.zeldacraft.instant_invigoration": "Invigoration",
   "item.minecraft.potion.effect.invigoration_potion": "Potion of Invigoration",

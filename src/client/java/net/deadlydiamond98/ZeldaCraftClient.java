@@ -63,6 +63,7 @@ public class ZeldaCraftClient implements ClientModInitializer {
 	private void registerEntityRenderers() {
 		EntityRendererRegistry.register(ZeldaEntities.Sword_Beam, SwordBeamRenderer::new);
 		EntityRendererRegistry.register(ZeldaEntities.Master_Sword_Beam, MasterSwordBeamRenderer::new);
+		EntityRendererRegistry.register(ZeldaEntities.Magic_Fire_Projectile, MagicFireProjectileRenderer::new);
 		EntityRendererRegistry.register(ZeldaEntities.Keese_Entity, KeeseRenderer::new);
 		EntityRendererRegistry.register(ZeldaEntities.Bubble_Entity, BubbleRenderer::new);
 		EntityRendererRegistry.register(ZeldaEntities.Beamos_Entity, BeamosRenderer::new);

@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ege",
+    "ese",
+    "ege"
+  ],
+  "key": {
+    "e": {
+      "item": "zeldacraft:emerald_shard"
+    },
+    "s": {
+      "item": "zeldacraft:stardust"
+    },
+    "g": {
+      "item": "minecraft:glass_bottle"
+    }
+  },
+  "result": {
+    "item": "zeldacraft:magic_jar",
+    "count": 2
+  }
+}

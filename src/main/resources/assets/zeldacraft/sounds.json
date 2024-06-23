@@ -23,6 +23,18 @@
       "zeldacraft:upgrade_mana"
     ]
   },
+  "no_mana": {
+    "subtitle": "sounds.zeldacraft.no_mana",
+    "sounds": [
+      "zeldacraft:no_mana"
+    ]
+  },
+  "fire_magic": {
+    "subtitle": "sounds.zeldacraft.fire_magic",
+    "sounds": [
+      "zeldacraft:fire_magic"
+    ]
+  },
   "musicdisclegend": {
     "subtitle": "sounds.zeldacraft.musicdisclegend",
     "sounds": [

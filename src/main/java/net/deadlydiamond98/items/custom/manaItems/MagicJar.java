@@ -25,7 +25,7 @@ public class MagicJar extends Item {
         if (user instanceof PlayerEntity player) {
             ManaHandler.addManaToPlayer(player, this.amountToGive);
         }
-        world.addBlockBreakParticles(user.getBlockPos(), Blocks.GREEN_STAINED_GLASS.getDefaultState());
+        world.addBlockBreakParticles(user.getBlockPos(), Blocks.LIME_STAINED_GLASS.getDefaultState());
         world.playSound(null, user.getBlockPos(), SoundEvents.BLOCK_GLASS_BREAK, SoundCategory.PLAYERS, 1.0f, 1.0f);
         return super.finishUsing(stack, world, user);
     }
@@ -38,7 +38,7 @@ public class MagicJar extends Item {
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         if (!world.isClient()) {
-            if (ManaHandler.CanAddManaToPlayer(user, this.amountToGive)) {
+            if (ManaHandler.CanAddManaToPlayer(user, this.amountToGive) || user.isCreative()) {
                 return super.use(world, user, hand);
             }
         }

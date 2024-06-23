@@ -32,6 +32,13 @@ public class ZeldaEntities {
                     .dimensions(EntityDimensions.fixed(0.4f,0.2f))
                     .build()
     );
+    public static final EntityType<MagicFireProjectileEntity> Magic_Fire_Projectile = Registry.register(
+            Registries.ENTITY_TYPE,
+            new Identifier(ZeldaCraft.MOD_ID, "magic_fire_projectile"),
+            FabricEntityTypeBuilder.create(SpawnGroup.MISC, MagicFireProjectileEntity::new)
+                    .dimensions(EntityDimensions.fixed(0.4f,0.2f))
+                    .build()
+    );
     public static final EntityType<BombEntity> Bomb_Entity = Registry.register(
             Registries.ENTITY_TYPE,
             new Identifier(ZeldaCraft.MOD_ID, "bomb_entity"),

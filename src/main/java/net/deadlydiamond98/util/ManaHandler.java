@@ -1,6 +1,8 @@
 package net.deadlydiamond98.util;
 
+import net.deadlydiamond98.sounds.ZeldaSounds;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.sound.SoundCategory;
 import net.minecraft.util.TypedActionResult;
 
 public class ManaHandler {
@@ -45,6 +47,7 @@ public class ManaHandler {
         else if (userM.getMana() > 0 && userM.getMana() - amountToRemove < 0) {
             return true;
         }
+        user.getWorld().playSound(null, user.getBlockPos(), ZeldaSounds.NotEnoughMana, SoundCategory.PLAYERS, 1.0f, 1.0f);
         return false;
     }
 

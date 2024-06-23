@@ -24,7 +24,7 @@ public class InvigorationStatusEffect extends InstantStatusEffect {
     public void onApplied(LivingEntity entity, AttributeContainer attributes, int amplifier) {
         super.onApplied(entity, attributes, amplifier);
         if (entity instanceof PlayerEntity user) {
-            if (!user.getWorld().isClient() && ManaHandler.CanAddManaToPlayer(user, (25 * (amplifier + 1)))) {
+            if (!user.getWorld().isClient()) {
                 ManaHandler.addManaToPlayer(user, (30 * (amplifier + 1)));
             }
         }
@@ -34,7 +34,7 @@ public class InvigorationStatusEffect extends InstantStatusEffect {
     public void applyInstantEffect(@Nullable Entity source, @Nullable Entity attacker, LivingEntity target, int amplifier, double proximity) {
         super.applyInstantEffect(source, attacker, target, amplifier, proximity);
         if (target instanceof PlayerEntity user) {
-            if (!user.getWorld().isClient() && ManaHandler.CanAddManaToPlayer(user, (20 * (amplifier + 1)))) {
+            if (!user.getWorld().isClient()) {
                 ManaHandler.addManaToPlayer(user, (20 * (amplifier + 1)));
             }
         }

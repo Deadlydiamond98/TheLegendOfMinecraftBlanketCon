@@ -7,6 +7,7 @@ import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.render.GameRenderer;
+import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.GameMode;
@@ -20,20 +21,21 @@ public class ManaHudOverlay implements HudRenderCallback {
     @Override
     public void onHudRender(DrawContext drawContext, float tickDelta) {
         MinecraftClient client = MinecraftClient.getInstance();
+        int width = client.getWindow().getScaledWidth();
+        int height = client.getWindow().getScaledHeight();
+
         if (client == null || client.player == null || client.interactionManager.getCurrentGameMode() == GameMode.CREATIVE
                 || client.interactionManager.getCurrentGameMode() == GameMode.SPECTATOR) {
             return;
         }
-        int width = client.getWindow().getScaledWidth();
-        int height = client.getWindow().getScaledHeight();
 
-        int x = (width / 2) + 100;
-        int y = height - 50;
+        int mana_x = (width / 2) + 100;
+        int mana_y = height - 50;
 
         RenderSystem.setShader(GameRenderer::getPositionTexProgram);
         RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
         RenderSystem.setShaderTexture(0, Empty_Mana);
-        drawContext.drawTexture(Empty_Mana, x, y, 0, 0, 16, 42, 16, 42);
+        drawContext.drawTexture(Empty_Mana, mana_x, mana_y, 0, 0, 16, 42, 16, 42);
 
         ManaPlayerData userM = ((ManaPlayerData) client.player);
         int currentMana = userM.getMana();
@@ -43,6 +45,6 @@ public class ManaHudOverlay implements HudRenderCallback {
 
         int filledHeight = (int) ((displayedMana / (float) maxMana) * 42);
         RenderSystem.setShaderTexture(0, Filled_Mana);
-        drawContext.drawTexture(Filled_Mana, x, y + (42 - filledHeight), 0, 42 - filledHeight, 16, filledHeight, 16, 42);
+        drawContext.drawTexture(Filled_Mana, mana_x, mana_y + (42 - filledHeight), 0, 42 - filledHeight, 16, filledHeight, 16, 42);
     }
 }

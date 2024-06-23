@@ -10,6 +10,7 @@ import net.minecraft.util.math.BlockPos;
 
 public class ZeldaClientPackets {
     public static final Identifier SmaaashPacket = new Identifier(ZeldaCraft.MOD_ID, "smaaash_particle_packet");
+    public static final Identifier MagicFirePacket = new Identifier(ZeldaCraft.MOD_ID, "magic_fire_particle_packet");
     public static final Identifier SnapPacket = new Identifier(ZeldaCraft.MOD_ID, "snap_particle_packet");
     public static final Identifier BombPacket = new Identifier(ZeldaCraft.MOD_ID, "bomb_particle_packet");
     public static final Identifier ShootBeamPacket = new Identifier(ZeldaCraft.MOD_ID, "shoot_beam_packet");
@@ -19,6 +20,7 @@ public class ZeldaClientPackets {
 
     public static void registerC2SPackets() {
         ClientPlayNetworking.registerGlobalReceiver(SmaaashPacket, SmaaashParticleS2CPacket::recieve);
+        ClientPlayNetworking.registerGlobalReceiver(MagicFirePacket, MagicFireParticleS2CPacket::recieve);
         ClientPlayNetworking.registerGlobalReceiver(SnapPacket, SnapParticleS2CPacket::recieve);
         ClientPlayNetworking.registerGlobalReceiver(BombPacket, BombParticleS2CPacket::recieve);
         ClientPlayNetworking.registerGlobalReceiver(DekuStunOverlayPacket, DekuStunOverlayS2CPacket::recieve);

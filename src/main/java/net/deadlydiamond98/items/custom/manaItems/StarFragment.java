@@ -24,10 +24,11 @@ public class StarFragment extends Item {
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         if (!world.isClient()) {
-            if (ManaHandler.CanAddManaToPlayer(user, this.amountToGive)) {
+            if (ManaHandler.CanAddManaToPlayer(user, this.amountToGive) || user.isCreative()) {
                 ManaHandler.addManaToPlayer(user, this.amountToGive);
                 world.playSound(null, user.getBlockPos(), ZeldaSounds.StarUsed, SoundCategory.PLAYERS, 1.0f, 1.0f);
                 user.getStackInHand(hand).decrement(1);
+                user.getItemCooldownManager().set(this, 10);
                 return TypedActionResult.success(user.getStackInHand(hand));
             }
             else {
