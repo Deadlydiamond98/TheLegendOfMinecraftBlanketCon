@@ -9,6 +9,9 @@ import net.minecraft.util.Identifier;
 
 public class ZeldaSounds {
     public static SoundEvent EmeraldShardPickedUp = registerSoundEvent("emeraldshardpickedup");
+    public static SoundEvent StarPickedUp = registerSoundEvent("starpickedup");
+    public static SoundEvent StarUsed = registerSoundEvent("star_used");
+    public static SoundEvent ManaUpgrade = registerSoundEvent("mana_upgrade");
     public static SoundEvent MusicDiscLegend = registerSoundEvent("musicdisclegend");
     public static SoundEvent SwordShoot = registerSoundEvent("swordshoot");
     public static SoundEvent SwordRecharge = registerSoundEvent("swordrecharge");

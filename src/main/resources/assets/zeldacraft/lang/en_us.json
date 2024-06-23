@@ -7,8 +7,12 @@
   "item.zeldacraft.bombchu": "Bombchu",
   "item.zeldacraft.bomb_bag": "Bomb Bag",
   "block.zeldacraft.bomb_flower": "Bomb Flower Seeds",
-  "effect.zeldacraft.stunned": "Stunned",
   "item.zeldacraft.deku_nut": "Deku Nut",
+  "item.zeldacraft.dungeon_key": "Key",
+
+
+  "item.zeldacraft.star_fragment": "Star Fragment",
+  "item.zeldacraft.magic_powder": "Magic Powder",
 
   "block.zeldacraft.loot_grass": "Loot Grass",
   "block.zeldacraft.plain_pot": "Pot",
@@ -26,6 +30,7 @@
   "block.zeldacraft.brown_dungeoncite_tile_ttr": "Brown Dungeoncite Triforce B",
   "block.zeldacraft.brown_dungeoncite_tile_tbl": "Brown Dungeoncite Triforce C",
   "block.zeldacraft.brown_dungeoncite_tile_tbr": "Brown Dungeoncite Triforce D",
+  "block.zeldacraft.brown_dungeoncite_pedestal": "Brown Dungeoncite Pedestal",
 
   "item.zeldacraft.quiver": "Quiver",
   "item.zeldacraft.hylian_shield": "Hylian Shield",
@@ -37,6 +42,7 @@
   "item.zeldacraft.magic_sword.tooltip": "Shoots Sword Beams",
   "item.zeldacraft.master_sword": "Master Sword",
   "item.zeldacraft.master_sword.tooltip": "Shoots Piercing Sword Beams",
+  "item.zeldacraft.mana_sword.tooltip": "Consumes Mana if Players Health isn't full",
   "item.zeldacraft.cracked_bat": "Cracked Bat",
   "item.zeldacraft.cracked_bat.tooltip": "25% Chance to do Smaaaash!! attacks",
   "item.zeldacraft.baseball": "Baseball",
@@ -49,7 +55,32 @@
   "key.category.zeldacraft.zeldacraftkeys": "The Legend of Steve",
   "key.zeldacraft.sworddash": "Perform Sword Dash",
 
+  "effect.zeldacraft.stunned": "Stunned",
 
-  "entity.zeldacraft.keese": "Keese",
-  "entity.zeldacraft.bubble": "Bubble"
+  "effect.zeldacraft.instant_invigoration": "Invigoration",
+  "item.minecraft.potion.effect.invigoration_potion": "Potion of Invigoration",
+  "item.minecraft.splash_potion.effect.invigoration_potion": "Splash Potion of Invigoration",
+  "item.minecraft.lingering_potion.effect.invigoration_potion": "Lingering Potion of Invigoration",
+  "item.minecraft.tipped_arrow.effect.invigoration_potion": "Arrow of Invigoration",
+  "item.minecraft.potion.effect.invigoration_potion_strong": "Potion of Invigoration",
+  "item.minecraft.splash_potion.effect.invigoration_potion_strong": "Splash Potion of Invigoration",
+  "item.minecraft.lingering_potion.effect.invigoration_potion_strong": "Lingering Potion of Invigoration",
+  "item.minecraft.tipped_arrow.effect.invigoration_potion_strong": "Arrow of Invigoration",
+
+  "effect.zeldacraft.rejuvenation": "Rejuvenation",
+  "item.minecraft.potion.effect.rejuvenation_potion": "Potion of Rejuvenation",
+  "item.minecraft.splash_potion.effect.rejuvenation_potion": "Splash Potion of Rejuvenation",
+  "item.minecraft.lingering_potion.effect.rejuvenation_potion": "Lingering Potion of Rejuvenation",
+  "item.minecraft.tipped_arrow.effect.rejuvenation_potion": "Arrow of Rejuvenation",
+  "item.minecraft.potion.effect.rejuvenation_potion_strong": "Potion of Rejuvenation",
+  "item.minecraft.splash_potion.effect.rejuvenation_potion_strong": "Splash Potion of Rejuvenation",
+  "item.minecraft.lingering_potion.effect.rejuvenation_potion_strong": "Lingering Potion of Rejuvenation",
+  "item.minecraft.tipped_arrow.effect.rejuvenation_potion_strong": "Arrow of Rejuvenation",
+
+  "item.zeldacraft.bubble_spawn_egg": "Bubble Spawn Egg",
+  "entity.zeldacraft.bubble": "Bubble",
+  "item.zeldacraft.beamos_spawn_egg": "Beamos Spawn Egg",
+  "entity.zeldacraft.beamos": "Beamos",
+  "item.zeldacraft.keese_spawn_egg": "Keese Spawn Egg",
+  "entity.zeldacraft.keese": "Keese"
 }

@@ -3,9 +3,10 @@ package net.deadlydiamond98.networking.packets;
 import net.deadlydiamond98.entities.projectiles.MasterSwordBeamEntity;
 import net.deadlydiamond98.entities.projectiles.SwordBeamEntity;
 import net.deadlydiamond98.entities.ZeldaEntities;
-import net.deadlydiamond98.items.Swords.MagicSword;
-import net.deadlydiamond98.items.Swords.MasterSword;
+import net.deadlydiamond98.items.custom.Swords.MagicSword;
+import net.deadlydiamond98.items.custom.Swords.MasterSword;
 import net.deadlydiamond98.sounds.ZeldaSounds;
+import net.deadlydiamond98.util.ManaHandler;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
 import net.minecraft.item.Item;
 import net.minecraft.network.PacketByteBuf;
@@ -22,7 +23,7 @@ public class ShootBeamC2SPacket {
         server.execute(() -> {
             ServerWorld world = (ServerWorld) player.getWorld();
             Item item = player.getMainHandStack().getItem();
-            if (((player.getHealth() == player.getMaxHealth()) || player.isCreative())
+            if (((player.getHealth() == player.getMaxHealth()) || ManaHandler.CanRemoveManaFromPlayer(player, 1) || player.isCreative())
                     && !(player.getItemCooldownManager().isCoolingDown(item))
                     && player.handSwinging) {
                 if (item instanceof MagicSword) {
@@ -39,6 +40,9 @@ public class ShootBeamC2SPacket {
                     player.getItemCooldownManager().set(item, 20);
                     ((MagicSword) item).setSoundPlay(true);
                     player.playSound(ZeldaSounds.SwordShoot, SoundCategory.PLAYERS, 1, 1);
+                    if (!(player.getHealth() == player.getMaxHealth())) {
+                        ManaHandler.removeManaFromPlayer(player, 1);
+                    }
                 }
                 else if (item instanceof MasterSword) {
                     MasterSwordBeamEntity master_projectile = new MasterSwordBeamEntity(ZeldaEntities.Master_Sword_Beam, world);
@@ -51,7 +55,9 @@ public class ShootBeamC2SPacket {
                     player.getItemCooldownManager().set(item, 20);
                     ((MasterSword) item).setSoundPlay(true);
                     player.playSound(ZeldaSounds.SwordShoot, SoundCategory.PLAYERS, 1, 1);
-
+                    if (!(player.getHealth() == player.getMaxHealth())) {
+                        ManaHandler.removeManaFromPlayer(player, 1);
+                    }
                 }
             }
         });

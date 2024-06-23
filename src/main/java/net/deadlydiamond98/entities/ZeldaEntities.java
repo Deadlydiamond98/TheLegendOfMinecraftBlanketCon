@@ -1,6 +1,7 @@
 package net.deadlydiamond98.entities;
 
 import net.deadlydiamond98.ZeldaCraft;
+import net.deadlydiamond98.entities.monsters.BeamosEntity;
 import net.deadlydiamond98.entities.monsters.BubbleEntity;
 import net.deadlydiamond98.entities.monsters.KeeseEntity;
 import net.deadlydiamond98.entities.projectiles.*;
@@ -82,6 +83,13 @@ public class ZeldaEntities {
             new Identifier(ZeldaCraft.MOD_ID, "bubble"),
             FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, BubbleEntity::new)
                     .dimensions(EntityDimensions.fixed(0.6f,0.6f))
+                    .build()
+    );
+    public static final EntityType<BeamosEntity> Beamos_Entity = Registry.register(
+            Registries.ENTITY_TYPE,
+            new Identifier(ZeldaCraft.MOD_ID, "beamos"),
+            FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, BeamosEntity::new)
+                    .dimensions(EntityDimensions.fixed(1,1))
                     .build()
     );
 }

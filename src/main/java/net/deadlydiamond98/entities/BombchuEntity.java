@@ -1,49 +1,34 @@
 package net.deadlydiamond98.entities;
 
-import net.deadlydiamond98.ZeldaCraft;
 import net.deadlydiamond98.blocks.BombFlower;
 import net.deadlydiamond98.blocks.SecretStone;
 import net.deadlydiamond98.blocks.ZeldaBlocks;
-import net.deadlydiamond98.items.BombchuItem;
-import net.deadlydiamond98.items.Swords.CrackedBat;
+import net.deadlydiamond98.items.custom.Swords.CrackedBat;
 import net.deadlydiamond98.networking.ZeldaServerPackets;
 import net.deadlydiamond98.sounds.ZeldaSounds;
 import net.deadlydiamond98.util.RaycastUtil;
 import net.deadlydiamond98.util.ZeldaTags;
-import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.StairsBlock;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.TargetPredicate;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
-import net.minecraft.entity.mob.ShulkerEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.particle.ParticleTypes;
 import net.minecraft.registry.tag.BlockTags;
-import net.minecraft.registry.tag.TagKey;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
-import net.minecraft.util.BlockRotation;
 import net.minecraft.util.hit.BlockHitResult;
-import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.*;
-import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Iterator;
 import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
-import java.util.function.Predicate;
 
 import static net.deadlydiamond98.blocks.BombFlower.AGE;
 

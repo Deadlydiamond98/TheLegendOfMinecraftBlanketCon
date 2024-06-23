@@ -1,11 +1,12 @@
 package net.deadlydiamond98.mixin;
 
-import net.deadlydiamond98.items.BombchuItem;
-import net.deadlydiamond98.items.custombundle.BombBag;
-import net.deadlydiamond98.items.BombItem;
-import net.deadlydiamond98.items.EmeraldItem;
-import net.deadlydiamond98.items.custombundle.Quiver;
-import net.deadlydiamond98.items.custombundle.CustomBundle;
+import net.deadlydiamond98.items.custom.BombchuItem;
+import net.deadlydiamond98.items.custom.custombundle.BombBag;
+import net.deadlydiamond98.items.custom.BombItem;
+import net.deadlydiamond98.items.custom.EmeraldItem;
+import net.deadlydiamond98.items.custom.custombundle.Quiver;
+import net.deadlydiamond98.items.custom.custombundle.CustomBundle;
+import net.deadlydiamond98.items.custom.manaItems.StarFragment;
 import net.deadlydiamond98.sounds.ZeldaSounds;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -33,13 +34,22 @@ public abstract class ItemPickupMixin {
 			shift = At.Shift.AFTER))
 	private void onEmeraldItemPickup(PlayerEntity player, CallbackInfo info) {
 		ItemEntity itemEntity = (ItemEntity) (Object) this;
-		if (!player.getWorld().isClient && itemEntity.getStack().getItem() instanceof EmeraldItem) {
-
-			long currentTime = System.currentTimeMillis();
-			long lastPickupTime = lastPickupTimeMap.getOrDefault(player, 0L);
-			if (currentTime - lastPickupTime > 500) {
-				player.playSound(ZeldaSounds.EmeraldShardPickedUp, SoundCategory.PLAYERS, 1, 1);
-				lastPickupTimeMap.put(player, currentTime);
+		if (!player.getWorld().isClient) {
+			if (itemEntity.getStack().getItem() instanceof EmeraldItem) {
+				long currentTime = System.currentTimeMillis();
+				long lastPickupTime = lastPickupTimeMap.getOrDefault(player, 0L);
+				if (currentTime - lastPickupTime > 500) {
+					player.playSound(ZeldaSounds.EmeraldShardPickedUp, SoundCategory.PLAYERS, 1, 1);
+					lastPickupTimeMap.put(player, currentTime);
+				}
+			}
+			if (itemEntity.getStack().getItem() instanceof StarFragment) {
+				long currentTime = System.currentTimeMillis();
+				long lastPickupTime = lastPickupTimeMap.getOrDefault(player, 0L);
+				if (currentTime - lastPickupTime > 500) {
+					player.playSound(ZeldaSounds.StarPickedUp, SoundCategory.PLAYERS, 1, 1);
+					lastPickupTimeMap.put(player, currentTime);
+				}
 			}
 		}
 	}

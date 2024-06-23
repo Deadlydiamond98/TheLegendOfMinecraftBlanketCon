@@ -5,6 +5,24 @@
       "zeldacraft:emerald_shard_picked_up"
     ]
   },
+  "starpickedup": {
+    "subtitle": "sounds.zeldacraft.starpickedup",
+    "sounds": [
+      "zeldacraft:star_pickup"
+    ]
+  },
+  "star_used": {
+    "subtitle": "sounds.zeldacraft.star_used",
+    "sounds": [
+      "zeldacraft:star_used"
+    ]
+  },
+  "upgrade_mana": {
+    "subtitle": "sounds.zeldacraft.upgrade_mana",
+    "sounds": [
+      "zeldacraft:upgrade_mana"
+    ]
+  },
   "musicdisclegend": {
     "subtitle": "sounds.zeldacraft.musicdisclegend",
     "sounds": [

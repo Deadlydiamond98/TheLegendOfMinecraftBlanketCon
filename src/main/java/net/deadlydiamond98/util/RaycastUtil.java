@@ -20,6 +20,7 @@ public final class RaycastUtil {
         return world.raycast(context);
     }
 
+
     public static HitResult getCollisionDownwardFromEntity(Entity entity, double range) {
         Vec3d startPos = entity.getPos();
         Vec3d direction = getDownwardDirection(entity);

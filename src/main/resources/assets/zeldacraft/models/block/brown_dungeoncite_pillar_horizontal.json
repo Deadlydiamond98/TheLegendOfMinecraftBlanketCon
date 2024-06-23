@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column_horizontal",
+  "textures": {
+    "end": "zeldacraft:block/brown_dungeoncite_tile",
+    "side": "zeldacraft:block/brown_dungeoncite_pillar"
+  }
+}

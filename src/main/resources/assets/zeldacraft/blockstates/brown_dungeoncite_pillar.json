@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "zeldacraft:block/brown_dungeoncite_pillar_horizontal",
+      "x": 90,
+      "y": 90
+    },
+    "axis=y": {
+      "model": "zeldacraft:block/brown_dungeoncite_pillar"
+    },
+    "axis=z": {
+      "model": "zeldacraft:block/brown_dungeoncite_pillar_horizontal",
+      "x": 90
+    }
+  }
+}

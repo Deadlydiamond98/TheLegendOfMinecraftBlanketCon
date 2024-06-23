@@ -8,6 +8,7 @@ import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.GlazedTerracottaBlock;
+import net.minecraft.block.PillarBlock;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroups;
@@ -66,12 +67,24 @@ public class ZeldaBlocks {
             new GlazedTerracottaBlock(FabricBlockSettings.copyOf(Blocks.STONE_BRICKS).strength(
                             50, 6.0F)
                     .sounds(BlockSoundGroup.STONE).requiresTool()));
+    public static final Block Brown_Dungeoncite_Tile_Bomb = registerBlock("brown_dungeoncite_tile_bomb",
+            new GlazedTerracottaBlock(FabricBlockSettings.copyOf(Blocks.STONE_BRICKS).strength(
+                            50, 6.0F)
+                    .sounds(BlockSoundGroup.STONE).requiresTool()));
     public static final Block Secret_Cracked_Brown_Dungeoncite_Brick = registerBlock("secret_cracked_brown_dungeoncite_bricks",
             new SecretStone(FabricBlockSettings.copyOf(Blocks.CRACKED_STONE_BRICKS).strength(
                             50, 6.0F)
                     .sounds(BlockSoundGroup.STONE).requiresTool()));
     public static final Block Reinforced_Brown_Dungeoncite = registerBlock("reinforced_brown_dungeoncite",
             new Block(FabricBlockSettings.copyOf(Blocks.STONE_BRICKS).strength(
+                            50, 6.0F)
+                    .sounds(BlockSoundGroup.STONE).requiresTool()));
+    public static final Block Brown_Dungeoncite_Pedestal = registerBlock("brown_dungeoncite_pedestal",
+            new Block(FabricBlockSettings.copyOf(Blocks.SANDSTONE).strength(
+                            50, 6.0F)
+                    .sounds(BlockSoundGroup.STONE).requiresTool()));
+    public static final Block Brown_Dungeoncite_Pillar = registerBlock("brown_dungeoncite_pillar",
+            new PillarBlock(FabricBlockSettings.copyOf(Blocks.QUARTZ_PILLAR).strength(
                             50, 6.0F)
                     .sounds(BlockSoundGroup.STONE).requiresTool()));
 
@@ -105,7 +118,10 @@ public class ZeldaBlocks {
         entry.add(Brown_Dungeoncite_Tile_TTR);
         entry.add(Brown_Dungeoncite_Tile_TBL);
         entry.add(Brown_Dungeoncite_Tile_TBR);
+        entry.add(Brown_Dungeoncite_Tile_Bomb);
         entry.add(Reinforced_Brown_Dungeoncite);
+        entry.add(Brown_Dungeoncite_Pedestal);
+        entry.add(Brown_Dungeoncite_Pillar);
     }
 
     public static void addItemsToPlantGroup(FabricItemGroupEntries entry) {

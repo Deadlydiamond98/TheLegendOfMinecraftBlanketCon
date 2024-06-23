@@ -1,10 +1,7 @@
 package net.deadlydiamond98.networking;
 
 import net.deadlydiamond98.ZeldaCraft;
-import net.deadlydiamond98.networking.packets.BombParticleS2CPacket;
-import net.deadlydiamond98.networking.packets.DekuStunOverlayS2CPacket;
-import net.deadlydiamond98.networking.packets.SmaaashParticleS2CPacket;
-import net.deadlydiamond98.networking.packets.SnapParticleS2CPacket;
+import net.deadlydiamond98.networking.packets.*;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.minecraft.network.PacketByteBuf;
@@ -18,12 +15,14 @@ public class ZeldaClientPackets {
     public static final Identifier ShootBeamPacket = new Identifier(ZeldaCraft.MOD_ID, "shoot_beam_packet");
     public static final Identifier SmashLootGrassPacket = new Identifier(ZeldaCraft.MOD_ID, "smash_loot_grass_packet");
     public static final Identifier DekuStunOverlayPacket = new Identifier(ZeldaCraft.MOD_ID, "deku_stun_overlay_packet");
+    public static final Identifier ManaHudPacket = new Identifier(ZeldaCraft.MOD_ID, "mana_hud_packet");
 
     public static void registerC2SPackets() {
         ClientPlayNetworking.registerGlobalReceiver(SmaaashPacket, SmaaashParticleS2CPacket::recieve);
         ClientPlayNetworking.registerGlobalReceiver(SnapPacket, SnapParticleS2CPacket::recieve);
         ClientPlayNetworking.registerGlobalReceiver(BombPacket, BombParticleS2CPacket::recieve);
         ClientPlayNetworking.registerGlobalReceiver(DekuStunOverlayPacket, DekuStunOverlayS2CPacket::recieve);
+        ClientPlayNetworking.registerGlobalReceiver(ManaHudPacket, ManaValueS2CPacket::recieve);
     }
 
     public static void sendSwordBeamPacket() {

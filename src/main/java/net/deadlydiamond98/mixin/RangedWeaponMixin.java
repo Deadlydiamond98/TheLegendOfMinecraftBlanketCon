@@ -1,7 +1,7 @@
 package net.deadlydiamond98.mixin;
 
-import net.deadlydiamond98.items.custombundle.Quiver;
-import net.deadlydiamond98.util.PlayerData;
+import net.deadlydiamond98.items.custom.custombundle.Quiver;
+import net.deadlydiamond98.util.OtherPlayerData;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -20,7 +20,7 @@ public abstract class RangedWeaponMixin {
     private static void getArrowFromQuiver(LivingEntity entity, Predicate<ItemStack> predicate, CallbackInfoReturnable<ItemStack> cir) {
         if (entity instanceof PlayerEntity) {
             PlayerEntity player = (PlayerEntity) entity;
-            PlayerData accessor = (PlayerData) player;
+            OtherPlayerData accessor = (OtherPlayerData) player;
 
             for (int i = 0; i < player.getInventory().size(); i++) {
                 ItemStack stack = player.getInventory().getStack(i);

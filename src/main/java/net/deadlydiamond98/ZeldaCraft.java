@@ -2,6 +2,7 @@ package net.deadlydiamond98;
 
 import net.deadlydiamond98.blocks.ZeldaBlocks;
 import net.deadlydiamond98.blocks.entities.ZeldaBlockEntities;
+import net.deadlydiamond98.entities.monsters.BeamosEntity;
 import net.deadlydiamond98.entities.monsters.BubbleEntity;
 import net.deadlydiamond98.entities.monsters.KeeseEntity;
 import net.deadlydiamond98.entities.ZeldaEntities;
@@ -11,6 +12,7 @@ import net.deadlydiamond98.networking.ZeldaServerPackets;
 import net.deadlydiamond98.particle.ZeldaParticles;
 import net.deadlydiamond98.sounds.ZeldaSounds;
 import net.deadlydiamond98.statuseffects.ZeldaStatusEffects;
+import net.deadlydiamond98.util.ZeldaPotionRecipes;
 import net.deadlydiamond98.world.ZeldaFeatures;
 import net.fabricmc.api.ModInitializer;
 
@@ -35,6 +37,7 @@ public class ZeldaCraft implements ModInitializer {
 		ZeldaServerPackets.registerS2CPackets();
 		ZeldaParticles.registerParticles();
 		ZeldaStatusEffects.registerStatusEffects();
+		ZeldaPotionRecipes.registerBrewingRecipes();
 		EntityDamagedEvent.register();
 		ZeldaFeatures.register();
 		LOGGER.info("Mod Loaded");
@@ -43,6 +46,7 @@ public class ZeldaCraft implements ModInitializer {
 	private void registerEntityAttributes() {
 		FabricDefaultAttributeRegistry.register(ZeldaEntities.Keese_Entity, KeeseEntity.createCustomBatAttributes());
 		FabricDefaultAttributeRegistry.register(ZeldaEntities.Bubble_Entity, BubbleEntity.createCustomBatAttributes());
+		FabricDefaultAttributeRegistry.register(ZeldaEntities.Beamos_Entity, BeamosEntity.createCustomBatAttributes());
 	}
 
 	public static boolean isModLoaded(String modid) {

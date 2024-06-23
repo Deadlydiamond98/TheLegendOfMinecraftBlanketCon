@@ -2,21 +2,21 @@ package net.deadlydiamond98.items;
 
 import net.deadlydiamond98.ZeldaCraft;
 import net.deadlydiamond98.entities.ZeldaEntities;
-import net.deadlydiamond98.items.Swords.CrackedBat;
-import net.deadlydiamond98.items.Swords.MagicSword;
-import net.deadlydiamond98.items.Swords.MasterSword;
-import net.deadlydiamond98.items.custombundle.BombBag;
-import net.deadlydiamond98.items.custombundle.Quiver;
+import net.deadlydiamond98.items.custom.*;
+import net.deadlydiamond98.items.custom.Swords.CrackedBat;
+import net.deadlydiamond98.items.custom.Swords.MagicSword;
+import net.deadlydiamond98.items.custom.Swords.MasterSword;
+import net.deadlydiamond98.items.custom.custombundle.BombBag;
+import net.deadlydiamond98.items.custom.custombundle.Quiver;
+import net.deadlydiamond98.items.custom.manaItems.MagicPowder;
+import net.deadlydiamond98.items.custom.manaItems.StarFragment;
 import net.deadlydiamond98.sounds.ZeldaSounds;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroupEntries;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
-import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.item.*;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
-import net.minecraft.text.Text;
-import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Rarity;
 
@@ -73,8 +73,16 @@ public class ZeldaItems {
             .maxCount(1), 86));
     public static final Item Music_Disc_Legend_Fragment = registerItem("music_disc_legend_fragment", new ToolTipItem(
             new FabricItemSettings()));
-    public static final Item Loot_Grass_Seeds = registerItem("loot_grass_seeds", new LootGrassSeedBag(
+    public static final Item Dungeon_Key = registerItem("dungeon_key", new Item(
             new FabricItemSettings()));
+    public static final Item Hookshot = registerItem("hookshot", new HookshotItem(
+            new FabricItemSettings()));
+    public static final Item Star_Fragment = registerItem("star_fragment", new StarFragment(
+            new FabricItemSettings(), 25));
+    public static final Item Magic_Jar = registerItem("magic_jar", new StarFragment(
+            new FabricItemSettings().food(new FoodComponent.Builder().build()), 15));
+    public static final Item Magic_Powder = registerItem("magic_powder", new MagicPowder(
+            new FabricItemSettings().maxCount(16)));
 
 
 
@@ -83,6 +91,9 @@ public class ZeldaItems {
 
 
     //SPAWN EGGGGGSSSSSSSSSSSSSSSSS
+
+    public static final Item Beamos_Spawn_Egg = registerItem("beamos_spawn_egg", new SpawnEggItem(
+            ZeldaEntities.Beamos_Entity, 0x423027, 0x1782db, new FabricItemSettings()));
     public static final Item Bubble_Spawn_Egg = registerItem("bubble_spawn_egg", new SpawnEggItem(
             ZeldaEntities.Bubble_Entity, 0x979797, 0x610717, new FabricItemSettings()));
     public static final Item Keese_Spawn_Egg = registerItem("keese_spawn_egg", new SpawnEggItem(
@@ -112,6 +123,7 @@ public class ZeldaItems {
         entry.add(Mirror_Shield);
     }
     public static void addTools(FabricItemGroupEntries entry) {
+        entry.add(Magic_Powder);
         entry.add(Music_Disc_Legend);
     }
     public static void addMaterials(FabricItemGroupEntries entry) {
@@ -119,8 +131,11 @@ public class ZeldaItems {
         entry.add(Emerald_Chunk);
         entry.add(Baseball);
         entry.add(Music_Disc_Legend_Fragment);
+        entry.add(Dungeon_Key);
+        entry.add(Star_Fragment);
     }
     public static void addEggs(FabricItemGroupEntries entry) {
+        entry.add(Beamos_Spawn_Egg);
         entry.add(Bubble_Spawn_Egg);
         entry.add(Keese_Spawn_Egg);
     }
