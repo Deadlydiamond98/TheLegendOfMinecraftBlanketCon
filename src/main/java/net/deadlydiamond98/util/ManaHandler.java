@@ -13,7 +13,7 @@ public class ManaHandler {
             userM.setMana(userM.getMana() + amountToGive);
         }
         else if (userM.getMana() < userM.getMaxMana() && amountToGive + userM.getMana() > userM.getMaxMana()) {
-            userM.setMana(100);
+            userM.setMana(userM.getMaxMana());
         }
     }
     public static void removeManaFromPlayer(PlayerEntity user, int amountToRemove) {

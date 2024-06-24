@@ -35,6 +35,12 @@
       "zeldacraft:fire_magic"
     ]
   },
+  "ice_magic": {
+    "subtitle": "sounds.zeldacraft.ice_magic",
+    "sounds": [
+      "zeldacraft:ice_magic"
+    ]
+  },
   "musicdisclegend": {
     "subtitle": "sounds.zeldacraft.musicdisclegend",
     "sounds": [

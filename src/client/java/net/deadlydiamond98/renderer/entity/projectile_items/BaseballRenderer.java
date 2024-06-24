@@ -1,8 +1,7 @@
-package net.deadlydiamond98.renderer.entity;
+package net.deadlydiamond98.renderer.entity.projectile_items;
 
 import net.deadlydiamond98.ZeldaCraft;
 import net.deadlydiamond98.entities.projectiles.BaseBallEntity;
-import net.deadlydiamond98.entities.projectiles.DekuNutEntity;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.*;
 import net.minecraft.client.render.entity.EntityRenderer;
@@ -14,13 +13,13 @@ import net.minecraft.util.math.RotationAxis;
 import org.joml.Matrix3f;
 import org.joml.Matrix4f;
 
-public class DekuNutRenderer<T extends Entity> extends EntityRenderer<DekuNutEntity> {
-    public DekuNutRenderer(EntityRendererFactory.Context ctx) {
+public class BaseballRenderer<T extends Entity> extends EntityRenderer<BaseBallEntity> {
+    public BaseballRenderer(EntityRendererFactory.Context ctx) {
         super(ctx);
     }
 
     @Override
-    public void render(DekuNutEntity entity, float yaw, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light) {
+    public void render(BaseBallEntity entity, float yaw, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light) {
         matrices.push();
         matrices.scale(-1.0F, -1.0F, 1.0F);
         matrices.translate(0.0D, -0.25D, 0.0D);
@@ -46,7 +45,7 @@ public class DekuNutRenderer<T extends Entity> extends EntityRenderer<DekuNutEnt
     }
 
     @Override
-    public Identifier getTexture(DekuNutEntity entity) {
-        return new Identifier(ZeldaCraft.MOD_ID, "textures/item/deku_nut.png");
+    public Identifier getTexture(BaseBallEntity entity) {
+        return new Identifier(ZeldaCraft.MOD_ID, "textures/item/baseball.png");
     }
 }

@@ -21,18 +21,23 @@
         },
         {
           "type": "minecraft:item",
-          "name": "zeldacraft:bomb",
+          "name": "zeldacraft:emerald_chunk",
           "weight": 25
-        },
-        {
-          "type": "minecraft:item",
-          "name": "zeldacraft:bombchu",
-          "weight": 5
         },
         {
           "type": "minecraft:item",
           "name": "zeldacraft:deku_nut",
           "weight": 5
+        },
+        {
+          "type": "minecraft:item",
+          "name": "zeldacraft:bomb",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "zeldacraft:bombchu",
+          "weight": 1
         },
         {
           "type": "minecraft:item",

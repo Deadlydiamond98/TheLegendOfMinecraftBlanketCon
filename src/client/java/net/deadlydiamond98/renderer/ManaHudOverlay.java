@@ -43,8 +43,8 @@ public class ManaHudOverlay implements HudRenderCallback {
 
         displayedMana = MathHelper.lerp(tickDelta * 0.25f, displayedMana, currentMana);
 
-        int filledHeight = (int) ((displayedMana / (float) maxMana) * 42);
+        int filledHeight = (int) ((displayedMana / (float) maxMana) * 32);
         RenderSystem.setShaderTexture(0, Filled_Mana);
-        drawContext.drawTexture(Filled_Mana, mana_x, mana_y + (42 - filledHeight), 0, 42 - filledHeight, 16, filledHeight, 16, 42);
+        drawContext.drawTexture(Filled_Mana, mana_x + 4, mana_y + 5 + (32 - filledHeight), 0, 32 - filledHeight, 8, filledHeight, 8, 32);
     }
 }

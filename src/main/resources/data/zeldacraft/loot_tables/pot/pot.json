@@ -46,7 +46,7 @@
         },
         {
           "type": "minecraft:item",
-          "name": "zeldacraft:star_fragment",
+          "name": "zeldacraft:stardust",
           "weight": 2
         }
       ]

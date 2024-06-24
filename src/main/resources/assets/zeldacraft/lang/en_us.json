@@ -14,8 +14,11 @@
   "item.zeldacraft.star_fragment": "Star Fragment",
   "item.zeldacraft.stardust": "Stardust",
   "item.zeldacraft.magic_jar": "Magic Jar",
+  "item.zeldacraft.magic_upgrade": "Magic Container",
+  "item.zeldacraft.fairy_bottle": "Fairy Bottle",
   "item.zeldacraft.magic_powder": "Magic Powder",
   "item.zeldacraft.fire_rod": "Fire Rod",
+  "item.zeldacraft.ice_rod": "Ice Rod",
 
   "block.zeldacraft.loot_grass": "Loot Grass",
   "block.zeldacraft.plain_pot": "Pot",
@@ -84,6 +87,8 @@
 
   "item.zeldacraft.bubble_spawn_egg": "Bubble Spawn Egg",
   "entity.zeldacraft.bubble": "Bubble",
+  "item.zeldacraft.fairy_spawn_egg": "Fairy Spawn Egg",
+  "entity.zeldacraft.fairy": "Fairy",
   "item.zeldacraft.beamos_spawn_egg": "Beamos Spawn Egg",
   "entity.zeldacraft.beamos": "Beamos",
   "item.zeldacraft.keese_spawn_egg": "Keese Spawn Egg",

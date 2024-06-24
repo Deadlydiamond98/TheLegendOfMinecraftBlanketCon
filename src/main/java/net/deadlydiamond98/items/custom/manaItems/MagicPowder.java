@@ -58,7 +58,7 @@ public class MagicPowder extends Item {
         BlockPos pos = context.getBlockPos();
         BlockState state = world.getBlockState(pos);
 
-        if (ManaHandler.CanRemoveManaFromPlayer(context.getPlayer(), 2)) {
+        if (ManaHandler.CanRemoveManaFromPlayer(context.getPlayer(), 5)) {
             if (state.isOf(Blocks.GRASS)) {
                 world.setBlockState(pos, ZeldaBlocks.Loot_Grass.getDefaultState());
             }
@@ -76,7 +76,7 @@ public class MagicPowder extends Item {
                     SoundCategory.PLAYERS, 1.0f, 1.0f);
             world.addBlockBreakParticles(pos, Blocks.MOSS_BLOCK.getDefaultState());
             world.addBlockBreakParticles(pos, Blocks.GOLD_BLOCK.getDefaultState());
-            ManaHandler.removeManaFromPlayer(context.getPlayer(), 2);
+            ManaHandler.removeManaFromPlayer(context.getPlayer(), 5);
             context.getStack().decrement(1);
             return ActionResult.SUCCESS;
         }

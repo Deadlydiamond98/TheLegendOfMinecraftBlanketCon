@@ -1,4 +1,4 @@
-package net.deadlydiamond98.renderer.entity;
+package net.deadlydiamond98.renderer.entity.monster;
 
 import net.deadlydiamond98.ZeldaCraft;
 import net.deadlydiamond98.entities.monsters.KeeseEntity;

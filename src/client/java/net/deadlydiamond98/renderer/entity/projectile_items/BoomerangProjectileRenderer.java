@@ -1,4 +1,4 @@
-package net.deadlydiamond98.renderer.entity;
+package net.deadlydiamond98.renderer.entity.projectile_items;
 
 import net.deadlydiamond98.entities.projectiles.BoomerangProjectile;
 import net.minecraft.client.render.VertexConsumerProvider;

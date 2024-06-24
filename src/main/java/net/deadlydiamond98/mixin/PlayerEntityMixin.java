@@ -35,12 +35,16 @@ public abstract class PlayerEntityMixin implements OtherPlayerData, ManaPlayerDa
     @Inject(method = "writeCustomDataToNbt", at = @At("HEAD"))
     public void onSave(NbtCompound nbt, CallbackInfo info) {
         nbt.putInt("manaLevelZelda", manaLevelZelda);
+        nbt.putInt("manaMaxLevelZelda", manaMaxLevelZelda);
     }
 
     @Inject(method = "readCustomDataFromNbt", at = @At("HEAD"))
     public void onLoad(NbtCompound nbt, CallbackInfo info) {
         if (nbt.contains("manaLevelZelda")) {
             this.manaLevelZelda = nbt.getInt("manaLevelZelda");
+        }
+        if (nbt.contains("manaMaxLevelZelda")) {
+            this.manaMaxLevelZelda = nbt.getInt("manaMaxLevelZelda");
         }
     }
 

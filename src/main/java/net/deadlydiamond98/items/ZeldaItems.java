@@ -8,10 +8,7 @@ import net.deadlydiamond98.items.custom.Swords.MagicSword;
 import net.deadlydiamond98.items.custom.Swords.MasterSword;
 import net.deadlydiamond98.items.custom.custombundle.BombBag;
 import net.deadlydiamond98.items.custom.custombundle.Quiver;
-import net.deadlydiamond98.items.custom.manaItems.FireRod;
-import net.deadlydiamond98.items.custom.manaItems.MagicJar;
-import net.deadlydiamond98.items.custom.manaItems.MagicPowder;
-import net.deadlydiamond98.items.custom.manaItems.StarFragment;
+import net.deadlydiamond98.items.custom.manaItems.*;
 import net.deadlydiamond98.sounds.ZeldaSounds;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroupEntries;
@@ -84,12 +81,19 @@ public class ZeldaItems {
     public static final Item Stardust = registerItem("stardust", new Item(
             new FabricItemSettings()));
     public static final Item Magic_Jar = registerItem("magic_jar", new MagicJar(
-            new FabricItemSettings().food(new FoodComponent.Builder().build()), 10));
+            new FabricItemSettings().food(new FoodComponent.Builder().alwaysEdible().build()), 10));
+    public static final Item Fairy_Bottle = registerItem("fairy_bottle", new Item(
+            new FabricItemSettings().maxCount(1)));
     public static final Item Magic_Powder = registerItem("magic_powder", new MagicPowder(
             new FabricItemSettings().maxCount(16)));
-    public static final Item Fire_Crystal = registerItem("fire_rod", new FireRod(
+    public static final Item Fire_Rod = registerItem("fire_rod", new FireRod(
+            new FabricItemSettings().maxCount(1)));
+    public static final Item Ice_Rod = registerItem("ice_rod", new IceRod(
+            new FabricItemSettings().maxCount(1)));
+    public static final Item Magic_Upgrade = registerItem("magic_upgrade", new MagicUpgrade(
             new FabricItemSettings().maxCount(16)));
-
+    public static final Item Magic_Downgrade = registerItem("magic_downgrade", new MagicDowngrade(
+            new FabricItemSettings().maxCount(16)));
 
 
 
@@ -102,6 +106,8 @@ public class ZeldaItems {
             ZeldaEntities.Beamos_Entity, 0x423027, 0x1782db, new FabricItemSettings()));
     public static final Item Bubble_Spawn_Egg = registerItem("bubble_spawn_egg", new SpawnEggItem(
             ZeldaEntities.Bubble_Entity, 0x979797, 0x610717, new FabricItemSettings()));
+    public static final Item Fairy_Spawn_Egg = registerItem("fairy_spawn_egg", new SpawnEggItem(
+            ZeldaEntities.Fairy_Entity, 0xffffff, 0x5d8fc2, new FabricItemSettings()));
     public static final Item Keese_Spawn_Egg = registerItem("keese_spawn_egg", new SpawnEggItem(
             ZeldaEntities.Keese_Entity, 0x1412a8, 0x9390fe, new FabricItemSettings()));
 
@@ -127,7 +133,8 @@ public class ZeldaItems {
         entry.add(Quiver);
         entry.add(Hylain_Shield);
         entry.add(Mirror_Shield);
-        entry.add(Fire_Crystal);
+        entry.add(Fire_Rod);
+        entry.add(Ice_Rod);
     }
     public static void addTools(FabricItemGroupEntries entry) {
         entry.add(Magic_Powder);
@@ -141,10 +148,14 @@ public class ZeldaItems {
         entry.add(Dungeon_Key);
         entry.add(Star_Fragment);
         entry.add(Stardust);
+        entry.add(Fairy_Bottle);
+        entry.add(Magic_Upgrade);
+        entry.add(Magic_Downgrade);
     }
     public static void addEggs(FabricItemGroupEntries entry) {
         entry.add(Beamos_Spawn_Egg);
         entry.add(Bubble_Spawn_Egg);
+        entry.add(Fairy_Spawn_Egg);
         entry.add(Keese_Spawn_Egg);
     }
     public static void addConsumables(FabricItemGroupEntries entry) {

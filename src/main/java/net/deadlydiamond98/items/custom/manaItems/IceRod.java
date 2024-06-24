@@ -5,7 +5,6 @@ import net.deadlydiamond98.entities.projectiles.MagicFireProjectileEntity;
 import net.deadlydiamond98.sounds.ZeldaSounds;
 import net.deadlydiamond98.util.ManaHandler;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
 import net.minecraft.block.CampfireBlock;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
@@ -20,8 +19,8 @@ import net.minecraft.world.World;
 
 import static net.minecraft.block.CampfireBlock.LIT;
 
-public class FireRod extends Item {
-    public FireRod(Settings settings) {
+public class IceRod extends Item {
+    public IceRod(Settings settings) {
         super(settings);
     }
 
@@ -33,7 +32,7 @@ public class FireRod extends Item {
             if (blockState.getBlock() instanceof CampfireBlock campfireBlock && !campfireBlock.isLitCampfire(blockState)) {
                 context.getWorld().setBlockState(context.getBlockPos(), blockState.with(LIT, true));
                 ManaHandler.removeManaFromPlayer(user, 2);
-                context.getWorld().playSound(null, context.getBlockPos(), ZeldaSounds.FireMagic,
+                context.getWorld().playSound(null, context.getBlockPos(), ZeldaSounds.IceMagic,
                         SoundCategory.PLAYERS, 3.0f, 1.0f);
                 return ActionResult.SUCCESS;
             }
@@ -52,7 +51,7 @@ public class FireRod extends Item {
             magicFire.setOwner(user);
             world.spawnEntity(magicFire);
             ManaHandler.removeManaFromPlayer(user, 8);
-            user.getWorld().playSound(null, user.getBlockPos(), ZeldaSounds.FireMagic,
+            user.getWorld().playSound(null, user.getBlockPos(), ZeldaSounds.IceMagic,
                     SoundCategory.PLAYERS, 3.0f, 1.0f);
             return TypedActionResult.success(user.getStackInHand(hand));
         }
