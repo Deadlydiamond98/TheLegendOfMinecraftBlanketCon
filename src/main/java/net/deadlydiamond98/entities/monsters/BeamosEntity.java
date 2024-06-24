@@ -184,7 +184,7 @@ public class BeamosEntity extends HostileEntity implements Monster {
     public void takeKnockback(double strength, double x, double z) {
     }
 
-    public static DefaultAttributeContainer.Builder createCustomBatAttributes() {
+    public static DefaultAttributeContainer.Builder createCustomAttributes() {
         return HostileEntity.createHostileAttributes()
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, 20.0)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 4.0)

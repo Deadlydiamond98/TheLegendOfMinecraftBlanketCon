@@ -4,6 +4,7 @@ import net.deadlydiamond98.blocks.ZeldaBlocks;
 import net.deadlydiamond98.blocks.entities.ZeldaBlockEntities;
 import net.deadlydiamond98.entities.monsters.BeamosEntity;
 import net.deadlydiamond98.entities.monsters.BubbleEntity;
+import net.deadlydiamond98.entities.monsters.FairyEntity;
 import net.deadlydiamond98.entities.monsters.KeeseEntity;
 import net.deadlydiamond98.entities.ZeldaEntities;
 import net.deadlydiamond98.events.EntityDamagedEvent;
@@ -44,9 +45,10 @@ public class ZeldaCraft implements ModInitializer {
 	}
 
 	private void registerEntityAttributes() {
-		FabricDefaultAttributeRegistry.register(ZeldaEntities.Keese_Entity, KeeseEntity.createCustomBatAttributes());
-		FabricDefaultAttributeRegistry.register(ZeldaEntities.Bubble_Entity, BubbleEntity.createCustomBatAttributes());
-		FabricDefaultAttributeRegistry.register(ZeldaEntities.Beamos_Entity, BeamosEntity.createCustomBatAttributes());
+		FabricDefaultAttributeRegistry.register(ZeldaEntities.Keese_Entity, KeeseEntity.createCustomAttributes());
+		FabricDefaultAttributeRegistry.register(ZeldaEntities.Fairy_Entity, FairyEntity.createCustomAttributes());
+		FabricDefaultAttributeRegistry.register(ZeldaEntities.Bubble_Entity, BubbleEntity.createCustomAttributes());
+		FabricDefaultAttributeRegistry.register(ZeldaEntities.Beamos_Entity, BeamosEntity.createCustomAttributes());
 	}
 
 	public static boolean isModLoaded(String modid) {

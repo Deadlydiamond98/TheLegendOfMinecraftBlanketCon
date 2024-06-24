@@ -19,6 +19,9 @@ public class ZeldaSounds {
     public static SoundEvent SwordRecharge = registerSoundEvent("swordrecharge");
     public static SoundEvent SecretRoom = registerSoundEvent("secretroom");
     public static SoundEvent Smaaash_Sound = registerSoundEvent("smaaash_sound");
+    public static SoundEvent FairyAmbient = registerSoundEvent("fairy_ambient");
+    public static SoundEvent Fairyhurt = registerSoundEvent("fairy_hurt");
+    public static SoundEvent FairyDeath = registerSoundEvent("fairy_death");
 
     public static SoundEvent registerSoundEvent(String name) {
         Identifier id = new Identifier(ZeldaCraft.MOD_ID, name);

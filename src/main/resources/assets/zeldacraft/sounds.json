@@ -64,5 +64,23 @@
     "sounds": [
       "zeldacraft:secret"
     ]
+  },
+  "fairy_ambient": {
+    "subtitle": "sounds.zeldacraft.fairy_ambient",
+    "sounds": [
+      "zeldacraft:fairy_ambient"
+    ]
+  },
+  "fairy_hurt": {
+    "subtitle": "sounds.zeldacraft.fairy_hurt",
+    "sounds": [
+      "zeldacraft:fairy_hurt"
+    ]
+  },
+  "fairy_death": {
+    "subtitle": "sounds.zeldacraft.fairy_death",
+    "sounds": [
+      "zeldacraft:fairy_death"
+    ]
   }
 }

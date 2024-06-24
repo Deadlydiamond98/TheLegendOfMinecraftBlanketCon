@@ -65,6 +65,7 @@ public class ZeldaCraftClient implements ClientModInitializer {
 		EntityRendererRegistry.register(ZeldaEntities.Master_Sword_Beam, MasterSwordBeamRenderer::new);
 		EntityRendererRegistry.register(ZeldaEntities.Magic_Fire_Projectile, MagicFireProjectileRenderer::new);
 		EntityRendererRegistry.register(ZeldaEntities.Keese_Entity, KeeseRenderer::new);
+		EntityRendererRegistry.register(ZeldaEntities.Fairy_Entity, FairyRenderer::new);
 		EntityRendererRegistry.register(ZeldaEntities.Bubble_Entity, BubbleRenderer::new);
 		EntityRendererRegistry.register(ZeldaEntities.Beamos_Entity, BeamosRenderer::new);
 		EntityRendererRegistry.register(ZeldaEntities.Baseball_Entity, BaseballRenderer::new);
@@ -79,6 +80,7 @@ public class ZeldaCraftClient implements ClientModInitializer {
 		EntityModelLayerRegistry.registerModelLayer(BombchuEntityModel.LAYER_LOCATION, BombchuEntityModel::getTexturedModelData);
 		EntityModelLayerRegistry.registerModelLayer(KeeseEntityModel.LAYER_LOCATION, BatEntityModel::getTexturedModelData);
 		EntityModelLayerRegistry.registerModelLayer(BubbleEntityModel.LAYER_LOCATION, BubbleEntityModel::getTexturedModelData);
+		EntityModelLayerRegistry.registerModelLayer(FairyEntityModel.LAYER_LOCATION, FairyEntityModel::getTexturedModelData);
 		EntityModelLayerRegistry.registerModelLayer(BeamosEntityModel.LAYER_LOCATION, BeamosEntityModel::getTexturedModelData);
 	}
 

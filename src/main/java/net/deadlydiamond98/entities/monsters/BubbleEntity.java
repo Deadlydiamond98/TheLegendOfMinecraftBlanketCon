@@ -148,7 +148,7 @@ public class BubbleEntity extends HostileEntity implements Monster {
         return this.getAttackableState();
     }
 
-    public static DefaultAttributeContainer.Builder createCustomBatAttributes() {
+    public static DefaultAttributeContainer.Builder createCustomAttributes() {
         return HostileEntity.createHostileAttributes()
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, 2.0)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 1.0)

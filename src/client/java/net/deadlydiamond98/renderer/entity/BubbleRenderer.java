@@ -28,17 +28,6 @@ public class BubbleRenderer<T extends Entity> extends MobEntityRenderer<BubbleEn
     @Override
     public void render(BubbleEntity mobEntity, float f, float g, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i) {
         super.render(mobEntity, f, g, matrixStack, vertexConsumerProvider, i);
-
-        ModelPart main = this.getModel().getPart().getChild("main");
-        ModelPart wingr = main.getChild("wingr");
-        ModelPart wingl = main.getChild("wingl");
-
-        if (!mobEntity.getAttackableState()) {
-            wingr.yaw = MathHelper.cos(mobEntity.age * 74 * 0.005f) * 0.25f * (float) Math.PI;
-            wingl.yaw = -wingr.yaw;
-            wingr.pitch = MathHelper.cos(mobEntity.age * 74 * 0.005f) * 0.5f;
-            wingl.pitch = wingr.pitch;
-        }
     }
 
     @Override

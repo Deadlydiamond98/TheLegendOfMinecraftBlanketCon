@@ -3,6 +3,8 @@ package net.deadlydiamond98.networking.packets;
 import net.deadlydiamond98.ZeldaCraft;
 import net.deadlydiamond98.blocks.LootGrass;
 import net.deadlydiamond98.blocks.ZeldaBlocks;
+import net.deadlydiamond98.entities.ZeldaEntities;
+import net.deadlydiamond98.entities.monsters.FairyEntity;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -53,15 +55,18 @@ public class SmashLootGrassC2SPacket {
 
                 world.setBlockState(lookingBlock, lootGrass.getDefaultState().with(AGE, 0), 2);
 
-                int random = (((int) (Math.random() * 6)));
-                if (random == 1 && ZeldaCraft.isModLoaded("healpgood")) {
+                int random = (((int) (Math.random() * 50)));
+                if (random <= 20 && ZeldaCraft.isModLoaded("healpgood")) {
                     EntityType<?> entityType = EntityType.get("healpgood:health").orElse(null);
                     if (entityType != null) {
                         entityType.spawn((ServerWorld) world, null, null, lookingBlock,
                                 SpawnReason.NATURAL, true, true);
                     }
-                }
-                else {
+                } else if (random == 1) {
+                    FairyEntity fairy = new FairyEntity(ZeldaEntities.Fairy_Entity, world);
+                    fairy.setPos(lookingBlock.getX() + 0.5, lookingBlock.getY() + 0.5, lookingBlock.getZ() + 0.5);
+                    world.spawnEntity(fairy);
+                } else {
                     List<ItemStack> drops = Block.getDroppedStacks(
                             block, (ServerWorld) world, lookingBlock, null, player, player.getMainHandStack());
                     for (ItemStack drop : drops) {
