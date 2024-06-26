@@ -17,6 +17,7 @@ public class ZeldaStatusEffects {
 
     //effects
     public static final StatusEffect Stun_Status_Effect = new StunStatusEffect();
+    public static final StatusEffect Sword_Sick_Status_Effect = new SwordSickStatusEffect();
     public static final InstantStatusEffect Invigoration_Status_Effect = new InvigorationStatusEffect();
     public static final InstantStatusEffect Degeneration_Status_Effect = new DegenerationStatusEffect();
     public static final InstantStatusEffect Rejuvenation_Status_Effect = new RejuvenationStatusEffect();
@@ -29,6 +30,7 @@ public class ZeldaStatusEffects {
 
     public static void registerStatusEffects() {
         Registry.register(Registries.STATUS_EFFECT, new Identifier(ZeldaCraft.MOD_ID, "stunned"), Stun_Status_Effect);
+        Registry.register(Registries.STATUS_EFFECT, new Identifier(ZeldaCraft.MOD_ID, "sword_sick"), Sword_Sick_Status_Effect);
         Registry.register(Registries.STATUS_EFFECT, new Identifier(ZeldaCraft.MOD_ID, "instant_invigoration"), Invigoration_Status_Effect);
         Registry.register(Registries.STATUS_EFFECT, new Identifier(ZeldaCraft.MOD_ID, "instant_degeneration"), Degeneration_Status_Effect);
         Registry.register(Registries.STATUS_EFFECT, new Identifier(ZeldaCraft.MOD_ID, "rejuvenation"), Rejuvenation_Status_Effect);

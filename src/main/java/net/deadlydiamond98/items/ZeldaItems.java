@@ -81,7 +81,7 @@ public class ZeldaItems {
     public static final Item Stardust = registerItem("stardust", new Item(
             new FabricItemSettings()));
     public static final Item Magic_Jar = registerItem("magic_jar", new MagicJar(
-            new FabricItemSettings().food(new FoodComponent.Builder().alwaysEdible().build()), 10));
+            new FabricItemSettings().food(new FoodComponent.Builder().alwaysEdible().snack().build()), 10));
     public static final Item Fairy_Bottle = registerItem("fairy_bottle", new Item(
             new FabricItemSettings().maxCount(1)));
     public static final Item Magic_Powder = registerItem("magic_powder", new MagicPowder(
@@ -92,6 +92,8 @@ public class ZeldaItems {
             new FabricItemSettings().maxCount(1)));
     public static final Item Magic_Upgrade = registerItem("magic_upgrade", new MagicUpgrade(
             new FabricItemSettings().maxCount(16)));
+    public static final Item Magic_Candy = registerItem("magic_candy", new MagicCandy(
+            new FabricItemSettings().maxCount(16).food(new FoodComponent.Builder().alwaysEdible().snack().build())));
     public static final Item Magic_Downgrade = registerItem("magic_downgrade", new MagicDowngrade(
             new FabricItemSettings().maxCount(16)));
 
@@ -118,55 +120,14 @@ public class ZeldaItems {
     private static Item registerItem(String itemName, Item item) {
         return Registry.register(Registries.ITEM, new Identifier(ZeldaCraft.MOD_ID, itemName), item);
     }
-
-    public static void addCombat(FabricItemGroupEntries entry) {
-        entry.add(Kokiri_Sword);
-        entry.add(Magic_Sword);
-        entry.add(Master_Sword);
-        entry.add(Cracked_Bat);
-        entry.add(Wooden_Boomerang);
-        entry.add(Bomb);
-        entry.add(Deku_Nut);
-        entry.add(Super_Bomb);
-        entry.add(Bombchu);
-        entry.add(Bomb_Bag);
-        entry.add(Quiver);
-        entry.add(Hylain_Shield);
-        entry.add(Mirror_Shield);
-        entry.add(Fire_Rod);
-        entry.add(Ice_Rod);
-    }
-    public static void addTools(FabricItemGroupEntries entry) {
-        entry.add(Magic_Powder);
-        entry.add(Music_Disc_Legend);
-    }
-    public static void addMaterials(FabricItemGroupEntries entry) {
-        entry.add(Emerald_Shard);
-        entry.add(Emerald_Chunk);
-        entry.add(Baseball);
-        entry.add(Music_Disc_Legend_Fragment);
-        entry.add(Dungeon_Key);
-        entry.add(Star_Fragment);
-        entry.add(Stardust);
-        entry.add(Fairy_Bottle);
-        entry.add(Magic_Upgrade);
-        entry.add(Magic_Downgrade);
-    }
     public static void addEggs(FabricItemGroupEntries entry) {
         entry.add(Beamos_Spawn_Egg);
         entry.add(Bubble_Spawn_Egg);
         entry.add(Fairy_Spawn_Egg);
         entry.add(Keese_Spawn_Egg);
     }
-    public static void addConsumables(FabricItemGroupEntries entry) {
-        entry.add(Magic_Jar);
-    }
     public static void registerItems() {
         ZeldaCraft.LOGGER.debug("Registering Items for" + ZeldaCraft.MOD_ID);
-        ItemGroupEvents.modifyEntriesEvent(ItemGroups.COMBAT).register(ZeldaItems::addCombat);
-        ItemGroupEvents.modifyEntriesEvent(ItemGroups.TOOLS).register(ZeldaItems::addTools);
-        ItemGroupEvents.modifyEntriesEvent(ItemGroups.INGREDIENTS).register(ZeldaItems::addMaterials);
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.SPAWN_EGGS).register(ZeldaItems::addEggs);
-        ItemGroupEvents.modifyEntriesEvent(ItemGroups.FOOD_AND_DRINK).register(ZeldaItems::addConsumables);
     }
 }

@@ -16,7 +16,7 @@ public class ZeldaClientPackets {
     public static final Identifier ShootBeamPacket = new Identifier(ZeldaCraft.MOD_ID, "shoot_beam_packet");
     public static final Identifier SmashLootGrassPacket = new Identifier(ZeldaCraft.MOD_ID, "smash_loot_grass_packet");
     public static final Identifier DekuStunOverlayPacket = new Identifier(ZeldaCraft.MOD_ID, "deku_stun_overlay_packet");
-    public static final Identifier ManaHudPacket = new Identifier(ZeldaCraft.MOD_ID, "mana_hud_packet");
+    public static final Identifier PlayerStatsPacket = new Identifier(ZeldaCraft.MOD_ID, "player_stats_packet");
 
     public static void registerC2SPackets() {
         ClientPlayNetworking.registerGlobalReceiver(SmaaashPacket, SmaaashParticleS2CPacket::recieve);
@@ -24,7 +24,7 @@ public class ZeldaClientPackets {
         ClientPlayNetworking.registerGlobalReceiver(SnapPacket, SnapParticleS2CPacket::recieve);
         ClientPlayNetworking.registerGlobalReceiver(BombPacket, BombParticleS2CPacket::recieve);
         ClientPlayNetworking.registerGlobalReceiver(DekuStunOverlayPacket, DekuStunOverlayS2CPacket::recieve);
-        ClientPlayNetworking.registerGlobalReceiver(ManaHudPacket, ManaValueS2CPacket::recieve);
+        ClientPlayNetworking.registerGlobalReceiver(PlayerStatsPacket, PlayerStatsS2CPacket::recieve);
     }
 
     public static void sendSwordBeamPacket() {

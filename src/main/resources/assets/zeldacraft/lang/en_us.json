@@ -1,4 +1,7 @@
 {
+  "itemgroup.zeldacraft_items": "The Legend of Steve Items",
+  "itemgroup.zeldacraft_blocks": "The Legend of Steve Blocks",
+
   "item.zeldacraft.emerald_shard": "Emerald Shard",
   "item.zeldacraft.emerald_chunk": "Emerald Chunk",
 
@@ -14,6 +17,7 @@
   "item.zeldacraft.star_fragment": "Star Fragment",
   "item.zeldacraft.stardust": "Stardust",
   "item.zeldacraft.magic_jar": "Magic Jar",
+  "item.zeldacraft.magic_candy": "Magic Candy",
   "item.zeldacraft.magic_upgrade": "Magic Container",
   "item.zeldacraft.fairy_bottle": "Fairy Bottle",
   "item.zeldacraft.magic_powder": "Magic Powder",
@@ -62,6 +66,7 @@
   "key.zeldacraft.sworddash": "Perform Sword Dash",
 
   "effect.zeldacraft.stunned": "Stunned",
+  "effect.zeldacraft.sword_sick": "Sword Sick",
 
   "effect.zeldacraft.instant_degeneration": "Degeneration",
 

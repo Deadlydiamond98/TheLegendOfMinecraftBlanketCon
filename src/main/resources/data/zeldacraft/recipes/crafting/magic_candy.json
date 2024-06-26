@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "eie",
+    "sis",
+    "i#i"
+  ],
+  "key": {
+    "e": {
+      "item": "zeldacraft:emerald_chunk"
+    },
+    "i": {
+      "item": "zeldacraft:star_fragment"
+    },
+    "s": {
+      "item": "zeldacraft:stardust"
+    },
+    "#": {
+      "item": "minecraft:sugar"
+    }
+  },
+  "result": {
+    "item": "zeldacraft:magic_candy",
+    "count": 1
+  }
+}

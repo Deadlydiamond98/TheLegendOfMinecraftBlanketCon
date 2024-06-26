@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ggg",
+    "gmg",
+    "gfg"
+  ],
+  "key": {
+    "m": {
+      "item": "zeldacraft:magic_candy"
+    },
+    "g": {
+      "item": "minecraft:gold_ingot"
+    },
+    "f": {
+      "item": "zeldacraft:fairy_bottle"
+    }
+  },
+  "result": {
+    "item": "zeldacraft:magic_upgrade",
+    "count": 1
+  }
+}

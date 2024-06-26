@@ -106,32 +106,8 @@ public class ZeldaBlocks {
         return Registry.register(Registries.ITEM, new Identifier(ZeldaCraft.MOD_ID, name),
                 new BlockItem(block, new FabricItemSettings()));
     }
-    public static void addItemsToGroup(FabricItemGroupEntries entry) {
-        entry.add(Secret_Cracked_Stone_Brick);
-        entry.add(Plain_Pot);
-        entry.add(Brown_Dungeoncite_Brick);
-        entry.add(Cracked_Brown_Dungeoncite_Brick);
-        entry.add(Mossy_Brown_Dungeoncite_Brick);
-        entry.add(Secret_Cracked_Brown_Dungeoncite_Brick);
-        entry.add(Brown_Dungeoncite_Tile);
-        entry.add(Brown_Dungeoncite_Tile_TTL);
-        entry.add(Brown_Dungeoncite_Tile_TTR);
-        entry.add(Brown_Dungeoncite_Tile_TBL);
-        entry.add(Brown_Dungeoncite_Tile_TBR);
-        entry.add(Brown_Dungeoncite_Tile_Bomb);
-        entry.add(Reinforced_Brown_Dungeoncite);
-        entry.add(Brown_Dungeoncite_Pedestal);
-        entry.add(Brown_Dungeoncite_Pillar);
-    }
-
-    public static void addItemsToPlantGroup(FabricItemGroupEntries entry) {
-        entry.add(Bomb_Flower);
-        entry.add(Loot_Grass);
-    }
 
     public static void registerBlocks() {
         ZeldaCraft.LOGGER.debug("Registering Blocks for" + ZeldaCraft.MOD_ID);
-        ItemGroupEvents.modifyEntriesEvent(ItemGroups.BUILDING_BLOCKS).register(ZeldaBlocks::addItemsToGroup);
-        ItemGroupEvents.modifyEntriesEvent(ItemGroups.NATURAL).register(ZeldaBlocks::addItemsToPlantGroup);
     }
 }

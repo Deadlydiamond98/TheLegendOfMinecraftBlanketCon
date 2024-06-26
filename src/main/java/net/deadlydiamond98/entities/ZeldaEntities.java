@@ -90,7 +90,7 @@ public class ZeldaEntities {
             Registries.ENTITY_TYPE,
             new Identifier(ZeldaCraft.MOD_ID, "fairy"),
             FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, FairyEntity::new)
-                    .dimensions(EntityDimensions.fixed(0.75f,0.75f))
+                    .dimensions(EntityDimensions.fixed(0.4f,0.4f))
                     .build()
     );
     public static final EntityType<BubbleEntity> Bubble_Entity = Registry.register(

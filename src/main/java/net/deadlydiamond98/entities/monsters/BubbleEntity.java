@@ -1,5 +1,6 @@
 package net.deadlydiamond98.entities.monsters;
 
+import net.deadlydiamond98.statuseffects.ZeldaStatusEffects;
 import net.deadlydiamond98.util.RaycastUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -23,11 +24,13 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
+import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.mob.*;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
@@ -95,13 +98,6 @@ public class BubbleEntity extends HostileEntity implements Monster {
     }
 
     @Override
-    public void onPlayerCollision(PlayerEntity player) {
-        if (this.isAlive() && this.getAttackableState()) {
-            this.applyDamageEffects(this, player);
-        }
-    }
-
-    @Override
     public boolean damage(DamageSource source, float amount) {
         if (!this.getAttackableState()) {
             this.setAttackableState(true);
@@ -130,6 +126,15 @@ public class BubbleEntity extends HostileEntity implements Monster {
             this.setAttackableState(true);
             this.navigation = this.groundNavigation;
             this.moveControl = new HopMoveControl(this);
+        }
+
+        if (this.getTarget() != null) {
+            if (this.isAlive() && this.getAttackableState() && this.getSquaredDistanceToAttackPosOf(getTarget())
+                    <= (double)(this.getWidth() * 2.0F * this.getWidth() * 2.0F + this.getWidth())) {
+                this.getTarget().damage(this.getTarget().getDamageSources().mobAttack(this), 1.0f);
+                this.getTarget().addStatusEffect(new StatusEffectInstance(
+                        ZeldaStatusEffects.Sword_Sick_Status_Effect, 60, 0));
+            }
         }
     }
 
@@ -276,6 +281,19 @@ public class BubbleEntity extends HostileEntity implements Monster {
         @Override
         public boolean canStart() {
             return super.canStart();
+        }
+
+        @Override
+        protected void attack(LivingEntity target, double squaredDistance) {
+            double d = this.getSquaredMaxAttackDistance(target);
+            if (squaredDistance <= d && this.getCooldown() <= 0) {
+                this.resetCooldown();
+                this.mob.swingHand(Hand.MAIN_HAND);
+                this.mob.tryAttack(target);
+                target.addStatusEffect(new StatusEffectInstance(
+                        ZeldaStatusEffects.Sword_Sick_Status_Effect,
+                        60, 0));
+            }
         }
     }
 

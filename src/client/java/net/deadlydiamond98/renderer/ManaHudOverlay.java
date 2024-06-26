@@ -15,6 +15,7 @@ import net.minecraft.world.GameMode;
 public class ManaHudOverlay implements HudRenderCallback {
 
     private static final Identifier Filled_Mana = new Identifier(ZeldaCraft.MOD_ID, "textures/gui/mana_full.png");
+    private static final Identifier Filled_Mana_Second = new Identifier(ZeldaCraft.MOD_ID, "textures/gui/mana_full_second.png");
     private static final Identifier Empty_Mana = new Identifier(ZeldaCraft.MOD_ID, "textures/gui/mana_empty.png");
     private static float displayedMana = 0.0f;
 
@@ -42,9 +43,15 @@ public class ManaHudOverlay implements HudRenderCallback {
         int maxMana = userM.getMaxMana();
 
         displayedMana = MathHelper.lerp(tickDelta * 0.25f, displayedMana, currentMana);
+        int filledHeight = (int) ((displayedMana / (float) maxMana) * 33);
 
-        int filledHeight = (int) ((displayedMana / (float) maxMana) * 32);
-        RenderSystem.setShaderTexture(0, Filled_Mana);
-        drawContext.drawTexture(Filled_Mana, mana_x + 4, mana_y + 5 + (32 - filledHeight), 0, 32 - filledHeight, 8, filledHeight, 8, 32);
+        if (currentMana >= maxMana) {
+            RenderSystem.setShaderTexture(0, Filled_Mana_Second);
+            drawContext.drawTexture(Filled_Mana_Second, mana_x + 4, mana_y + 4 + (33 - filledHeight), 0, 33 - filledHeight, 8, filledHeight, 8, 33);
+        }
+        else {
+            RenderSystem.setShaderTexture(0, Filled_Mana);
+            drawContext.drawTexture(Filled_Mana, mana_x + 4, mana_y + 4 + (33 - filledHeight), 0, 33 - filledHeight, 8, filledHeight, 8, 33);
+        }
     }
 }

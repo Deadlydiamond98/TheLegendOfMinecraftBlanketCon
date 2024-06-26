@@ -21,7 +21,7 @@ public class ZeldaServerPackets {
     public static final Identifier ShootBeamPacket = new Identifier(ZeldaCraft.MOD_ID, "shoot_beam_packet");
     public static final Identifier SmashLootGrassPacket = new Identifier(ZeldaCraft.MOD_ID, "smash_loot_grass_packet");
     public static final Identifier DekuStunOverlayPacket = new Identifier(ZeldaCraft.MOD_ID, "deku_stun_overlay_packet");
-    public static final Identifier ManaHudPacket = new Identifier(ZeldaCraft.MOD_ID, "mana_hud_packet");
+    public static final Identifier PlayerStatsPacket = new Identifier(ZeldaCraft.MOD_ID, "player_stats_packet");
 
     public static void registerS2CPackets() {
         ServerPlayNetworking.registerGlobalReceiver(ShootBeamPacket, ShootBeamC2SPacket::receive);
@@ -34,15 +34,6 @@ public class ZeldaServerPackets {
         buf.writeDouble(y);
         buf.writeDouble(z);
         ServerPlayNetworking.send(player, SmaaashPacket, buf);
-    }
-    public static void sendMagicFirePacket(List<ServerPlayerEntity> player, double x, double y, double z) {
-        PacketByteBuf buf = PacketByteBufs.create();
-        buf.writeDouble(x);
-        buf.writeDouble(y);
-        buf.writeDouble(z);
-        for (ServerPlayerEntity playerEntity : player) {
-            ServerPlayNetworking.send(playerEntity, MagicFirePacket, buf);
-        }
     }
     public static void sendBombParticlePacket(List<ServerPlayerEntity> player, double x, double y, double z) {
         PacketByteBuf buf = PacketByteBufs.create();
@@ -68,10 +59,11 @@ public class ZeldaServerPackets {
         buf.writeBoolean(hasEffect);
         ServerPlayNetworking.send(player, DekuStunOverlayPacket, buf);
     }
-    public static void sendManaLevelPacket(ServerPlayerEntity player, int level, int maxLevel) {
+    public static void sendPlayerStatsPacket(ServerPlayerEntity player, int level, int maxLevel, boolean fairyControl) {
         PacketByteBuf buf = PacketByteBufs.create();
         buf.writeInt(level);
         buf.writeInt(maxLevel);
-        ServerPlayNetworking.send(player, ManaHudPacket, buf);
+        buf.writeBoolean(fairyControl);
+        ServerPlayNetworking.send(player, PlayerStatsPacket, buf);
     }
 }

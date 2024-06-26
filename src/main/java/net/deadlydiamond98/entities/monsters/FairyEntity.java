@@ -1,8 +1,10 @@
 package net.deadlydiamond98.entities.monsters;
 
 import net.deadlydiamond98.sounds.ZeldaSounds;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.Ownable;
 import net.minecraft.entity.ai.AboveGroundTargeting;
 import net.minecraft.entity.ai.NoPenaltySolidTargeting;
 import net.minecraft.entity.ai.control.FlightMoveControl;
@@ -22,6 +24,7 @@ import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.mob.Monster;
 import net.minecraft.entity.passive.PassiveEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
@@ -138,6 +141,18 @@ public class FairyEntity extends PassiveEntity {
 
     private void setColor(String bool) {
         this.dataTracker.set(color, bool);
+    }
+
+    @Override
+    public void readCustomDataFromNbt(NbtCompound nbt) {
+        if (nbt.contains("color")) {
+            this.setColor(nbt.getString("color"));
+        }
+    }
+
+    @Override
+    public void writeCustomDataToNbt(NbtCompound nbt) {
+        nbt.putString("color", this.getColor());
     }
 
     static class WanderAroundGoal extends Goal {

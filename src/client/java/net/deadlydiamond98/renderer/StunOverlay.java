@@ -25,7 +25,6 @@ public class StunOverlay<T extends LivingEntity, M extends EntityModel<T>> exten
         if (entity.hasStatusEffect(ZeldaStatusEffects.Stun_Status_Effect)) {
             VertexConsumer vertexConsumer = vertexConsumers.getBuffer(Stun_Overlay_Layer);
             if (vertexConsumer != null) {
-
                 this.getContextModel().render(matrices, vertexConsumer, light, OverlayTexture.DEFAULT_UV, 1.0F, 1.0F, 1.0F, 0.5F);
             }
         }

@@ -26,20 +26,15 @@ public class MagicUpgrade extends Item {
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         if (!world.isClient()) {
             ManaPlayerData userM = (ManaPlayerData) user;
-            if (userM.getMaxMana() <= 500) {
+            if (userM.getMaxMana() < 500) {
                 userM.setMaxMana(userM.getMaxMana() + 100);
                 ManaHandler.addManaToPlayer(user, userM.getMaxMana());
                 world.playSound(null, user.getBlockPos(), ZeldaSounds.ManaUpgrade, SoundCategory.PLAYERS, 1.0f, 0.5f);
                 user.getStackInHand(hand).decrement(1);
-                user.getItemCooldownManager().set(this, 10);
+                user.getItemCooldownManager().set(this, 20);
                 return TypedActionResult.success(user.getStackInHand(hand));
-            } else if (ManaHandler.CanRemoveManaFromPlayer(user, userM.getMaxMana())) {
-                ManaHandler.addManaToPlayer(user, userM.getMaxMana());
-                world.playSound(null, user.getBlockPos(), ZeldaSounds.ManaUpgrade, SoundCategory.PLAYERS, 1.0f, 0.5f);
-                user.getStackInHand(hand).decrement(1);
-                user.getItemCooldownManager().set(this, 10);
-                return TypedActionResult.success(user.getStackInHand(hand));
-            } else {
+            }
+            else {
                 return TypedActionResult.fail(user.getStackInHand(hand));
             }
         }

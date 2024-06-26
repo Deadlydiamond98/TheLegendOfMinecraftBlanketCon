@@ -5,7 +5,8 @@
   "client": [
     "KeyboardMixin",
     "LivingEntityRendererMixin",
-    "MouseMixin"
+    "MouseMixin",
+    "PlayerEntityRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1
