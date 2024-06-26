@@ -37,6 +37,7 @@ public class IceRod extends Item {
                 return ActionResult.SUCCESS;
             }
         }
+        user.getWorld().playSound(null, user.getBlockPos(), ZeldaSounds.NotEnoughMana, SoundCategory.PLAYERS, 1.0f, 1.0f);
         return super.useOnBlock(context);
     }
 
@@ -55,6 +56,7 @@ public class IceRod extends Item {
                     SoundCategory.PLAYERS, 3.0f, 1.0f);
             return TypedActionResult.success(user.getStackInHand(hand));
         }
+        user.getWorld().playSound(null, user.getBlockPos(), ZeldaSounds.NotEnoughMana, SoundCategory.PLAYERS, 1.0f, 1.0f);
         return super.use(world, user, hand);
     }
 }

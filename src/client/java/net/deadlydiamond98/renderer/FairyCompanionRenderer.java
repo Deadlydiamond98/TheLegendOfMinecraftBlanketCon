@@ -25,7 +25,6 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RotationAxis;
 import org.joml.Matrix3f;
 import org.joml.Matrix4f;
-import org.joml.Vector3f;
 
 public class FairyCompanionRenderer<T extends PlayerEntity> extends LivingEntityRenderer<T, FairyEntityModel<T>> {
     private static final Identifier TEXTURE = new Identifier(ZeldaCraft.MOD_ID, "textures/entity/blue_fairy.png");

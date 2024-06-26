@@ -47,7 +47,6 @@ public class ManaHandler {
         else if (userM.getMana() > 0 && userM.getMana() - amountToRemove < 0) {
             return true;
         }
-        user.getWorld().playSound(null, user.getBlockPos(), ZeldaSounds.NotEnoughMana, SoundCategory.PLAYERS, 1.0f, 1.0f);
         return false;
     }
 

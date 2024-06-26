@@ -4,6 +4,7 @@ import net.deadlydiamond98.blocks.ZeldaBlocks;
 import net.deadlydiamond98.entities.ZeldaEntities;
 import net.deadlydiamond98.entities.monsters.BubbleEntity;
 import net.deadlydiamond98.entities.monsters.FairyEntity;
+import net.deadlydiamond98.sounds.ZeldaSounds;
 import net.deadlydiamond98.util.ManaHandler;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -49,6 +50,7 @@ public class MagicPowder extends Item {
                 return ActionResult.SUCCESS;
             }
         }
+        user.getWorld().playSound(null, user.getBlockPos(), ZeldaSounds.NotEnoughMana, SoundCategory.PLAYERS, 1.0f, 1.0f);
         return super.useOnEntity(stack, user, entity, hand);
     }
 
@@ -80,6 +82,7 @@ public class MagicPowder extends Item {
             context.getStack().decrement(1);
             return ActionResult.SUCCESS;
         }
+        world.playSound(null, context.getPlayer().getBlockPos(), ZeldaSounds.NotEnoughMana, SoundCategory.PLAYERS, 1.0f, 1.0f);
         return super.useOnBlock(context);
     }
 

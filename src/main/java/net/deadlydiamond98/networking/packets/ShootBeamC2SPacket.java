@@ -23,9 +23,10 @@ public class ShootBeamC2SPacket {
         server.execute(() -> {
             ServerWorld world = (ServerWorld) player.getWorld();
             Item item = player.getMainHandStack().getItem();
-            if (!(player.getItemCooldownManager().isCoolingDown(item))
+            if (((player.getHealth() == player.getMaxHealth()) || ManaHandler.CanRemoveManaFromPlayer(player, 1) || player.isCreative())
+                    && !(player.getItemCooldownManager().isCoolingDown(item))
                     && player.handSwinging) {
-                if (item instanceof MagicSword && canShoot(player)) {
+                if (item instanceof MagicSword) {
                     SwordBeamEntity projectile = new SwordBeamEntity(ZeldaEntities.Sword_Beam, world);
                     projectile.setOwner(player);
                     projectile.setPosition(
@@ -43,7 +44,7 @@ public class ShootBeamC2SPacket {
                         ManaHandler.removeManaFromPlayer(player, 1);
                     }
                 }
-                else if (item instanceof MasterSword && canShoot(player)) {
+                else if (item instanceof MasterSword) {
                     MasterSwordBeamEntity master_projectile = new MasterSwordBeamEntity(ZeldaEntities.Master_Sword_Beam, world);
                     master_projectile.setOwner(player);
                     master_projectile.setPosition(player.getX(), player.getY() + player.getEyeHeight(player.getPose()) -0.5, player.getZ());
@@ -59,10 +60,10 @@ public class ShootBeamC2SPacket {
                     }
                 }
             }
+            else if ((item instanceof MasterSword || item instanceof MagicSword) && !(player.getItemCooldownManager().isCoolingDown(item))
+                    && player.handSwinging && player.handSwingTicks == 0) {
+                player.getWorld().playSound(null, player.getBlockPos(), ZeldaSounds.NotEnoughMana, SoundCategory.PLAYERS, 1.0f, 1.0f);
+            }
         });
-    }
-
-    private static boolean canShoot(ServerPlayerEntity player) {
-        return (player.getHealth() == player.getMaxHealth()) || ManaHandler.CanRemoveManaFromPlayer(player, 1) || player.isCreative();
     }
 }

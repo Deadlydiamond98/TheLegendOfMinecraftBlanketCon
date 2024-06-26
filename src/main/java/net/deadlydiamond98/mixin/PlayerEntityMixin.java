@@ -1,6 +1,7 @@
 package net.deadlydiamond98.mixin;
 
 import net.deadlydiamond98.networking.ZeldaServerPackets;
+import net.deadlydiamond98.sounds.ZeldaSounds;
 import net.deadlydiamond98.util.ManaHandler;
 import net.deadlydiamond98.util.ManaPlayerData;
 import net.deadlydiamond98.util.OtherPlayerData;
@@ -9,6 +10,7 @@ import net.minecraft.entity.EntityPose;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.sound.SoundCategory;
 import net.minecraft.text.Text;
 import org.apache.logging.log4j.core.jmx.Server;
 import org.spongepowered.asm.mixin.Mixin;
@@ -38,6 +40,11 @@ public abstract class PlayerEntityMixin implements OtherPlayerData, ManaPlayerDa
     @Inject(method = "tick", at = @At("HEAD"))
     public void tick(CallbackInfo ci) {
         PlayerEntity user = ((PlayerEntity)(Object)this);
+
+        if ((!this.isFairy() && this.transitionFairy) || (this.isFairy() && (user.isSubmergedInWater() || user.isOnFire()))) {
+            this.removeFairyEffect(user);
+        }
+
         if (!user.getWorld().isClient()) {
             ZeldaServerPackets.sendPlayerStatsPacket((ServerPlayerEntity) user, this.manaLevelZelda, this.manaMaxLevelZelda,
                     this.fairyControl);
@@ -47,7 +54,7 @@ public abstract class PlayerEntityMixin implements OtherPlayerData, ManaPlayerDa
 
         if (this.isFairy()) {
             if (ManaHandler.CanRemoveManaFromPlayer(user, 1)) {
-                ManaHandler.removeManaFromPlayer(user, 2);
+                ManaHandler.removeManaFromPlayer(user, 1);
                 user.getAbilities().allowFlying = true;
                 user.getAbilities().flying = true;
                 this.transitionFairy = true;
@@ -56,10 +63,8 @@ public abstract class PlayerEntityMixin implements OtherPlayerData, ManaPlayerDa
             }
             else {
                 this.removeFairyEffect(user);
+                user.getWorld().playSound(null, user.getBlockPos(), ZeldaSounds.NotEnoughMana, SoundCategory.PLAYERS, 1.0f, 1.0f);
             }
-        }
-        if (!this.isFairy() && this.transitionFairy) {
-            this.removeFairyEffect(user);
         }
     }
 

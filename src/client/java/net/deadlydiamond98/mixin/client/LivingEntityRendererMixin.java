@@ -19,6 +19,7 @@ import net.minecraft.util.math.RotationAxis;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
+import org.spongepowered.asm.mixin.gen.Accessor;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -26,7 +27,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(LivingEntityRenderer.class)
 public abstract class LivingEntityRendererMixin<T extends LivingEntity, M extends EntityModel<T>> {
 
-	@Shadow protected abstract boolean addFeature(FeatureRenderer<T, M> feature);
+	@Shadow
+	protected abstract boolean addFeature(FeatureRenderer<T, M> feature);
 	@Unique
 	private boolean hasStunOverlay = false;
 

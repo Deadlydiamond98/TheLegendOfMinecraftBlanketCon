@@ -49,7 +49,6 @@ public class StunStatusEffect extends StatusEffect {
             }
         }
         entity.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED).removeModifier(Stun_Modifier);
-        entity.damage(entity.getDamageSources().magic(), 10.0f);
     }
 
     @Override

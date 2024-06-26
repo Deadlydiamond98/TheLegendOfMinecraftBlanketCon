@@ -7,6 +7,7 @@ import net.deadlydiamond98.entities.monsters.BubbleEntity;
 import net.deadlydiamond98.entities.monsters.FairyEntity;
 import net.deadlydiamond98.entities.monsters.KeeseEntity;
 import net.deadlydiamond98.entities.ZeldaEntities;
+import net.deadlydiamond98.events.AfterRespawnEvent;
 import net.deadlydiamond98.events.EntityDamagedEvent;
 import net.deadlydiamond98.items.ZeldaItems;
 import net.deadlydiamond98.networking.ZeldaServerPackets;
@@ -18,6 +19,7 @@ import net.deadlydiamond98.util.ZeldaPotionRecipes;
 import net.deadlydiamond98.world.ZeldaFeatures;
 import net.fabricmc.api.ModInitializer;
 
+import net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 import net.fabricmc.loader.api.FabricLoader;
 import org.slf4j.Logger;
@@ -41,6 +43,7 @@ public class ZeldaCraft implements ModInitializer {
 		ZeldaStatusEffects.registerStatusEffects();
 		ZeldaPotionRecipes.registerBrewingRecipes();
 		EntityDamagedEvent.register();
+		ServerPlayerEvents.AFTER_RESPAWN.register(new AfterRespawnEvent());
 		ZeldaFeatures.register();
 		ZeldaCreativeTabs.registerItemGroups();
 		LOGGER.info("Mod Loaded");
