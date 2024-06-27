@@ -47,7 +47,6 @@ public class ZeldaCraftClient implements ClientModInitializer {
 		registerModelLayers();
 		registerTintables();
 		HudRenderCallback.EVENT.register(new ManaHudOverlay());
-
 	}
 
 	private void registerModelPredicatees() {
