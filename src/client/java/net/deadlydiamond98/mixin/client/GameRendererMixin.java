@@ -5,6 +5,7 @@ import net.deadlydiamond98.ZeldaCraft;
 import net.deadlydiamond98.renderer.transformations.FairyPlayerRenderer;
 import net.deadlydiamond98.util.NaviAccessor;
 import net.deadlydiamond98.util.NaviState;
+import net.deadlydiamond98.util.OtherPlayerData;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.hud.InGameOverlayRenderer;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
@@ -58,13 +59,7 @@ public abstract class GameRendererMixin {
 
     @Shadow private boolean renderingPanorama;
 
-    @Shadow protected abstract void tiltViewWhenHurt(MatrixStack matrices, float tickDelta);
-
-    @Shadow protected abstract void bobView(MatrixStack matrices, float tickDelta);
-
     @Shadow @Final private LightmapTextureManager lightmapTextureManager;
-
-    @Shadow @Final public HeldItemRenderer firstPersonRenderer;
 
     @Shadow @Final private BufferBuilderStorage buffers;
 
@@ -73,7 +68,7 @@ public abstract class GameRendererMixin {
     @Inject(method = "renderWorld", at = @At(value = "INVOKE", target = "Lnet/minecraft/util/profiler/Profiler;pop()V"))
     private void RenderFairy(float tickDelta, long limitTime, MatrixStack matrices, CallbackInfo ci) {
         Camera camera = this.camera;
-        if (!this.renderingPanorama && this.client.player != null) {
+        if (!this.renderingPanorama && this.client.player != null && ((OtherPlayerData) this.client.player).getFairyFriend()) {
             RenderSystem.clear(256, MinecraftClient.IS_SYSTEM_MAC);
             renderFairyCompanion(tickDelta, camera, matrices);
         }
@@ -82,7 +77,7 @@ public abstract class GameRendererMixin {
     @Unique
     private void renderFairyCompanion(float tickDelta, Camera camera, MatrixStack matrices) {
         if (client != null && client.player != null) {
-            //if (client.options.getPerspective().isFirstPerson()) {
+            if (client.options.getPerspective().isFirstPerson()) {
                 this.loadProjectionMatrix(this.getBasicProjectionMatrix(this.getFov(camera, tickDelta, false)));
                 matrices.loadIdentity();
                 matrices.push();
@@ -99,21 +94,27 @@ public abstract class GameRendererMixin {
                     }
 
                     Vec3d naviPosition = naviState.getPosition();
-                    Vec3d cameraPos = camera.getPos();
+                    Vec3d cameraPos = client.player.getCameraPosVec(tickDelta);
                     Vec3d relativePosition = cameraPos.subtract(naviPosition);
 
                     float playerYaw = client.player.getYaw(tickDelta);
+                    float playerPitch = client.player.getPitch(tickDelta);
                     float yawRadians = -playerYaw * (float) Math.PI / 180.0F;
+                    float pitchRadians = playerPitch * (float) Math.PI / 180.0F;
 
                     double adjustedX = relativePosition.x * Math.cos(yawRadians) - relativePosition.z * Math.sin(yawRadians);
                     double adjustedZ = relativePosition.x * Math.sin(yawRadians) + relativePosition.z * Math.cos(yawRadians);
 
-                    matrices.translate(adjustedX, relativePosition.y, adjustedZ);
+                    double adjustedY = -relativePosition.y * Math.cos(pitchRadians) - adjustedZ * Math.sin(pitchRadians);
+                    adjustedZ = -relativePosition.y * Math.sin(pitchRadians) + adjustedZ * Math.cos(pitchRadians);
 
-                    this.fairyRenderer.render(client.player, -camera.getYaw(), tickDelta, matrices,
+                    matrices.translate(adjustedX, adjustedY, adjustedZ);
+                    matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(playerYaw));
+
+                    naviState.renderNavi(client.player, 0, tickDelta, matrices,
                             client.getBufferBuilders().getEntityVertexConsumers(),
-                            client.getEntityRenderDispatcher().getLight(client.player, tickDelta));
-                //}
+                            client.getEntityRenderDispatcher().getLight(client.player, tickDelta), false);
+                }
                 matrices.pop();
                 this.lightmapTextureManager.enable();
                 this.buffers.getEntityVertexConsumers().draw();

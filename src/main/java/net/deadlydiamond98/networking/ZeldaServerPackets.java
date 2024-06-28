@@ -1,8 +1,10 @@
 package net.deadlydiamond98.networking;
 
 import net.deadlydiamond98.ZeldaCraft;
+import net.deadlydiamond98.networking.packets.PlayFairySoundC2SPacket;
 import net.deadlydiamond98.networking.packets.ShootBeamC2SPacket;
 import net.deadlydiamond98.networking.packets.SmashLootGrassC2SPacket;
+import net.deadlydiamond98.networking.packets.UseMagicTrinketC2SPacket;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.entity.player.PlayerEntity;
@@ -22,10 +24,14 @@ public class ZeldaServerPackets {
     public static final Identifier SmashLootGrassPacket = new Identifier(ZeldaCraft.MOD_ID, "smash_loot_grass_packet");
     public static final Identifier DekuStunOverlayPacket = new Identifier(ZeldaCraft.MOD_ID, "deku_stun_overlay_packet");
     public static final Identifier PlayerStatsPacket = new Identifier(ZeldaCraft.MOD_ID, "player_stats_packet");
+    public static final Identifier MagicTrinketPacket = new Identifier(ZeldaCraft.MOD_ID, "magic_trinket_packet");
+    public static final Identifier FairySoundPacket = new Identifier(ZeldaCraft.MOD_ID, "fairy_sound_packet");
 
     public static void registerS2CPackets() {
         ServerPlayNetworking.registerGlobalReceiver(ShootBeamPacket, ShootBeamC2SPacket::receive);
         ServerPlayNetworking.registerGlobalReceiver(SmashLootGrassPacket, SmashLootGrassC2SPacket::receive);
+        ServerPlayNetworking.registerGlobalReceiver(MagicTrinketPacket, UseMagicTrinketC2SPacket::receive);
+        ServerPlayNetworking.registerGlobalReceiver(FairySoundPacket, PlayFairySoundC2SPacket::receive);
     }
 
     public static void sendSmaaashParticlePacket(ServerPlayerEntity player, double x, double y, double z) {
@@ -59,11 +65,13 @@ public class ZeldaServerPackets {
         buf.writeBoolean(hasEffect);
         ServerPlayNetworking.send(player, DekuStunOverlayPacket, buf);
     }
-    public static void sendPlayerStatsPacket(ServerPlayerEntity player, int level, int maxLevel, boolean fairyControl) {
+    public static void sendPlayerStatsPacket(ServerPlayerEntity player, int level, int maxLevel, boolean fairyControl,
+                                             boolean fairyfriend) {
         PacketByteBuf buf = PacketByteBufs.create();
         buf.writeInt(level);
         buf.writeInt(maxLevel);
         buf.writeBoolean(fairyControl);
+        buf.writeBoolean(fairyfriend);
         ServerPlayNetworking.send(player, PlayerStatsPacket, buf);
     }
 }

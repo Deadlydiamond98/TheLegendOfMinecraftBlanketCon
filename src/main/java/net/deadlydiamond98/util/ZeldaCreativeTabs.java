@@ -15,7 +15,7 @@ public class ZeldaCreativeTabs {
     public static final ItemGroup ZeldaCraftItemsGroup = Registry.register(Registries.ITEM_GROUP,
             new Identifier(ZeldaCraft.MOD_ID, "zeldacraft_items_group"),
             FabricItemGroup.builder().displayName(Text.translatable("itemgroup.zeldacraft_items"))
-                    .icon(() -> ZeldaItems.Master_Sword.getDefaultStack()).entries((displayContext, entry) -> {
+                    .icon(ZeldaItems.Master_Sword::getDefaultStack).entries((displayContext, entry) -> {
                         entry.add(ZeldaItems.Kokiri_Sword);
                         entry.add(ZeldaItems.Magic_Sword);
                         entry.add(ZeldaItems.Master_Sword);
@@ -24,31 +24,35 @@ public class ZeldaCreativeTabs {
                         entry.add(ZeldaBlocks.Bomb_Flower);
                         entry.add(ZeldaItems.Bomb_Bag);
                         entry.add(ZeldaItems.Quiver);
+
                         entry.add(ZeldaItems.Hylain_Shield);
                         entry.add(ZeldaItems.Mirror_Shield);
+
                         entry.add(ZeldaItems.Fire_Rod);
                         entry.add(ZeldaItems.Ice_Rod);
-
                         entry.add(ZeldaItems.Magic_Powder);
-                        entry.add(ZeldaItems.Music_Disc_Legend);
 
+                        entry.add(ZeldaItems.Fairy_Pendant);
+                        entry.add(ZeldaItems.Fairy_Bell);
+
+                        entry.add(ZeldaItems.Music_Disc_Legend);
+                        entry.add(ZeldaItems.Music_Disc_Legend_Fragment);
                         entry.add(ZeldaItems.Emerald_Shard);
                         entry.add(ZeldaItems.Emerald_Chunk);
-                        entry.add(ZeldaItems.Bomb);
-                        entry.add(ZeldaItems.Deku_Nut);
-                        entry.add(ZeldaItems.Super_Bomb);
-                        entry.add(ZeldaItems.Bombchu);
-                        entry.add(ZeldaItems.Baseball);
-                        entry.add(ZeldaItems.Music_Disc_Legend_Fragment);
-                        entry.add(ZeldaItems.Dungeon_Key);
                         entry.add(ZeldaItems.Star_Fragment);
                         entry.add(ZeldaItems.Stardust);
-                        entry.add(ZeldaItems.Fairy_Bottle);
-                        entry.add(ZeldaItems.Magic_Upgrade);
-                        entry.add(ZeldaItems.Magic_Downgrade);
+                        entry.add(ZeldaItems.Bomb);
+                        entry.add(ZeldaItems.Super_Bomb);
+                        entry.add(ZeldaItems.Bombchu);
+                        entry.add(ZeldaItems.Deku_Nut);
+                        entry.add(ZeldaItems.Baseball);
+                        entry.add(ZeldaItems.Dungeon_Key);
 
                         entry.add(ZeldaItems.Magic_Jar);
                         entry.add(ZeldaItems.Magic_Candy);
+                        entry.add(ZeldaItems.Fairy_Bottle);
+                        entry.add(ZeldaItems.Magic_Upgrade);
+                        entry.add(ZeldaItems.Magic_Downgrade);
 
                     }).build());
     public static final ItemGroup ZeldaCraftBlocksGroup = Registry.register(Registries.ITEM_GROUP,

@@ -17,6 +17,8 @@
       "zeldacraft:star_used"
     ]
   },
+
+
   "upgrade_mana": {
     "subtitle": "sounds.zeldacraft.upgrade_mana",
     "sounds": [
@@ -29,6 +31,8 @@
       "zeldacraft:no_mana"
     ]
   },
+
+
   "fire_magic": {
     "subtitle": "sounds.zeldacraft.fire_magic",
     "sounds": [
@@ -41,12 +45,16 @@
       "zeldacraft:ice_magic"
     ]
   },
+
+
   "musicdisclegend": {
     "subtitle": "sounds.zeldacraft.musicdisclegend",
     "sounds": [
       "zeldacraft:music_disc_legend"
     ]
   },
+
+
   "swordshoot": {
     "subtitle": "sounds.zeldacraft.sword_shoot",
     "sounds": [
@@ -65,12 +73,16 @@
       "zeldacraft:smaaash_sound"
     ]
   },
+
+
   "secretroom": {
     "subtitle": "sounds.zeldacraft.secret_room",
     "sounds": [
       "zeldacraft:secret"
     ]
   },
+
+
   "fairy_ambient": {
     "subtitle": "sounds.zeldacraft.fairy_ambient",
     "sounds": [
@@ -87,6 +99,67 @@
     "subtitle": "sounds.zeldacraft.fairy_death",
     "sounds": [
       "zeldacraft:fairy_death"
+    ]
+  },
+  "fairy_in": {
+    "subtitle": "sounds.zeldacraft.fairy_in",
+    "sounds": [
+      "zeldacraft:navi_in"
+    ]
+  },
+  "fairy_out": {
+    "subtitle": "sounds.zeldacraft.fairy_out",
+    "sounds": [
+      "zeldacraft:navi_out"
+    ]
+  },
+  "navi_hello": {
+    "subtitle": "sounds.zeldacraft.navi_hello",
+    "sounds": [
+      "zeldacraft:navi_hello",
+      "zeldacraft:navi_hey"
+    ]
+  },
+  "navi_attention": {
+    "subtitle": "sounds.zeldacraft.navi_attention",
+    "sounds": [
+      "zeldacraft:navi_hey",
+      "zeldacraft:navi_listen",
+      "zeldacraft:navi_look",
+      "zeldacraft:navi_watchout"
+    ]
+  },
+  "tatl_in": {
+    "subtitle": "sounds.zeldacraft.fairy_in",
+    "sounds": [
+      "zeldacraft:tatl_in"
+    ]
+  },
+  "tatl_out": {
+    "subtitle": "sounds.zeldacraft.fairy_out",
+    "sounds": [
+      "zeldacraft:tatl_out"
+    ]
+  },
+  "tatl_attention": {
+    "subtitle": "sounds.zeldacraft.tatl_attention",
+    "sounds": [
+      "zeldacraft:tatl_hey",
+      "zeldacraft:tatl_listen",
+      "zeldacraft:tatl_alarm"
+    ]
+  },
+  "tatl_sad": {
+    "subtitle": "sounds.zeldacraft.tatl_sad",
+    "sounds": [
+      "zeldacraft:tatl_sad"
+    ]
+  },
+  "tatl_bell_sound": {
+    "subtitle": "sounds.zeldacraft.tatl_hello",
+    "sounds": [
+      "zeldacraft:tatl_hey",
+      "zeldacraft:tatl_listen"
     ]
   }
 }

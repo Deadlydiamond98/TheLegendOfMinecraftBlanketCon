@@ -14,11 +14,4 @@ public class EmeraldItem extends Item {
     public EmeraldItem(Settings settings) {
         super(settings);
     }
-
-    @Override
-    public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
-        OtherPlayerData userO = (OtherPlayerData) user;
-        userO.setFairyState(!userO.isFairy());
-        return TypedActionResult.success(user.getStackInHand(hand));
-    }
 }

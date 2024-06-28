@@ -1,5 +1,8 @@
 package net.deadlydiamond98.mixin;
 
+import dev.emi.trinkets.api.TrinketComponent;
+import dev.emi.trinkets.api.TrinketsApi;
+import net.deadlydiamond98.items.ZeldaItems;
 import net.deadlydiamond98.networking.ZeldaServerPackets;
 import net.deadlydiamond98.sounds.ZeldaSounds;
 import net.deadlydiamond98.util.ManaHandler;
@@ -31,6 +34,8 @@ public abstract class PlayerEntityMixin implements OtherPlayerData, ManaPlayerDa
     @Unique
     private boolean fairyControl = false;
     @Unique
+    private boolean fairyfriend = false;
+    @Unique
     private boolean transitionFairy = false;
     @Unique
     private int manaLevelZelda = 0;
@@ -47,14 +52,19 @@ public abstract class PlayerEntityMixin implements OtherPlayerData, ManaPlayerDa
 
         if (!user.getWorld().isClient()) {
             ZeldaServerPackets.sendPlayerStatsPacket((ServerPlayerEntity) user, this.manaLevelZelda, this.manaMaxLevelZelda,
-                    this.fairyControl);
+                    this.fairyControl, this.fairyfriend);
         }
 
         user.setNoGravity(this.isFairy());
 
+        TrinketComponent trinket = TrinketsApi.getTrinketComponent(user).get();
+        if (!trinket.isEquipped(ZeldaItems.Fairy_Bell)) {
+            this.setFairyFriend(false);
+        }
+
         if (this.isFairy()) {
-            if (ManaHandler.CanRemoveManaFromPlayer(user, 1)) {
-                ManaHandler.removeManaFromPlayer(user, 1);
+            if (ManaHandler.CanRemoveManaFromPlayer(user, 2)) {
+                ManaHandler.removeManaFromPlayer(user, 2);
                 user.getAbilities().allowFlying = true;
                 user.getAbilities().flying = true;
                 this.transitionFairy = true;
@@ -74,6 +84,7 @@ public abstract class PlayerEntityMixin implements OtherPlayerData, ManaPlayerDa
         nbt.putInt("manaMaxLevelZelda", manaMaxLevelZelda);
         nbt.putBoolean("fairyControl", fairyControl);
         nbt.putBoolean("transitionFairy", transitionFairy);
+        nbt.putBoolean("fairyfriend", fairyfriend);
     }
 
     @Inject(method = "readCustomDataFromNbt", at = @At("HEAD"))
@@ -89,6 +100,9 @@ public abstract class PlayerEntityMixin implements OtherPlayerData, ManaPlayerDa
         }
         if (nbt.contains("transitionFairy")) {
             this.transitionFairy = nbt.getBoolean("transitionFairy");
+        }
+        if (nbt.contains("fairyfriend")) {
+            this.fairyfriend = nbt.getBoolean("fairyfriend");
         }
     }
 
@@ -149,5 +163,14 @@ public abstract class PlayerEntityMixin implements OtherPlayerData, ManaPlayerDa
         user.getAbilities().flying = false;
         user.getAbilities().setFlySpeed(0.05f);
         user.calculateDimensions();
+    }
+
+    @Override
+    public boolean getFairyFriend() {
+        return this.fairyfriend;
+    }
+    @Override
+    public void setFairyFriend(boolean fairyfriend) {
+        this.fairyfriend = fairyfriend;
     }
 }

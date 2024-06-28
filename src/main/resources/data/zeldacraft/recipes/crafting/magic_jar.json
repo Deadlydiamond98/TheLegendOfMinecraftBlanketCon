@@ -13,7 +13,8 @@
       "item": "zeldacraft:stardust"
     },
     "g": {
-      "item": "minecraft:water_bottle"
+      "item": "minecraft:potion",
+      "nbt": "{Potion:\"minecraft:water\"}"
     }
   },
   "result": {

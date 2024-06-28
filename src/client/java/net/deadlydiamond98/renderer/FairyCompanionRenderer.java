@@ -16,9 +16,11 @@ import org.joml.Matrix4f;
 
 public class FairyCompanionRenderer<T extends PlayerEntity> extends LivingEntityRenderer<T, FairyEntityModel<T>> {
     private static final Identifier TEXTURE = new Identifier(ZeldaCraft.MOD_ID, "textures/entity/blue_fairy.png");
+    private String color;
 
     public FairyCompanionRenderer(EntityRendererFactory.Context context) {
         super(context, new FairyEntityModel<>(context.getPart(FairyEntityModel.LAYER_LOCATION)), 0.25F);
+        this.color = "blue";
     }
 
     public Identifier getTexture(PlayerEntity fairy) {
@@ -45,7 +47,7 @@ public class FairyCompanionRenderer<T extends PlayerEntity> extends LivingEntity
 
         VertexConsumer vertexConsumer;
         vertexConsumer = vertexConsumerProvider.getBuffer(RenderLayer.getEntityTranslucent(
-                new Identifier(ZeldaCraft.MOD_ID, "textures/entity/blue_fairy.png")
+                new Identifier(ZeldaCraft.MOD_ID, "textures/entity/" + this.color + "_fairy.png")
         ));
         float minUV = 0.0F;
         float maxUV = 0.375F;
@@ -75,5 +77,12 @@ public class FairyCompanionRenderer<T extends PlayerEntity> extends LivingEntity
 
     protected void setupTransforms(T fairy, MatrixStack matrixStack, float f, float g, float h) {
         super.setupTransforms(fairy, matrixStack, f, g, h);
+    }
+
+    public String getColor() {
+        return color;
+    }
+    public void setColor(String color) {
+        this.color = color;
     }
 }

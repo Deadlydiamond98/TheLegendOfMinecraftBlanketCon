@@ -13,10 +13,12 @@ public class PlayerStatsS2CPacket {
         int level = buf.readInt();
         int maxLevel = buf.readInt();
         boolean fairyControl = buf.readBoolean();
+        boolean fairyfriend = buf.readBoolean();
         client.execute(() -> {
                 ((ManaPlayerData) client.player).setMana(level);
                 ((ManaPlayerData) client.player).setMaxMana(maxLevel);
                 ((OtherPlayerData) client.player).setFairyState(fairyControl);
+                ((OtherPlayerData) client.player).setFairyFriend(fairyfriend);
         });
     }
 }

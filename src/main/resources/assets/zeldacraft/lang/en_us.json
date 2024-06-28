@@ -13,7 +13,6 @@
   "item.zeldacraft.deku_nut": "Deku Nut",
   "item.zeldacraft.dungeon_key": "Key",
 
-
   "item.zeldacraft.star_fragment": "Star Fragment",
   "item.zeldacraft.stardust": "Stardust",
   "item.zeldacraft.magic_jar": "Magic Jar",
@@ -63,7 +62,13 @@
   "item.zeldacraft.music_disc_legend_fragment.tooltip": "Music Disc - Legend",
 
   "key.category.zeldacraft.zeldacraftkeys": "The Legend of Steve",
-  "key.zeldacraft.sworddash": "Perform Sword Dash",
+  "key.zeldacraft.triketmagic": "Use Magic Trinket Ability",
+  "item.zeldacraft.fairy_bell": "Fairy Bell",
+  "item.zeldacraft.fairy_bell_with_color": "Fairy Bell (%s)",
+  "item.zeldacraft.fairy_bell.tooltipa": "Gives the player a fairy companion",
+  "item.zeldacraft.fairy_bell.tooltipb": "Slowly restores magic",
+  "item.zeldacraft.fairy_pendant": "Fairy Pendant",
+  "item.zeldacraft.fairy_pendant.tooltip": "Allows one to turn into a fairy",
 
   "effect.zeldacraft.stunned": "Stunned",
   "effect.zeldacraft.sword_sick": "Sword Sick",

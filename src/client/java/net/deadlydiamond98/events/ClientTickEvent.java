@@ -19,7 +19,7 @@ import org.lwjgl.glfw.GLFW;
 
 public class ClientTickEvent {
     public static final String ZELDACRAFT_KEY_CATEGORY = "key.category.zeldacraft.zeldacraftkeys";
-    public static final String SWORD_DASH_KEY = "key.zeldacraft.sworddash";
+    public static final String SWORD_DASH_KEY = "key.zeldacraft.triketmagic";
 
     public static KeyBinding swordDashKey;
     public static void endTickEvent() {
@@ -34,7 +34,7 @@ public class ClientTickEvent {
                 }
             }
             if (swordDashKey.wasPressed()) {
-                client.player.sendMessage(Text.literal("test"));
+                ZeldaClientPackets.sendMagicTrinketPacket();
             }
         });
     }

@@ -9,4 +9,6 @@ public interface OtherPlayerData {
     boolean isFairy();
     void setFairyState(boolean fairyControl);
     void removeFairyEffect(PlayerEntity user);
+    boolean getFairyFriend();
+    void setFairyFriend(boolean fairyfriend);
 }

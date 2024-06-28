@@ -1,5 +1,6 @@
 package net.deadlydiamond98.items;
 
+import dev.emi.trinkets.api.TrinketItem;
 import net.deadlydiamond98.ZeldaCraft;
 import net.deadlydiamond98.entities.ZeldaEntities;
 import net.deadlydiamond98.items.custom.*;
@@ -9,6 +10,8 @@ import net.deadlydiamond98.items.custom.Swords.MasterSword;
 import net.deadlydiamond98.items.custom.custombundle.BombBag;
 import net.deadlydiamond98.items.custom.custombundle.Quiver;
 import net.deadlydiamond98.items.custom.manaItems.*;
+import net.deadlydiamond98.items.custom.manaItems.wearable.FairyBell;
+import net.deadlydiamond98.items.custom.manaItems.wearable.FairyPendant;
 import net.deadlydiamond98.sounds.ZeldaSounds;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroupEntries;
@@ -96,6 +99,10 @@ public class ZeldaItems {
             new FabricItemSettings().maxCount(16).food(new FoodComponent.Builder().alwaysEdible().snack().build())));
     public static final Item Magic_Downgrade = registerItem("magic_downgrade", new MagicDowngrade(
             new FabricItemSettings().maxCount(16)));
+    public static final Item Fairy_Pendant = registerItem("fairy_pendant", new FairyPendant(
+            new FabricItemSettings().maxCount(1)));
+    public static final Item Fairy_Bell = registerItem("fairy_bell", new FairyBell(
+            new FabricItemSettings().maxCount(1)));
 
 
 
