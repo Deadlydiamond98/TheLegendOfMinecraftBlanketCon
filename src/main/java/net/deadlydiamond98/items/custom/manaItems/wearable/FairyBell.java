@@ -2,6 +2,7 @@ package net.deadlydiamond98.items.custom.manaItems.wearable;
 
 import dev.emi.trinkets.api.SlotReference;
 import dev.emi.trinkets.api.TrinketItem;
+import net.deadlydiamond98.entities.PlayerFairyCompanion;
 import net.deadlydiamond98.items.ZeldaItems;
 import net.deadlydiamond98.sounds.ZeldaSounds;
 import net.deadlydiamond98.util.ManaHandler;
@@ -22,7 +23,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 
 public class FairyBell extends TrinketItem {
-    private static final List<String> colors = List.of("blue", "yellow", "green", "pink", "red", "navi", "tatl");
+    private static final List<String> colors = List.of("blue", "yellow", "green", "pink", "red", "purple", "navi", "tatl");
     public FairyBell(Settings settings) {
         super(settings);
     }
@@ -43,6 +44,8 @@ public class FairyBell extends TrinketItem {
 
         if (entity instanceof PlayerEntity user) {
             ((OtherPlayerData) user).setFairyFriend(true);
+            PlayerFairyCompanion playerFairyCompanion = new PlayerFairyCompanion(user.getWorld(), user);
+            user.getWorld().spawnEntity(playerFairyCompanion);
         }
     }
 

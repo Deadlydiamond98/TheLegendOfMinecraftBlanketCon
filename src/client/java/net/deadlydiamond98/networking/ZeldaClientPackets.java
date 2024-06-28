@@ -18,7 +18,6 @@ public class ZeldaClientPackets {
     public static final Identifier DekuStunOverlayPacket = new Identifier(ZeldaCraft.MOD_ID, "deku_stun_overlay_packet");
     public static final Identifier PlayerStatsPacket = new Identifier(ZeldaCraft.MOD_ID, "player_stats_packet");
     public static final Identifier MagicTrinketPacket = new Identifier(ZeldaCraft.MOD_ID, "magic_trinket_packet");
-    public static final Identifier FairySoundPacket = new Identifier(ZeldaCraft.MOD_ID, "fairy_sound_packet");
 
     public static void registerC2SPackets() {
         ClientPlayNetworking.registerGlobalReceiver(SmaaashPacket, SmaaashParticleS2CPacket::recieve);
@@ -41,10 +40,5 @@ public class ZeldaClientPackets {
     public static void sendMagicTrinketPacket() {
         PacketByteBuf buf = PacketByteBufs.create();
         ClientPlayNetworking.send(MagicTrinketPacket, buf);
-    }
-    public static void sendFairySound(int sound) {
-        PacketByteBuf buf = PacketByteBufs.create();
-        buf.writeInt(sound);
-        ClientPlayNetworking.send(FairySoundPacket, buf);
     }
 }

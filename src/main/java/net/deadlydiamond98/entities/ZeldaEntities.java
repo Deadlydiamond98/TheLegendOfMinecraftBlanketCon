@@ -93,6 +93,14 @@ public class ZeldaEntities {
                     .dimensions(EntityDimensions.fixed(0.4f,0.4f))
                     .build()
     );
+    public static final EntityType<PlayerFairyCompanion> Companion_Fairy_Entity = Registry.register(
+            Registries.ENTITY_TYPE,
+            new Identifier(ZeldaCraft.MOD_ID, "companion_fairy"),
+            FabricEntityTypeBuilder.create(SpawnGroup.MISC, (EntityType<PlayerFairyCompanion> type, World world) ->
+                            new PlayerFairyCompanion(type, world))
+                    .dimensions(EntityDimensions.fixed(0.4f,0.4f))
+                    .build()
+    );
     public static final EntityType<BubbleEntity> Bubble_Entity = Registry.register(
             Registries.ENTITY_TYPE,
             new Identifier(ZeldaCraft.MOD_ID, "bubble"),

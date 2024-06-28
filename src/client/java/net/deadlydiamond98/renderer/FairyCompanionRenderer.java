@@ -1,38 +1,64 @@
 package net.deadlydiamond98.renderer;
 
 import net.deadlydiamond98.ZeldaCraft;
+import net.deadlydiamond98.entities.PlayerFairyCompanion;
+import net.deadlydiamond98.model.entity.BombEntityModel;
 import net.deadlydiamond98.model.entity.FairyEntityModel;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.*;
+import net.minecraft.client.render.entity.EntityRenderer;
 import net.minecraft.client.render.entity.EntityRendererFactory;
-import net.minecraft.client.render.entity.LivingEntityRenderer;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RotationAxis;
+import net.minecraft.util.math.Vec3d;
 import org.joml.Matrix3f;
 import org.joml.Matrix4f;
 
-public class FairyCompanionRenderer<T extends PlayerEntity> extends LivingEntityRenderer<T, FairyEntityModel<T>> {
+public class FairyCompanionRenderer extends EntityRenderer<PlayerFairyCompanion> {
     private static final Identifier TEXTURE = new Identifier(ZeldaCraft.MOD_ID, "textures/entity/blue_fairy.png");
     private String color;
+    private final FairyEntityModel<PlayerFairyCompanion> entityModel;
 
     public FairyCompanionRenderer(EntityRendererFactory.Context context) {
-        super(context, new FairyEntityModel<>(context.getPart(FairyEntityModel.LAYER_LOCATION)), 0.25F);
+        super(context);
+        this.entityModel = new FairyEntityModel<>(context.getPart(FairyEntityModel.LAYER_LOCATION));
         this.color = "blue";
     }
 
-    public Identifier getTexture(PlayerEntity fairy) {
+    public Identifier getTexture(PlayerFairyCompanion fairy) {
         return TEXTURE;
     }
 
     @Override
-    public void render(T mobEntity, float f, float g, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i) {
+    public void render(PlayerFairyCompanion mobEntity, float f, float g, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i) {
         super.render(mobEntity, f, g, matrixStack, vertexConsumerProvider, i);
+
+        if (mobEntity.getVisable()) {
+            matrixStack.push();
+
+            double interpolatedX = MathHelper.lerp(g, mobEntity.prevX, mobEntity.getX());
+            double interpolatedY = MathHelper.lerp(g, mobEntity.prevY, mobEntity.getY());
+            double interpolatedZ = MathHelper.lerp(g, mobEntity.prevZ, mobEntity.getZ());
+
+            matrixStack.translate(interpolatedX - mobEntity.getX(), interpolatedY - mobEntity.getY(), interpolatedZ - mobEntity.getZ());
+
+            renderBody(mobEntity, matrixStack, vertexConsumerProvider);
+            matrixStack.scale(0.5F, 0.5F, 0.5F);
+
+            matrixStack.multiply(RotationAxis.NEGATIVE_Y.rotationDegrees(mobEntity.getYaw() + 180));
+            matrixStack.translate(0, 1.5, 0);
+            matrixStack.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(180));
+            VertexConsumer vertexConsumer = vertexConsumerProvider.getBuffer(this.entityModel.getLayer(getTexture(mobEntity)));
+            this.entityModel.animateModel(mobEntity, f, g, MinecraftClient.getInstance().getTickDelta());
+            this.entityModel.setAngles(mobEntity, f, g, mobEntity.age, mobEntity.getYaw(), mobEntity.getPitch());
+            this.entityModel.render(matrixStack, vertexConsumer, i, OverlayTexture.DEFAULT_UV, 1.0F, 1.0F, 1.0F, 1.0F);
+            matrixStack.pop();
+        }
     }
 
-    public void renderBody(T fairy, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider) {
+    public void renderBody(PlayerFairyCompanion fairy, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider) {
         matrixStack.push();
 
         matrixStack.translate(0.0F, 0.3125F, 0.0F);
@@ -47,7 +73,7 @@ public class FairyCompanionRenderer<T extends PlayerEntity> extends LivingEntity
 
         VertexConsumer vertexConsumer;
         vertexConsumer = vertexConsumerProvider.getBuffer(RenderLayer.getEntityTranslucent(
-                new Identifier(ZeldaCraft.MOD_ID, "textures/entity/" + this.color + "_fairy.png")
+                new Identifier(ZeldaCraft.MOD_ID, "textures/entity/" + fairy.getColor() + "_fairy.png")
         ));
         float minUV = 0.0F;
         float maxUV = 0.375F;
@@ -69,20 +95,5 @@ public class FairyCompanionRenderer<T extends PlayerEntity> extends LivingEntity
         vertexConsumer.vertex(modelMatrix, -0.18F, -0.18F, 0.0F).color(255, 255, 255, 10).texture(minUV, minUV).overlay(OverlayTexture.DEFAULT_UV).light(light).normal(normalMatrix, 0, 1, 0).next();
 
         matrixStack.pop();
-    }
-
-    protected void scale(T fairy, MatrixStack matrixStack, float f) {
-        matrixStack.scale(0.5F, 0.5F, 0.5F);
-    }
-
-    protected void setupTransforms(T fairy, MatrixStack matrixStack, float f, float g, float h) {
-        super.setupTransforms(fairy, matrixStack, f, g, h);
-    }
-
-    public String getColor() {
-        return color;
-    }
-    public void setColor(String color) {
-        this.color = color;
     }
 }

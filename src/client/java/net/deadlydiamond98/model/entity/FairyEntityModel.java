@@ -17,7 +17,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
 
-public class FairyEntityModel<T extends LivingEntity> extends SinglePartEntityModel<T> {
+public class FairyEntityModel<T extends Entity> extends SinglePartEntityModel<T> {
 	public static final EntityModelLayer LAYER_LOCATION = new EntityModelLayer(new Identifier(ZeldaCraft.MOD_ID, "fairy_entity"), "main");
 	private final ModelPart root;
 	private final ModelPart body;

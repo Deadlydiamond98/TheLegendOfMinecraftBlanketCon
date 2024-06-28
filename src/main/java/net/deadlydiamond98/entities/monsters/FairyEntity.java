@@ -42,7 +42,7 @@ import java.util.Random;
 
 public class FairyEntity extends PassiveEntity {
 
-    private static final List<String> colors = List.of("blue", "yellow", "green", "pink", "red");
+    private static final List<String> colors = List.of("purple", "blue", "yellow", "green", "pink", "red");
     private static final Random random = new Random();
     private static final TrackedData<String> color;
     @Override
@@ -64,7 +64,7 @@ public class FairyEntity extends PassiveEntity {
         this.setPathfindingPenalty(PathNodeType.WATER_BORDER, 16.0F);
         this.setPathfindingPenalty(PathNodeType.COCOA, -1.0F);
         this.setPathfindingPenalty(PathNodeType.FENCE, -1.0F);
-        this.setColor(colors.get(random.nextInt(5)));
+        this.setColor(colors.get(random.nextInt(colors.size())));
     }
 
     @Nullable
