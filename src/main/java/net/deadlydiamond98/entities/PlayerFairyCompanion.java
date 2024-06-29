@@ -17,6 +17,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.sound.SoundCategory;
+import net.minecraft.text.Text;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
@@ -27,6 +28,13 @@ import java.util.Comparator;
 import java.util.List;
 
 public class PlayerFairyCompanion extends Entity implements Ownable {
+
+    /* ISSUES
+    * Sometimes Movement is jittery
+    * idleTime sometimes updates even when shouldn't
+    * weird glitch when Navi targets entity and player moves away
+    * */
+
     private static final TrackedData<String> color;
     private static final TrackedData<Boolean> visable;
     private static final List<String> colors = List.of("purple", "blue", "yellow", "green", "pink", "red");
@@ -69,8 +77,6 @@ public class PlayerFairyCompanion extends Entity implements Ownable {
 
     @Override
     public void tick() {
-
-
         if (!this.getWorld().isClient()) {
             if (this.getOwner() != null && this.getOwner() instanceof PlayerEntity player) {
                 if (!player.isAlive() || player.getWorld() != this.getWorld()) {
@@ -87,25 +93,28 @@ public class PlayerFairyCompanion extends Entity implements Ownable {
                 this.moveAround(player);
                 this.move(MovementType.SELF, this.getVelocity());
 
+                player.sendMessage(Text.literal("Idle: " + this.idleTime));
                 super.tick();
                 this.velocityDirty = true;
-                this.getWorld().getProfiler().pop();
             }
             else {
                 this.discard();
             }
         }
+        this.updateTrackedPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.getYaw(), this.getPitch(), 20, true);
+
         this.prevYaw = this.getYaw();
         this.prevX = this.getX();
         this.prevY = this.getY();
         this.prevZ = this.getZ();
+        this.getWorld().getProfiler().pop();
     }
-
 
     private void moveAround(PlayerEntity player) {
         double distanceToTarget = this.getPos().distanceTo(player.getPos());
         Entity nearestHostile = findNearestHostile(player);
 
+        // Targetting Entities
         if (player.getAttacker() != null && player.distanceTo(player.getAttacker()) <= 10) {
             if (this.age % 200 == 0) {
                 playAttentionSound(player);
@@ -117,31 +126,35 @@ public class PlayerFairyCompanion extends Entity implements Ownable {
                 playAttentionSound(player);
             }
             this.circleAround(nearestHostile, 1.0);
-        } else if (distanceToTarget > FOLLOW_DISTANCE * 2.5) {
+        }
+
+        // Flying back to player
+        else if (distanceToTarget > FOLLOW_DISTANCE * 2.5) {
             this.setVelocityTowards(player.getPos().add(0, 2, 0), player.horizontalSpeed);
         } else if (distanceToTarget > FOLLOW_DISTANCE) {
             this.setVelocityTowards(player.getPos().add(0, 2, 0), SPEED * 0.5);
         } else {
             this.handleIdleMovement(player);
         }
-
-        if (player.getVelocity().horizontalLengthSquared() == 0 && nearestHostile == null) {
-            this.idleTime++;
-        } else {
-            this.idleTime = 0;
-            if (!this.getVisable()) {
-                this.setVisable(true);
-                this.fireSound = true;
-                this.setVelocityTowards(player.getPos().add(0.0, 2.0, 0.0), SPEED * 0.5);
-                playOutSound(player);
-            }
-        }
     }
 
     private void handleIdleMovement(PlayerEntity player) {
+        this.idleTime++;
         if (this.idleTime <= 6000) {
-            this.circleAround(player, 4.0);
-            if (this.idleTime % 400 == 0 && this.idleTime >= 500) {
+            if (this.idleTime <= 100 ) {
+                Vec3d shoulderPos = player.getPos().add(0.75, player.getEyeHeight(player.getPose()) - 0.5, 0.75);
+                if (this.getPos().subtract(shoulderPos).horizontalLength() > 0.5) {
+                    this.setVelocityTowards(shoulderPos, SPEED * 0.25);
+                }
+                else {
+                    this.setVelocityTowards(shoulderPos, 0);
+                }
+            }
+            else {
+                this.circleAround(player, 4.0);
+            }
+
+            if (this.idleTime % 200 == 0 && this.idleTime >= 500) {
                 playIdleSound(player);
             }
         } else {
@@ -153,6 +166,16 @@ public class PlayerFairyCompanion extends Entity implements Ownable {
                     playInSound(player);
                     this.fireSound = false;
                 }
+            }
+        }
+
+        if (player.getVelocity().horizontalLengthSquared() > 0.0001) {
+            this.idleTime = 0;
+            if (!this.getVisable()) {
+                this.setVisable(true);
+                this.fireSound = true;
+                this.setVelocityTowards(player.getPos().add(0.0, 2.0, 0.0), SPEED * 0.5);
+                playOutSound(player);
             }
         }
     }

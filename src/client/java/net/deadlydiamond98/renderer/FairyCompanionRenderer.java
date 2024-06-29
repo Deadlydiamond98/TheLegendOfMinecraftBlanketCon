@@ -38,12 +38,6 @@ public class FairyCompanionRenderer extends EntityRenderer<PlayerFairyCompanion>
         if (mobEntity.getVisable()) {
             matrixStack.push();
 
-            double interpolatedX = MathHelper.lerp(g, mobEntity.prevX, mobEntity.getX());
-            double interpolatedY = MathHelper.lerp(g, mobEntity.prevY, mobEntity.getY());
-            double interpolatedZ = MathHelper.lerp(g, mobEntity.prevZ, mobEntity.getZ());
-
-            matrixStack.translate(interpolatedX - mobEntity.getX(), interpolatedY - mobEntity.getY(), interpolatedZ - mobEntity.getZ());
-
             renderBody(mobEntity, matrixStack, vertexConsumerProvider);
             matrixStack.scale(0.5F, 0.5F, 0.5F);
 

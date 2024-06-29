@@ -49,6 +49,7 @@ public class ZeldaCreativeTabs {
                         entry.add(ZeldaItems.Dungeon_Key);
 
                         entry.add(ZeldaItems.Magic_Jar);
+                        entry.add(ZeldaItems.Magic_Tart);
                         entry.add(ZeldaItems.Magic_Candy);
                         entry.add(ZeldaItems.Fairy_Bottle);
                         entry.add(ZeldaItems.Magic_Upgrade);

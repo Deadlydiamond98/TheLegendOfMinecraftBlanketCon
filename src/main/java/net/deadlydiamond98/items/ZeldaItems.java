@@ -103,6 +103,8 @@ public class ZeldaItems {
             new FabricItemSettings().maxCount(1)));
     public static final Item Fairy_Bell = registerItem("fairy_bell", new FairyBell(
             new FabricItemSettings().maxCount(1)));
+    public static final Item Magic_Tart = registerItem("magic_tart", new MagicFood(
+            new FabricItemSettings().food(new FoodComponent.Builder().hunger(2).alwaysEdible().snack().build()), 40));
 
 
 
