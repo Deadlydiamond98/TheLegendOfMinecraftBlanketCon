@@ -1,9 +1,6 @@
 package net.deadlydiamond98.renderer.entity;
 
-import net.deadlydiamond98.ZeldaCraft;
-import net.deadlydiamond98.entities.BombEntity;
 import net.deadlydiamond98.entities.projectiles.HookshotEntity;
-import net.deadlydiamond98.model.entity.BombEntityModel;
 import net.deadlydiamond98.model.entity.HookshotHeadModel;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.OverlayTexture;
@@ -16,11 +13,7 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.RotationAxis;
 import net.minecraft.util.math.Vec3d;
-import org.joml.Matrix3f;
-import org.joml.Matrix4f;
 
 public class HookshotRenderer extends EntityRenderer<HookshotEntity> {
     private static final Identifier TEXTURE = new Identifier("minecraft", "textures/block/chain.png");

@@ -33,7 +33,6 @@ public class FairyCompanionRenderer extends EntityRenderer<PlayerFairyCompanion>
 
     @Override
     public void render(PlayerFairyCompanion mobEntity, float f, float g, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i) {
-        super.render(mobEntity, f, g, matrixStack, vertexConsumerProvider, i);
 
         if (mobEntity.getVisable()) {
             matrixStack.push();
@@ -50,6 +49,7 @@ public class FairyCompanionRenderer extends EntityRenderer<PlayerFairyCompanion>
             this.entityModel.render(matrixStack, vertexConsumer, i, OverlayTexture.DEFAULT_UV, 1.0F, 1.0F, 1.0F, 1.0F);
             matrixStack.pop();
         }
+        super.render(mobEntity, f, g, matrixStack, vertexConsumerProvider, i);
     }
 
     public void renderBody(PlayerFairyCompanion fairy, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider) {

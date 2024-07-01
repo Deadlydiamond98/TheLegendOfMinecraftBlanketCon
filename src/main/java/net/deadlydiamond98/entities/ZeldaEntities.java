@@ -1,6 +1,8 @@
 package net.deadlydiamond98.entities;
 
 import net.deadlydiamond98.ZeldaCraft;
+import net.deadlydiamond98.entities.bombs.BombEntity;
+import net.deadlydiamond98.entities.bombs.BombchuEntity;
 import net.deadlydiamond98.entities.monsters.BeamosEntity;
 import net.deadlydiamond98.entities.monsters.BubbleEntity;
 import net.deadlydiamond98.entities.monsters.FairyEntity;

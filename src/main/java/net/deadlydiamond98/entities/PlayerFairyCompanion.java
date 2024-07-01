@@ -2,7 +2,6 @@ package net.deadlydiamond98.entities;
 
 import dev.emi.trinkets.api.TrinketComponent;
 import dev.emi.trinkets.api.TrinketsApi;
-import net.deadlydiamond98.entities.monsters.FairyEntity;
 import net.deadlydiamond98.items.ZeldaItems;
 import net.deadlydiamond98.sounds.ZeldaSounds;
 import net.minecraft.entity.Entity;
@@ -22,18 +21,11 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
-import org.lwjgl.system.MathUtil;
 
 import java.util.Comparator;
 import java.util.List;
 
 public class PlayerFairyCompanion extends Entity implements Ownable {
-
-    /* ISSUES
-    * Sometimes Movement is jittery
-    * idleTime sometimes updates even when shouldn't
-    * weird glitch when Navi targets entity and player moves away
-    * */
 
     private static final TrackedData<String> color;
     private static final TrackedData<Boolean> visable;
@@ -45,6 +37,7 @@ public class PlayerFairyCompanion extends Entity implements Ownable {
     public static final float SPEED = 1.5f;
     public static final float FOLLOW_DISTANCE = 5.0f;
     private Entity owner;
+    private Vec3d prevOwnerPos;
 
     @Override
     protected void initDataTracker() {
@@ -62,21 +55,26 @@ public class PlayerFairyCompanion extends Entity implements Ownable {
     }
     public PlayerFairyCompanion(World world, PlayerEntity owner) {
         this(ZeldaEntities.Companion_Fairy_Entity, world);
-        // 0 = normal, 1 = navi, 2 = tatl
+        // 0 = normal, 1 = navi, 2 = tatl/tael
         this.fairyType = 0;
 
         this.idleTime = 0;
         this.fireSound = true;
         this.currentAngle = 0.0f;
         this.owner = owner;
+        this.prevOwnerPos = owner.getPos();
         this.setPosition(owner.getPos());
         this.setupColor(owner);
         this.setVisable(true);
         this.noClip = true;
     }
 
+
+
     @Override
     public void tick() {
+        super.tick();
+
         if (!this.getWorld().isClient()) {
             if (this.getOwner() != null && this.getOwner() instanceof PlayerEntity player) {
                 if (!player.isAlive() || player.getWorld() != this.getWorld()) {
@@ -91,17 +89,19 @@ public class PlayerFairyCompanion extends Entity implements Ownable {
                 }
 
                 this.moveAround(player);
-                this.move(MovementType.SELF, this.getVelocity());
 
-                player.sendMessage(Text.literal("Idle: " + this.idleTime));
-                super.tick();
+                this.prevOwnerPos = player.getPos();
                 this.velocityDirty = true;
             }
             else {
                 this.discard();
             }
         }
-        this.updateTrackedPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.getYaw(), this.getPitch(), 20, true);
+        else {
+            this.updateTrackedPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.getYaw(), this.getPitch(), 20, true);
+        }
+
+        this.move(MovementType.SELF, this.getVelocity());
 
         this.prevYaw = this.getYaw();
         this.prevX = this.getX();
@@ -114,23 +114,28 @@ public class PlayerFairyCompanion extends Entity implements Ownable {
         double distanceToTarget = this.getPos().distanceTo(player.getPos());
         Entity nearestHostile = findNearestHostile(player);
 
-        // Targetting Entities
+        // Targeting Entities
         if (player.getAttacker() != null && player.distanceTo(player.getAttacker()) <= 10) {
-            if (this.age % 200 == 0) {
+            if (this.age % 100 == 0) {
                 playAttentionSound(player);
             }
-            this.circleAround(player.getAttacker(), 1.0);
+            this.circleAround(player.getAttacker(), 1.0, 0.5);
+            stopIdle(player);
         }
-        else if (nearestHostile != null) {
-            if (this.age % 200 == 0) {
+        else if (nearestHostile != null && player.distanceTo(nearestHostile) <= 10) {
+            if (this.age % 100 == 0) {
                 playAttentionSound(player);
             }
-            this.circleAround(nearestHostile, 1.0);
+            this.circleAround(nearestHostile, 1.0, 0.5);
+            stopIdle(player);
         }
 
         // Flying back to player
+        else if (distanceToTarget > FOLLOW_DISTANCE * 4) {
+            this.setPosition(player.getPos());
+        }
         else if (distanceToTarget > FOLLOW_DISTANCE * 2.5) {
-            this.setVelocityTowards(player.getPos().add(0, 2, 0), player.horizontalSpeed);
+            this.setVelocityTowards(player.getPos().add(0, 2, 0), SPEED);
         } else if (distanceToTarget > FOLLOW_DISTANCE) {
             this.setVelocityTowards(player.getPos().add(0, 2, 0), SPEED * 0.5);
         } else {
@@ -140,9 +145,24 @@ public class PlayerFairyCompanion extends Entity implements Ownable {
 
     private void handleIdleMovement(PlayerEntity player) {
         this.idleTime++;
-        if (this.idleTime <= 6000) {
-            if (this.idleTime <= 100 ) {
-                Vec3d shoulderPos = player.getPos().add(0.75, player.getEyeHeight(player.getPose()) - 0.5, 0.75);
+        if (this.idleTime <= 600) {
+            if (this.idleTime <= 500) {
+
+                Vec3d lookDirection = player.getRotationVec(1.0F).normalize();
+
+                double yawRad = Math.toRadians(player.getYaw());
+
+                double offsetFront = -0.6;
+                double offsetRight = -1;
+
+                double offsetX = offsetRight * MathHelper.cos((float) yawRad) - offsetFront * MathHelper.sin((float) yawRad);
+                double offsetZ = offsetRight * MathHelper.sin((float) yawRad) + offsetFront * MathHelper.cos((float) yawRad);
+
+                Vec3d shoulderPos = player.getPos().add(
+                        offsetX,
+                        player.getEyeHeight(player.getPose()) + 0.1,
+                        offsetZ).add(lookDirection);
+
                 if (this.getPos().subtract(shoulderPos).horizontalLength() > 0.5) {
                     this.setVelocityTowards(shoulderPos, SPEED * 0.25);
                 }
@@ -151,10 +171,10 @@ public class PlayerFairyCompanion extends Entity implements Ownable {
                 }
             }
             else {
-                this.circleAround(player, 4.0);
+                this.circleAround(player, 5.0, 0.1);
             }
 
-            if (this.idleTime % 200 == 0 && this.idleTime >= 500) {
+            if (this.idleTime % 200 == 0 && this.idleTime >= 200) {
                 playIdleSound(player);
             }
         } else {
@@ -169,26 +189,29 @@ public class PlayerFairyCompanion extends Entity implements Ownable {
             }
         }
 
-        if (player.getVelocity().horizontalLengthSquared() > 0.0001) {
-            this.idleTime = 0;
-            if (!this.getVisable()) {
-                this.setVisable(true);
-                this.fireSound = true;
-                this.setVelocityTowards(player.getPos().add(0.0, 2.0, 0.0), SPEED * 0.5);
-                playOutSound(player);
-            }
+        if (player.getPos() != this.prevOwnerPos) {
+            stopIdle(player);
         }
     }
 
-    public void circleAround(Entity entity, double radius) {
-        double baseAngleIncrement = 0.2;
-        double angleVariance = 0.01;
-        double positionVariance = 0.1;
+    private void stopIdle(PlayerEntity player) {
+        this.idleTime = 0;
+        if (!this.getVisable()) {
+            this.setVisable(true);
+            this.fireSound = true;
+            this.setVelocityTowards(player.getPos().add(0.0, 2.0, 0.0), SPEED * 0.5);
+            playOutSound(player);
+        }
+    }
 
-        double angleIncrement = baseAngleIncrement + (Math.random() * angleVariance - angleVariance / 2);
+    public void circleAround(Entity entity, double radius, double speed) {
+        double angleVariance = 0.01;
+        double positionVariance = 0.01;
+
+        double angleIncrement = (0.5 * speed) + (Math.random() * angleVariance - angleVariance / 2);
 
         this.currentAngle += angleIncrement;
-        if (this.currentAngle >= 2 * Math.PI) {
+        if (this.currentAngle > 2 * Math.PI) {
             this.currentAngle -= 2 * Math.PI;
         }
 
@@ -197,13 +220,10 @@ public class PlayerFairyCompanion extends Entity implements Ownable {
 
         double targetX = entity.getX() + randomRadiusX * Math.cos(this.currentAngle);
         double targetZ = entity.getZ() + randomRadiusZ * Math.sin(this.currentAngle);
+        double targetY = MathHelper.lerp(0.1, this.getY(), entity.getEyeY() + (Math.sin(age) * 0.5));
+        Vec3d targetPosition = new Vec3d(targetX, targetY, targetZ);
 
-        Vec3d targetPosition = new Vec3d(
-                targetX,
-                MathHelper.lerp(0.1, this.getY(), entity.getEyeY() + (Math.sin(age) * 0.5)),
-                targetZ);
-
-        this.setVelocityTowards(targetPosition, 0.2);
+        this.setVelocityTowards(targetPosition, speed);
     }
 
     public void setVelocityTowards(Vec3d targetPosition, double speed) {
@@ -246,6 +266,10 @@ public class PlayerFairyCompanion extends Entity implements Ownable {
                         this.setColor("yellow");
                         this.fairyType = 2;
                     }
+                    case "tael" -> {
+                        this.setColor("purple");
+                        this.fairyType = 2;
+                    }
                     default -> {
                         this.setColor(fairyType);
                         this.fairyType = 0;
@@ -260,14 +284,14 @@ public class PlayerFairyCompanion extends Entity implements Ownable {
     }
 
     public String getColor() {
-        return (String) this.dataTracker.get(color);
+        return this.dataTracker.get(color);
     }
 
     private void setColor(String bool) {
         this.dataTracker.set(color, bool);
     }
     public Boolean getVisable() {
-        return (Boolean) this.dataTracker.get(visable);
+        return this.dataTracker.get(visable);
     }
 
     private void setVisable(Boolean vis) {
@@ -293,7 +317,8 @@ public class PlayerFairyCompanion extends Entity implements Ownable {
         if (this.fairyType == 1) {
             player.getWorld().playSound(null, this.getBlockPos(), ZeldaSounds.NaviAttention, SoundCategory.PLAYERS, 1.0f,
                     1.0f + (player.getRandom().nextBetween(-2, 2) * 0.05f));
-        } else if (this.fairyType == 2) {
+        }
+        else if (this.fairyType == 2) {
             player.getWorld().playSound(null, this.getBlockPos(), ZeldaSounds.TatlAttention, SoundCategory.PLAYERS, 1.0f,
                     1.0f + (player.getRandom().nextBetween(-2, 2) * 0.05f));
         }
@@ -303,8 +328,13 @@ public class PlayerFairyCompanion extends Entity implements Ownable {
         if (this.fairyType == 1) {
             player.getWorld().playSound(null, this.getBlockPos(), ZeldaSounds.NaviHello, SoundCategory.PLAYERS, 1.0f,
                     1.0f + (player.getRandom().nextBetween(-2, 2) * 0.05f));
-        } else if (this.fairyType == 2) {
+        }
+        else if (this.fairyType == 2) {
             player.getWorld().playSound(null, this.getBlockPos(), ZeldaSounds.TatlSad, SoundCategory.PLAYERS, 1.0f,
+                    1.0f + (player.getRandom().nextBetween(-2, 2) * 0.05f));
+        }
+        else {
+            player.getWorld().playSound(null, this.getBlockPos(), ZeldaSounds.FairyAmbient, SoundCategory.PLAYERS, 1.0f,
                     1.0f + (player.getRandom().nextBetween(-2, 2) * 0.05f));
         }
     }
@@ -313,7 +343,8 @@ public class PlayerFairyCompanion extends Entity implements Ownable {
         if (this.fairyType == 2) {
             player.getWorld().playSound(null, this.getBlockPos(), ZeldaSounds.TatlOut, SoundCategory.PLAYERS, 1.0f,
                     1.0f + (player.getRandom().nextBetween(-2, 2) * 0.05f));
-        } else {
+        }
+        else {
             player.getWorld().playSound(null, this.getBlockPos(), ZeldaSounds.FairyOut, SoundCategory.PLAYERS, 1.0f,
                     1.0f + (player.getRandom().nextBetween(-2, 2) * 0.05f));
         }
@@ -323,7 +354,8 @@ public class PlayerFairyCompanion extends Entity implements Ownable {
         if (this.fairyType == 2) {
             player.getWorld().playSound(null, this.getBlockPos(), ZeldaSounds.TatlIn, SoundCategory.PLAYERS, 1.0f,
                     1.0f + (player.getRandom().nextBetween(-2, 2) * 0.05f));
-        } else {
+        }
+        else {
             player.getWorld().playSound(null, this.getBlockPos(), ZeldaSounds.FairyIn, SoundCategory.PLAYERS, 1.0f,
                     1.0f + (player.getRandom().nextBetween(-2, 2) * 0.05f));
         }

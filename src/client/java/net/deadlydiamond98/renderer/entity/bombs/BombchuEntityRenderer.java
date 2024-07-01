@@ -1,9 +1,7 @@
 package net.deadlydiamond98.renderer.entity.bombs;
 
 import net.deadlydiamond98.ZeldaCraft;
-import net.deadlydiamond98.entities.BombEntity;
-import net.deadlydiamond98.entities.BombchuEntity;
-import net.deadlydiamond98.model.entity.BombEntityModel;
+import net.deadlydiamond98.entities.bombs.BombchuEntity;
 import net.deadlydiamond98.model.entity.BombchuEntityModel;
 import net.minecraft.client.render.OverlayTexture;
 import net.minecraft.client.render.RenderLayer;
@@ -14,9 +12,7 @@ import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RotationAxis;
-import org.joml.Vector3f;
 
 public class BombchuEntityRenderer extends EntityRenderer<BombchuEntity> {
     private static final Identifier TEXTURE = new Identifier(ZeldaCraft.MOD_ID, "textures/entity/bombchu_entity.png");

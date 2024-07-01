@@ -23,7 +23,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 
 public class FairyBell extends TrinketItem {
-    private static final List<String> colors = List.of("blue", "yellow", "green", "pink", "red", "purple", "navi", "tatl");
+    private static final List<String> colors = List.of("blue", "yellow", "green", "pink", "red", "purple", "navi", "tatl", "tael");
     public FairyBell(Settings settings) {
         super(settings);
     }
@@ -73,6 +73,10 @@ public class FairyBell extends TrinketItem {
                         1.0f + (user.getRandom().nextBetween(-2, 2) * 0.05f));
             }
             else if (nextColor == "tatl") {
+                user.getWorld().playSound(null, user.getBlockPos(), ZeldaSounds.TatlBell, SoundCategory.PLAYERS, 1.0f,
+                        1.0f + (user.getRandom().nextBetween(-2, 2) * 0.05f));
+            }
+            else if (nextColor == "tael") {
                 user.getWorld().playSound(null, user.getBlockPos(), ZeldaSounds.TatlBell, SoundCategory.PLAYERS, 1.0f,
                         1.0f + (user.getRandom().nextBetween(-2, 2) * 0.05f));
             }

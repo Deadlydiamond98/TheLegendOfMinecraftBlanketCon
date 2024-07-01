@@ -1,14 +1,12 @@
 package net.deadlydiamond98.items.custom;
 
-import net.deadlydiamond98.entities.BombEntity;
+import net.deadlydiamond98.entities.bombs.BombEntity;
 import net.deadlydiamond98.items.ZeldaItems;
-import net.deadlydiamond98.sounds.ZeldaSounds;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.math.Vec3d;
