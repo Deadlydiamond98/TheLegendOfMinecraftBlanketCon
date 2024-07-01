@@ -48,4 +48,13 @@ public abstract class MouseMixin {
             }
         }
     }
+
+    @Inject(method = "onCursorPos", at = @At("HEAD"), cancellable = true)
+    private void onCursorPos(long window, double xpos, double ypos, CallbackInfo callbackInfo) {
+        if (MinecraftClient.getInstance().player != null && !MinecraftClient.getInstance().isPaused() && MinecraftClient.getInstance().player.isAlive()) {
+            if (MinecraftClient.getInstance().player.hasStatusEffect(ZeldaStatusEffects.Stun_Status_Effect)) {
+                callbackInfo.cancel();
+            }
+        }
+    }
 }

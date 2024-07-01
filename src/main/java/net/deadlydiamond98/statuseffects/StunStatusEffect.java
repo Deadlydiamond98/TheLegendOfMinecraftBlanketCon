@@ -24,30 +24,14 @@ public class StunStatusEffect extends StatusEffect {
     @Override
     public void onApplied(LivingEntity entity, AttributeContainer attributes, int amplifier) {
         super.onApplied(entity, attributes, amplifier);
-        for (PlayerEntity player : entity.getWorld().getPlayers()) {
-            if (player instanceof ServerPlayerEntity) {
-                ServerPlayerEntity serverPlayer = (ServerPlayerEntity) player;
-                double distance = entity.squaredDistanceTo(serverPlayer);
-                if (distance < 10000) {
-                    ZeldaServerPackets.sendDekuStunOverlayPacket(serverPlayer, entity.getId(), true);
-                }
-            }
-        }
+        notifyPlayers(entity, true);
         entity.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED).addPersistentModifier(Stun_Modifier);
     }
 
     @Override
     public void onRemoved(LivingEntity entity, AttributeContainer attributes, int amplifier) {
         super.onRemoved(entity, attributes, amplifier);
-        for (PlayerEntity player : entity.getWorld().getPlayers()) {
-            if (player instanceof ServerPlayerEntity) {
-                ServerPlayerEntity serverPlayer = (ServerPlayerEntity) player;
-                double distance = entity.squaredDistanceTo(serverPlayer);
-                if (distance < 10000) {
-                    ZeldaServerPackets.sendDekuStunOverlayPacket(serverPlayer, entity.getId(), false);
-                }
-            }
-        }
+        notifyPlayers(entity, false);
         entity.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED).removeModifier(Stun_Modifier);
     }
 
@@ -59,15 +43,19 @@ public class StunStatusEffect extends StatusEffect {
     @Override
     public void applyUpdateEffect(LivingEntity entity, int amplifier) {
         super.applyUpdateEffect(entity, amplifier);
+        notifyPlayers(entity, true);
+        entity.setVelocity(0, 0, 0);
+    }
+
+    private void notifyPlayers(LivingEntity entity, boolean apply) {
         for (PlayerEntity player : entity.getWorld().getPlayers()) {
             if (player instanceof ServerPlayerEntity) {
                 ServerPlayerEntity serverPlayer = (ServerPlayerEntity) player;
                 double distance = entity.squaredDistanceTo(serverPlayer);
                 if (distance < 10000) {
-                    ZeldaServerPackets.sendDekuStunOverlayPacket(serverPlayer, entity.getId(), true);
+                    ZeldaServerPackets.sendDekuStunOverlayPacket(serverPlayer, entity.getId(), apply);
                 }
             }
         }
-        entity.setVelocity(0, 0, 0);
     }
 }

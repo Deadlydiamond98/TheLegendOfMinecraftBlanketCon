@@ -4,6 +4,7 @@ import net.deadlydiamond98.statuseffects.ZeldaStatusEffects;
 import net.minecraft.client.Keyboard;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.option.KeyBinding;
+import net.minecraft.client.util.InputUtil;
 import org.lwjgl.glfw.GLFW;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -20,6 +21,8 @@ public abstract class KeyboardMixin {
                 int screenshotKey = MinecraftClient.getInstance().options.screenshotKey.getDefaultKey().getCode();
                 if (key != chatKey && key != screenshotKey && key != GLFW.GLFW_KEY_ESCAPE) {
                     KeyBinding.unpressAll();
+                    InputUtil.Key inputKey = InputUtil.fromKeyCode(key, scancode);
+                    KeyBinding.setKeyPressed(inputKey, false);
                     callbackInfo.cancel();
                 }
             }

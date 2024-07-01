@@ -30,16 +30,18 @@ public class BombBag extends CustomBundle {
 
         if (!user.isSneaking()) {
             Optional<ItemStack> bombStack = this.getFirstItem(user.getStackInHand(hand));
-            Optional<ItemStack> bomb = this.removeOneItem(user.getStackInHand(hand), bombStack.get().getItem());
-            if (bomb.isPresent() && (bombStack.get().isOf(ZeldaItems.Bomb) || bombStack.get().isOf(ZeldaItems.Super_Bomb))) {
-                createBomb(world, user, bomb);
-                return TypedActionResult.success(user.getStackInHand(hand));
+            if (bombStack.isPresent()) {
+                Optional<ItemStack> bomb = this.removeOneItem(user.getStackInHand(hand), bombStack.get().getItem());
+                if (bomb.isPresent() && (bombStack.get().isOf(ZeldaItems.Bomb) || bombStack.get().isOf(ZeldaItems.Super_Bomb))) {
+                    createBomb(world, user, bomb);
+                    return TypedActionResult.success(user.getStackInHand(hand));
+                }
+                else if (bomb.isPresent() && bombStack.get().isOf(ZeldaItems.Bombchu)) {
+                    createBombchu(world, user, bomb);
+                    return TypedActionResult.success(user.getStackInHand(hand));
+                }
+                return TypedActionResult.fail(user.getStackInHand(hand));
             }
-            else if (bomb.isPresent() && bombStack.get().isOf(ZeldaItems.Bombchu)) {
-                createBombchu(world, user, bomb);
-                return TypedActionResult.success(user.getStackInHand(hand));
-            }
-            return TypedActionResult.fail(user.getStackInHand(hand));
         }
         return super.use(world, user, hand);
     }
@@ -51,11 +53,13 @@ public class BombBag extends CustomBundle {
         Vec3d vec3d = user.getRotationVec(1.0F);
         bombEntity.setYaw(user.headYaw);
         bombEntity.setVelocity(vec3d.x * ((BombchuItem) bomb.get().getItem()).getSpeed(), vec3d.y, vec3d.z * ((BombchuItem) bomb.get().getItem()).getSpeed());
+        bombEntity.setOwner(user);
         world.spawnEntity(bombEntity);
         user.getItemCooldownManager().set(this, 40);
         user.getItemCooldownManager().set(ZeldaItems.Bomb, 20);
         user.getItemCooldownManager().set(ZeldaItems.Super_Bomb, 20);
         user.getItemCooldownManager().set(ZeldaItems.Bombchu, 20);
+
         user.playSound(SoundEvents.ENTITY_SPLASH_POTION_THROW, SoundCategory.PLAYERS, 1, 1);
     }
 

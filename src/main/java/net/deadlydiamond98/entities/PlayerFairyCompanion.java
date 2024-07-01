@@ -164,7 +164,7 @@ public class PlayerFairyCompanion extends Entity implements Ownable {
                         offsetZ).add(lookDirection);
 
                 if (this.getPos().subtract(shoulderPos).horizontalLength() > 0.5) {
-                    this.setVelocityTowards(shoulderPos, SPEED * 0.25);
+                    this.setVelocityTowards(shoulderPos, SPEED * 0.1);
                 }
                 else {
                     this.setVelocityTowards(shoulderPos, 0);
