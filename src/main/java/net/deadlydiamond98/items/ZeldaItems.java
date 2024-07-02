@@ -47,11 +47,11 @@ public class ZeldaItems {
             new FabricItemSettings().maxCount(16)));
 
     public static final Item Wooden_Boomerang = registerItem("wooden_boomerang", new WoodBoomerangItem(
-            new FabricItemSettings().maxCount(1)));
+            new FabricItemSettings().maxCount(1).maxDamage(200)));
     public static final Item Iron_Boomerang = registerItem("iron_boomerang", new IronBoomerangItem(
-            new FabricItemSettings().maxCount(1)));
+            new FabricItemSettings().maxCount(1).maxDamage(1000)));
     public static final Item Magic_Boomerang = registerItem("magic_boomerang", new MagicBoomerangItem(
-            new FabricItemSettings().maxCount(1)));
+            new FabricItemSettings().maxCount(1).maxDamage(6248)));
 
     public static final Item Emerald_Shard = registerItem("emerald_shard", new EmeraldItem(
             new FabricItemSettings()));
@@ -117,7 +117,9 @@ public class ZeldaItems {
     public static final Item Fairy_Bell = registerItem("fairy_bell", new FairyBell(
             new FabricItemSettings().maxCount(1)));
     public static final Item Magic_Tart = registerItem("magic_tart", new MagicFood(
-            new FabricItemSettings().food(new FoodComponent.Builder().hunger(2).alwaysEdible().snack().build()), 40));
+            new FabricItemSettings().food(new FoodComponent.Builder().hunger(7).saturationModifier(2.0f).alwaysEdible().build()), 40));
+    public static final Item Magic_Flan = registerItem("magic_flan", new MagicFood(
+            new FabricItemSettings().food(new FoodComponent.Builder().hunger(8).saturationModifier(4.0f).alwaysEdible().build()), 100));
 
 
 

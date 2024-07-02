@@ -59,8 +59,12 @@
   "item.zeldacraft.baseball": "Baseball",
 
   "item.zeldacraft.wooden_boomerang": "Wood Boomerang",
+  "item.zeldacraft.wooden_boomerang.tooltip": "The bare minimum for a Boomerang",
   "item.zeldacraft.iron_boomerang": "Iron Boomerang",
+  "item.zeldacraft.iron_boomerang.tooltip": "Can activate buttons and levers from afar",
   "item.zeldacraft.magic_boomerang": "Magic Boomerang",
+  "item.zeldacraft.magic_boomerang.tooltipa": "Can pick up items from afar",
+  "item.zeldacraft.magic_boomerang.tooltipb": "Won't be damaged if you have Magic",
 
   "item.zeldacraft.music_disc_legend": "Music Disc",
   "item.zeldacraft.music_disc_legend.desc": "Deadlydiamond98 - Legend",

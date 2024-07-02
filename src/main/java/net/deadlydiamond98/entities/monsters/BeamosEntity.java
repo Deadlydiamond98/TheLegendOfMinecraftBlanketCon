@@ -192,6 +192,11 @@ public class BeamosEntity extends HostileEntity implements Monster {
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.0);
     }
 
+    @Override
+    public boolean cannotDespawn() {
+        return true;
+    }
+
     static class LookAtTargetGoal extends Goal {
         private final BeamosEntity beamos;
 

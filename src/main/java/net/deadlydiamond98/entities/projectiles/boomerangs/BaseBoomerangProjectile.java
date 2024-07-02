@@ -2,6 +2,7 @@ package net.deadlydiamond98.entities.projectiles.boomerangs;
 
 import net.deadlydiamond98.ZeldaCraft;
 import net.deadlydiamond98.items.ZeldaItems;
+import net.deadlydiamond98.sounds.ZeldaSounds;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ItemEntity;
@@ -17,6 +18,7 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.EntityHitResult;
@@ -88,15 +90,13 @@ public class BaseBoomerangProjectile extends ProjectileEntity {
             Entity hitEntity = entityHitResult.getEntity();
 
             if (hitEntity != this.getOwner()) {
-                Vec3d hitNormal = entityHitResult.getPos().subtract(this.getPos()).normalize();
-
-                reflectedVelocity = velocity.subtract(hitNormal.multiply(2 * velocity.dotProduct(hitNormal)));
 
                 if (this.getOwner() != null &&
                         this.getOwner() instanceof PlayerEntity player &&
                         hitEntity instanceof LivingEntity livingEntity) {
                     livingEntity.damage(livingEntity.getDamageSources().playerAttack(player), damageAmount);
                 }
+                this.returnBack();
             }
         }
 
@@ -119,6 +119,13 @@ public class BaseBoomerangProjectile extends ProjectileEntity {
 
             if (this.getOwner() != null) {
                 this.ticksInAir++;
+
+                if (this.ticksInAir % 5 == 1) {
+                    this.getWorld().playSound(null, this.getBlockPos(),
+                            ZeldaSounds.BoomerangInAir,
+                            SoundCategory.BLOCKS, 1.0f, 1.0f);
+                }
+
                 if (this.ticksInAir > this.airtime) {
 
                     Vec3d ownerPos = new Vec3d(this.getOwner().getX() + this.getOwner().getHandPosOffset(this.getBoomerangItem().getItem()).x * 0.5,
@@ -128,7 +135,7 @@ public class BaseBoomerangProjectile extends ProjectileEntity {
 
                     Vec3d currentVelocity = this.getVelocity();
                     Vec3d newVelocity = directionToOwner.multiply(this.speed);
-                    Vec3d interpolatedVelocity = currentVelocity.lerp(newVelocity, 0.1);
+                    Vec3d interpolatedVelocity = currentVelocity.lerp(newVelocity, 0.3);
 
                     this.setVelocity(interpolatedVelocity);
                 }
@@ -145,6 +152,9 @@ public class BaseBoomerangProjectile extends ProjectileEntity {
                                 }
                             }
                         }
+                        this.getWorld().playSound(null, this.getBlockPos(),
+                                ZeldaSounds.BoomerangCaught,
+                                SoundCategory.BLOCKS, 1.0f, 1.0f);
                         this.discard();
                     }
                 }
@@ -178,13 +188,17 @@ public class BaseBoomerangProjectile extends ProjectileEntity {
 
             for(int i = 0; i < 8; ++i) {
                 this.getWorld().addParticle(particleEffect, this.getX(), this.getY(), this.getZ(),
-                        Math.floor(Math.random() * (2 + 2 + 1) - 2),
-                        Math.floor(Math.random() * (2 + 2 + 1) - 2),
-                        Math.floor(Math.random() * (2 + 2 + 1) - 2));
+                        Math.floor(Math.random() * (0.5 + 0.5 + 1) - 0.5),
+                        Math.floor(Math.random() * (0.5 + 0.5 + 1) - 0.5),
+                        Math.floor(Math.random() * (0.5 + 0.5 + 1) - 0.5));
             }
         }
         super.handleStatus(status);
 
+    }
+
+    protected void returnBack() {
+        this.airtime = 0;
     }
 
     @Override

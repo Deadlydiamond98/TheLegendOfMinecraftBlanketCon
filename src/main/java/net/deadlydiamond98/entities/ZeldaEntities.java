@@ -46,6 +46,15 @@ public class ZeldaEntities {
                     .dimensions(EntityDimensions.fixed(0.4f,0.2f))
                     .build()
     );
+    public static final EntityType<ShootingStar> Shooting_Star = Registry.register(
+            Registries.ENTITY_TYPE,
+            new Identifier(ZeldaCraft.MOD_ID, "shooting_star"),
+            FabricEntityTypeBuilder.create(SpawnGroup.MISC, ShootingStar::new)
+                    .dimensions(EntityDimensions.fixed(0.3f,0.3f))
+                    .spawnableFarFromPlayer()
+                    .trackRangeChunks(32)
+                    .build()
+    );
     public static final EntityType<BombEntity> Bomb_Entity = Registry.register(
             Registries.ENTITY_TYPE,
             new Identifier(ZeldaCraft.MOD_ID, "bomb_entity"),
@@ -122,6 +131,7 @@ public class ZeldaEntities {
             FabricEntityTypeBuilder.create(SpawnGroup.MISC, (EntityType<PlayerFairyCompanion> type, World world) ->
                             new PlayerFairyCompanion(type, world))
                     .dimensions(EntityDimensions.fixed(0.4f,0.4f))
+                    .disableSummon()
                     .build()
     );
     public static final EntityType<BubbleEntity> Bubble_Entity = Registry.register(
@@ -136,6 +146,7 @@ public class ZeldaEntities {
             new Identifier(ZeldaCraft.MOD_ID, "beamos"),
             FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, BeamosEntity::new)
                     .dimensions(EntityDimensions.fixed(1,1))
+                    .spawnableFarFromPlayer()
                     .build()
     );
 }

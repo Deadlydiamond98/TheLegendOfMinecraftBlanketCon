@@ -17,6 +17,12 @@
       "zeldacraft:star_used"
     ]
   },
+  "falling_star": {
+    "subtitle": "sounds.zeldacraft.falling_star",
+    "sounds": [
+      "zeldacraft:falling_star"
+    ]
+  },
 
 
   "upgrade_mana": {
@@ -160,6 +166,19 @@
     "sounds": [
       "zeldacraft:tatl_hey",
       "zeldacraft:tatl_listen"
+    ]
+  },
+
+  "boomerang_in_air": {
+    "subtitle": "sounds.zeldacraft.boomerang_in_air",
+    "sounds": [
+      "zeldacraft:boomerang_in_air"
+    ]
+  },
+  "boomerang_caught": {
+    "subtitle": "sounds.zeldacraft.boomerang_caught",
+    "sounds": [
+      "zeldacraft:boomerang_caught"
     ]
   }
 }

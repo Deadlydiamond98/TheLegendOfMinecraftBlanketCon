@@ -9,6 +9,7 @@ import net.deadlydiamond98.networking.ZeldaClientPackets;
 import net.deadlydiamond98.particle.ZeldaParticleFactory;
 import net.deadlydiamond98.renderer.FairyCompanionRenderer;
 import net.deadlydiamond98.renderer.ManaHudOverlay;
+import net.deadlydiamond98.renderer.ShootingStarRenderer;
 import net.deadlydiamond98.renderer.entity.*;
 import net.deadlydiamond98.renderer.entity.bombs.BombEntityRenderer;
 import net.deadlydiamond98.renderer.entity.bombs.BombchuEntityRenderer;
@@ -70,6 +71,7 @@ public class ZeldaCraftClient implements ClientModInitializer {
 
 	private void registerEntityRenderers() {
 		EntityRendererRegistry.register(ZeldaEntities.Sword_Beam, SwordBeamRenderer::new);
+		EntityRendererRegistry.register(ZeldaEntities.Shooting_Star, ShootingStarRenderer::new);
 		EntityRendererRegistry.register(ZeldaEntities.Master_Sword_Beam, MasterSwordBeamRenderer::new);
 		EntityRendererRegistry.register(ZeldaEntities.Magic_Fire_Projectile, MagicFireProjectileRenderer::new);
 		EntityRendererRegistry.register(ZeldaEntities.Wood_Boomerang, BoomerangProjectileRenderer::new);

@@ -15,6 +15,8 @@ public class ZeldaSounds {
 
     //Magic
     public static SoundEvent StarUsed = registerSoundEvent("star_used");
+    public static SoundEvent ShootingStarFalling = registerSoundEvent("falling_star");
+
     public static SoundEvent ManaUpgrade = registerSoundEvent("upgrade_mana");
     public static SoundEvent NotEnoughMana = registerSoundEvent("no_mana");
 
@@ -48,6 +50,10 @@ public class ZeldaSounds {
     public static SoundEvent TatlSad = registerSoundEvent("tatl_sad");
     public static SoundEvent TatlOut = registerSoundEvent("tatl_out");
     public static SoundEvent TatlIn = registerSoundEvent("tatl_in");
+
+    //Boomerang
+    public static SoundEvent BoomerangInAir = registerSoundEvent("boomerang_in_air");
+    public static SoundEvent BoomerangCaught = registerSoundEvent("boomerang_caught");
 
     public static SoundEvent registerSoundEvent(String name) {
         Identifier id = new Identifier(ZeldaCraft.MOD_ID, name);

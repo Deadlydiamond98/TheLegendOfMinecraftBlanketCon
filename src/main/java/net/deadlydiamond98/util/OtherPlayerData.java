@@ -11,4 +11,7 @@ public interface OtherPlayerData {
     void removeFairyEffect(PlayerEntity user);
     boolean getFairyFriend();
     void setFairyFriend(boolean fairyfriend);
+
+    boolean canSpawnStar();
+    void setTriedStarSpawn(boolean starSpawn);
 }

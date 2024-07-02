@@ -30,7 +30,11 @@ public abstract class LivingEntityRendererMixin<T extends LivingEntity, M extend
 	@Shadow
 	protected abstract boolean addFeature(FeatureRenderer<T, M> feature);
 	@Unique
-	private boolean hasStunOverlay = false;
+	private boolean hasStunOverlay;
+	@Inject(method = "<init>", at = @At("TAIL"))
+	private void onInit(CallbackInfo ci) {
+		this.hasStunOverlay = false;
+	}
 
 
 	@Inject(method = "render", at = @At("HEAD"))

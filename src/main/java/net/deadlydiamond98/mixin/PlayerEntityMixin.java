@@ -9,13 +9,10 @@ import net.deadlydiamond98.util.ManaHandler;
 import net.deadlydiamond98.util.ManaPlayerData;
 import net.deadlydiamond98.util.OtherPlayerData;
 import net.minecraft.entity.EntityDimensions;
-import net.minecraft.entity.EntityPose;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundCategory;
-import net.minecraft.text.Text;
-import org.apache.logging.log4j.core.jmx.Server;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -32,15 +29,27 @@ public abstract class PlayerEntityMixin implements OtherPlayerData, ManaPlayerDa
     @Unique
     private boolean arrowRemoved;
     @Unique
-    private boolean fairyControl = false;
+    private boolean fairyControl;
     @Unique
-    private boolean fairyfriend = false;
+    private boolean fairyfriend;
     @Unique
-    private boolean transitionFairy = false;
+    private boolean transitionFairy;
     @Unique
-    private int manaLevelZelda = 0;
+    private int manaLevelZelda;
     @Unique
-    private int manaMaxLevelZelda = 100;
+    private int manaMaxLevelZelda;
+    @Unique
+    private boolean spawnStar;
+
+    @Inject(method = "<init>", at = @At("TAIL"))
+    private void onInit(CallbackInfo ci) {
+        this.spawnStar = true;
+        this.manaMaxLevelZelda = 100;
+        this.manaLevelZelda = 0;
+        this.transitionFairy = false;
+        this.fairyfriend = false;
+        this.fairyControl = false;
+    }
 
     @Inject(method = "tick", at = @At("HEAD"))
     public void tick(CallbackInfo ci) {
@@ -85,6 +94,7 @@ public abstract class PlayerEntityMixin implements OtherPlayerData, ManaPlayerDa
         nbt.putBoolean("fairyControl", fairyControl);
         nbt.putBoolean("transitionFairy", transitionFairy);
         nbt.putBoolean("fairyfriend", fairyfriend);
+        nbt.putBoolean("spawnStar", spawnStar);
     }
 
     @Inject(method = "readCustomDataFromNbt", at = @At("HEAD"))
@@ -103,6 +113,9 @@ public abstract class PlayerEntityMixin implements OtherPlayerData, ManaPlayerDa
         }
         if (nbt.contains("fairyfriend")) {
             this.fairyfriend = nbt.getBoolean("fairyfriend");
+        }
+        if (nbt.contains("spawnStar")) {
+            this.spawnStar = nbt.getBoolean("spawnStar");
         }
     }
 
@@ -174,5 +187,13 @@ public abstract class PlayerEntityMixin implements OtherPlayerData, ManaPlayerDa
     @Override
     public void setFairyFriend(boolean fairyfriend) {
         this.fairyfriend = fairyfriend;
+    }
+    @Override
+    public boolean canSpawnStar() {
+        return this.spawnStar;
+    }
+    @Override
+    public void setTriedStarSpawn(boolean starSpawn) {
+        this.spawnStar = starSpawn;
     }
 }

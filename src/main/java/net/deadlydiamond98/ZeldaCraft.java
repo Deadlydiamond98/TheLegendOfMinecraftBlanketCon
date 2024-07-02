@@ -9,6 +9,7 @@ import net.deadlydiamond98.entities.monsters.KeeseEntity;
 import net.deadlydiamond98.entities.ZeldaEntities;
 import net.deadlydiamond98.events.AfterRespawnEvent;
 import net.deadlydiamond98.events.EntityDamagedEvent;
+import net.deadlydiamond98.events.ZeldaSeverTickEvent;
 import net.deadlydiamond98.items.ZeldaItems;
 import net.deadlydiamond98.networking.ZeldaServerPackets;
 import net.deadlydiamond98.particle.ZeldaParticles;
@@ -46,6 +47,7 @@ public class ZeldaCraft implements ModInitializer {
 		ServerPlayerEvents.AFTER_RESPAWN.register(new AfterRespawnEvent());
 		ZeldaFeatures.register();
 		ZeldaCreativeTabs.registerItemGroups();
+		ZeldaSeverTickEvent.registerTickEvent();
 		LOGGER.info("Mod Loaded");
 	}
 

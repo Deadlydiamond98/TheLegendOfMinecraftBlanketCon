@@ -25,7 +25,7 @@ public class InvigorationStatusEffect extends InstantStatusEffect {
         super.onApplied(entity, attributes, amplifier);
         if (entity instanceof PlayerEntity user) {
             if (!user.getWorld().isClient()) {
-                ManaHandler.addManaToPlayer(user, (30 * (amplifier + 1)));
+                ManaHandler.addManaToPlayer(user, (70 * (amplifier + 1)));
             }
         }
     }
@@ -35,7 +35,7 @@ public class InvigorationStatusEffect extends InstantStatusEffect {
         super.applyInstantEffect(source, attacker, target, amplifier, proximity);
         if (target instanceof PlayerEntity user) {
             if (!user.getWorld().isClient()) {
-                ManaHandler.addManaToPlayer(user, (20 * (amplifier + 1)));
+                ManaHandler.addManaToPlayer(user, (70 * (amplifier + 1)));
             }
         }
     }
