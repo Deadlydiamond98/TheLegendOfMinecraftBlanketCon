@@ -1,12 +1,12 @@
 package net.deadlydiamond98.mixin;
 
-import net.deadlydiamond98.items.custom.BombchuItem;
+import net.deadlydiamond98.items.custom.bomb.BombchuItem;
 import net.deadlydiamond98.items.custom.custombundle.BombBag;
-import net.deadlydiamond98.items.custom.BombItem;
+import net.deadlydiamond98.items.custom.bomb.BombItem;
 import net.deadlydiamond98.items.custom.EmeraldItem;
 import net.deadlydiamond98.items.custom.custombundle.Quiver;
 import net.deadlydiamond98.items.custom.custombundle.CustomBundle;
-import net.deadlydiamond98.items.custom.manaItems.StarFragment;
+import net.deadlydiamond98.items.custom.manaItems.restoring.StarFragment;
 import net.deadlydiamond98.sounds.ZeldaSounds;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;

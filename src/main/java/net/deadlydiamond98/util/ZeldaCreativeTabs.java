@@ -21,6 +21,8 @@ public class ZeldaCreativeTabs {
                         entry.add(ZeldaItems.Master_Sword);
                         entry.add(ZeldaItems.Cracked_Bat);
                         entry.add(ZeldaItems.Wooden_Boomerang);
+                        entry.add(ZeldaItems.Iron_Boomerang);
+                        entry.add(ZeldaItems.Magic_Boomerang);
                         entry.add(ZeldaBlocks.Bomb_Flower);
                         entry.add(ZeldaItems.Bomb_Bag);
                         entry.add(ZeldaItems.Quiver);

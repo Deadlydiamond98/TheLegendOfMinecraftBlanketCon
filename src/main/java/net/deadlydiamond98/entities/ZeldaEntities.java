@@ -8,6 +8,10 @@ import net.deadlydiamond98.entities.monsters.BubbleEntity;
 import net.deadlydiamond98.entities.monsters.FairyEntity;
 import net.deadlydiamond98.entities.monsters.KeeseEntity;
 import net.deadlydiamond98.entities.projectiles.*;
+import net.deadlydiamond98.entities.projectiles.boomerangs.BaseBoomerangProjectile;
+import net.deadlydiamond98.entities.projectiles.boomerangs.IronBoomerang;
+import net.deadlydiamond98.entities.projectiles.boomerangs.MagicalBoomerang;
+import net.deadlydiamond98.entities.projectiles.boomerangs.WoodBoomerang;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
 import net.minecraft.entity.EntityDimensions;
 import net.minecraft.entity.EntityType;
@@ -58,11 +62,28 @@ public class ZeldaEntities {
                     .dimensions(EntityDimensions.fixed(0.4f,0.4f))
                     .build()
     );
-    public static final EntityType<BoomerangProjectile> Boomerang_Entity = Registry.register(
+    public static final EntityType<WoodBoomerang> Wood_Boomerang = Registry.register(
             Registries.ENTITY_TYPE,
-            new Identifier(ZeldaCraft.MOD_ID, "boomerang_entity"),
-            FabricEntityTypeBuilder.create(SpawnGroup.MISC, BoomerangProjectile::new)
-                    .dimensions(EntityDimensions.fixed(0.1f,0.1f))
+            new Identifier(ZeldaCraft.MOD_ID, "wood_boomerang_entity"),
+            FabricEntityTypeBuilder.create(SpawnGroup.MISC, (EntityType<WoodBoomerang> type, World world) ->
+            new WoodBoomerang(type, world))
+                    .dimensions(EntityDimensions.fixed(0.3f,0.3f))
+                    .build()
+    );
+    public static final EntityType<IronBoomerang> Iron_Boomerang = Registry.register(
+            Registries.ENTITY_TYPE,
+            new Identifier(ZeldaCraft.MOD_ID, "iron_boomerang_entity"),
+            FabricEntityTypeBuilder.create(SpawnGroup.MISC, (EntityType<IronBoomerang> type, World world) ->
+                            new IronBoomerang(type, world))
+                    .dimensions(EntityDimensions.fixed(0.3f,0.3f))
+                    .build()
+    );
+    public static final EntityType<MagicalBoomerang> Magic_Boomerang = Registry.register(
+            Registries.ENTITY_TYPE,
+            new Identifier(ZeldaCraft.MOD_ID, "magic_boomerang_entity"),
+            FabricEntityTypeBuilder.create(SpawnGroup.MISC, (EntityType<MagicalBoomerang> type, World world) ->
+                            new MagicalBoomerang(type, world))
+                    .dimensions(EntityDimensions.fixed(0.3f,0.3f))
                     .build()
     );
     public static final EntityType<BaseBallEntity> Baseball_Entity = Registry.register(

@@ -105,7 +105,6 @@ public class SwordBeamEntity extends ProjectileEntity {
             default: hex = "#f8b808"; break;
         }
 
-        //way too dumb to figure out this, thank you internet! Probably an easier way but I'm too sleep-deprived to care
         int color = Integer.parseInt(hex.startsWith("#") ? hex.substring(1) : hex, 16);
         float red = ((color >> 16) & 0xFF) / 255.0f;
         float green = ((color >> 8) & 0xFF) / 255.0f;

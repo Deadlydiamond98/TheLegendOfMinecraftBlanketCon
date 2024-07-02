@@ -17,7 +17,9 @@
   "item.zeldacraft.stardust": "Stardust",
   "item.zeldacraft.magic_jar": "Magic Jar",
   "item.zeldacraft.magic_candy": "Magic Candy",
+  "item.zeldacraft.magic_tart": "Magic Tart",
   "item.zeldacraft.magic_upgrade": "Magic Container",
+  "item.zeldacraft.magic_downgrade": "Empty Magic Container",
   "item.zeldacraft.fairy_bottle": "Fairy Bottle",
   "item.zeldacraft.magic_powder": "Magic Powder",
   "item.zeldacraft.fire_rod": "Fire Rod",
@@ -55,6 +57,10 @@
   "item.zeldacraft.cracked_bat": "Cracked Bat",
   "item.zeldacraft.cracked_bat.tooltip": "25% Chance to do Smaaaash!! attacks",
   "item.zeldacraft.baseball": "Baseball",
+
+  "item.zeldacraft.wooden_boomerang": "Wood Boomerang",
+  "item.zeldacraft.iron_boomerang": "Iron Boomerang",
+  "item.zeldacraft.magic_boomerang": "Magic Boomerang",
 
   "item.zeldacraft.music_disc_legend": "Music Disc",
   "item.zeldacraft.music_disc_legend.desc": "Deadlydiamond98 - Legend",

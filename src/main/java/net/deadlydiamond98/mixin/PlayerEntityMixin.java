@@ -159,8 +159,10 @@ public abstract class PlayerEntityMixin implements OtherPlayerData, ManaPlayerDa
     public void removeFairyEffect(PlayerEntity user) {
         this.setFairyState(false);
         this.transitionFairy = false;
-        user.getAbilities().allowFlying = false;
-        user.getAbilities().flying = false;
+        if (!user.isCreative()) {
+            user.getAbilities().allowFlying = false;
+            user.getAbilities().flying = false;
+        }
         user.getAbilities().setFlySpeed(0.05f);
         user.calculateDimensions();
     }

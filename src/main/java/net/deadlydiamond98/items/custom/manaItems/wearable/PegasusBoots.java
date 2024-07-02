@@ -1,4 +1,4 @@
-package net.deadlydiamond98.items.custom;
+package net.deadlydiamond98.items.custom.manaItems.wearable;
 
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.item.ArmorItem;

@@ -28,6 +28,7 @@ import net.minecraft.client.color.world.GrassColors;
 import net.minecraft.client.item.ModelPredicateProviderRegistry;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.entity.model.BatEntityModel;
+import net.minecraft.item.DyeableItem;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.util.Identifier;
 
@@ -71,6 +72,9 @@ public class ZeldaCraftClient implements ClientModInitializer {
 		EntityRendererRegistry.register(ZeldaEntities.Sword_Beam, SwordBeamRenderer::new);
 		EntityRendererRegistry.register(ZeldaEntities.Master_Sword_Beam, MasterSwordBeamRenderer::new);
 		EntityRendererRegistry.register(ZeldaEntities.Magic_Fire_Projectile, MagicFireProjectileRenderer::new);
+		EntityRendererRegistry.register(ZeldaEntities.Wood_Boomerang, BoomerangProjectileRenderer::new);
+		EntityRendererRegistry.register(ZeldaEntities.Iron_Boomerang, BoomerangProjectileRenderer::new);
+		EntityRendererRegistry.register(ZeldaEntities.Magic_Boomerang, BoomerangProjectileRenderer::new);
 		EntityRendererRegistry.register(ZeldaEntities.Keese_Entity, KeeseRenderer::new);
 		EntityRendererRegistry.register(ZeldaEntities.Fairy_Entity, FairyRenderer::new);
 		EntityRendererRegistry.register(ZeldaEntities.Companion_Fairy_Entity, FairyCompanionRenderer::new);
@@ -78,7 +82,6 @@ public class ZeldaCraftClient implements ClientModInitializer {
 		EntityRendererRegistry.register(ZeldaEntities.Beamos_Entity, BeamosRenderer::new);
 		EntityRendererRegistry.register(ZeldaEntities.Baseball_Entity, BaseballRenderer::new);
 		EntityRendererRegistry.register(ZeldaEntities.Deku_Nut_Entity, DekuNutRenderer::new);
-		EntityRendererRegistry.register(ZeldaEntities.Boomerang_Entity, BoomerangProjectileRenderer::new);
 		EntityRendererRegistry.register(ZeldaEntities.Bomb_Entity, BombEntityRenderer::new);
 		EntityRendererRegistry.register(ZeldaEntities.Bombchu_Entity, BombchuEntityRenderer::new);
 	}
@@ -106,5 +109,24 @@ public class ZeldaCraftClient implements ClientModInitializer {
 			}
 			return -1;
 		}), ZeldaBlocks.Loot_Grass.asItem());
+
+		ColorProviderRegistry.ITEM.register(((stack, tintIndex) -> {
+			if (tintIndex == 1) {
+				return ((DyeableItem)stack.getItem()).getColor(stack);
+			}
+			return -1;
+		}), ZeldaItems.Wooden_Boomerang.asItem());
+		ColorProviderRegistry.ITEM.register(((stack, tintIndex) -> {
+			if (tintIndex == 1) {
+				return ((DyeableItem)stack.getItem()).getColor(stack);
+			}
+			return -1;
+		}), ZeldaItems.Iron_Boomerang.asItem());
+		ColorProviderRegistry.ITEM.register(((stack, tintIndex) -> {
+			if (tintIndex == 1) {
+				return ((DyeableItem)stack.getItem()).getColor(stack);
+			}
+			return -1;
+		}), ZeldaItems.Magic_Boomerang.asItem());
 	}
 }

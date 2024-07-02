@@ -1,18 +1,21 @@
-package net.deadlydiamond98.items.custom.manaItems;
+package net.deadlydiamond98.items.custom.manaItems.restoring;
 
 import net.deadlydiamond98.util.ManaHandler;
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.UseAction;
 import net.minecraft.world.World;
 
-public class MagicFood extends Item {
+public class MagicJar extends Item {
     private int amountToGive;
-    public MagicFood(Settings settings, int amountToGive) {
+    public MagicJar(Settings settings, int amountToGive) {
         super(settings);
         this.amountToGive = amountToGive;
     }
@@ -22,12 +25,14 @@ public class MagicFood extends Item {
         if (user instanceof PlayerEntity player) {
             ManaHandler.addManaToPlayer(player, this.amountToGive);
         }
+        world.addBlockBreakParticles(user.getBlockPos(), Blocks.LIME_STAINED_GLASS.getDefaultState());
+        world.playSound(null, user.getBlockPos(), SoundEvents.BLOCK_GLASS_BREAK, SoundCategory.PLAYERS, 1.0f, 1.0f);
         return super.finishUsing(stack, world, user);
     }
 
     @Override
     public UseAction getUseAction(ItemStack stack) {
-        return UseAction.EAT;
+        return UseAction.DRINK;
     }
 
     @Override

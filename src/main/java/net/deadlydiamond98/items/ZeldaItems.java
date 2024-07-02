@@ -1,17 +1,27 @@
 package net.deadlydiamond98.items;
 
-import dev.emi.trinkets.api.TrinketItem;
 import net.deadlydiamond98.ZeldaCraft;
 import net.deadlydiamond98.entities.ZeldaEntities;
 import net.deadlydiamond98.items.custom.*;
 import net.deadlydiamond98.items.custom.Swords.CrackedBat;
 import net.deadlydiamond98.items.custom.Swords.MagicSword;
 import net.deadlydiamond98.items.custom.Swords.MasterSword;
+import net.deadlydiamond98.items.custom.bomb.BombItem;
+import net.deadlydiamond98.items.custom.bomb.BombchuItem;
+import net.deadlydiamond98.items.custom.bomb.DekuNutItem;
+import net.deadlydiamond98.items.custom.boomerang.IronBoomerangItem;
+import net.deadlydiamond98.items.custom.boomerang.MagicBoomerangItem;
+import net.deadlydiamond98.items.custom.boomerang.WoodBoomerangItem;
 import net.deadlydiamond98.items.custom.custombundle.BombBag;
 import net.deadlydiamond98.items.custom.custombundle.Quiver;
 import net.deadlydiamond98.items.custom.manaItems.*;
+import net.deadlydiamond98.items.custom.manaItems.restoring.MagicCandy;
+import net.deadlydiamond98.items.custom.manaItems.restoring.MagicFood;
+import net.deadlydiamond98.items.custom.manaItems.restoring.MagicJar;
+import net.deadlydiamond98.items.custom.manaItems.restoring.StarFragment;
 import net.deadlydiamond98.items.custom.manaItems.wearable.FairyBell;
 import net.deadlydiamond98.items.custom.manaItems.wearable.FairyPendant;
+import net.deadlydiamond98.items.custom.manaItems.wearable.PegasusBoots;
 import net.deadlydiamond98.sounds.ZeldaSounds;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroupEntries;
@@ -36,9 +46,12 @@ public class ZeldaItems {
     public static final Item Baseball = registerItem("baseball", new Baseball(
             new FabricItemSettings().maxCount(16)));
 
-    public static final Item Wooden_Boomerang = registerItem("wooden_boomerang", new Item(
-            new FabricItemSettings()
-    ));
+    public static final Item Wooden_Boomerang = registerItem("wooden_boomerang", new WoodBoomerangItem(
+            new FabricItemSettings().maxCount(1)));
+    public static final Item Iron_Boomerang = registerItem("iron_boomerang", new IronBoomerangItem(
+            new FabricItemSettings().maxCount(1)));
+    public static final Item Magic_Boomerang = registerItem("magic_boomerang", new MagicBoomerangItem(
+            new FabricItemSettings().maxCount(1)));
 
     public static final Item Emerald_Shard = registerItem("emerald_shard", new EmeraldItem(
             new FabricItemSettings()));

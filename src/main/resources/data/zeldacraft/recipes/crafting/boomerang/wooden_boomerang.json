@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "#OW",
+    "OE ",
+    "W  "
+  ],
+  "key": {
+    "#": {
+      "tag": "minecraft:logs"
+    },
+    "O": {
+      "tag": "minecraft:planks"
+    },
+    "W": {
+      "item": "minecraft:wooden_sword"
+    },
+    "E": {
+      "item": "zeldacraft:emerald_chunk"
+    }
+  },
+  "result": {
+    "item": "zeldacraft:wooden_boomerang",
+    "count": 1
+  }
+}

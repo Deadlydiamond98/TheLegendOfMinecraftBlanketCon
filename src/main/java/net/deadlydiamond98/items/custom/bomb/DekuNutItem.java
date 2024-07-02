@@ -1,4 +1,4 @@
-package net.deadlydiamond98.items.custom;
+package net.deadlydiamond98.items.custom.bomb;
 
 import net.deadlydiamond98.entities.projectiles.DekuNutEntity;
 import net.minecraft.entity.player.PlayerEntity;

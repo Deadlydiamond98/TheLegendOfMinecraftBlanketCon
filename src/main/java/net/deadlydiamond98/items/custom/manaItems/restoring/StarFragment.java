@@ -1,4 +1,4 @@
-package net.deadlydiamond98.items.custom.manaItems;
+package net.deadlydiamond98.items.custom.manaItems.restoring;
 
 import net.deadlydiamond98.networking.ZeldaServerPackets;
 import net.deadlydiamond98.sounds.ZeldaSounds;

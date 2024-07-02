@@ -1,0 +1,205 @@
+package net.deadlydiamond98.entities.projectiles.boomerangs;
+
+import net.deadlydiamond98.ZeldaCraft;
+import net.deadlydiamond98.items.ZeldaItems;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.ItemEntity;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.data.DataTracker;
+import net.minecraft.entity.data.TrackedData;
+import net.minecraft.entity.data.TrackedDataHandlerRegistry;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.projectile.ProjectileEntity;
+import net.minecraft.entity.projectile.ProjectileUtil;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.particle.ParticleEffect;
+import net.minecraft.particle.ParticleTypes;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.util.Hand;
+import net.minecraft.util.hit.BlockHitResult;
+import net.minecraft.util.hit.EntityHitResult;
+import net.minecraft.util.hit.HitResult;
+import net.minecraft.util.math.Box;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.World;
+
+import java.util.List;
+
+public class BaseBoomerangProjectile extends ProjectileEntity {
+
+    private static final TrackedData<ItemStack> itemstack;
+    private int ticksInAir;
+    private int airtime;
+    private int damageAmount;
+    private float speed;
+    private Hand hand;
+
+    static {
+        itemstack = DataTracker.registerData(BaseBoomerangProjectile.class, TrackedDataHandlerRegistry.ITEM_STACK);
+    }
+
+    @Override
+    protected void initDataTracker() {
+        this.dataTracker.startTracking(itemstack, ZeldaItems.Emerald_Chunk.getDefaultStack());
+    }
+    public BaseBoomerangProjectile(EntityType<? extends BaseBoomerangProjectile> entityType, World world) {
+        super(entityType, world);
+    }
+
+    public BaseBoomerangProjectile(EntityType<? extends BaseBoomerangProjectile> entityType, World world, PlayerEntity player,
+                                   ItemStack boomerangItem, int airtime, int damageAmount, float speed, Hand hand) {
+        super(entityType, world);
+        this.setOwner(player);
+        this.ticksInAir = 0;
+        this.airtime = airtime;
+        this.damageAmount = damageAmount;
+        this.setBoomerangItem(boomerangItem);
+        this.speed = speed;
+        this.hand = hand;
+        this.setVelocity(player, player.getPitch(), player.getYaw(), 0.0f, speed, 1.0f);
+        this.setYaw(player.getHeadYaw());
+        this.setPitch(player.getPitch());
+    }
+
+    @Override
+    protected void onCollision(HitResult hitResult) {
+        Vec3d velocity = this.getVelocity();
+        Vec3d reflectedVelocity = null;
+
+        if (hitResult.getType() == HitResult.Type.BLOCK) {
+
+            BlockHitResult blockHitResult = (BlockHitResult) hitResult;
+
+            Vec3d hitNormal = Vec3d.of(blockHitResult.getSide().getVector()).normalize();
+
+            reflectedVelocity = velocity.subtract(hitNormal.multiply(2 * velocity.dotProduct(hitNormal)));
+            this.getWorld().sendEntityStatus(this, (byte)3);
+            this.getWorld().playSound(null, blockHitResult.getBlockPos(),
+                    this.getWorld().getBlockState(blockHitResult.getBlockPos()).getSoundGroup().getHitSound(),
+                    SoundCategory.BLOCKS, 1.0f, 1.0f);
+        }
+
+        else if (hitResult.getType() == HitResult.Type.ENTITY) {
+
+            EntityHitResult entityHitResult = (EntityHitResult) hitResult;
+            Entity hitEntity = entityHitResult.getEntity();
+
+            if (hitEntity != this.getOwner()) {
+                Vec3d hitNormal = entityHitResult.getPos().subtract(this.getPos()).normalize();
+
+                reflectedVelocity = velocity.subtract(hitNormal.multiply(2 * velocity.dotProduct(hitNormal)));
+
+                if (this.getOwner() != null &&
+                        this.getOwner() instanceof PlayerEntity player &&
+                        hitEntity instanceof LivingEntity livingEntity) {
+                    livingEntity.damage(livingEntity.getDamageSources().playerAttack(player), damageAmount);
+                }
+            }
+        }
+
+        if (reflectedVelocity != null) {
+            this.setVelocity(reflectedVelocity);
+        }
+    }
+
+    @Override
+    public void tick() {
+        super.tick();
+
+        if (!this.getWorld().isClient()) {
+            if (this.ticksInAir <= 50) {
+                HitResult hitResult = ProjectileUtil.getCollision(this, this::canHit);
+                if (hitResult.getType() != HitResult.Type.MISS) {
+                    this.onCollision(hitResult);
+                }
+            }
+
+            if (this.getOwner() != null) {
+                this.ticksInAir++;
+                if (this.ticksInAir > this.airtime) {
+
+                    Vec3d ownerPos = new Vec3d(this.getOwner().getX() + this.getOwner().getHandPosOffset(this.getBoomerangItem().getItem()).x * 0.5,
+                            this.getOwner().getY() + this.getOwner().getEyeHeight(this.getOwner().getPose()) - 0.5,
+                            this.getOwner().getZ() + this.getOwner().getHandPosOffset(this.getBoomerangItem().getItem()).z * 0.5);
+                    Vec3d directionToOwner = ownerPos.subtract(this.getPos()).normalize();
+
+                    Vec3d currentVelocity = this.getVelocity();
+                    Vec3d newVelocity = directionToOwner.multiply(this.speed);
+                    Vec3d interpolatedVelocity = currentVelocity.lerp(newVelocity, 0.1);
+
+                    this.setVelocity(interpolatedVelocity);
+                }
+
+                if (this.ticksInAir > 10) {
+                    if (this.getBoundingBox().expand(0.5).intersects(this.getOwner().getBoundingBox())) {
+                        if (this.getOwner() instanceof PlayerEntity player) {
+                            if (!player.isCreative()) {
+                                if (player.getStackInHand(hand).isEmpty()) {
+                                    player.setStackInHand(hand, this.getBoomerangItem());
+                                }
+                                else {
+                                    player.getInventory().insertStack(this.getBoomerangItem());
+                                }
+                            }
+                        }
+                        this.discard();
+                    }
+                }
+            }
+            else {
+                ItemEntity item = new ItemEntity(this.getWorld(), this.getX(), this.getY(), this.getZ(), this.getBoomerangItem());
+                this.getWorld().spawnEntity(item);
+                this.discard();
+            }
+        }
+
+        Vec3d vec3d = this.getVelocity();
+        double d = this.getX() + vec3d.x;
+        double e = this.getY() + vec3d.y;
+        double f = this.getZ() + vec3d.z;
+        this.setPosition(d, e, f);
+    }
+
+    public ItemStack getBoomerangItem() {
+        return this.dataTracker.get(itemstack);
+    }
+
+    private void setBoomerangItem(ItemStack item) {
+        this.dataTracker.set(itemstack, item);
+    }
+
+    @Override
+    public void handleStatus(byte status) {
+        if (status == 3) {
+            ParticleEffect particleEffect = ParticleTypes.CRIT;
+
+            for(int i = 0; i < 8; ++i) {
+                this.getWorld().addParticle(particleEffect, this.getX(), this.getY(), this.getZ(),
+                        Math.floor(Math.random() * (2 + 2 + 1) - 2),
+                        Math.floor(Math.random() * (2 + 2 + 1) - 2),
+                        Math.floor(Math.random() * (2 + 2 + 1) - 2));
+            }
+        }
+        super.handleStatus(status);
+
+    }
+
+    @Override
+    public void readCustomDataFromNbt(NbtCompound nbt) {
+        if (nbt.contains("BoomerangItem", 10)) {
+            this.setBoomerangItem(ItemStack.fromNbt(nbt.getCompound("BoomerangItem")));
+        }
+    }
+
+    @Override
+    public void writeCustomDataToNbt(NbtCompound nbt) {
+        if (!this.getBoomerangItem().isEmpty()) {
+            NbtCompound itemNbt = new NbtCompound();
+            this.getBoomerangItem().writeNbt(itemNbt);
+            nbt.put("BoomerangItem", itemNbt);
+        }
+    }
+}

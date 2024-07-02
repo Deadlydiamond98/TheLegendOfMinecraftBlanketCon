@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "#OW",
+    "OE ",
+    "W  "
+  ],
+  "key": {
+    "#": {
+      "item": "zeldacraft:wooden_boomerang"
+    },
+    "O": {
+      "item": "minecraft:iron_ingot"
+    },
+    "W": {
+      "item": "minecraft:iron_sword"
+    },
+    "E": {
+      "item": "minecraft:light_blue_dye"
+    }
+  },
+  "result": {
+    "item": "zeldacraft:iron_boomerang",
+    "count": 1
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "zeldacraft:item/iron_boomerang",
+    "layer1": "zeldacraft:item/boomerang_overlay"
+  }
+}
