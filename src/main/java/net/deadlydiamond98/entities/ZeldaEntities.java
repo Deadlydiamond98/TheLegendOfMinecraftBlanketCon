@@ -65,7 +65,8 @@ public class ZeldaEntities {
     public static final EntityType<HookshotEntity> Hookshot_Entity = Registry.register(
             Registries.ENTITY_TYPE,
             new Identifier(ZeldaCraft.MOD_ID, "hookshot_hook"),
-            FabricEntityTypeBuilder.create(SpawnGroup.MISC, HookshotEntity::new)
+            FabricEntityTypeBuilder.create(SpawnGroup.MISC, (EntityType<HookshotEntity> type, World world) ->
+                            new HookshotEntity(type, world))
                     .dimensions(EntityDimensions.fixed(0.3f,0.3f))
                     .build()
     );

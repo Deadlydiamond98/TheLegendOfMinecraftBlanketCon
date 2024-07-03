@@ -170,6 +170,13 @@
     ]
   },
 
+  "hookshot_active": {
+    "subtitle": "sounds.zeldacraft.hookshot_active",
+    "sounds": [
+      "zeldacraft:hookshot_active"
+    ]
+  },
+
   "boomerang_in_air": {
     "subtitle": "sounds.zeldacraft.boomerang_in_air",
     "sounds": [

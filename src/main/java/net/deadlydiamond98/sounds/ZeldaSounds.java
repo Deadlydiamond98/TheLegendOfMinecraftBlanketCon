@@ -55,6 +55,10 @@ public class ZeldaSounds {
     public static SoundEvent BoomerangInAir = registerSoundEvent("boomerang_in_air");
     public static SoundEvent BoomerangCaught = registerSoundEvent("boomerang_caught");
 
+    //Hookshot
+
+    public static SoundEvent HookshotActive = registerSoundEvent("hookshot_active");
+
     public static SoundEvent registerSoundEvent(String name) {
         Identifier id = new Identifier(ZeldaCraft.MOD_ID, name);
         return Registry.register(Registries.SOUND_EVENT, id, SoundEvent.of(id));

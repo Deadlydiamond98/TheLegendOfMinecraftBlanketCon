@@ -31,16 +31,23 @@ public class HookshotRenderer extends EntityRenderer<HookshotEntity> {
         PlayerEntity player = (PlayerEntity) entity.getOwner();
 
         if (player != null) {
+
             matrices.push();
+            matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(entity.getYaw() + 180));
+            matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees(entity.getPitch()));
+            matrices.translate(0, -0.75f, 0);
             VertexConsumer vertexConsumer = vertexConsumers.getBuffer(this.entityModel.getLayer(getTexture(entity)));
             this.entityModel.render(matrices, vertexConsumer, light, OverlayTexture.DEFAULT_UV, 1.0F, 1.0F, 1.0F, 1.0F);
             matrices.pop();
 
             //Chain Rendering
             matrices.push();
+            Vec3d handPos = player.getLerpedPos(tickDelta).add(0, player.getEyeHeight(player.getPose()) - 0.6, 0)
+                    .add(player.getRotationVec(tickDelta).normalize().crossProduct(new Vec3d(0, 1, 0))
+                            .multiply(0.5));
 
-            Vec3d playerPos = player.getLerpedPos(tickDelta).subtract(entity.getLerpedPos(tickDelta));
-            Vec3d headPos = entity.getLerpedPos(tickDelta).subtract(entity.getLerpedPos(tickDelta)).subtract(playerPos);
+            Vec3d playerPos = handPos.subtract(entity.getLerpedPos(tickDelta));
+            Vec3d headPos = entity.getLerpedPos(tickDelta).add(0, 0.2, 0).subtract(entity.getLerpedPos(tickDelta)).subtract(playerPos);
 
             VertexConsumer vertexConsumerChain = vertexConsumers.getBuffer(RenderLayer.getEntityTranslucent(CHAIN_TEXTURE));
             matrices.translate(playerPos.x, playerPos.y, playerPos.z);

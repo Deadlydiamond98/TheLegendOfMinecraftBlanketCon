@@ -17,9 +17,8 @@ public class HookshotItem extends Item {
 
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
-        HookshotEntity hook = new HookshotEntity(ZeldaEntities.Hookshot_Entity, world);
-        hook.setPos(user.getX(), user.getY(), user.getZ());
-        hook.setOwner(user);
+        HookshotEntity hook = new HookshotEntity(ZeldaEntities.Hookshot_Entity, world, user, 15);
+        hook.setPos(user.getX(), user.getEyeY(), user.getZ());
         world.spawnEntity(hook);
         return super.use(world, user, hand);
     }
