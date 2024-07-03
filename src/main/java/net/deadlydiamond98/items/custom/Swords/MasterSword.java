@@ -1,5 +1,6 @@
 package net.deadlydiamond98.items.custom.Swords;
 
+import net.deadlydiamond98.items.custom.manaItems.MagicItem;
 import net.deadlydiamond98.sounds.ZeldaSounds;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.Entity;
@@ -15,7 +16,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class MasterSword extends SwordItem {
+public class MasterSword extends SwordItem  implements MagicItem {
 
     private boolean soundPlay;
     public MasterSword(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
@@ -40,5 +41,10 @@ public class MasterSword extends SwordItem {
 
     public void setSoundPlay(boolean soundPlay) {
         this.soundPlay = soundPlay;
+    }
+
+    @Override
+    public int getManaCost() {
+        return 3;
     }
 }

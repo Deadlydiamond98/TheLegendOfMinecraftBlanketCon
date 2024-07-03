@@ -12,6 +12,8 @@ public class ZeldaParticles {
     public static DefaultParticleType Explosion_Particle;
     public static DefaultParticleType Snap_Particle;
     public static DefaultParticleType Magic_Fire_Particle;
+    public static DefaultParticleType Magic_Ice_Particle;
+    public static DefaultParticleType Magic_Ice_Particle_Bullet;
 
 
     private static DefaultParticleType registerParticle(String name, DefaultParticleType particleType) {
@@ -23,6 +25,8 @@ public class ZeldaParticles {
         Snap_Particle = registerParticle("snap_particle", FabricParticleTypes.simple(true));
         Explosion_Particle = registerParticle("bomb_particle", FabricParticleTypes.simple(true));
         Magic_Fire_Particle = registerParticle("magic_fire_particle", FabricParticleTypes.simple(true));
+        Magic_Ice_Particle = registerParticle("magic_ice_particle", FabricParticleTypes.simple(true));
+        Magic_Ice_Particle_Bullet = registerParticle("magic_ice_particle_bullet", FabricParticleTypes.simple(true));
         ZeldaCraft.LOGGER.info("Registering Particles for " + ZeldaCraft.MOD_ID);
     }
 }

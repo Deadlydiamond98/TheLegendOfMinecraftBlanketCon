@@ -46,6 +46,13 @@ public class ZeldaEntities {
                     .dimensions(EntityDimensions.fixed(0.4f,0.2f))
                     .build()
     );
+    public static final EntityType<MagicIceProjectileEntity> Magic_Ice_Projectile = Registry.register(
+            Registries.ENTITY_TYPE,
+            new Identifier(ZeldaCraft.MOD_ID, "magic_ice_projectile"),
+            FabricEntityTypeBuilder.create(SpawnGroup.MISC, MagicIceProjectileEntity::new)
+                    .dimensions(EntityDimensions.fixed(0.4f,0.2f))
+                    .build()
+    );
     public static final EntityType<ShootingStar> Shooting_Star = Registry.register(
             Registries.ENTITY_TYPE,
             new Identifier(ZeldaCraft.MOD_ID, "shooting_star"),
@@ -53,6 +60,13 @@ public class ZeldaEntities {
                     .dimensions(EntityDimensions.fixed(0.3f,0.3f))
                     .spawnableFarFromPlayer()
                     .trackRangeChunks(32)
+                    .build()
+    );
+    public static final EntityType<HookshotEntity> Hookshot_Entity = Registry.register(
+            Registries.ENTITY_TYPE,
+            new Identifier(ZeldaCraft.MOD_ID, "hookshot_hook"),
+            FabricEntityTypeBuilder.create(SpawnGroup.MISC, HookshotEntity::new)
+                    .dimensions(EntityDimensions.fixed(0.3f,0.3f))
                     .build()
     );
     public static final EntityType<BombEntity> Bomb_Entity = Registry.register(

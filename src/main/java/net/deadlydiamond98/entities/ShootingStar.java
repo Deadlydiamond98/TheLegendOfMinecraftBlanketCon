@@ -25,8 +25,8 @@ import org.joml.Vector3f;
 public class ShootingStar extends Entity {
     public ShootingStar(EntityType<?> type, World world) {
         super(type, world);
-        double randomX = (Math.random() * 2 - 1) * 0.1;
-        double randomZ = (Math.random() * 2 - 1) * 0.1;
+        double randomX = (Math.random() * 2 - 1) * 0.5;
+        double randomZ = (Math.random() * 2 - 1) * 0.5;
         this.setVelocity(randomX, 0.0, randomZ);
         ZeldaCraft.LOGGER.info("Spawned Star");
     }
@@ -66,6 +66,7 @@ public class ShootingStar extends Entity {
 
             ItemStack itemStack = new ItemStack(ZeldaItems.Star_Fragment);
             ItemEntity itemEntity = new ItemEntity(this.getWorld(), this.getX(), this.getY(), this.getZ(), itemStack);
+            itemEntity.setGlowing(true);
             this.getWorld().spawnEntity(itemEntity);
 
             this.discard();

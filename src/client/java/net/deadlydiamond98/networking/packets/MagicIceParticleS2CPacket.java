@@ -6,7 +6,7 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
 import net.minecraft.network.PacketByteBuf;
 
-public class MagicFireParticleS2CPacket {
+public class MagicIceParticleS2CPacket {
     public static void recieve(MinecraftClient client, ClientPlayNetworkHandler handler, PacketByteBuf buf,
                                PacketSender responseSender) {
         double x = buf.readDouble();
@@ -14,7 +14,7 @@ public class MagicFireParticleS2CPacket {
         double z = buf.readDouble();
 
         client.execute(() -> {
-            MinecraftClient.getInstance().world.addImportantParticle(ZeldaParticles.Magic_Fire_Particle, x, y, z, 0, 0, 0);
+            MinecraftClient.getInstance().world.addImportantParticle(ZeldaParticles.Magic_Ice_Particle, x, y, z, 0, 0, 0);
         });
     }
 }

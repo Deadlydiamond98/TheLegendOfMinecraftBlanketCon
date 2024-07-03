@@ -23,6 +23,7 @@ public class FairyPendant extends TrinketItem {
 
     @Override
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-        tooltip.add(Text.translatable("item.zeldacraft.fairy_pendant.tooltip").formatted(Formatting.GREEN));
+        tooltip.add(Text.translatable("item.zeldacraft.fairy_pendant.tooltipa").formatted(Formatting.GREEN));
+        tooltip.add(Text.translatable("item.zeldacraft.fairy_pendant.tooltipb").formatted(Formatting.DARK_GREEN));
     }
 }

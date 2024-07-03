@@ -1,6 +1,7 @@
 package net.deadlydiamond98.renderer.entity.projectile_items;
 
 import net.deadlydiamond98.entities.projectiles.boomerangs.BaseBoomerangProjectile;
+import net.minecraft.client.render.Frustum;
 import net.minecraft.client.render.OverlayTexture;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.EntityRenderer;
@@ -31,13 +32,18 @@ public class BoomerangProjectileRenderer<T extends Entity> extends EntityRendere
         matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(rotation * 30));
 
         ItemStack itemStack = entity.getBoomerangItem();
-        BakedModel bakedModel = this.itemRenderer.getModel(itemStack, entity.getWorld(), (LivingEntity) null, entity.getId());
+        BakedModel bakedModel = this.itemRenderer.getModel(itemStack, entity.getWorld(), null, entity.getId());
 
         this.itemRenderer.renderItem(itemStack, ModelTransformationMode.GROUND,
                 false, matrices, vertexConsumers, light, OverlayTexture.DEFAULT_UV, bakedModel);
 
         matrices.pop();
         super.render(entity, yaw, tickDelta, matrices, vertexConsumers, light);
+    }
+
+    @Override
+    public boolean shouldRender(BaseBoomerangProjectile entity, Frustum frustum, double x, double y, double z) {
+        return true;
     }
 
     @Override

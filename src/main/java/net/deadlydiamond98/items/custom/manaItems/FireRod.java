@@ -7,20 +7,25 @@ import net.deadlydiamond98.util.ManaHandler;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.CampfireBlock;
+import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
 import net.minecraft.sound.SoundCategory;
+import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.List;
 
 import static net.minecraft.block.CampfireBlock.LIT;
 
-public class FireRod extends Item {
+public class FireRod extends Item implements MagicItem {
     public FireRod(Settings settings) {
         super(settings);
     }
@@ -44,7 +49,7 @@ public class FireRod extends Item {
 
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
-        if (ManaHandler.CanRemoveManaFromPlayer(user, 8)) {
+        if (ManaHandler.CanRemoveManaFromPlayer(user, 10)) {
             MagicFireProjectileEntity magicFire = new MagicFireProjectileEntity(ZeldaEntities.Magic_Fire_Projectile, world);
             magicFire.setPos(user.getX(), user.getEyeY(), user.getZ());
             Vec3d vec3d = user.getRotationVec(1.0F);
@@ -52,12 +57,18 @@ public class FireRod extends Item {
             magicFire.setYaw(user.getHeadYaw());
             magicFire.setOwner(user);
             world.spawnEntity(magicFire);
-            ManaHandler.removeManaFromPlayer(user, 8);
+            ManaHandler.removeManaFromPlayer(user, 10);
             user.getWorld().playSound(null, user.getBlockPos(), ZeldaSounds.FireMagic,
                     SoundCategory.PLAYERS, 3.0f, 1.0f);
+            user.getItemCooldownManager().set(this, 20);
             return TypedActionResult.success(user.getStackInHand(hand));
         }
         user.getWorld().playSound(null, user.getBlockPos(), ZeldaSounds.NotEnoughMana, SoundCategory.PLAYERS, 1.0f, 1.0f);
         return super.use(world, user, hand);
+    }
+
+    @Override
+    public int getManaCost() {
+        return 10;
     }
 }

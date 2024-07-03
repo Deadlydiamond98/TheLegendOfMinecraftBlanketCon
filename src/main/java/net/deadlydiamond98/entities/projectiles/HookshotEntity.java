@@ -48,29 +48,13 @@ public class HookshotEntity extends ProjectileEntity implements Ownable {
     public void tick() {
         super.tick();
 
-        HitResult hitResult = ProjectileUtil.getCollision(this, this::canHit);
-        boolean bl = false;
-        if (hitResult.getType() == HitResult.Type.BLOCK) {
-            BlockPos blockPos = ((BlockHitResult)hitResult).getBlockPos();
-            BlockState blockState = this.getWorld().getBlockState(blockPos);
-            if (blockState.isOf(Blocks.NETHER_PORTAL)) {
-                this.setInNetherPortal(blockPos);
-                bl = true;
-            } else if (blockState.isOf(Blocks.END_GATEWAY)) {
-                BlockEntity blockEntity = this.getWorld().getBlockEntity(blockPos);
-                if (blockEntity instanceof EndGatewayBlockEntity && EndGatewayBlockEntity.canTeleport(this)) {
-                    EndGatewayBlockEntity.tryTeleportingEntity(this.getWorld(), blockPos, blockState, this, (EndGatewayBlockEntity)blockEntity);
-                }
-
-                bl = true;
-            }
-        }
-
-        if (hitResult.getType() != HitResult.Type.MISS && !bl) {
-            this.onCollision(hitResult);
-        }
-
-        this.checkBlockCollision();
+//        HitResult hitResult = ProjectileUtil.getCollision(this, this::canHit);
+//
+//        if (hitResult.getType() != HitResult.Type.MISS) {
+//            this.onCollision(hitResult);
+//        }
+//
+//        this.checkBlockCollision();
 
         Vec3d vec3d = this.getVelocity();
         double d = this.getX() + vec3d.x;

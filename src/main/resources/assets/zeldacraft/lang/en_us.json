@@ -1,4 +1,6 @@
 {
+  "attribute.zeldacraft.magic_cost": " Magic Cost",
+
   "itemgroup.zeldacraft_items": "The Legend of Steve Items",
   "itemgroup.zeldacraft_blocks": "The Legend of Steve Blocks",
 
@@ -53,7 +55,7 @@
   "item.zeldacraft.magic_sword.tooltip": "Shoots Sword Beams",
   "item.zeldacraft.master_sword": "Master Sword",
   "item.zeldacraft.master_sword.tooltip": "Shoots Piercing Sword Beams",
-  "item.zeldacraft.mana_sword.tooltip": "Consumes Mana if Players Health isn't full",
+  "item.zeldacraft.mana_sword.tooltip": "Consumes Magic if Players Health isn't full",
   "item.zeldacraft.cracked_bat": "Cracked Bat",
   "item.zeldacraft.cracked_bat.tooltip": "25% Chance to do Smaaaash!! attacks",
   "item.zeldacraft.baseball": "Baseball",
@@ -66,6 +68,9 @@
   "item.zeldacraft.magic_boomerang.tooltipa": "Can pick up items from afar",
   "item.zeldacraft.magic_boomerang.tooltipb": "Won't be damaged if you have Magic",
 
+  "item.zeldacraft.hookshot": "Hookshot",
+
+
   "item.zeldacraft.music_disc_legend": "Music Disc",
   "item.zeldacraft.music_disc_legend.desc": "Deadlydiamond98 - Legend",
   "item.zeldacraft.music_disc_legend_fragment": "Disc Fragment",
@@ -76,9 +81,10 @@
   "item.zeldacraft.fairy_bell": "Fairy Bell",
   "item.zeldacraft.fairy_bell_with_color": "Fairy Bell (%s)",
   "item.zeldacraft.fairy_bell.tooltipa": "Gives the player a fairy companion",
-  "item.zeldacraft.fairy_bell.tooltipb": "Slowly restores magic",
+  "item.zeldacraft.fairy_bell.tooltipb": "Slowly restores Magic",
   "item.zeldacraft.fairy_pendant": "Fairy Pendant",
-  "item.zeldacraft.fairy_pendant.tooltip": "Allows one to turn into a fairy",
+  "item.zeldacraft.fairy_pendant.tooltipa": "Allows one to turn into a fairy",
+  "item.zeldacraft.fairy_pendant.tooltipb": "Rapidly consumes Magic",
 
   "effect.zeldacraft.stunned": "Stunned",
   "effect.zeldacraft.sword_sick": "Sword Sick",

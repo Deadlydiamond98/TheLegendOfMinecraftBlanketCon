@@ -44,9 +44,6 @@ public class ManaHandler {
         if (userM.getMana() - amountToRemove >= 0) {
             return true;
         }
-        else if (userM.getMana() > 0 && userM.getMana() - amountToRemove < 0) {
-            return true;
-        }
         return false;
     }
 

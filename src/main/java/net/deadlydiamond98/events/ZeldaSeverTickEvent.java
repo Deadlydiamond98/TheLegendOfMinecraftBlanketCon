@@ -28,17 +28,17 @@ public class ZeldaSeverTickEvent {
                 if (world.getRegistryKey() == World.OVERWORLD) {
                     if (world.getTimeOfDay() >= 13000 && world.getTimeOfDay() <= 23000) {
                         world.getPlayers().forEach(player -> {
-                            if (player.getRandom().nextDouble() < 0.005 && ((OtherPlayerData)player).canSpawnStar() && world.getTimeOfDay() % 20 == 0) {
-                                double x = player.getX() + (player.getRandom().nextDouble() - 0.5) * 25;
+                            if (player.getRandom().nextDouble() < 0.005 && ((OtherPlayerData)player).canSpawnStar() && world.getTimeOfDay() % 25 == 0) {
+                                double x = player.getX() + (player.getRandom().nextDouble() - 0.5) * 30;
                                 double y = player.getY() + 50;
-                                double z = player.getZ() + (player.getRandom().nextDouble() - 0.5) * 25;
+                                double z = player.getZ() + (player.getRandom().nextDouble() - 0.5) * 30;
 
                                 if (world.getBlockState(new BlockPos((int) x, (int) y, (int) z)).isAir()) {
                                     ShootingStar star = new ShootingStar(ZeldaEntities.Shooting_Star, player.getWorld());
                                     star.setPosition(x, y, z);
                                     star.setYaw(player.getRandom().nextBetween(0, 360));
                                     world.spawnEntity(star);
-                                    world.playSound(null, new BlockPos(star.getBlockPos().getX(), (int) (player.getY() + 10), star.getBlockPos().getZ()),
+                                    player.getWorld().playSound(null, new BlockPos(star.getBlockPos().getX(), (int) (player.getY() + 10), star.getBlockPos().getZ()),
                                             ZeldaSounds.ShootingStarFalling, SoundCategory.MASTER, 1.0f, 1.0f);
                                     ((OtherPlayerData) player).setTriedStarSpawn(false);
                                 }

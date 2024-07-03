@@ -5,6 +5,7 @@ import net.deadlydiamond98.entities.projectiles.boomerangs.BaseBoomerangProjecti
 import net.deadlydiamond98.entities.projectiles.boomerangs.IronBoomerang;
 import net.deadlydiamond98.entities.projectiles.boomerangs.MagicalBoomerang;
 import net.deadlydiamond98.entities.projectiles.boomerangs.WoodBoomerang;
+import net.deadlydiamond98.items.custom.manaItems.MagicItem;
 import net.deadlydiamond98.util.ManaHandler;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.player.PlayerEntity;
@@ -20,7 +21,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class MagicBoomerangItem extends BaseBoomerangItem {
+public class MagicBoomerangItem extends BaseBoomerangItem implements MagicItem {
     private static final int DEFAULT_COLOR = 0xff4444;
 
     public MagicBoomerangItem(Settings settings) {
@@ -34,8 +35,8 @@ public class MagicBoomerangItem extends BaseBoomerangItem {
 
     @Override
     protected void damageItem(ItemStack itemStack, PlayerEntity user, Hand hand) {
-        if (ManaHandler.CanRemoveManaFromPlayer(user, 1)) {
-            ManaHandler.removeManaFromPlayer(user, 1);
+        if (ManaHandler.CanRemoveManaFromPlayer(user, 3)) {
+            ManaHandler.removeManaFromPlayer(user, 3);
         }
         else {
             super.damageItem(itemStack, user, hand);
@@ -46,5 +47,10 @@ public class MagicBoomerangItem extends BaseBoomerangItem {
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
         tooltip.add(Text.translatable("item.zeldacraft.magic_boomerang.tooltipa").formatted(Formatting.GREEN));
         tooltip.add(Text.translatable("item.zeldacraft.magic_boomerang.tooltipb").formatted(Formatting.DARK_GREEN));
+    }
+
+    @Override
+    public int getManaCost() {
+        return 3;
     }
 }

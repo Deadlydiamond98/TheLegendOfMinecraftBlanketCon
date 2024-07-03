@@ -90,8 +90,12 @@ public class ZeldaItems {
             new FabricItemSettings()));
     public static final Item Dungeon_Key = registerItem("dungeon_key", new Item(
             new FabricItemSettings()));
+
+
     public static final Item Hookshot = registerItem("hookshot", new HookshotItem(
             new FabricItemSettings()));
+
+
     public static final Item Star_Fragment = registerItem("star_fragment", new StarFragment(
             new FabricItemSettings(), 25));
     public static final Item Stardust = registerItem("stardust", new Item(

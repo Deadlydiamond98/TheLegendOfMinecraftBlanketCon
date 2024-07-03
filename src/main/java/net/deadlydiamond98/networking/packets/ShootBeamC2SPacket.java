@@ -23,7 +23,7 @@ public class ShootBeamC2SPacket {
         server.execute(() -> {
             ServerWorld world = (ServerWorld) player.getWorld();
             Item item = player.getMainHandStack().getItem();
-            if (((player.getHealth() == player.getMaxHealth()) || ManaHandler.CanRemoveManaFromPlayer(player, 1) || player.isCreative())
+            if (((player.getHealth() == player.getMaxHealth()) || ManaHandler.CanRemoveManaFromPlayer(player, 3) || player.isCreative())
                     && !(player.getItemCooldownManager().isCoolingDown(item))
                     && player.handSwinging) {
                 if (item instanceof MagicSword) {
@@ -41,7 +41,7 @@ public class ShootBeamC2SPacket {
                     ((MagicSword) item).setSoundPlay(true);
                     player.playSound(ZeldaSounds.SwordShoot, SoundCategory.PLAYERS, 1, 1);
                     if (!(player.getHealth() == player.getMaxHealth())) {
-                        ManaHandler.removeManaFromPlayer(player, 1);
+                        ManaHandler.removeManaFromPlayer(player, 3);
                     }
                 }
                 else if (item instanceof MasterSword) {
@@ -56,7 +56,7 @@ public class ShootBeamC2SPacket {
                     ((MasterSword) item).setSoundPlay(true);
                     player.playSound(ZeldaSounds.SwordShoot, SoundCategory.PLAYERS, 1, 1);
                     if (!(player.getHealth() == player.getMaxHealth())) {
-                        ManaHandler.removeManaFromPlayer(player, 1);
+                        ManaHandler.removeManaFromPlayer(player, 3);
                     }
                 }
             }

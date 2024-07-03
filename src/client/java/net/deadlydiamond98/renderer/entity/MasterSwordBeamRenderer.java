@@ -2,10 +2,7 @@ package net.deadlydiamond98.renderer.entity;
 
 import net.deadlydiamond98.ZeldaCraft;
 import net.deadlydiamond98.entities.projectiles.MasterSwordBeamEntity;
-import net.minecraft.client.render.OverlayTexture;
-import net.minecraft.client.render.RenderLayer;
-import net.minecraft.client.render.VertexConsumer;
-import net.minecraft.client.render.VertexConsumerProvider;
+import net.minecraft.client.render.*;
 import net.minecraft.client.render.entity.EntityRenderer;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.util.math.MatrixStack;
@@ -50,6 +47,11 @@ public class MasterSwordBeamRenderer<T extends Entity> extends EntityRenderer<Ma
 
         matrices.pop();
         super.render(entity, yaw, tickDelta, matrices, vertexConsumers, light);
+    }
+
+    @Override
+    public boolean shouldRender(MasterSwordBeamEntity entity, Frustum frustum, double x, double y, double z) {
+        return true;
     }
 
     @Override

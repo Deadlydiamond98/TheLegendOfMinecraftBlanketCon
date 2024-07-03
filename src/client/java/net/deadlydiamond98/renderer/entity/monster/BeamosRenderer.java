@@ -5,10 +5,7 @@ import net.deadlydiamond98.entities.monsters.BeamosEntity;
 import net.deadlydiamond98.entities.monsters.KeeseEntity;
 import net.deadlydiamond98.model.entity.BeamosEntityModel;
 import net.deadlydiamond98.model.entity.KeeseEntityModel;
-import net.minecraft.client.render.RenderLayer;
-import net.minecraft.client.render.VertexConsumer;
-import net.minecraft.client.render.VertexConsumerProvider;
-import net.minecraft.client.render.WorldRenderer;
+import net.minecraft.client.render.*;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.MobEntityRenderer;
 import net.minecraft.client.util.math.MatrixStack;
@@ -34,6 +31,11 @@ public class BeamosRenderer<T extends Entity> extends MobEntityRenderer<BeamosEn
     protected void scale(BeamosEntity entity, MatrixStack matrices, float amount) {
         matrices.scale(1.5f, 1.5f, 1.5f);
         super.scale(entity, matrices, amount);
+    }
+
+    @Override
+    public boolean shouldRender(BeamosEntity mobEntity, Frustum frustum, double d, double e, double f) {
+        return true;
     }
 
     protected void setupTransforms(BeamosEntity mob, MatrixStack matrixStack, float f, float g, float h) {

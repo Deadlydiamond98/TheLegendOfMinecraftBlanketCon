@@ -8,5 +8,7 @@ public class ZeldaParticleFactory {
         ParticleFactoryRegistry.getInstance().register(ZeldaParticles.Explosion_Particle, ExplosionParticle.ExplosionParticleFactory::new);
         ParticleFactoryRegistry.getInstance().register(ZeldaParticles.Snap_Particle, SnapParticle.SnapParticleFactory::new);
         ParticleFactoryRegistry.getInstance().register(ZeldaParticles.Magic_Fire_Particle, MagicFireParticle.MagicFireParticleFactory::new);
+        ParticleFactoryRegistry.getInstance().register(ZeldaParticles.Magic_Ice_Particle, MagicIceParticle.MagicIceParticleFactory::new);
+        ParticleFactoryRegistry.getInstance().register(ZeldaParticles.Magic_Ice_Particle_Bullet, MagicIceParticleBullet.MagicIceBulletParticleFactory::new);
     }
 }

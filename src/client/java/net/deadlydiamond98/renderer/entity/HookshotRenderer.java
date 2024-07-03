@@ -3,23 +3,23 @@ package net.deadlydiamond98.renderer.entity;
 import net.deadlydiamond98.entities.projectiles.HookshotEntity;
 import net.deadlydiamond98.model.entity.HookshotHeadModel;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.render.OverlayTexture;
-import net.minecraft.client.render.RenderLayer;
-import net.minecraft.client.render.VertexConsumer;
-import net.minecraft.client.render.VertexConsumerProvider;
+import net.minecraft.client.render.*;
 import net.minecraft.client.render.entity.EntityRenderer;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.RotationAxis;
 import net.minecraft.util.math.Vec3d;
+import org.joml.Matrix3f;
+import org.joml.Matrix4f;
 
 public class HookshotRenderer extends EntityRenderer<HookshotEntity> {
-    private static final Identifier TEXTURE = new Identifier("minecraft", "textures/block/chain.png");
-    private static final Identifier CHAIN_TEXTURE = new Identifier("minecraft", "textures/block/anvil.png");
+    private static final Identifier TEXTURE = new Identifier("minecraft", "textures/block/anvil.png");
+    private static final Identifier CHAIN_TEXTURE = new Identifier("minecraft", "textures/block/chain.png");
     private final HookshotHeadModel<HookshotEntity> entityModel;
-    protected HookshotRenderer(EntityRendererFactory.Context ctx) {
+    public HookshotRenderer(EntityRendererFactory.Context ctx) {
         super(ctx);
         this.entityModel = new HookshotHeadModel<>(ctx.getPart(HookshotHeadModel.LAYER_LOCATION));
     }
@@ -28,76 +28,61 @@ public class HookshotRenderer extends EntityRenderer<HookshotEntity> {
     public void render(HookshotEntity entity, float yaw, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light) {
         super.render(entity, yaw, tickDelta, matrices, vertexConsumers, light);
 
-        PlayerEntity player = MinecraftClient.getInstance().player;
+        PlayerEntity player = (PlayerEntity) entity.getOwner();
 
-        if (!(player == null)) {
+        if (player != null) {
             matrices.push();
-
             VertexConsumer vertexConsumer = vertexConsumers.getBuffer(this.entityModel.getLayer(getTexture(entity)));
             this.entityModel.render(matrices, vertexConsumer, light, OverlayTexture.DEFAULT_UV, 1.0F, 1.0F, 1.0F, 1.0F);
+            matrices.pop();
 
-            Vec3d start = new Vec3d(
-                    player.getX() + 0.4 * Math.cos(Math.toRadians(player.bodyYaw)),
-                    player.getEyeY(),
-                    player.getZ() + 0.4 * Math.sin(player.bodyYaw)
-                    );
-            Vec3d end = start.subtract(
-                    entity.getX(),
-                    entity.getY(),
-                    entity.getZ()
-            );
+            //Chain Rendering
+            matrices.push();
 
+            Vec3d playerPos = player.getLerpedPos(tickDelta).subtract(entity.getLerpedPos(tickDelta));
+            Vec3d headPos = entity.getLerpedPos(tickDelta).subtract(entity.getLerpedPos(tickDelta)).subtract(playerPos);
 
-            renderChain(start, end, entity, tickDelta, matrices, vertexConsumers, light);
-
+            VertexConsumer vertexConsumerChain = vertexConsumers.getBuffer(RenderLayer.getEntityTranslucent(CHAIN_TEXTURE));
+            matrices.translate(playerPos.x, playerPos.y, playerPos.z);
+            renderChain(headPos, matrices, vertexConsumerChain, light, OverlayTexture.DEFAULT_UV);
             matrices.pop();
         }
     }
 
-    public void renderChain(Vec3d start, Vec3d end, Entity entity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light) {
-        VertexConsumer vertexConsumer = vertexConsumers.getBuffer(RenderLayer.getEntityCutout(CHAIN_TEXTURE));
-        Vec3d direction = end.subtract(start).normalize();
-        double length = start.distanceTo(end);
-        double segmentLength = 0.1;
-        int segments = (int) (length / segmentLength);
-
-        for (int i = 0; i < segments; i++) {
-            double t = i * segmentLength;
-            Vec3d segmentStart = start.add(direction.multiply(t));
-            Vec3d segmentEnd = start.add(direction.multiply(t + segmentLength));
-            renderChainSegment(segmentStart, segmentEnd, matrices, vertexConsumer, light);
-        }
+    @Override
+    public boolean shouldRender(HookshotEntity entity, Frustum frustum, double x, double y, double z) {
+        return true;
     }
 
-    private void renderChainSegment(Vec3d start, Vec3d end, MatrixStack matrices, VertexConsumer vertexConsumer, int light) {
-        float x1 = (float) start.x;
-        float y1 = (float) start.y;
-        float z1 = (float) start.z;
-        float x2 = (float) end.x;
-        float y2 = (float) end.y;
-        float z2 = (float) end.z;
-
-        float u1 = 0.0F;
-        float v1 = 0.0F;
-        float u2 = 3.0F / 16.0F;
-        float v2 = 1.0F;
-
-        vertexConsumer.vertex(matrices.peek().getPositionMatrix(), x1, y1, z1).color(255, 255, 255, 255).texture(u1, v1).light(light).next();
-        vertexConsumer.vertex(matrices.peek().getPositionMatrix(), x2, y2, z2).color(255, 255, 255, 255).texture(u2, v1).light(light).next();
-        vertexConsumer.vertex(matrices.peek().getPositionMatrix(), x2, y2, z2).color(255, 255, 255, 255).texture(u2, v2).light(light).next();
-        vertexConsumer.vertex(matrices.peek().getPositionMatrix(), x1, y1, z1).color(255, 255, 255, 255).texture(u1, v2).light(light).next();
-
-        u1 = 3.0F / 16.0F;
-        u2 = 6.0F / 16.0F;
-
-        vertexConsumer.vertex(matrices.peek().getPositionMatrix(), x1, y1, z1).color(255, 255, 255, 255).texture(u1, v2).light(light).next();
-        vertexConsumer.vertex(matrices.peek().getPositionMatrix(), x2, y2, z2).color(255, 255, 255, 255).texture(u1, v1).light(light).next();
-        vertexConsumer.vertex(matrices.peek().getPositionMatrix(), x2, y2, z2).color(255, 255, 255, 255).texture(u2, v1).light(light).next();
-        vertexConsumer.vertex(matrices.peek().getPositionMatrix(), x1, y1, z1).color(255, 255, 255, 255).texture(u2, v2).light(light).next();
+    public static void renderChain(Vec3d end, MatrixStack matrices, VertexConsumer buffer, int light, int overlayCoords) {
+        double distance = end.horizontalLength();
+        float chainWidth = 3F / 16F;
+        float chainOffset = chainWidth * -0.5F;
+        float chainLength = (float) end.length();
+        matrices.push();
+        matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees((float) (Math.atan2(end.x, end.z) * (double) (180F / (float) Math.PI))));
+        matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees((float) (-(Math.atan2(end.y, distance) * (double) (180F / (float) Math.PI))) - 90.0F));
+        matrices.translate(0, -chainLength, 0);
+        MatrixStack.Entry entry = matrices.peek();
+        Matrix4f matrix4f = entry.getPositionMatrix();
+        Matrix3f matrix3f = entry.getNormalMatrix();
+        // x links
+        buffer.vertex(matrix4f, chainOffset, 0, 0).color(255, 255, 255, 255).texture((float) 0, (float) chainLength).overlay(overlayCoords).light(light).normal(matrix3f, 0.0F, -1.0F, 0.0F).next();
+        buffer.vertex(matrix4f, chainWidth + chainOffset, 0, 0).color(255, 255, 255, 255).texture((float) chainWidth, (float) chainLength).overlay(overlayCoords).light(light).normal(matrix3f, 0.0F, -1.0F, 0.0F).next();
+        buffer.vertex(matrix4f, chainWidth + chainOffset, chainLength, 0).color(255, 255, 255, 255).texture((float) chainWidth, (float) 0).overlay(overlayCoords).light(light).normal(matrix3f, 0.0F, -1.0F, 0.0F).next();
+        buffer.vertex(matrix4f, chainOffset, chainLength, 0).color(255, 255, 255, 255).texture((float) 0, (float) 0).overlay(overlayCoords).light(light).normal(matrix3f, 0.0F, -1.0F, 0.0F).next();
+        float pixelSkip = 2.5F / 16F;
+        // z links
+        buffer.vertex(matrix4f, 0, pixelSkip, chainOffset).color(255, 255, 255, 255).texture((float) chainWidth, (float) chainLength + pixelSkip).overlay(overlayCoords).light(light).normal(matrix3f, 0.0F, -1.0F, 0.0F).next();
+        buffer.vertex(matrix4f, 0, pixelSkip, chainWidth + chainOffset).color(255, 255, 255, 255).texture((float) chainWidth * 2, (float) chainLength + pixelSkip).overlay(overlayCoords).light(light).normal(matrix3f, 0.0F, -1.0F, 0.0F).next();
+        buffer.vertex(matrix4f, 0, chainLength + pixelSkip, chainWidth + chainOffset).color(255, 255, 255, 255).texture((float) chainWidth * 2, (float) pixelSkip).overlay(overlayCoords).light(light).normal(matrix3f, 0.0F, -1.0F, 0.0F).next();
+        buffer.vertex(matrix4f, 0, chainLength + pixelSkip, chainOffset).color(255, 255, 255, 255).texture((float) chainWidth, (float) pixelSkip).overlay(overlayCoords).light(light).normal(matrix3f, 0.0F, -1.0F, 0.0F).next();
+        matrices.pop();
     }
+
 
     @Override
     public Identifier getTexture(HookshotEntity entity) {
-        return null;
+        return TEXTURE;
     }
 }

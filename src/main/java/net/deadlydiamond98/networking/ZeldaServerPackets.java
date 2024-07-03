@@ -15,7 +15,7 @@ import java.util.List;
 public class ZeldaServerPackets {
 
     public static final Identifier SmaaashPacket = new Identifier(ZeldaCraft.MOD_ID, "smaaash_particle_packet");
-    public static final Identifier MagicFirePacket = new Identifier(ZeldaCraft.MOD_ID, "magic_fire_particle_packet");
+    public static final Identifier MagicIcePacket = new Identifier(ZeldaCraft.MOD_ID, "magic_ice_particle_packet");
     public static final Identifier SnapPacket = new Identifier(ZeldaCraft.MOD_ID, "snap_particle_packet");
     public static final Identifier BombPacket = new Identifier(ZeldaCraft.MOD_ID, "bomb_particle_packet");
     public static final Identifier ShootBeamPacket = new Identifier(ZeldaCraft.MOD_ID, "shoot_beam_packet");
@@ -44,6 +44,15 @@ public class ZeldaServerPackets {
         buf.writeDouble(z);
         for (ServerPlayerEntity playerEntity : player) {
             ServerPlayNetworking.send(playerEntity, BombPacket, buf);
+        }
+    }
+    public static void sendMagicIceParticlePacket(List<ServerPlayerEntity> player, double x, double y, double z) {
+        PacketByteBuf buf = PacketByteBufs.create();
+        buf.writeDouble(x);
+        buf.writeDouble(y);
+        buf.writeDouble(z);
+        for (ServerPlayerEntity playerEntity : player) {
+            ServerPlayNetworking.send(playerEntity, MagicIcePacket, buf);
         }
     }
     public static void sendSnapParticlePacket(List<ServerPlayerEntity> player, double x, double y, double z) {

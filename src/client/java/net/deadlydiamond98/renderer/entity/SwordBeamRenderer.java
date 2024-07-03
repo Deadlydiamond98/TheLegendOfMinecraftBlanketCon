@@ -50,6 +50,11 @@ public class SwordBeamRenderer<T extends Entity> extends EntityRenderer<SwordBea
     }
 
     @Override
+    public boolean shouldRender(SwordBeamEntity entity, Frustum frustum, double x, double y, double z) {
+        return true;
+    }
+
+    @Override
     public Identifier getTexture(SwordBeamEntity entity) {
         return new Identifier(ZeldaCraft.MOD_ID, "textures/entity/sword_beam.png");
     }

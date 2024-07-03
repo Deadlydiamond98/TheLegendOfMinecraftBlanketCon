@@ -27,6 +27,8 @@ public class ZeldaCreativeTabs {
                         entry.add(ZeldaItems.Bomb_Bag);
                         entry.add(ZeldaItems.Quiver);
 
+                        entry.add(ZeldaItems.Hookshot);
+
                         entry.add(ZeldaItems.Hylain_Shield);
                         entry.add(ZeldaItems.Mirror_Shield);
 
