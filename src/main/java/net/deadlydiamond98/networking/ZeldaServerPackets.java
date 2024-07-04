@@ -6,6 +6,7 @@ import net.deadlydiamond98.networking.packets.SmashLootGrassC2SPacket;
 import net.deadlydiamond98.networking.packets.UseMagicTrinketC2SPacket;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
@@ -23,6 +24,7 @@ public class ZeldaServerPackets {
     public static final Identifier DekuStunOverlayPacket = new Identifier(ZeldaCraft.MOD_ID, "deku_stun_overlay_packet");
     public static final Identifier PlayerStatsPacket = new Identifier(ZeldaCraft.MOD_ID, "player_stats_packet");
     public static final Identifier MagicTrinketPacket = new Identifier(ZeldaCraft.MOD_ID, "magic_trinket_packet");
+    public static final Identifier PlayShootingStarSound = new Identifier(ZeldaCraft.MOD_ID, "play_shooting_star_sound");
 
     public static void registerS2CPackets() {
         ServerPlayNetworking.registerGlobalReceiver(ShootBeamPacket, ShootBeamC2SPacket::receive);
@@ -78,5 +80,9 @@ public class ZeldaServerPackets {
         buf.writeBoolean(fairyControl);
         buf.writeBoolean(fairyfriend);
         ServerPlayNetworking.send(player, PlayerStatsPacket, buf);
+    }
+    public static void sendShootingStarSound(ServerPlayerEntity player) {
+        PacketByteBuf buf = PacketByteBufs.create();
+        ServerPlayNetworking.send(player, PlayShootingStarSound, buf);
     }
 }

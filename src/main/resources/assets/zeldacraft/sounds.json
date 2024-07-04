@@ -20,9 +20,11 @@
   "falling_star": {
     "subtitle": "sounds.zeldacraft.falling_star",
     "sounds": [
-      "zeldacraft:falling_star"
-    ],
-    "attenuation_distance": 48
+      {
+        "name": "zeldacraft:falling_star",
+        "attenuation_distance": 100
+      }
+    ]
   },
 
 

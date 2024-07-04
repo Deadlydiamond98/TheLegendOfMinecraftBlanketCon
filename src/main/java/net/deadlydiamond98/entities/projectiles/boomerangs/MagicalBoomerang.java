@@ -1,12 +1,11 @@
 package net.deadlydiamond98.entities.projectiles.boomerangs;
 
 import net.deadlydiamond98.ZeldaCraft;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.ItemEntity;
+import net.minecraft.entity.*;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.particle.DustParticleEffect;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
@@ -28,7 +27,9 @@ public class MagicalBoomerang extends BaseBoomerangProjectile {
         super.tick();
         if (!this.getWorld().isClient()) {
             Box expandedBox = this.getBoundingBox().expand(0.5);
-            List<Entity> entities = this.getWorld().getOtherEntities(this, expandedBox, entity -> entity instanceof ItemEntity);
+            EntityType<?> entityType = EntityType.get("healpgood:health").orElse(null);
+            List<Entity> entities = this.getWorld().getOtherEntities(this, expandedBox, entity ->
+                    (entity instanceof ItemEntity) || (entity instanceof ExperienceOrbEntity) || (entityType != null && entity.getType() == entityType));
             for (Entity entity : entities) {
                 if (entity.getBoundingBox().intersects(expandedBox)) {
                     entity.startRiding(this, true);

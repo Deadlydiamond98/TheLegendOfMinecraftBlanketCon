@@ -110,6 +110,8 @@ public class ZeldaItems {
             new FabricItemSettings().maxCount(1)));
     public static final Item Ice_Rod = registerItem("ice_rod", new IceRod(
             new FabricItemSettings().maxCount(1)));
+    public static final Item Beam_Rod = registerItem("beam_rod", new BeamRod(
+            new FabricItemSettings().maxCount(1)));
     public static final Item Magic_Upgrade = registerItem("magic_upgrade", new MagicUpgrade(
             new FabricItemSettings().maxCount(16)));
     public static final Item Magic_Candy = registerItem("magic_candy", new MagicCandy(

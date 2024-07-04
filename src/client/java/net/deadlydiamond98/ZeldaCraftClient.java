@@ -118,6 +118,7 @@ public class ZeldaCraftClient implements ClientModInitializer {
 
 		EntityRendererRegistry.register(ZeldaEntities.Magic_Fire_Projectile, MagicFireProjectileRenderer::new);
 		EntityRendererRegistry.register(ZeldaEntities.Magic_Ice_Projectile, MagicIceProjectileRenderer::new);
+		EntityRendererRegistry.register(ZeldaEntities.Beam_Entity, BeamProjectileRenderer::new);
 
 		EntityRendererRegistry.register(ZeldaEntities.Wood_Boomerang, BoomerangProjectileRenderer::new);
 		EntityRendererRegistry.register(ZeldaEntities.Iron_Boomerang, BoomerangProjectileRenderer::new);

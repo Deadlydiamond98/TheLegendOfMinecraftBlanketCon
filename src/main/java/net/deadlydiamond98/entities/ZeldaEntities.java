@@ -62,12 +62,22 @@ public class ZeldaEntities {
                     .trackRangeChunks(32)
                     .build()
     );
+    public static final EntityType<BeamEntity> Beam_Entity = Registry.register(
+            Registries.ENTITY_TYPE,
+            new Identifier(ZeldaCraft.MOD_ID, "beam"),
+            FabricEntityTypeBuilder.create(SpawnGroup.MISC, (EntityType<BeamEntity> type, World world) ->
+                            new BeamEntity(type, world))
+                    .dimensions(EntityDimensions.fixed(0.3f,0.3f))
+                    .spawnableFarFromPlayer()
+                    .trackRangeChunks(32)
+                    .build()
+    );
     public static final EntityType<HookshotEntity> Hookshot_Entity = Registry.register(
             Registries.ENTITY_TYPE,
             new Identifier(ZeldaCraft.MOD_ID, "hookshot_hook"),
             FabricEntityTypeBuilder.create(SpawnGroup.MISC, (EntityType<HookshotEntity> type, World world) ->
                             new HookshotEntity(type, world))
-                    .dimensions(EntityDimensions.fixed(0.3f,0.3f))
+                    .dimensions(EntityDimensions.fixed(0.4f,0.4f))
                     .build()
     );
     public static final EntityType<BombEntity> Bomb_Entity = Registry.register(

@@ -3,6 +3,7 @@ package net.deadlydiamond98.renderer;
 import net.deadlydiamond98.entities.ShootingStar;
 import net.deadlydiamond98.entities.projectiles.boomerangs.BaseBoomerangProjectile;
 import net.deadlydiamond98.items.ZeldaItems;
+import net.minecraft.client.render.Frustum;
 import net.minecraft.client.render.OverlayTexture;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.EntityRenderer;
@@ -41,6 +42,11 @@ public class ShootingStarRenderer<T extends Entity> extends EntityRenderer<Shoot
 
         matrices.pop();
         super.render(entity, yaw, tickDelta, matrices, vertexConsumers, light);
+    }
+
+    @Override
+    public boolean shouldRender(ShootingStar entity, Frustum frustum, double x, double y, double z) {
+        return true;
     }
 
     @Override
