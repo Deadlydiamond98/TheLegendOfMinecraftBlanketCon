@@ -29,7 +29,7 @@ public abstract class BaseBoomerangItem extends Item implements DyeableItem {
             boomerangEntity.setPos(user.getX(), user.getEyeY() - 0.1, user.getZ());
             world.spawnEntity(boomerangEntity);
         }
-        user.getItemCooldownManager().set(this, 120);
+        user.getItemCooldownManager().set(this, 20);
         user.getStackInHand(hand).decrement(1);
         user.playSound(SoundEvents.ENTITY_SPLASH_POTION_THROW, SoundCategory.PLAYERS, 1, 1);
         return TypedActionResult.success(itemStack, world.isClient());

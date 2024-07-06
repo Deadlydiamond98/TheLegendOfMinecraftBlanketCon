@@ -2,7 +2,10 @@ package net.deadlydiamond98.entities.projectiles.boomerangs;
 
 import net.deadlydiamond98.ZeldaCraft;
 import net.deadlydiamond98.items.ZeldaItems;
+import net.deadlydiamond98.items.custom.boomerang.MagicBoomerangItem;
 import net.deadlydiamond98.sounds.ZeldaSounds;
+import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ItemEntity;
@@ -38,6 +41,7 @@ public class BaseBoomerangProjectile extends ProjectileEntity {
     private int damageAmount;
     private float speed;
     private Hand hand;
+    private boolean hasLoyalty;
 
     static {
         itemstack = DataTracker.registerData(BaseBoomerangProjectile.class, TrackedDataHandlerRegistry.ITEM_STACK);
@@ -61,6 +65,8 @@ public class BaseBoomerangProjectile extends ProjectileEntity {
         this.setBoomerangItem(boomerangItem);
         this.speed = speed;
         this.hand = hand;
+        this.hasLoyalty = EnchantmentHelper.getLevel(Enchantments.LOYALTY, this.getBoomerangItem()) > 0 ||
+                this.getBoomerangItem().getItem() instanceof MagicBoomerangItem;
         this.setVelocity(player, player.getPitch(), player.getYaw(), 0.0f, speed, 1.0f);
         this.setYaw(player.getHeadYaw());
         this.setPitch(player.getPitch());
@@ -110,7 +116,7 @@ public class BaseBoomerangProjectile extends ProjectileEntity {
         super.tick();
 
         if (!this.getWorld().isClient()) {
-            if (this.ticksInAir <= 50) {
+            if (this.ticksInAir <= (this.airtime * 4) || !this.hasLoyalty) {
                 HitResult hitResult = ProjectileUtil.getCollision(this, this::canHit);
                 if (hitResult.getType() != HitResult.Type.MISS) {
                     this.onCollision(hitResult);
@@ -126,18 +132,26 @@ public class BaseBoomerangProjectile extends ProjectileEntity {
                             SoundCategory.BLOCKS, 1.0f, 1.0f);
                 }
 
+                if (this.ticksInAir > (this.airtime * 4) && !this.hasLoyalty) {
+                    ItemEntity item = new ItemEntity(this.getWorld(), this.getX(), this.getY(), this.getZ(), this.getBoomerangItem());
+                    this.getWorld().spawnEntity(item);
+                    this.discard();
+                }
+
                 if (this.ticksInAir > this.airtime) {
 
-                    Vec3d ownerPos = new Vec3d(this.getOwner().getX() + this.getOwner().getHandPosOffset(this.getBoomerangItem().getItem()).x * 0.5,
-                            this.getOwner().getY() + this.getOwner().getEyeHeight(this.getOwner().getPose()) - 0.5,
-                            this.getOwner().getZ() + this.getOwner().getHandPosOffset(this.getBoomerangItem().getItem()).z * 0.5);
-                    Vec3d directionToOwner = ownerPos.subtract(this.getPos()).normalize();
+                    if (this.ticksInAir < this.airtime + 5 || this.hasLoyalty) {
+                        Vec3d ownerPos = new Vec3d(this.getOwner().getX() + this.getOwner().getHandPosOffset(this.getBoomerangItem().getItem()).x * 0.5,
+                                this.getOwner().getY() + this.getOwner().getEyeHeight(this.getOwner().getPose()) - 0.5,
+                                this.getOwner().getZ() + this.getOwner().getHandPosOffset(this.getBoomerangItem().getItem()).z * 0.5);
+                        Vec3d directionToOwner = ownerPos.subtract(this.getPos()).normalize();
 
-                    Vec3d currentVelocity = this.getVelocity();
-                    Vec3d newVelocity = directionToOwner.multiply(this.speed);
-                    Vec3d interpolatedVelocity = currentVelocity.lerp(newVelocity, 0.3);
+                        Vec3d currentVelocity = this.getVelocity();
+                        Vec3d newVelocity = directionToOwner.multiply(this.speed);
+                        Vec3d interpolatedVelocity = currentVelocity.lerp(newVelocity, 0.3);
 
-                    this.setVelocity(interpolatedVelocity);
+                        this.setVelocity(interpolatedVelocity);
+                    }
                 }
 
                 if (this.ticksInAir > 10) {
@@ -198,7 +212,7 @@ public class BaseBoomerangProjectile extends ProjectileEntity {
     }
 
     protected void returnBack() {
-        this.airtime = 0;
+        this.airtime = this.ticksInAir;
     }
 
     @Override
