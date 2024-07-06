@@ -1,6 +1,44 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "zeldacraft:item/fairy_bottle"
-  }
+    "layer0": "zeldacraft:item/fairy_bottle_rgp"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "fairycolor": 0.1
+      },
+      "model": "zeldacraft:item/fairy_bottle_blue"
+    },
+    {
+      "predicate": {
+        "fairycolor": 0.2
+      },
+      "model": "zeldacraft:item/fairy_bottle_yellow"
+    },
+    {
+      "predicate": {
+        "fairycolor": 0.3
+      },
+      "model": "zeldacraft:item/fairy_bottle_green"
+    },
+    {
+      "predicate": {
+        "fairycolor": 0.4
+      },
+      "model": "zeldacraft:item/fairy_bottle_pink"
+    },
+    {
+      "predicate": {
+        "fairycolor": 0.5
+      },
+      "model": "zeldacraft:item/fairy_bottle_red"
+    },
+    {
+      "predicate": {
+        "fairycolor": 0.6
+      },
+      "model": "zeldacraft:item/fairy_bottle_purple"
+    }
+  ]
 }

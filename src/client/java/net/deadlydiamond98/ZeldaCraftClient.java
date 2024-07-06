@@ -4,6 +4,7 @@ import net.deadlydiamond98.blocks.ZeldaBlocks;
 import net.deadlydiamond98.entities.ZeldaEntities;
 import net.deadlydiamond98.events.ClientTickEvent;
 import net.deadlydiamond98.items.ZeldaItems;
+import net.deadlydiamond98.items.custom.FairyBottle;
 import net.deadlydiamond98.items.custom.manaItems.MagicItem;
 import net.deadlydiamond98.model.entity.*;
 import net.deadlydiamond98.networking.ZeldaClientPackets;
@@ -73,6 +74,15 @@ public class ZeldaCraftClient implements ClientModInitializer {
 		}));
 		ModelPredicateProviderRegistry.register(ZeldaItems.Mirror_Shield, new Identifier("blocking"), ((stack, world, entity, seed) -> {
 			return entity != null && entity.isUsingItem() && entity.getActiveItem() == stack ? 1.0f : 0.0f;
+		}));
+
+		ModelPredicateProviderRegistry.register(ZeldaItems.Fairy_Bottle, new Identifier("fairycolor"), ((stack, world, entity, seed) -> {
+			int colornum = ((FairyBottle) stack.getItem()).getColorList().indexOf(((FairyBottle) stack.getItem()).getColor());
+
+			if (colornum != -1) {
+				return colornum;
+			}
+			return 6;
 		}));
 
 		ItemTooltipCallback.EVENT.register((stack, context, lines) -> {

@@ -139,7 +139,7 @@ public class FairyEntity extends PassiveEntity {
         return (String) this.dataTracker.get(color);
     }
 
-    private void setColor(String bool) {
+    public void setColor(String bool) {
         this.dataTracker.set(color, bool);
     }
 

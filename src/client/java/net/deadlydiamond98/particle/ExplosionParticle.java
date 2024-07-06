@@ -13,7 +13,7 @@ public class ExplosionParticle extends SpriteBillboardParticle {
     private int tickCounter = 0;
     private final SpriteProvider spriteProvider;
     protected ExplosionParticle(ClientWorld world, double x, double y, double z, SpriteProvider spriteProvider) {
-        super(world, x, y + 1, z);
+        super(world, x, y, z);
         this.maxAge = 20;
         this.setSprite(spriteProvider.getSprite(0, 3));
         this.scale = 2.0F;

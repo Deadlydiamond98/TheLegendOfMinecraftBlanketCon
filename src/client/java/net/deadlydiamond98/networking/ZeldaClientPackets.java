@@ -17,9 +17,9 @@ public class ZeldaClientPackets {
     public static final Identifier SmashLootGrassPacket = new Identifier(ZeldaCraft.MOD_ID, "smash_loot_grass_packet");
     public static final Identifier DekuStunOverlayPacket = new Identifier(ZeldaCraft.MOD_ID, "deku_stun_overlay_packet");
     public static final Identifier PlayerStatsPacket = new Identifier(ZeldaCraft.MOD_ID, "player_stats_packet");
-    public static final Identifier MagicTrinketPacket = new Identifier(ZeldaCraft.MOD_ID, "magic_trinket_packet");
+    public static final Identifier NeckTrinketPacket = new Identifier(ZeldaCraft.MOD_ID, "neck_trinket_packet");
+    public static final Identifier BackTrinketPacket = new Identifier(ZeldaCraft.MOD_ID, "back_trinket_packet");
     public static final Identifier PlayShootingStarSound = new Identifier(ZeldaCraft.MOD_ID, "play_shooting_star_sound");
-    public static final Identifier TimeFreezePacket = new Identifier(ZeldaCraft.MOD_ID, "time_freeze_packet");
 
 
     public static void registerC2SPackets() {
@@ -41,8 +41,12 @@ public class ZeldaClientPackets {
         buf.writeBlockPos(lookingBlock);
         ClientPlayNetworking.send(SmashLootGrassPacket, buf);
     }
-    public static void sendMagicTrinketPacket() {
+    public static void sendNeckTrinketPacket() {
         PacketByteBuf buf = PacketByteBufs.create();
-        ClientPlayNetworking.send(MagicTrinketPacket, buf);
+        ClientPlayNetworking.send(NeckTrinketPacket, buf);
+    }
+    public static void sendBackTrinketPacket() {
+        PacketByteBuf buf = PacketByteBufs.create();
+        ClientPlayNetworking.send(BackTrinketPacket, buf);
     }
 }

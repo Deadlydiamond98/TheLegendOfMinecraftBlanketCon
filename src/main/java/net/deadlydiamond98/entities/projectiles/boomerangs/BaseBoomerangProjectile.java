@@ -1,9 +1,14 @@
 package net.deadlydiamond98.entities.projectiles.boomerangs;
 
 import net.deadlydiamond98.ZeldaCraft;
+import net.deadlydiamond98.enchantments.ZeldaEnchantments;
 import net.deadlydiamond98.items.ZeldaItems;
 import net.deadlydiamond98.items.custom.boomerang.MagicBoomerangItem;
 import net.deadlydiamond98.sounds.ZeldaSounds;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.ButtonBlock;
+import net.minecraft.block.PlantBlock;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.Entity;
@@ -20,12 +25,14 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
@@ -42,6 +49,8 @@ public class BaseBoomerangProjectile extends ProjectileEntity {
     private float speed;
     private Hand hand;
     private boolean hasLoyalty;
+    private boolean hasLawnMower;
+    private int lawnMowerLevel;
 
     static {
         itemstack = DataTracker.registerData(BaseBoomerangProjectile.class, TrackedDataHandlerRegistry.ITEM_STACK);
@@ -67,6 +76,8 @@ public class BaseBoomerangProjectile extends ProjectileEntity {
         this.hand = hand;
         this.hasLoyalty = EnchantmentHelper.getLevel(Enchantments.LOYALTY, this.getBoomerangItem()) > 0 ||
                 this.getBoomerangItem().getItem() instanceof MagicBoomerangItem;
+        this.hasLawnMower = EnchantmentHelper.getLevel(ZeldaEnchantments.Lawn_Mower, this.getBoomerangItem()) > 0;
+        this.lawnMowerLevel = EnchantmentHelper.getLevel(ZeldaEnchantments.Lawn_Mower, this.getBoomerangItem());
         this.setVelocity(player, player.getPitch(), player.getYaw(), 0.0f, speed, 1.0f);
         this.setYaw(player.getHeadYaw());
         this.setPitch(player.getPitch());
@@ -116,6 +127,16 @@ public class BaseBoomerangProjectile extends ProjectileEntity {
         super.tick();
 
         if (!this.getWorld().isClient()) {
+
+            BlockPos pos = this.getBlockPos();
+            for (BlockPos blockPos : BlockPos.iterate(pos.add(-this.lawnMowerLevel, -this.lawnMowerLevel, -this.lawnMowerLevel),
+                    pos.add(this.lawnMowerLevel, this.lawnMowerLevel, this.lawnMowerLevel))) {
+                BlockState state = this.getWorld().getBlockState(blockPos);
+                if (this.hasLawnMower && state.getHardness(this.getWorld(), blockPos) <= 0 && state.getBlock() instanceof PlantBlock) {
+                    this.getWorld().breakBlock(blockPos, true);
+                }
+            }
+
             if (this.ticksInAir <= (this.airtime * 4) || !this.hasLoyalty) {
                 HitResult hitResult = ProjectileUtil.getCollision(this, this::canHit);
                 if (hitResult.getType() != HitResult.Type.MISS) {

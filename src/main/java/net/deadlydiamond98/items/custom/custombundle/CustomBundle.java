@@ -10,6 +10,8 @@ import net.minecraft.inventory.StackReference;
 import net.minecraft.item.*;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtList;
+import net.minecraft.registry.tag.ItemTags;
+import net.minecraft.registry.tag.TagKey;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
@@ -20,6 +22,7 @@ import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.Optional;
@@ -29,12 +32,21 @@ public class CustomBundle extends Item {
     private static final String ITEMS_KEY = "Items";
     private static final int ITEM_BAR_COLOR = MathHelper.packRgb(0.4F, 0.4F, 1.0F);
     private final int maxStorage;
-    private final List<Item> itemInsertable;
+    private final List<TagKey> itemTags;
 
-    public CustomBundle(Item.Settings settings, int maxStorage, List<Item> itemInsertable) {
+    public CustomBundle(Item.Settings settings, int maxStorage, List<TagKey> itemTags) {
         super(settings);
         this.maxStorage = maxStorage;
-        this.itemInsertable = List.copyOf(itemInsertable);
+        this.itemTags = List.copyOf(itemTags);
+    }
+    
+    private boolean canInsertItem(Item item) {
+        for (int i = 0; i < this.itemTags.size(); i++) {
+            if (item.getDefaultStack().isIn(itemTags.get(i))) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override
@@ -48,8 +60,8 @@ public class CustomBundle extends Item {
                 removeFirstStack(stack).ifPresent((removedStack) -> {
                     addToBundle(stack, slot.insertStack(removedStack));
                 });
-            } else if (itemInsertable.contains(itemStack.getItem()) && itemStack.getItem().canBeNested()) {
-                int maxItemsToAdd = (maxStorage - getBundleOccupancy(stack)) / getItemOccupancy(itemStack);
+            } else if (canInsertItem(itemStack.getItem()) && itemStack.getItem().canBeNested()) {
+                int maxItemsToAdd = (maxStorage - getBundleOccupancy(stack));
                 int itemsAdded = addToBundle(stack, slot.takeStackRange(itemStack.getCount(), maxItemsToAdd, player));
                 if (itemsAdded > 0) {
                     this.playInsertSound(player);
@@ -68,7 +80,7 @@ public class CustomBundle extends Item {
                     this.playRemoveOneSound(player);
                     cursorStackReference.set(itemStack);
                 });
-            } else if (itemInsertable.contains(otherStack.getItem()) && otherStack.getItem().canBeNested()) {
+            } else if (canInsertItem(otherStack.getItem()) && otherStack.getItem().canBeNested()) {
                 int itemsAdded = addToBundle(stack, otherStack);
                 if (itemsAdded > 0) {
                     this.playInsertSound(player);
@@ -98,15 +110,14 @@ public class CustomBundle extends Item {
     }
 
     public int addToBundle(ItemStack bundle, ItemStack stack) {
-        if (!stack.isEmpty() && itemInsertable.contains(stack.getItem()) && stack.getItem().canBeNested()) {
+        if (!stack.isEmpty() && canInsertItem(stack.getItem()) && stack.getItem().canBeNested()) {
             NbtCompound nbtCompound = bundle.getOrCreateNbt();
             if (!nbtCompound.contains(ITEMS_KEY)) {
                 nbtCompound.put(ITEMS_KEY, new NbtList());
             }
 
             int currentOccupancy = getBundleOccupancy(bundle);
-            int itemOccupancy = getItemOccupancy(stack);
-            int itemsToAdd = Math.min(stack.getCount(), (maxStorage - currentOccupancy) / itemOccupancy);
+            int itemsToAdd = Math.min(stack.getCount(), (maxStorage - currentOccupancy));
 
             NbtList nbtList = nbtCompound.getList(ITEMS_KEY, 10);
             Optional<Integer> existingItemIndex = findBundledItemDataIndex(nbtList, stack);
@@ -139,10 +150,6 @@ public class CustomBundle extends Item {
         return Optional.empty();
     }
 
-    private static int getItemOccupancy(ItemStack stack) {
-        return 64 / stack.getMaxCount();
-    }
-
     protected static int getBundleOccupancy(ItemStack stack) {
         NbtCompound nbtCompound = stack.getNbt();
         if (nbtCompound == null) {
@@ -154,7 +161,7 @@ public class CustomBundle extends Item {
         for (int i = 0; i < nbtList.size(); i++) {
             NbtCompound nbt = nbtList.getCompound(i);
             BundledItemData bundledItemData = new BundledItemData(nbt);
-            occupancy += getItemOccupancy(new ItemStack(bundledItemData.getItem())) * bundledItemData.getCount();
+            occupancy += bundledItemData.getCount();
         }
         return occupancy;
     }
@@ -186,7 +193,7 @@ public class CustomBundle extends Item {
         return Optional.of(itemStack);
     }
 
-    protected Optional<ItemStack> cycleStack(ItemStack stack) {
+    public Optional<ItemStack> cycleStack(ItemStack stack) {
         NbtCompound nbtCompound = stack.getOrCreateNbt();
         if (!nbtCompound.contains(ITEMS_KEY)) {
             return Optional.empty();

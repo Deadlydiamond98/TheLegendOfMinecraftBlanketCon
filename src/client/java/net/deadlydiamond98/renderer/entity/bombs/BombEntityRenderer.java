@@ -32,7 +32,7 @@ public class BombEntityRenderer extends EntityRenderer<BombEntity> {
         float time = entity.age + tickDelta;
         float scale = 1.0f + 0.05f * MathHelper.sin(time * 0.2f);
         matrices.push();
-        matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(entity.getYaw() + 90));
+        matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(-(entity.getYaw() + 90)));
         matrices.scale(scale, scale, scale);
         VertexConsumer vertexConsumer = vertexConsumers.getBuffer(this.entityModel.getLayer(getTexture(entity)));
         this.entityModel.render(matrices, vertexConsumer, light, OverlayTexture.DEFAULT_UV, 1.0F, 1.0F, 1.0F, 1.0F);

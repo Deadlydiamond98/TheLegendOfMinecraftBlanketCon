@@ -1,5 +1,8 @@
 package net.deadlydiamond98.mixin;
 
+import dev.emi.trinkets.api.TrinketComponent;
+import dev.emi.trinkets.api.TrinketsApi;
+import net.deadlydiamond98.items.ZeldaItems;
 import net.deadlydiamond98.items.custom.bomb.BombchuItem;
 import net.deadlydiamond98.items.custom.custombundle.BombBag;
 import net.deadlydiamond98.items.custom.bomb.BombItem;
@@ -68,7 +71,9 @@ public abstract class ItemEntityMixin {
 			Item item = itemStack.getItem();
 
 			if (item instanceof ArrowItem) {
-				addItemToBag(player, itemEntity, itemStack, Quiver.class, ci);
+				if (!addItemToBagTrinket(player, itemEntity, itemStack, Quiver.class, ci)) {
+					addItemToBag(player, itemEntity, itemStack, Quiver.class, ci);
+				}
 			} else if (item instanceof BombItem || item instanceof BombchuItem) {
 				addItemToBag(player, itemEntity, itemStack, BombBag.class, ci);
 			}
@@ -76,8 +81,39 @@ public abstract class ItemEntityMixin {
 
 	}
 
+	private <T extends CustomBundle> boolean addItemToBagTrinket(PlayerEntity player, ItemEntity itemEntity, ItemStack itemStack,
+										Class<T> itemClass, CallbackInfo ci) {
+		TrinketComponent trinket = TrinketsApi.getTrinketComponent(player).get();
+		if (trinket.isEquipped(ZeldaItems.Quiver)) {
+			for (int i = 0; i < trinket.getEquipped(ZeldaItems.Quiver).size(); i++) {
+				ItemStack stack = trinket.getEquipped(ZeldaItems.Quiver).get(i).getRight();
+				if (itemClass.isInstance(stack.getItem())) {
+					T customBundle = (T) stack.getItem();
+					if (customBundle.getItemBarStep(customBundle.getDefaultStack()) < 13 && !itemEntity.cannotPickup()) {
+						int added = customBundle.addToBundle(stack, itemStack);
+						if (added > 0) {
+							itemStack.decrement(added);
+							if (itemStack.isEmpty()) {
+								player.sendPickup(itemEntity, 0);
+								itemEntity.discard();
+								player.increaseStat(Stats.PICKED_UP.getOrCreateStat(itemStack.getItem()), added);
+								player.triggerItemPickedUpByEntityCriteria(itemEntity);
+								player.playSound(SoundEvents.ITEM_BUNDLE_INSERT, 0.8F,
+										0.8F + player.getWorld().getRandom().nextFloat() * 0.4F);
+								ci.cancel();
+								return true;
+							}
+						}
+					}
+				}
+			}
+		}
+		return false;
+	}
+
 	private <T extends CustomBundle> void addItemToBag(PlayerEntity player, ItemEntity itemEntity, ItemStack itemStack,
 													   Class<T> itemClass, CallbackInfo ci) {
+
 		for (int i = 0; i < player.getInventory().size(); i++) {
 			ItemStack stack = player.getInventory().getStack(i);
 			if (itemClass.isInstance(stack.getItem())) {

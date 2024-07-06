@@ -23,16 +23,24 @@ import net.deadlydiamond98.items.custom.manaItems.wearable.FairyBell;
 import net.deadlydiamond98.items.custom.manaItems.wearable.FairyPendant;
 import net.deadlydiamond98.items.custom.manaItems.wearable.PegasusBoots;
 import net.deadlydiamond98.sounds.ZeldaSounds;
+import net.deadlydiamond98.util.ZeldaTags;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroupEntries;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
+import net.fabricmc.fabric.api.tag.convention.v1.ConventionalItemTags;
 import net.minecraft.item.*;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
+import net.minecraft.registry.entry.RegistryEntry;
+import net.minecraft.registry.entry.RegistryEntryList;
+import net.minecraft.registry.tag.ItemTags;
+import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Rarity;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ZeldaItems {
     public static final Item Kokiri_Sword = registerItem("kokiri_sword", new SwordItem(
@@ -60,19 +68,22 @@ public class ZeldaItems {
 
 
     public static final Item Deku_Nut = registerItem("deku_nut", new DekuNutItem(
-            new FabricItemSettings()));
+            new FabricItemSettings().maxCount(16)));
     public static final Item Bomb = registerItem("bomb", new BombItem(
-            new FabricItemSettings(), 3, 50, 1));
+            new FabricItemSettings().maxCount(16), 3, 50, 1));
     public static final Item Super_Bomb = registerItem("super_bomb", new BombItem(
-            new FabricItemSettings(), 5, 80, 2));
+            new FabricItemSettings().maxCount(16), 5, 80, 2));
     public static final Item Bombchu = registerItem("bombchu", new BombchuItem(
-            new FabricItemSettings(), 3, 100, 0.25F));
+            new FabricItemSettings().maxCount(16), 3, 100, 0.25F));
     public static final Item Bomb_Bag = registerItem("bomb_bag", new BombBag(
-            new FabricItemSettings().maxCount(1),192,
-            List.of(Bomb, Super_Bomb, Bombchu)));
+            new FabricItemSettings().maxCount(1),96,
+            List.of(ZeldaTags.Items.Bombs)));
+//    public static final Item Better_Bomb_Bag = registerItem("better_bomb_bag", new BombBag(
+//            new FabricItemSettings().maxCount(1),192,
+//            List.of(Bomb, Super_Bomb, Bombchu)));
     public static final Item Quiver = registerItem("quiver", new Quiver(
             new FabricItemSettings().maxCount(1),640,
-            List.of(Items.ARROW, Items.SPECTRAL_ARROW, Items.TIPPED_ARROW)));
+            List.of(ItemTags.ARROWS)));
 
     public static final Item Pegasus_Boots = registerItem("pegasus_boots", new PegasusBoots(
             ArmorMaterials.LEATHER, ArmorItem.Type.BOOTS, new FabricItemSettings().maxCount(1)
@@ -102,8 +113,6 @@ public class ZeldaItems {
             new FabricItemSettings()));
     public static final Item Magic_Jar = registerItem("magic_jar", new MagicJar(
             new FabricItemSettings().food(new FoodComponent.Builder().alwaysEdible().snack().build()), 10));
-    public static final Item Fairy_Bottle = registerItem("fairy_bottle", new Item(
-            new FabricItemSettings().maxCount(1)));
     public static final Item Magic_Powder = registerItem("magic_powder", new MagicPowder(
             new FabricItemSettings().maxCount(16)));
     public static final Item Fire_Rod = registerItem("fire_rod", new FireRod(
@@ -122,6 +131,9 @@ public class ZeldaItems {
             new FabricItemSettings().maxCount(1)));
     public static final Item Fairy_Bell = registerItem("fairy_bell", new FairyBell(
             new FabricItemSettings().maxCount(1)));
+
+    public static final Item Fairy_Bottle = registerItem("fairy_bottle", new FairyBottle(
+            new FabricItemSettings().maxCount(1), "rgb"));
     public static final Item Magic_Tart = registerItem("magic_tart", new MagicFood(
             new FabricItemSettings().food(new FoodComponent.Builder().hunger(7).saturationModifier(2.0f).alwaysEdible().build()), 40));
     public static final Item Magic_Flan = registerItem("magic_flan", new MagicFood(
@@ -161,5 +173,18 @@ public class ZeldaItems {
     public static void registerItems() {
         ZeldaCraft.LOGGER.debug("Registering Items for" + ZeldaCraft.MOD_ID);
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.SPAWN_EGGS).register(ZeldaItems::addEggs);
+    }
+
+
+
+    //Tag to list for some items
+    public static List<Item> getItemsFromTag(TagKey<Item> tag) {
+        List<Item> items = new ArrayList<>();
+
+        Registries.ITEM.stream()
+                .filter(item -> item.getRegistryEntry().isIn(tag))
+                .forEach(items::add);
+
+        return items;
     }
 }

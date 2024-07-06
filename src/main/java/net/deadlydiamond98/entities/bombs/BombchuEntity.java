@@ -207,8 +207,9 @@ public class BombchuEntity extends Entity implements Ownable {
             }
 
             this.getWorld().createExplosion(this, this.getX(), this.getY(), this.getZ(), power, false, World.ExplosionSourceType.NONE);
+            Vec3d newPos = this.getPos().offset(this.getAttachedFace(), -1.5);
             ZeldaServerPackets.sendBombParticlePacket((List<ServerPlayerEntity>) this.getWorld().getPlayers(), this.getX(),
-                    this.getEyeY(), this.getZ());
+                    newPos.getY(), this.getZ());
         }
     }
     @Override

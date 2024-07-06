@@ -129,7 +129,7 @@ public class BombEntity extends Entity implements Ownable{
 
             this.getWorld().createExplosion(this, this.getX(), this.getY(), this.getZ(), power, false, World.ExplosionSourceType.NONE);
             ZeldaServerPackets.sendBombParticlePacket((List<ServerPlayerEntity>) this.getWorld().getPlayers(), this.getX(),
-                    this.getEyeY(), this.getZ());
+                    this.getY() + 1.5, this.getZ());
         }
     }
 

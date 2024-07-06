@@ -27,8 +27,8 @@
   "item.zeldacraft.magic_powder": "Magic Powder",
   "item.zeldacraft.fire_rod": "Fire Rod",
   "item.zeldacraft.ice_rod": "Ice Rod",
-  "item.zeldacraft.clock_of_time_freeze": "Clock of Time Freeze",
-  "item.zeldacraft.frozen_clock.tooltipa": "Temperarory Freezes Time in the Area",
+  "item.zeldacraft.clock_of_time_freeze": "Stopwatch",
+  "item.zeldacraft.frozen_clock.tooltipa": "Temperarory freezes entities for",
   "item.zeldacraft.frozen_clock.tooltipb": "a short duration near you",
 
   "block.zeldacraft.loot_grass": "Loot Grass",
@@ -71,6 +71,7 @@
   "item.zeldacraft.magic_boomerang": "Magic Boomerang",
   "item.zeldacraft.magic_boomerang.tooltipa": "Can pick up items from afar, Passive Loyalty",
   "item.zeldacraft.magic_boomerang.tooltipb": "Won't be damaged if you have Magic",
+  "enchantment.zeldacraft.lawn_mower": "Lawn Mower",
 
   "item.zeldacraft.hookshot": "Hookshot",
 
@@ -81,7 +82,9 @@
   "item.zeldacraft.music_disc_legend_fragment.tooltip": "Music Disc - Legend",
 
   "key.category.zeldacraft.zeldacraftkeys": "The Legend of Steve",
-  "key.zeldacraft.triketmagic": "Use Magic Trinket Ability",
+  "key.zeldacraft.trinketneck": "Use Necklace Trinket Ability",
+  "key.zeldacraft.trinketback": "Use Back Trinket Ability",
+
   "item.zeldacraft.fairy_bell": "Fairy Bell",
   "item.zeldacraft.fairy_bell_with_color": "Fairy Bell (%s)",
   "item.zeldacraft.fairy_bell.tooltipa": "Gives the player a fairy companion",

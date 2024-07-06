@@ -6,16 +6,18 @@ import net.minecraft.inventory.StackReference;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.registry.tag.TagKey;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.util.ClickType;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.Optional;
 
 public class Quiver extends CustomBundle {
-    public Quiver(Settings settings, int maxStorage, List<Item> itemInsertable) {
-        super(settings, maxStorage, itemInsertable);
+    public Quiver(Settings settings, int maxStorage, List<TagKey> itemTags) {
+        super(settings, maxStorage, itemTags);
     }
 
     @Override
