@@ -2,6 +2,7 @@ package net.deadlydiamond98.entities.projectiles;
 
 import net.deadlydiamond98.networking.ZeldaServerPackets;
 import net.deadlydiamond98.particle.ZeldaParticles;
+import net.deadlydiamond98.statuseffects.StunStatusEffect;
 import net.deadlydiamond98.statuseffects.ZeldaStatusEffects;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -81,7 +82,9 @@ public class MagicIceProjectileEntity extends ProjectileEntity {
         entity.damage(entity.getDamageSources().freeze(), 4.0F);
         entity.setFireTicks(0);
         if (entity instanceof LivingEntity livingEntity) {
-            livingEntity.addStatusEffect(new StatusEffectInstance(ZeldaStatusEffects.Stun_Status_Effect, 20, 0));
+            StunStatusEffect statusEffect = (StunStatusEffect) ZeldaStatusEffects.Stun_Status_Effect;
+            statusEffect.giveOverlay(StunStatusEffect.OverlayType.ICE);
+            livingEntity.addStatusEffect(new StatusEffectInstance(statusEffect, 20, 0));
         }
     }
 

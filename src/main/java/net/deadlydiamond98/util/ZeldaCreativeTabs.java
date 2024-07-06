@@ -36,6 +36,7 @@ public class ZeldaCreativeTabs {
                         entry.add(ZeldaItems.Ice_Rod);
                         entry.add(ZeldaItems.Beam_Rod);
                         entry.add(ZeldaItems.Magic_Powder);
+                        entry.add(ZeldaItems.Clock_Of_Time_Freeze);
 
                         entry.add(ZeldaItems.Fairy_Pendant);
                         entry.add(ZeldaItems.Fairy_Bell);

@@ -4,22 +4,29 @@ import net.deadlydiamond98.ZeldaCraft;
 import net.deadlydiamond98.entities.ShootingStar;
 import net.deadlydiamond98.entities.ZeldaEntities;
 import net.deadlydiamond98.networking.ZeldaServerPackets;
-import net.deadlydiamond98.sounds.ZeldaSounds;
+import net.deadlydiamond98.statuseffects.StunStatusEffect;
+import net.deadlydiamond98.statuseffects.ZeldaStatusEffects;
 import net.deadlydiamond98.util.OtherPlayerData;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.ItemEntity;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.text.Text;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Box;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
+import java.util.*;
+
 public class ZeldaSeverTickEvent {
+
+    private static final Map<UUID, Integer> frozenEntities = new HashMap<>();
+    private static final Map<UUID, Vec3d> velocity = new HashMap<>();
+
     public static void registerTickEvent() {
         onEndServerTick();
     }
@@ -30,7 +37,7 @@ public class ZeldaSeverTickEvent {
                 if (world.getRegistryKey() == World.OVERWORLD) {
                     if (world.getTimeOfDay() >= 13000 && world.getTimeOfDay() <= 23000) {
                         world.getPlayers().forEach(player -> {
-                            if (player.getRandom().nextDouble() < 0.005 && ((OtherPlayerData)player).canSpawnStar() && world.getTimeOfDay() % 35 == 0) {
+                            if (player.getRandom().nextDouble() < 0.005 && ((OtherPlayerData)player).canSpawnStar() && world.getTimeOfDay() % 30 == 0) {
                                 double x = player.getX() + player.getRandom().nextBetween(-50, 50);
                                 double z = player.getZ() + player.getRandom().nextBetween(-50, 50);
 
@@ -45,7 +52,6 @@ public class ZeldaSeverTickEvent {
 
                                     if (Math.abs(xPos) < 50 && Math.abs(zPos) < 50) {
                                         ZeldaServerPackets.sendShootingStarSound(playerForSound);
-                                        playerForSound.sendMessage(Text.literal("Star landed at: " + star.getPos()));
                                         ZeldaCraft.LOGGER.info("Star landed at: " + star.getPos());
                                     }
                                 });
@@ -62,6 +68,59 @@ public class ZeldaSeverTickEvent {
                     }
                 }
             }
+
+
+            timeBoxSlowing(server);
         });
+    }
+
+    public static void addEntityToFrozen(Entity entity, int time) {
+        if (entity instanceof LivingEntity livingEntity) {
+            StunStatusEffect stunStatusEffect = (StunStatusEffect) ZeldaStatusEffects.Stun_Status_Effect;
+            stunStatusEffect.giveOverlay(StunStatusEffect.OverlayType.CLOCK);
+            livingEntity.addStatusEffect(new StatusEffectInstance(stunStatusEffect, 10, 0, false, false));
+        }
+        entity.setYaw(entity.getYaw());
+        entity.setPitch(entity.getPitch());
+        UUID entityId = entity.getUuid();
+        frozenEntities.putIfAbsent(entityId, time);
+        velocity.putIfAbsent(entityId, entity.getVelocity());
+    }
+
+
+    private static void timeBoxSlowing(MinecraftServer server) {
+        for (Map.Entry<UUID, Integer> entry : new HashMap<>(frozenEntities).entrySet()) {
+            server.getWorlds().forEach(serverWorld -> {
+                UUID entityId = entry.getKey();
+                int ticksLeft = entry.getValue();
+                Vec3d entityVelocity = velocity.get(entityId);
+
+                Entity entity = serverWorld.getEntity(entityId);
+
+                if (entity != null) {
+                    if (ticksLeft <= 0) {
+                        frozenEntities.remove(entityId);
+                        if (entity instanceof LivingEntity livingEntity) {
+                            livingEntity.removeStatusEffect(ZeldaStatusEffects.Stun_Status_Effect);
+                        }
+                        entity.setNoGravity(false);
+                        entity.setVelocity(entityVelocity);
+                    } else {
+                        if (entity instanceof LivingEntity livingEntity) {
+                            StunStatusEffect stunStatusEffect = (StunStatusEffect) ZeldaStatusEffects.Stun_Status_Effect;
+                            stunStatusEffect.giveOverlay(StunStatusEffect.OverlayType.CLOCK);
+                            livingEntity.addStatusEffect(new StatusEffectInstance(stunStatusEffect, 10, 0, false, false));
+                        }
+                        entity.setYaw(entity.prevYaw);
+                        entity.setPitch(entity.prevPitch);
+                        entity.setVelocity(0, 0, 0);
+                        entity.setPosition(entity.prevX, entity.prevY, entity.prevZ);
+                        entity.velocityDirty = true;
+                        entity.setNoGravity(true);
+                        frozenEntities.put(entityId, ticksLeft - 1);
+                    }
+                }
+            });
+        }
     }
 }

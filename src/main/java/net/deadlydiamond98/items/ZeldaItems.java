@@ -126,6 +126,8 @@ public class ZeldaItems {
             new FabricItemSettings().food(new FoodComponent.Builder().hunger(7).saturationModifier(2.0f).alwaysEdible().build()), 40));
     public static final Item Magic_Flan = registerItem("magic_flan", new MagicFood(
             new FabricItemSettings().food(new FoodComponent.Builder().hunger(8).saturationModifier(4.0f).alwaysEdible().build()), 100));
+    public static final Item Clock_Of_Time_Freeze = registerItem("clock_of_time_freeze", new FreezingClock(
+            new FabricItemSettings()));
 
 
 

@@ -4,6 +4,7 @@ import net.deadlydiamond98.ZeldaCraft;
 import net.deadlydiamond98.networking.packets.ShootBeamC2SPacket;
 import net.deadlydiamond98.networking.packets.SmashLootGrassC2SPacket;
 import net.deadlydiamond98.networking.packets.UseMagicTrinketC2SPacket;
+import net.deadlydiamond98.statuseffects.StunStatusEffect;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.entity.player.PlayerEntity;
@@ -66,10 +67,11 @@ public class ZeldaServerPackets {
             ServerPlayNetworking.send(playerEntity, SnapPacket, buf);
         }
     }
-    public static void sendDekuStunOverlayPacket(ServerPlayerEntity player, int entityId, boolean hasEffect) {
+    public static void sendDekuStunOverlayPacket(ServerPlayerEntity player, int entityId, boolean hasEffect, StunStatusEffect.OverlayType overlay) {
         PacketByteBuf buf = PacketByteBufs.create();
         buf.writeInt(entityId);
         buf.writeBoolean(hasEffect);
+        buf.writeEnumConstant(overlay);
         ServerPlayNetworking.send(player, DekuStunOverlayPacket, buf);
     }
     public static void sendPlayerStatsPacket(ServerPlayerEntity player, int level, int maxLevel, boolean fairyControl,

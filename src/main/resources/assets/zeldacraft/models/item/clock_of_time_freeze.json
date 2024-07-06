@@ -1,0 +1,8 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "zeldacraft:item/magic_clock",
+    "layer1": "zeldacraft:item/clock_hand",
+    "layer2": "zeldacraft:item/clock_hand_slow"
+  }
+}

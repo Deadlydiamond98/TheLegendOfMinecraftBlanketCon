@@ -3,6 +3,7 @@ package net.deadlydiamond98.entities.projectiles;
 import net.deadlydiamond98.entities.ZeldaEntities;
 import net.deadlydiamond98.items.ZeldaItems;
 import net.deadlydiamond98.networking.ZeldaServerPackets;
+import net.deadlydiamond98.statuseffects.StunStatusEffect;
 import net.deadlydiamond98.statuseffects.ZeldaStatusEffects;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -61,7 +62,9 @@ public class DekuNutEntity extends ThrownItemEntity {
             List<LivingEntity> entities = this.getWorld().getEntitiesByClass(LivingEntity.class, box, entity -> true);
 
             for (LivingEntity entity : entities) {
-                entity.addStatusEffect(new StatusEffectInstance(ZeldaStatusEffects.Stun_Status_Effect, 50, 0));
+                StunStatusEffect statusEffect = (StunStatusEffect) ZeldaStatusEffects.Stun_Status_Effect;
+                statusEffect.giveOverlay(StunStatusEffect.OverlayType.DEKU);
+                entity.addStatusEffect(new StatusEffectInstance(statusEffect, 50, 0));
             }
             ZeldaServerPackets.sendSnapParticlePacket((List<ServerPlayerEntity>) this.getWorld().getPlayers(), this.getX(),
                     this.getY() - 0.5, this.getZ());

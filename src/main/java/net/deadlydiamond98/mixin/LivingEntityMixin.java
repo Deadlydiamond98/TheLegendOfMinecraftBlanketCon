@@ -22,7 +22,7 @@ public abstract class LivingEntityMixin {
         }
     }
     @Inject(method = "damage", at = @At("HEAD"))
-    private void onTickMovement(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
+    private void onDamage(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
         if (entity.hasStatusEffect(ZeldaStatusEffects.Stun_Status_Effect)) {
             entity.removeStatusEffect(ZeldaStatusEffects.Stun_Status_Effect);
         }

@@ -19,6 +19,8 @@ public class ZeldaClientPackets {
     public static final Identifier PlayerStatsPacket = new Identifier(ZeldaCraft.MOD_ID, "player_stats_packet");
     public static final Identifier MagicTrinketPacket = new Identifier(ZeldaCraft.MOD_ID, "magic_trinket_packet");
     public static final Identifier PlayShootingStarSound = new Identifier(ZeldaCraft.MOD_ID, "play_shooting_star_sound");
+    public static final Identifier TimeFreezePacket = new Identifier(ZeldaCraft.MOD_ID, "time_freeze_packet");
+
 
     public static void registerC2SPackets() {
         ClientPlayNetworking.registerGlobalReceiver(SmaaashPacket, SmaaashParticleS2CPacket::recieve);

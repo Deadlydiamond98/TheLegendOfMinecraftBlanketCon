@@ -1,5 +1,6 @@
 package net.deadlydiamond98.networking.packets;
 
+import net.deadlydiamond98.statuseffects.StunStatusEffect;
 import net.deadlydiamond98.statuseffects.ZeldaStatusEffects;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
 import net.minecraft.client.MinecraftClient;
@@ -14,19 +15,23 @@ public class DekuStunOverlayS2CPacket {
                                PacketSender responseSender) {
         int entityId = buf.readInt();
         boolean hasEffect = buf.readBoolean();
+        StunStatusEffect.OverlayType overlayType = buf.readEnumConstant(StunStatusEffect.OverlayType.class);
         Entity entity = client.world.getEntityById(entityId);
 
         if (entity instanceof LivingEntity livingEntity) {
             client.execute(() -> {
                 if (hasEffect) {
+                    StunStatusEffect effect = (StunStatusEffect) ZeldaStatusEffects.Stun_Status_Effect;
+                    effect.giveOverlay(overlayType);
                     if (!livingEntity.hasStatusEffect(ZeldaStatusEffects.Stun_Status_Effect)) {
-                        livingEntity.addStatusEffect(new StatusEffectInstance(ZeldaStatusEffects.Stun_Status_Effect, 200));
+                        livingEntity.addStatusEffect(new StatusEffectInstance(effect, 200));
                     }
                 } else {
                     if (livingEntity.hasStatusEffect(ZeldaStatusEffects.Stun_Status_Effect)) {
                         livingEntity.removeStatusEffect(ZeldaStatusEffects.Stun_Status_Effect);
                     }
                 }
+
             });
         }
 
