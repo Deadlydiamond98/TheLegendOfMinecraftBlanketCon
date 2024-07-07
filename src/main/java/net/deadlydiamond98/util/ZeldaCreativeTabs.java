@@ -3,9 +3,11 @@ package net.deadlydiamond98.util;
 import net.deadlydiamond98.ZeldaCraft;
 import net.deadlydiamond98.blocks.ZeldaBlocks;
 import net.deadlydiamond98.items.ZeldaItems;
+import net.deadlydiamond98.items.custom.FairyBottle;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.text.Text;
@@ -58,7 +60,16 @@ public class ZeldaCreativeTabs {
                         entry.add(ZeldaItems.Magic_Tart);
                         entry.add(ZeldaItems.Magic_Flan);
                         entry.add(ZeldaItems.Magic_Candy);
-                        entry.add(ZeldaItems.Fairy_Bottle);
+//                        entry.add(ZeldaItems.Fairy_Bottle);
+                        for (String color : FairyBottle.colors) {
+                            ItemStack stack = new ItemStack(ZeldaItems.Fairy_Bottle);
+                            NbtCompound nbt = new NbtCompound();
+                            nbt.putString("fairycolor", color);
+                            stack.setNbt(nbt);
+
+                            entry.add(stack);
+                        }
+
                         entry.add(ZeldaItems.Magic_Upgrade);
                         entry.add(ZeldaItems.Magic_Downgrade);
 

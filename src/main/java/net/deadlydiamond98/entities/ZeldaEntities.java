@@ -146,7 +146,8 @@ public class ZeldaEntities {
     public static final EntityType<FairyEntity> Fairy_Entity = Registry.register(
             Registries.ENTITY_TYPE,
             new Identifier(ZeldaCraft.MOD_ID, "fairy"),
-            FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, FairyEntity::new)
+            FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, (EntityType<FairyEntity> type, World world) ->
+                            new FairyEntity(type, world))
                     .dimensions(EntityDimensions.fixed(0.4f,0.4f))
                     .build()
     );

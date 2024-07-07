@@ -77,12 +77,17 @@ public class ZeldaCraftClient implements ClientModInitializer {
 		}));
 
 		ModelPredicateProviderRegistry.register(ZeldaItems.Fairy_Bottle, new Identifier("fairycolor"), ((stack, world, entity, seed) -> {
-			int colornum = ((FairyBottle) stack.getItem()).getColorList().indexOf(((FairyBottle) stack.getItem()).getColor());
+			String color = stack.getNbt().getString("fairycolor");
 
-			if (colornum != -1) {
-				return colornum;
-			}
-			return 6;
+			return switch (color) {
+				case "blue" -> 0.1f;
+				case "yellow" -> 0.2f;
+				case "green" -> 0.3f;
+				case "pink" -> 0.4f;
+				case "red" -> 0.5f;
+				case "purple" -> 0.6f;
+				default -> 0.0f;
+			};
 		}));
 
 		ItemTooltipCallback.EVENT.register((stack, context, lines) -> {

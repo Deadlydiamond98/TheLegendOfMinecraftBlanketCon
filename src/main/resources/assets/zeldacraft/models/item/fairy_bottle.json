@@ -1,7 +1,7 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "zeldacraft:item/fairy_bottle_rgp"
+    "layer0": "zeldacraft:item/fairy_bottle_rgb"
   },
   "overrides": [
     {

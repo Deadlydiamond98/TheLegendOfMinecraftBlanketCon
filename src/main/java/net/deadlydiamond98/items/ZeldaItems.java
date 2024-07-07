@@ -133,7 +133,7 @@ public class ZeldaItems {
             new FabricItemSettings().maxCount(1)));
 
     public static final Item Fairy_Bottle = registerItem("fairy_bottle", new FairyBottle(
-            new FabricItemSettings().maxCount(1), "rgb"));
+            new FabricItemSettings().maxCount(1)));
     public static final Item Magic_Tart = registerItem("magic_tart", new MagicFood(
             new FabricItemSettings().food(new FoodComponent.Builder().hunger(7).saturationModifier(2.0f).alwaysEdible().build()), 40));
     public static final Item Magic_Flan = registerItem("magic_flan", new MagicFood(
