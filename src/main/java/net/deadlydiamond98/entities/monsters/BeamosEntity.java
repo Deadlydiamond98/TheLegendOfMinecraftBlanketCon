@@ -280,19 +280,6 @@ public class BeamosEntity extends HostileEntity implements Monster {
         }
 
         public boolean canStart() {
-            /*HitResult frontRaycast = RaycastUtil.getCollisionFromEntityFront(this.beamos, 10);
-            ZeldaCraft.LOGGER.info("Raycast hit result type: " + frontRaycast.getType());
-            if (frontRaycast.getType() == HitResult.Type.ENTITY) {
-                EntityHitResult entityHitResult = (EntityHitResult) frontRaycast;
-                Entity hitEntity = entityHitResult.getEntity();
-                ZeldaCraft.LOGGER.info("Found Entity");
-                if (this.targetEntityClass.isInstance(hitEntity)) {
-                    ZeldaCraft.LOGGER.info("Found Player");
-                    return super.canStart();
-
-                }
-            }
-            return false;*/
             return super.canStart();
         }
     }

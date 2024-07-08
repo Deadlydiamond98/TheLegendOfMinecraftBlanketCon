@@ -8,6 +8,7 @@ import net.deadlydiamond98.entities.monsters.BubbleEntity;
 import net.deadlydiamond98.entities.monsters.FairyEntity;
 import net.deadlydiamond98.entities.monsters.KeeseEntity;
 import net.deadlydiamond98.entities.projectiles.*;
+import net.deadlydiamond98.entities.projectiles.arrows.SilverArrowEntity;
 import net.deadlydiamond98.entities.projectiles.boomerangs.BaseBoomerangProjectile;
 import net.deadlydiamond98.entities.projectiles.boomerangs.IronBoomerang;
 import net.deadlydiamond98.entities.projectiles.boomerangs.MagicalBoomerang;
@@ -136,6 +137,17 @@ public class ZeldaEntities {
                     .dimensions(EntityDimensions.fixed(0.5f,0.5f))
                     .build()
     );
+
+    public static final EntityType<SilverArrowEntity> Silver_Arrow = Registry.register(
+            Registries.ENTITY_TYPE,
+            new Identifier(ZeldaCraft.MOD_ID, "silver_arrow"),
+            FabricEntityTypeBuilder.create(SpawnGroup.MISC, (EntityType<SilverArrowEntity> type, World world) ->
+                            new SilverArrowEntity(type, world))
+                    .dimensions(EntityDimensions.fixed(1,1))
+                    .spawnableFarFromPlayer()
+                    .build()
+    );
+
     public static final EntityType<KeeseEntity> Keese_Entity = Registry.register(
             Registries.ENTITY_TYPE,
             new Identifier(ZeldaCraft.MOD_ID, "keese"),

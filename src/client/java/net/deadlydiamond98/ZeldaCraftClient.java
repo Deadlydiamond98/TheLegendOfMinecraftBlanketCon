@@ -4,7 +4,6 @@ import net.deadlydiamond98.blocks.ZeldaBlocks;
 import net.deadlydiamond98.entities.ZeldaEntities;
 import net.deadlydiamond98.events.ClientTickEvent;
 import net.deadlydiamond98.items.ZeldaItems;
-import net.deadlydiamond98.items.custom.FairyBottle;
 import net.deadlydiamond98.items.custom.manaItems.MagicItem;
 import net.deadlydiamond98.model.entity.*;
 import net.deadlydiamond98.networking.ZeldaClientPackets;
@@ -23,6 +22,7 @@ import net.deadlydiamond98.renderer.entity.projectile_items.BaseballRenderer;
 import net.deadlydiamond98.renderer.entity.projectile_items.BoomerangProjectileRenderer;
 import net.deadlydiamond98.renderer.entity.projectile_items.DekuNutRenderer;
 import net.deadlydiamond98.renderer.entity.MagicFireProjectileRenderer;
+import net.deadlydiamond98.renderer.entity.projectile_items.ZeldaArrowRenderer;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback;
@@ -32,7 +32,6 @@ import net.minecraft.client.color.world.GrassColors;
 import net.minecraft.client.item.ModelPredicateProviderRegistry;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.entity.model.BatEntityModel;
-import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.item.DyeableItem;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.text.Text;
@@ -151,6 +150,8 @@ public class ZeldaCraftClient implements ClientModInitializer {
 		EntityRendererRegistry.register(ZeldaEntities.Bomb_Entity, BombEntityRenderer::new);
 
 		EntityRendererRegistry.register(ZeldaEntities.Bombchu_Entity, BombchuEntityRenderer::new);
+
+		EntityRendererRegistry.register(ZeldaEntities.Silver_Arrow, ZeldaArrowRenderer::new);
 	}
 
 	public void registerModelLayers() {

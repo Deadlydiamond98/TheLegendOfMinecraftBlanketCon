@@ -7,7 +7,8 @@
     "KeyboardMixin",
     "LivingEntityRendererMixin",
     "MouseMixin",
-    "PlayerEntityRendererMixin"
+    "PlayerEntityRendererMixin",
+    "SplashMixin"
   ],
   "injectors": {
     "defaultRequire": 1

@@ -24,6 +24,8 @@ public class ZeldaSounds {
     public static SoundEvent FireMagic = registerSoundEvent("fire_magic");
     public static SoundEvent IceMagic = registerSoundEvent("ice_magic");
 
+    public static SoundEvent Transform = registerSoundEvent("transform");
+
     //Music & music-like
     public static SoundEvent MusicDiscLegend = registerSoundEvent("musicdisclegend");
     public static SoundEvent SecretRoom = registerSoundEvent("secretroom");

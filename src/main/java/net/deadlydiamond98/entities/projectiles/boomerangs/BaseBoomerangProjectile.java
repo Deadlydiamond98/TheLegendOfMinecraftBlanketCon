@@ -137,7 +137,7 @@ public class BaseBoomerangProjectile extends ProjectileEntity {
                 }
             }
 
-            if (this.ticksInAir <= (this.airtime * 4) || !this.hasLoyalty) {
+            if (this.ticksInAir <= (this.airtime * 16) || !this.hasLoyalty) {
                 HitResult hitResult = ProjectileUtil.getCollision(this, this::canHit);
                 if (hitResult.getType() != HitResult.Type.MISS) {
                     this.onCollision(hitResult);

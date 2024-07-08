@@ -27,6 +27,12 @@
     ]
   },
 
+  "transform": {
+    "subtitle": "sounds.zeldacraft.transform",
+    "sounds": [
+      "zeldacraft:transform"
+    ]
+  },
 
   "upgrade_mana": {
     "subtitle": "sounds.zeldacraft.upgrade_mana",

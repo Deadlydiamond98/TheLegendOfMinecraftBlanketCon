@@ -81,8 +81,9 @@ public abstract class ItemEntityMixin {
 
 	}
 
+	@Unique
 	private <T extends CustomBundle> boolean addItemToBagTrinket(PlayerEntity player, ItemEntity itemEntity, ItemStack itemStack,
-										Class<T> itemClass, CallbackInfo ci) {
+																 Class<T> itemClass, CallbackInfo ci) {
 		TrinketComponent trinket = TrinketsApi.getTrinketComponent(player).get();
 		if (trinket.isEquipped(ZeldaItems.Quiver)) {
 			for (int i = 0; i < trinket.getEquipped(ZeldaItems.Quiver).size(); i++) {

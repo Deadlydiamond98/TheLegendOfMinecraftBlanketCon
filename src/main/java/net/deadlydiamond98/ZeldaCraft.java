@@ -21,7 +21,6 @@ import net.deadlydiamond98.util.ZeldaPotionRecipes;
 import net.deadlydiamond98.world.ZeldaFeatures;
 import net.fabricmc.api.ModInitializer;
 
-import net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 import net.fabricmc.loader.api.FabricLoader;
 import org.slf4j.Logger;
@@ -45,11 +44,16 @@ public class ZeldaCraft implements ModInitializer {
 		ZeldaStatusEffects.registerStatusEffects();
 		ZeldaEnchantments.registerEnchants();
 		ZeldaPotionRecipes.registerBrewingRecipes();
+
+		//Events
+//		PlayerRightClickedEntityEvent.register();
 		EntityDamagedEvent.register();
-		ServerPlayerEvents.AFTER_RESPAWN.register(new AfterRespawnEvent());
+		AfterRespawnEvent.register();
+		ZeldaSeverTickEvent.registerTickEvent();
+
+
 		ZeldaFeatures.register();
 		ZeldaCreativeTabs.registerItemGroups();
-		ZeldaSeverTickEvent.registerTickEvent();
 		LOGGER.info("Mod Loaded");
 	}
 

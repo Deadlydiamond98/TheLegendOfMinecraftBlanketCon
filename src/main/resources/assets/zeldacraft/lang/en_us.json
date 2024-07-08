@@ -25,6 +25,8 @@
   "item.zeldacraft.magic_downgrade": "Empty Magic Container",
   "item.zeldacraft.fairy_bottle": "Fairy Bottle",
   "item.zeldacraft.magic_powder": "Magic Powder",
+  "item.zeldacraft.magic_powder.tooltipa": "Try to sprinkle it on many",
+  "item.zeldacraft.magic_powder.tooltipb": "things to test its effects",
   "item.zeldacraft.fire_rod": "Fire Rod",
   "item.zeldacraft.ice_rod": "Ice Rod",
   "item.zeldacraft.clock_of_time_freeze": "Stopwatch",
