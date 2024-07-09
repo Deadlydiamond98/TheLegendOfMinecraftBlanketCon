@@ -18,49 +18,59 @@ public class ZeldaCreativeTabs {
             new Identifier(ZeldaCraft.MOD_ID, "zeldacraft_items_group"),
             FabricItemGroup.builder().displayName(Text.translatable("itemgroup.zeldacraft_items"))
                     .icon(ZeldaItems.Master_Sword::getDefaultStack).entries((displayContext, entry) -> {
+                        //Swords
                         entry.add(ZeldaItems.Kokiri_Sword);
                         entry.add(ZeldaItems.Magic_Sword);
                         entry.add(ZeldaItems.Master_Sword);
                         entry.add(ZeldaItems.Cracked_Bat);
+                        entry.add(ZeldaItems.Baseball); //Not Melee, but pairs w/ bat
+                        //Boomerangs
                         entry.add(ZeldaItems.Wooden_Boomerang);
                         entry.add(ZeldaItems.Iron_Boomerang);
                         entry.add(ZeldaItems.Magic_Boomerang);
+                        //Explosive
                         entry.add(ZeldaBlocks.Bomb_Flower);
+                        entry.add(ZeldaItems.Bomb);
+                        entry.add(ZeldaItems.Super_Bomb);
+                        entry.add(ZeldaItems.Bombchu);
+                        entry.add(ZeldaItems.Deku_Nut);
+                        //Bags
                         entry.add(ZeldaItems.Bomb_Bag);
                         entry.add(ZeldaItems.Quiver);
-
+                        //Arrows
+                        entry.add(ZeldaItems.Silver_Arrow);
+                        entry.add(ZeldaItems.Bomb_Arrow);
+                        //Grapples
                         entry.add(ZeldaItems.Hookshot);
-
+                        //Shields
                         entry.add(ZeldaItems.Hylain_Shield);
                         entry.add(ZeldaItems.Mirror_Shield);
-
+                        //Rods
                         entry.add(ZeldaItems.Fire_Rod);
                         entry.add(ZeldaItems.Ice_Rod);
                         entry.add(ZeldaItems.Beam_Rod);
+                        //Magic
                         entry.add(ZeldaItems.Magic_Powder);
                         entry.add(ZeldaItems.Clock_Of_Time_Freeze);
-
+                        //Equipment
                         entry.add(ZeldaItems.Fairy_Pendant);
                         entry.add(ZeldaItems.Fairy_Bell);
-
+                        //Consumables
+                        entry.add(ZeldaItems.Magic_Jar);
+                        entry.add(ZeldaItems.Magic_Tart);
+                        entry.add(ZeldaItems.Magic_Flan);
+                        entry.add(ZeldaItems.Magic_Candy);
+                        entry.add(ZeldaItems.Magic_Upgrade);
+                        entry.add(ZeldaItems.Magic_Downgrade);
+                        //Util
+                        entry.add(ZeldaItems.Dungeon_Key);
+                        //Misc
                         entry.add(ZeldaItems.Music_Disc_Legend);
                         entry.add(ZeldaItems.Music_Disc_Legend_Fragment);
                         entry.add(ZeldaItems.Emerald_Shard);
                         entry.add(ZeldaItems.Emerald_Chunk);
                         entry.add(ZeldaItems.Star_Fragment);
                         entry.add(ZeldaItems.Stardust);
-                        entry.add(ZeldaItems.Bomb);
-                        entry.add(ZeldaItems.Super_Bomb);
-                        entry.add(ZeldaItems.Bombchu);
-                        entry.add(ZeldaItems.Deku_Nut);
-                        entry.add(ZeldaItems.Baseball);
-                        entry.add(ZeldaItems.Dungeon_Key);
-
-                        entry.add(ZeldaItems.Magic_Jar);
-                        entry.add(ZeldaItems.Magic_Tart);
-                        entry.add(ZeldaItems.Magic_Flan);
-                        entry.add(ZeldaItems.Magic_Candy);
-//                        entry.add(ZeldaItems.Fairy_Bottle);
                         for (String color : FairyBottle.colors) {
                             ItemStack stack = new ItemStack(ZeldaItems.Fairy_Bottle);
                             NbtCompound nbt = new NbtCompound();
@@ -70,17 +80,15 @@ public class ZeldaCreativeTabs {
                             entry.add(stack);
                         }
 
-                        entry.add(ZeldaItems.Magic_Upgrade);
-                        entry.add(ZeldaItems.Magic_Downgrade);
-
                     }).build());
     public static final ItemGroup ZeldaCraftBlocksGroup = Registry.register(Registries.ITEM_GROUP,
             new Identifier(ZeldaCraft.MOD_ID, "zeldacraft_blocks_group"),
             FabricItemGroup.builder().displayName(Text.translatable("itemgroup.zeldacraft_blocks"))
                     .icon(() -> ZeldaBlocks.Plain_Pot.asItem().getDefaultStack()).entries((displayContext, entry) -> {
+                        //Lootables
                         entry.add(ZeldaBlocks.Loot_Grass);
                         entry.add(ZeldaBlocks.Plain_Pot);
-
+                        //Dungeon 1 Build Palette
                         entry.add(ZeldaBlocks.Secret_Cracked_Stone_Brick);
                         entry.add(ZeldaBlocks.Brown_Dungeoncite_Brick);
                         entry.add(ZeldaBlocks.Cracked_Brown_Dungeoncite_Brick);

@@ -117,10 +117,10 @@ public class MagicPowder extends Item implements MagicItem {
                 return convertEntity(EntityType.SKELETON, entity, user, stack);
             }
             else if (entity instanceof ZombifiedPiglinEntity) {
-                return convertEntity(EntityType.ZOMBIFIED_PIGLIN, entity, user, stack);
+                return convertEntity(EntityType.PIGLIN, entity, user, stack);
             }
             else if (entity instanceof ZoglinEntity) {
-                return convertEntity(EntityType.ZOGLIN, entity, user, stack);
+                return convertEntity(EntityType.HOGLIN, entity, user, stack);
             }
             else if (entity instanceof WitchEntity) {
                 return convertEntity(EntityType.VILLAGER, entity, user, stack);
@@ -141,7 +141,7 @@ public class MagicPowder extends Item implements MagicItem {
             return ActionResult.FAIL;
         }
 
-        newEntity.setPos(entity.getX(), entity.getY(), entity.getZ());
+        newEntity.setPos(entity.getX(), entity.getY() + 0.01, entity.getZ());
 
         if (newEntity instanceof SlimeEntity slime) {
             Box boundingBox = entity.getBoundingBox();

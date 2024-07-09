@@ -10,6 +10,7 @@
     "LookControlMixin",
     "MobEntityMixin",
     "PlayerEntityMixin",
+    "PlayerInventoryMixin",
     "RangedWeaponMixin"
   ],
   "injectors": {

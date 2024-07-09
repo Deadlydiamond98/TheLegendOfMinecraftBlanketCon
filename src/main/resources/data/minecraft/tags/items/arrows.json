@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "zeldacraft:silver_arrow"
+    "zeldacraft:silver_arrow",
+    "zeldacraft:bomb_arrow"
   ]
 }
