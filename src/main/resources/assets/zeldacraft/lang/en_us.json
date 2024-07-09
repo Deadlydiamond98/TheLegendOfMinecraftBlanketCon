@@ -55,6 +55,8 @@
   "item.zeldacraft.hylian_shield": "Hylian Shield",
   "item.zeldacraft.hylian_shield.tooltip": "Isn't harmed by Explosions",
   "item.zeldacraft.mirror_shield": "Mirror Shield",
+  "item.zeldacraft.mirror_shield.tooltipa": "Reflects all Projectiles as beams",
+  "item.zeldacraft.mirror_shield.tooltipb": "of light at the cost of magic",
 
   "item.zeldacraft.kokiri_sword": "Kokiri Sword",
   "item.zeldacraft.magic_sword": "Magic Sword",

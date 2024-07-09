@@ -50,6 +50,7 @@ public class ZeldaCraft implements ModInitializer {
 		EntityDamagedEvent.register();
 		AfterRespawnEvent.register();
 		ZeldaSeverTickEvent.registerTickEvent();
+//		AttackBlockEvent.register();
 
 
 		ZeldaFeatures.register();

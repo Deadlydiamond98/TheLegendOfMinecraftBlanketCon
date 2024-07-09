@@ -8,7 +8,6 @@ import net.deadlydiamond98.items.custom.bomb.BombchuItem;
 import net.deadlydiamond98.items.custom.custombundle.BombBag;
 import net.deadlydiamond98.items.custom.custombundle.CustomBundle;
 import net.deadlydiamond98.items.custom.custombundle.Quiver;
-import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ArrowItem;
@@ -31,20 +30,26 @@ public class PlayerInventoryMixin {
         PlayerEntity player = ((PlayerInventory) (Object) this).player;
         Item item = stack.getItem();
         if (item instanceof ArrowItem) {
-            if (!addItemToBagTrinket(player, stack, Quiver.class, cir)) {
-                addItemToBag(player, stack, Quiver.class, cir);
+            if (addItemToBagTrinket(player, stack, Quiver.class, cir)) {
+                cir.setReturnValue(true);
+                cir.cancel();
+            }
+            else if (addItemToBag(player, stack, Quiver.class, cir)) {
                 cir.setReturnValue(true);
                 cir.cancel();
             }
         }
         else if (item instanceof BombItem || item instanceof BombchuItem) {
-            addItemToBag(player, stack, BombBag.class, cir);
+            if (addItemToBag(player, stack, BombBag.class, cir)) {
+                cir.setReturnValue(true);
+                cir.cancel();
+            }
         }
     }
 
     @Unique
     private <T extends CustomBundle> boolean addItemToBagTrinket(PlayerEntity player, ItemStack itemStack,
-                                                                 Class<T> itemClass, CallbackInfo ci) {
+                                                                 Class<T> itemClass, CallbackInfo cir) {
         TrinketComponent trinket = TrinketsApi.getTrinketComponent(player).get();
         if (trinket.isEquipped(ZeldaItems.Quiver)) {
             for (int i = 0; i < trinket.getEquipped(ZeldaItems.Quiver).size(); i++) {
@@ -59,7 +64,6 @@ public class PlayerInventoryMixin {
                                 player.increaseStat(Stats.PICKED_UP.getOrCreateStat(itemStack.getItem()), added);
                                 player.playSound(SoundEvents.ITEM_BUNDLE_INSERT, 0.8F,
                                         0.8F + player.getWorld().getRandom().nextFloat() * 0.4F);
-                                ci.cancel();
                                 return true;
                             }
                         }
@@ -70,8 +74,9 @@ public class PlayerInventoryMixin {
         return false;
     }
 
-    private <T extends CustomBundle> void addItemToBag(PlayerEntity player, ItemStack itemStack,
-                                                       Class<T> itemClass, CallbackInfo ci) {
+    @Unique
+    private <T extends CustomBundle> boolean addItemToBag(PlayerEntity player, ItemStack itemStack,
+                                                          Class<T> itemClass, CallbackInfo cir) {
 
         for (int i = 0; i < player.getInventory().size(); i++) {
             ItemStack stack = player.getInventory().getStack(i);
@@ -85,13 +90,13 @@ public class PlayerInventoryMixin {
                             player.increaseStat(Stats.PICKED_UP.getOrCreateStat(itemStack.getItem()), added);
                             player.playSound(SoundEvents.ITEM_BUNDLE_INSERT, 0.8F,
                                     0.8F + player.getWorld().getRandom().nextFloat() * 0.4F);
-                            ci.cancel();
-                            break;
+                            return true;
                         }
                     }
                 }
             }
         }
+        return false;
     }
 
 }

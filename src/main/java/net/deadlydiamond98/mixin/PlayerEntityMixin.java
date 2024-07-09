@@ -9,10 +9,25 @@ import net.deadlydiamond98.util.ManaHandler;
 import net.deadlydiamond98.util.ManaPlayerData;
 import net.deadlydiamond98.util.OtherPlayerData;
 import net.minecraft.entity.EntityDimensions;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.EquipmentSlot;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.damage.DamageTypes;
+import net.minecraft.entity.player.ItemCooldownManager;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
+import net.minecraft.stat.Stat;
+import net.minecraft.stat.Stats;
+import net.minecraft.text.Text;
+import net.minecraft.util.Hand;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -22,10 +37,23 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(PlayerEntity.class)
-public abstract class PlayerEntityMixin implements OtherPlayerData, ManaPlayerData {
+public abstract class PlayerEntityMixin extends LivingEntity implements OtherPlayerData, ManaPlayerData {
+
+    @Unique
+    private final PlayerEntity user = ((PlayerEntity)(Object)this);
+
+    protected PlayerEntityMixin(EntityType<? extends LivingEntity> entityType, World world) {
+        super(entityType, world);
+    }
 
     @Shadow public abstract void tick();
 
+    @Shadow public abstract void incrementStat(Stat<?> stat);
+
+    @Shadow public abstract ItemCooldownManager getItemCooldownManager();
+
+    @Unique
+    private DamageSource shieldSource;
     @Unique
     private boolean arrowRemoved;
     @Unique
@@ -49,11 +77,11 @@ public abstract class PlayerEntityMixin implements OtherPlayerData, ManaPlayerDa
         this.transitionFairy = false;
         this.fairyfriend = false;
         this.fairyControl = false;
+        this.shieldSource = null;
     }
 
     @Inject(method = "tick", at = @At("HEAD"))
     public void tick(CallbackInfo ci) {
-        PlayerEntity user = ((PlayerEntity)(Object)this);
 
         if ((!this.isFairy() && this.transitionFairy) || (this.isFairy() && (user.isSubmergedInWater() || user.isOnFire()))) {
             this.removeFairyEffect(user);
@@ -131,6 +159,53 @@ public abstract class PlayerEntityMixin implements OtherPlayerData, ManaPlayerDa
     private void getCustomEyeHeight(CallbackInfoReturnable<Float> cir) {
         if (this.isFairy()) {
             cir.setReturnValue(0.35F);
+        }
+    }
+
+    @Inject(method = "damage", at = @At("HEAD"))
+    private void test(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
+        this.shieldSource = source;
+    }
+
+    @Inject(method = "damageShield", at = @At("HEAD"))
+    private void shieldDurability(float amount, CallbackInfo ci) {
+        if (this.activeItemStack.isOf(ZeldaItems.Hylain_Shield) && this.shieldSource != null
+                && !this.shieldSource.isOf(DamageTypes.EXPLOSION)) {
+            damageShieldItem(amount);
+        }
+        else if (this.activeItemStack.isOf(ZeldaItems.Mirror_Shield)) {
+            damageShieldItem(amount);
+        }
+    }
+
+    @Inject(method = "disableShield", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/PlayerEntity;clearActiveItem()V"))
+    private void shieldDurability(boolean sprinting, CallbackInfo ci) {
+        this.getItemCooldownManager().set(ZeldaItems.Hylain_Shield, 100);
+        this.getItemCooldownManager().set(ZeldaItems.Mirror_Shield, 100);
+
+    }
+
+    private void damageShieldItem(float amount) {
+        if (!this.getWorld().isClient) {
+            this.incrementStat(Stats.USED.getOrCreateStat(this.activeItemStack.getItem()));
+        }
+
+        if (amount >= 3.0F) {
+            int i = 1 + MathHelper.floor(amount);
+            Hand hand = this.getActiveHand();
+            this.activeItemStack.damage(i, this, (player) -> {
+                player.sendToolBreakStatus(hand);
+            });
+            if (this.activeItemStack.isEmpty()) {
+                if (hand == Hand.MAIN_HAND) {
+                    this.equipStack(EquipmentSlot.MAINHAND, ItemStack.EMPTY);
+                } else {
+                    this.equipStack(EquipmentSlot.OFFHAND, ItemStack.EMPTY);
+                }
+
+                this.activeItemStack = ItemStack.EMPTY;
+                this.playSound(SoundEvents.ITEM_SHIELD_BREAK, 0.8F, 0.8F + this.getWorld().random.nextFloat() * 0.4F);
+            }
         }
     }
 

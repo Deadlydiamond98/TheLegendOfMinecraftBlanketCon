@@ -24,17 +24,15 @@ import net.deadlydiamond98.items.custom.manaItems.restoring.StarFragment;
 import net.deadlydiamond98.items.custom.manaItems.wearable.FairyBell;
 import net.deadlydiamond98.items.custom.manaItems.wearable.FairyPendant;
 import net.deadlydiamond98.items.custom.manaItems.wearable.PegasusBoots;
+import net.deadlydiamond98.items.custom.shields.HylianShieldItem;
 import net.deadlydiamond98.sounds.ZeldaSounds;
 import net.deadlydiamond98.util.ZeldaTags;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroupEntries;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
-import net.fabricmc.fabric.api.tag.convention.v1.ConventionalItemTags;
 import net.minecraft.item.*;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
-import net.minecraft.registry.entry.RegistryEntry;
-import net.minecraft.registry.entry.RegistryEntryList;
 import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Identifier;
@@ -42,7 +40,6 @@ import net.minecraft.util.Rarity;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class ZeldaItems {
 
@@ -104,7 +101,7 @@ public class ZeldaItems {
             new FabricItemSettings().maxCount(1)));
 
     //Shields
-    public static final Item Hylain_Shield = registerItem("hylian_shield", new ShieldItem(
+    public static final Item Hylain_Shield = registerItem("hylian_shield", new HylianShieldItem(
             new FabricItemSettings().maxDamage(663)));
     public static final Item Mirror_Shield = registerItem("mirror_shield", new ShieldItem(
             new FabricItemSettings().maxDamage(663)));
