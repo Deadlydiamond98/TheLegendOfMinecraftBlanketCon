@@ -97,13 +97,12 @@ public class MasterSwordBeamEntity extends ProjectileEntity {
 
     private static float[] pickColor(int hexCode) {
 
-        String hex;
-        switch (hexCode) {
-            case 0: hex = "#aeffff"; break;
-            case 1: hex = "#30f2f2"; break;
-            case 2: hex = "#18c2ff"; break;
-            default: hex = "#004ecc"; break;
-        }
+        String hex = switch (hexCode) {
+            case 0 -> "#aeffff";
+            case 1 -> "#30f2f2";
+            case 2 -> "#18c2ff";
+            default -> "#004ecc";
+        };
 
         //way too dumb to figure out this, thank you internet! Probably an easier way but I'm too sleep-deprived to care
         int color = Integer.parseInt(hex.startsWith("#") ? hex.substring(1) : hex, 16);

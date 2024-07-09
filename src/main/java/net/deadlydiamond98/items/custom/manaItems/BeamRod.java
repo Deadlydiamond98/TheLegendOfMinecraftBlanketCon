@@ -47,7 +47,7 @@ public class BeamRod extends Item implements MagicItem {
         if (ManaHandler.CanRemoveManaFromPlayer(user, 10)) {
             Vec3d vec3d = user.getRotationVec(1.0F);
             BeamEntity beam = new BeamEntity(world, user.getX(), user.getEyeY(), user.getZ(),
-                    vec3d.x * 1, vec3d.y * 1, vec3d.z * 1, user);
+                    vec3d.x * 1, vec3d.y * 1, vec3d.z * 1, user, new Vec3d(user.getX(), user.getEyeY(), user.getZ()), true, 5);
             world.spawnEntity(beam);
 
             ManaHandler.removeManaFromPlayer(user, 10);

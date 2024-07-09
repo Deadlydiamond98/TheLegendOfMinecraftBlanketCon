@@ -1,8 +1,10 @@
 package net.deadlydiamond98.entities.projectiles;
 
+import net.deadlydiamond98.ZeldaCraft;
 import net.deadlydiamond98.entities.ZeldaEntities;
 import net.deadlydiamond98.entities.monsters.FairyEntity;
 import net.deadlydiamond98.networking.ZeldaServerPackets;
+import net.deadlydiamond98.particle.ZeldaParticles;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.entity.BlockEntity;
@@ -33,41 +35,26 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BeamEntity extends ProjectileEntity {
+    private boolean isLeader;
+    private int beams;
 
-    private static final TrackedData<Vector3f> initialPos;
-    private final List<Vec3d> startPos = new ArrayList<>();
-    private int deathTimer;
-    private boolean slatedForRemoval;
+    private Vec3d startPos;
     public BeamEntity(EntityType<BeamEntity> entityType, World world) {
         super(entityType, world);
     }
 
-    public BeamEntity(World world, double x, double y, double z, double vx, double vy, double vz, Entity user) {
+    public BeamEntity(World world, double x, double y, double z, double vx, double vy, double vz, Entity user, Vec3d startPos, boolean leader, int beams) {
         this(ZeldaEntities.Beam_Entity, world);
         this.setVelocity(vx, vy, vz);
         this.setPos(x, y, z);
         this.setOwner(user);
-        this.startPos.add(this.getPos());
-        setInitPos(startPos.get(0).toVector3f());
-        this.slatedForRemoval = false;
-        this.deathTimer = 0;
+        this.startPos = startPos;
+        this.isLeader = leader;
+        this.beams = beams;
     }
 
     @Override
     protected void initDataTracker() {
-        this.dataTracker.startTracking(initialPos, this.getPos().toVector3f());
-    }
-
-    static {
-        initialPos = DataTracker.registerData(BeamEntity.class, TrackedDataHandlerRegistry.VECTOR3F);
-    }
-
-    public Vector3f getInitPos() {
-        return this.dataTracker.get(initialPos);
-    }
-
-    public void setInitPos(Vector3f vec3f) {
-        this.dataTracker.set(initialPos, vec3f);
     }
 
     @Override
@@ -103,6 +90,8 @@ public class BeamEntity extends ProjectileEntity {
     public void tick() {
         super.tick();
 
+        Vec3d vec3d = this.getVelocity();
+
         if (!this.getWorld().isClient()) {
 
             if (this.getOwner() != null) {
@@ -114,30 +103,22 @@ public class BeamEntity extends ProjectileEntity {
 
                 this.checkBlockCollision();
 
-                if (!this.slatedForRemoval) {
-                    if (this.startPos.size() != 0) {
-                        this.startPos.add(this.getPos().lerp(this.startPos.get(0), 0.1));
-                    }
-                    else {
-                        this.startPos.add(this.getPos());
-                    }
-                }
-
-                if ((this.startPos.size() > 5 || this.slatedForRemoval) && this.startPos.size() > 1) {
-                    this.startPos.remove(0);
-                    this.setInitPos(this.startPos.get(0).toVector3f());
+                if (this.age == 1 && this.beams > 0) {
+                    this.getWorld().spawnEntity(new BeamEntity(this.getWorld(), this.startPos.getX(), this.startPos.getY(), this.startPos.getZ(),
+                            vec3d.x * 1, vec3d.y * 1, vec3d.z * 1, this.getOwner(), this.startPos, false, this.beams - 1));
                 }
             }
             else {
                 this.discard();
             }
         }
-
-        if (this.slatedForRemoval) {
-            this.deathTimer++;
+        else {
+            this.updateTrackedPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.getYaw(), this.getPitch(), 20, true);
+            if (this.age % 2 == 0 && this.isLeader) {
+                this.getWorld().addParticle(ZeldaParticles.Beam_Particle, this.getX(), this.getY(), this.getZ(), 0, 0, 0);
+            }
         }
 
-        Vec3d vec3d = this.getVelocity();
         double d = this.getX() + vec3d.x;
         double e = this.getY() + vec3d.y;
         double f = this.getZ() + vec3d.z;
@@ -149,6 +130,26 @@ public class BeamEntity extends ProjectileEntity {
         if (this.age >= 60) {
             this.discard();
         }
+
+        float[] rgb = pickColor(random.nextBetween(0, 2));
+        DustParticleEffect dustParticleEffect = new DustParticleEffect(new Vec3d(rgb[0], rgb[1], rgb[2]).toVector3f(), 1.0f);
+        this.getWorld().addParticle(dustParticleEffect, this.getX(), this.getY(), this.getZ(), 0, 0 , 0);
+    }
+
+    private static float[] pickColor(int hexCode) {
+
+        String hex = switch (hexCode) {
+            case 0 -> "#fd2d3c";
+            case 1 -> "#fb802e";
+            default -> "#ffad29";
+        };
+
+        //way too dumb to figure out this, thank you internet! Probably an easier way but I'm too sleep-deprived to care
+        int color = Integer.parseInt(hex.startsWith("#") ? hex.substring(1) : hex, 16);
+        float red = ((color >> 16) & 0xFF) / 255.0f;
+        float green = ((color >> 8) & 0xFF) / 255.0f;
+        float blue = (color & 0xFF) / 255.0f;
+        return new float[]{red, green, blue};
     }
 
     @Override
@@ -165,14 +166,5 @@ public class BeamEntity extends ProjectileEntity {
         }
         super.handleStatus(status);
 
-    }
-
-    @Override
-    public void remove(RemovalReason reason) {
-        if (reason != RemovalReason.DISCARDED || this.startPos.size() <= 1 || this.deathTimer > 10) {
-            super.remove(reason);
-        }
-        this.slatedForRemoval = true;
-        this.setVelocity(this.getVelocity().multiply(0.1));
     }
 }
