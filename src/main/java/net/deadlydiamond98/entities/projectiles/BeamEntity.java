@@ -1,6 +1,7 @@
 package net.deadlydiamond98.entities.projectiles;
 
 import net.deadlydiamond98.ZeldaCraft;
+import net.deadlydiamond98.entities.PlayerFairyCompanion;
 import net.deadlydiamond98.entities.ZeldaEntities;
 import net.deadlydiamond98.entities.monsters.FairyEntity;
 import net.deadlydiamond98.networking.ZeldaServerPackets;
@@ -35,10 +36,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BeamEntity extends ProjectileEntity {
-    private boolean isLeader;
+    private static final TrackedData<Boolean> isLeader;
     private int beams;
 
     private Vec3d startPos;
+
+
+    @Override
+    protected void initDataTracker() {
+        this.dataTracker.startTracking(isLeader, false);
+    }
+    static {
+        isLeader = DataTracker.registerData(BeamEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+    }
     public BeamEntity(EntityType<BeamEntity> entityType, World world) {
         super(entityType, world);
     }
@@ -49,12 +59,16 @@ public class BeamEntity extends ProjectileEntity {
         this.setPos(x, y, z);
         this.setOwner(user);
         this.startPos = startPos;
-        this.isLeader = leader;
+        this.hasLeader(leader);
         this.beams = beams;
     }
 
-    @Override
-    protected void initDataTracker() {
+    public Boolean getLeader() {
+        return this.dataTracker.get(isLeader);
+    }
+
+    private void hasLeader(Boolean leader) {
+        this.dataTracker.set(isLeader, leader);
     }
 
     @Override
@@ -114,7 +128,7 @@ public class BeamEntity extends ProjectileEntity {
         }
         else {
             this.updateTrackedPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.getYaw(), this.getPitch(), 20, true);
-            if (this.age % 2 == 0 && this.isLeader) {
+            if (this.age % 2 == 0 && this.getLeader()) {
                 this.getWorld().addParticle(ZeldaParticles.Beam_Particle, this.getX(), this.getY(), this.getZ(), 0, 0, 0);
             }
         }

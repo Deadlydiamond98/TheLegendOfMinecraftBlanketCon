@@ -3,6 +3,7 @@ package net.deadlydiamond98.entities.monsters;
 import net.deadlydiamond98.ZeldaCraft;
 import net.deadlydiamond98.blocks.ZeldaBlocks;
 import net.deadlydiamond98.entities.projectiles.BaseBallEntity;
+import net.deadlydiamond98.entities.projectiles.BeamEntity;
 import net.deadlydiamond98.util.RaycastUtil;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -78,7 +79,7 @@ public class BeamosEntity extends HostileEntity implements Monster {
     @Override
     protected void initGoals() {
         super.initGoals();
-        this.goalSelector.add(7, new LookAtTargetGoal(this));
+        this.goalSelector.add(7, new ShootBeam(this));
         this.goalSelector.add(8, new SpinGoal(this));
         this.targetSelector.add(2, new TargetGoal<>(this, PlayerEntity.class));
     }
@@ -197,18 +198,27 @@ public class BeamosEntity extends HostileEntity implements Monster {
         return true;
     }
 
-    static class LookAtTargetGoal extends Goal {
+    static class ShootBeam extends Goal {
         private final BeamosEntity beamos;
-
-        public LookAtTargetGoal(BeamosEntity beamos) {
+        private final int finalBeamTime = 25;
+        private int beamtime;
+        public ShootBeam(BeamosEntity beamos) {
             this.beamos = beamos;
             this.setControls(EnumSet.of(Control.LOOK));
+            this.beamtime = 0;
         }
 
         public boolean canStart() {
             return this.beamos.getTarget() != null &&
                     this.beamos.getTarget().squaredDistanceTo(this.beamos) < 4096.0 &&
-                    this.beamos.inFront(this.beamos.getTarget(), 60);
+                    this.beamos.inFront(this.beamos.getTarget(), 50) && this.beamtime <= this.finalBeamTime;
+        }
+
+        @Override
+        public boolean canStop() {
+            return !(this.beamos.getTarget() != null &&
+                    this.beamos.getTarget().squaredDistanceTo(this.beamos) < 4096.0 &&
+                    this.beamos.inFront(this.beamos.getTarget(), 50)) || this.beamtime >= this.finalBeamTime;
         }
 
         @Override
@@ -220,6 +230,7 @@ public class BeamosEntity extends HostileEntity implements Monster {
         @Override
         public void stop() {
             this.beamos.canSeeTarget = false;
+            this.beamtime = 0;
             super.stop();
         }
 
@@ -229,20 +240,18 @@ public class BeamosEntity extends HostileEntity implements Monster {
 
         public void tick() {
             if (this.beamos.getTarget() != null) {
-                LivingEntity livingEntity = this.beamos.getTarget();
-                this.beamos.setBeamTarget(livingEntity.getId());
-                double d = 64.0;
-                if (livingEntity.squaredDistanceTo(this.beamos) < 4096.0) {
-                    double e = livingEntity.getX() - this.beamos.getX();
-                    double f = livingEntity.getZ() - this.beamos.getZ();
-                    this.beamos.setYaw(-((float)MathHelper.atan2(e, f)) * 57.295776F);
-                    this.beamos.bodyYaw = this.beamos.getYaw();
+                if (this.beamtime == 15) {
+                    Vec3d vec3d = this.beamos.getRotationVec(1.0F);
+                    BeamEntity beam = new BeamEntity(this.beamos.getWorld(), this.beamos.getX(), this.beamos.getY() + 0.6, this.beamos.getZ(),
+                            vec3d.x * 1, vec3d.y * 1, vec3d.z * 1, this.beamos,
+                            new Vec3d(this.beamos.getX(), this.beamos.getY() + 0.6, this.beamos.getZ()), true, 10);
+                    this.beamos.getWorld().spawnEntity(beam);
                 }
-                this.beamos.setYawClient(this.beamos.getYaw());
             }
             else {
                 this.beamos.setBeamTarget(0);
             }
+            this.beamtime++;
         }
     }
     static class SpinGoal extends Goal {
