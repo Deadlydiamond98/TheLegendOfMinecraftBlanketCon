@@ -88,6 +88,11 @@ public class ZeldaBlocks {
                             50, 6.0F)
                     .sounds(BlockSoundGroup.STONE).requiresTool()));
 
+    public static final Block Star_Block = registerBlock("star_block",
+            new Block(FabricBlockSettings.copyOf(Blocks.DIAMOND_BLOCK).strength(
+                            5, 6.0F)
+                    .sounds(BlockSoundGroup.CALCITE).requiresTool()));
+
 
 
 

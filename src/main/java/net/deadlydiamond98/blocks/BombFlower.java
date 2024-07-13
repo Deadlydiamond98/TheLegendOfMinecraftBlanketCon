@@ -138,13 +138,13 @@ public class BombFlower extends PlantBlock {
     @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         if (getAge(state) == 3) {
-            if (!world.isClient) {
-                world.setBlockState(pos, state.with(AGE, 0));
-                dropStack(world, pos, new ItemStack(ZeldaItems.Bomb, 1));
-                world.playSound((PlayerEntity) null, pos, SoundEvents.BLOCK_SWEET_BERRY_BUSH_PICK_BERRIES, SoundCategory.BLOCKS, 1.0F, 0.8F + world.random.nextFloat() * 0.4F);
-                return ActionResult.SUCCESS;
-            }
+            world.setBlockState(pos, state.with(AGE, 0));
+            dropStack(world, pos, new ItemStack(ZeldaItems.Bomb, 1));
+            world.playSound((PlayerEntity) null, pos, SoundEvents.BLOCK_SWEET_BERRY_BUSH_PICK_BERRIES, SoundCategory.BLOCKS, 1.0F, 0.8F + world.random.nextFloat() * 0.4F);
+            return ActionResult.success(world.isClient);
         }
-        return super.onUse(state, world, pos, player, hand, hit);
+        else {
+            return super.onUse(state, world, pos, player, hand, hit);
+        }
     }
 }

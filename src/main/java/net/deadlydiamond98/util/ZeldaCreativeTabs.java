@@ -103,6 +103,8 @@ public class ZeldaCreativeTabs {
                         entry.add(ZeldaBlocks.Reinforced_Brown_Dungeoncite);
                         entry.add(ZeldaBlocks.Brown_Dungeoncite_Pedestal);
                         entry.add(ZeldaBlocks.Brown_Dungeoncite_Pillar);
+                        //Material Blocks
+                        entry.add(ZeldaBlocks.Star_Block);
                     }).build());
 
     public static void registerItemGroups() {
