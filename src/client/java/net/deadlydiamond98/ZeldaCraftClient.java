@@ -1,6 +1,9 @@
 package net.deadlydiamond98;
 
+import com.mojang.brigadier.CommandDispatcher;
+import com.mojang.brigadier.arguments.StringArgumentType;
 import net.deadlydiamond98.blocks.ZeldaBlocks;
+import net.deadlydiamond98.commands.ZeldaClientCommands;
 import net.deadlydiamond98.entities.ZeldaEntities;
 import net.deadlydiamond98.events.ClientTickEvent;
 import net.deadlydiamond98.items.ZeldaItems;
@@ -25,8 +28,12 @@ import net.deadlydiamond98.renderer.entity.MagicFireProjectileRenderer;
 import net.deadlydiamond98.renderer.entity.projectile_items.ZeldaArrowRenderer;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
+import net.fabricmc.fabric.api.client.command.v2.ClientCommandManager;
+import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
+import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
 import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback;
 import net.fabricmc.fabric.api.client.rendering.v1.*;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.color.world.BiomeColors;
 import net.minecraft.client.color.world.GrassColors;
 import net.minecraft.client.item.ModelPredicateProviderRegistry;
@@ -34,11 +41,15 @@ import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.entity.model.BatEntityModel;
 import net.minecraft.item.DyeableItem;
 import net.minecraft.nbt.NbtElement;
+import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 
 import java.util.List;
+
+import static com.mojang.brigadier.builder.LiteralArgumentBuilder.literal;
+import static com.mojang.brigadier.builder.RequiredArgumentBuilder.argument;
 
 public class ZeldaCraftClient implements ClientModInitializer {
 	@Override
@@ -57,6 +68,8 @@ public class ZeldaCraftClient implements ClientModInitializer {
 		registerModelLayers();
 		registerTintables();
 		HudRenderCallback.EVENT.register(new ManaHudOverlay());
+
+		ZeldaClientCommands.register();
 	}
 
 	private void registerModelPredicatees() {

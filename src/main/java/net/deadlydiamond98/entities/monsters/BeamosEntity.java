@@ -52,6 +52,7 @@ public class BeamosEntity extends HostileEntity implements Monster {
     private static final TrackedData<Integer> BEAM_TARGET_ID;
     private static final TrackedData<Float> YAW;
     private boolean canSeeTarget;
+    private int beamWaitTime;
 
     @Nullable
     private LivingEntity cachedBeamTarget;
@@ -71,7 +72,17 @@ public class BeamosEntity extends HostileEntity implements Monster {
         super(entityType, world);
         this.experiencePoints = 5;
         this.canSeeTarget = false;
+        this.beamWaitTime = 0;
     }
+
+    @Override
+    public void tick() {
+        super.tick();
+        if (this.beamWaitTime > 0) {
+            this.beamWaitTime--;
+        }
+    }
+
     @Override
     public float getPathfindingFavor(BlockPos pos, WorldView world) {
         return world.getBlockState(pos).isAir() ? 10.0F : 0.0F;
@@ -211,14 +222,16 @@ public class BeamosEntity extends HostileEntity implements Monster {
         public boolean canStart() {
             return this.beamos.getTarget() != null &&
                     this.beamos.getTarget().squaredDistanceTo(this.beamos) < 4096.0 &&
-                    this.beamos.inFront(this.beamos.getTarget(), 50) && this.beamtime <= this.finalBeamTime;
+                    this.beamos.inFront(this.beamos.getTarget(), 30) && this.beamtime <= this.finalBeamTime
+                    && this.beamos.beamWaitTime == 0;
         }
 
         @Override
         public boolean canStop() {
             return !(this.beamos.getTarget() != null &&
                     this.beamos.getTarget().squaredDistanceTo(this.beamos) < 4096.0 &&
-                    this.beamos.inFront(this.beamos.getTarget(), 50)) || this.beamtime >= this.finalBeamTime;
+                    this.beamos.inFront(this.beamos.getTarget(), 30)) && this.beamtime >= this.finalBeamTime
+                    && this.beamos.beamWaitTime > 0;
         }
 
         @Override
@@ -230,6 +243,7 @@ public class BeamosEntity extends HostileEntity implements Monster {
         @Override
         public void stop() {
             this.beamos.canSeeTarget = false;
+            this.beamos.beamWaitTime = 5;
             this.beamtime = 0;
             super.stop();
         }

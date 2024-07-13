@@ -16,6 +16,5 @@ public class EntityDamagedEvent {
             }
             return ActionResult.PASS;
         });
-
     }
 }
