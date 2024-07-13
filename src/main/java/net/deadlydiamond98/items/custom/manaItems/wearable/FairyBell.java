@@ -32,7 +32,7 @@ public class FairyBell extends TrinketItem {
     public void tick(ItemStack stack, SlotReference slot, LivingEntity entity) {
         super.tick(stack, slot, entity);
         if (entity instanceof PlayerEntity user) {
-            if (ManaHandler.CanAddManaToPlayer(user, 1) && user.age % 20 == 0) {
+            if (ManaHandler.CanAddManaToPlayer(user, 1) && user.age % 40 == 0) {
                 ManaHandler.addManaToPlayer(user, 1);
             }
         }

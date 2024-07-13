@@ -53,6 +53,8 @@ public class ZeldaCreativeTabs {
                         entry.add(ZeldaItems.Magic_Powder);
                         entry.add(ZeldaItems.Clock_Of_Time_Freeze);
                         //Equipment
+                        entry.add(ZeldaItems.Red_Ring);
+                        entry.add(ZeldaItems.Blue_Ring);
                         entry.add(ZeldaItems.Fairy_Pendant);
                         entry.add(ZeldaItems.Fairy_Bell);
                         //Consumables

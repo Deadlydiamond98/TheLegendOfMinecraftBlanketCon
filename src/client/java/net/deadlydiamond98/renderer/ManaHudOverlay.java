@@ -23,6 +23,8 @@ public class ManaHudOverlay implements HudRenderCallback {
     private static final Identifier Filled_Mana = new Identifier(ZeldaCraft.MOD_ID, "textures/gui/mana_full.png");
     private static final Identifier Filled_Mana_Second = new Identifier(ZeldaCraft.MOD_ID, "textures/gui/mana_full_second.png");
     private static final Identifier Empty_Mana = new Identifier(ZeldaCraft.MOD_ID, "textures/gui/mana_empty.png");
+
+
     private static float displayedMana = 0.0f;
     private static boolean transitionMinMax = false;
     private static float currentAlpha = 1.0f;
@@ -90,10 +92,10 @@ public class ManaHudOverlay implements HudRenderCallback {
         }
 
         if (currentMana == maxMana && !transitionMinMax) {
-            colorInterpolator.resetTransition(colorInterpolator.updateAndGetColor(tickDelta), 0xFF00FF5C, currentAlpha, 0.0f, 20.0f);
+            colorInterpolator.resetTransition(colorInterpolator.updateAndGetColor(tickDelta), 0xFF00FF5C, currentAlpha, 0.0f, 40.0f);
             transitionMinMax = true;
         } else if (currentMana != maxMana && transitionMinMax) {
-            colorInterpolator.resetTransition(colorInterpolator.updateAndGetColor(tickDelta), 0xFFFFFFFF, currentAlpha, 1.0f, 20.0f);
+            colorInterpolator.resetTransition(colorInterpolator.updateAndGetColor(tickDelta), 0xFFFFFFFF, currentAlpha, 1.0f, 40.0f);
             transitionMinMax = false;
         }
 

@@ -14,6 +14,7 @@ import net.deadlydiamond98.particle.ZeldaParticleFactory;
 import net.deadlydiamond98.renderer.FairyCompanionRenderer;
 import net.deadlydiamond98.renderer.ManaHudOverlay;
 import net.deadlydiamond98.renderer.ShootingStarRenderer;
+import net.deadlydiamond98.renderer.armor.ZeldaEquipmentRedererRegistry;
 import net.deadlydiamond98.renderer.entity.*;
 import net.deadlydiamond98.renderer.entity.bombs.BombEntityRenderer;
 import net.deadlydiamond98.renderer.entity.bombs.BombchuEntityRenderer;
@@ -38,7 +39,9 @@ import net.minecraft.client.color.world.BiomeColors;
 import net.minecraft.client.color.world.GrassColors;
 import net.minecraft.client.item.ModelPredicateProviderRegistry;
 import net.minecraft.client.render.RenderLayer;
+import net.minecraft.client.render.entity.PlayerEntityRenderer;
 import net.minecraft.client.render.entity.model.BatEntityModel;
+import net.minecraft.entity.EntityType;
 import net.minecraft.item.DyeableItem;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.text.MutableText;
@@ -70,6 +73,7 @@ public class ZeldaCraftClient implements ClientModInitializer {
 		HudRenderCallback.EVENT.register(new ManaHudOverlay());
 
 		ZeldaClientCommands.register();
+//		ZeldaEquipmentRedererRegistry.register();
 	}
 
 	private void registerModelPredicatees() {

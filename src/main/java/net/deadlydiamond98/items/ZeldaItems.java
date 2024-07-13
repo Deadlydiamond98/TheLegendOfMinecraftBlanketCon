@@ -21,9 +21,7 @@ import net.deadlydiamond98.items.custom.manaItems.restoring.MagicCandy;
 import net.deadlydiamond98.items.custom.manaItems.restoring.MagicFood;
 import net.deadlydiamond98.items.custom.manaItems.restoring.MagicJar;
 import net.deadlydiamond98.items.custom.manaItems.restoring.StarFragment;
-import net.deadlydiamond98.items.custom.manaItems.wearable.FairyBell;
-import net.deadlydiamond98.items.custom.manaItems.wearable.FairyPendant;
-import net.deadlydiamond98.items.custom.manaItems.wearable.PegasusBoots;
+import net.deadlydiamond98.items.custom.manaItems.wearable.*;
 import net.deadlydiamond98.items.custom.shields.HylianShieldItem;
 import net.deadlydiamond98.sounds.ZeldaSounds;
 import net.deadlydiamond98.util.ZeldaTags;
@@ -99,6 +97,10 @@ public class ZeldaItems {
             new FabricItemSettings().maxCount(1)));
     public static final Item Fairy_Bell = registerItem("fairy_bell", new FairyBell(
             new FabricItemSettings().maxCount(1)));
+    public static final Item Red_Ring = registerItem("red_ring", new DefensiveRing(
+            new FabricItemSettings().maxCount(1), 0.05));
+    public static final Item Blue_Ring = registerItem("blue_ring", new DefensiveRing(
+            new FabricItemSettings().maxCount(1), 0.15));
 
     //Shields
     public static final Item Hylain_Shield = registerItem("hylian_shield", new HylianShieldItem(

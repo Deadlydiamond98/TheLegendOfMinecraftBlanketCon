@@ -9,10 +9,13 @@
     },
     {
       "item": "minecraft:brown_mushroom"
+    },
+    {
+      "item": "minecraft:rabbit_hide"
     }
   ],
   "result": {
     "item": "zeldacraft:magic_powder",
-    "count": 3
+    "count": 4
   }
 }
