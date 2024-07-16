@@ -18,6 +18,7 @@ public class ZeldaClientCommands {
 
     }
 
+    // this is just a debug command for testing the zelda font
     private static void fontDebugCommand() {
         ClientCommandRegistrationCallback.EVENT.register((dispatcher, registryAccess) -> {
             dispatcher.register(ClientCommandManager.literal("zeldafont")

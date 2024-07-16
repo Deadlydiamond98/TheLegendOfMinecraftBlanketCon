@@ -35,10 +35,11 @@ public class ManaHudOverlay implements HudRenderCallback {
         TextRenderer textRenderer = client.textRenderer;
 
 
-
+        // if not in survival or adventure, don't render the magic bar
         if (client.player == null || client.interactionManager.getCurrentGameMode() == GameMode.CREATIVE ||
                 client.interactionManager.getCurrentGameMode() == GameMode.SPECTATOR) {
             return;
+            // note to self, add config to disable bar too
         }
 
         matrices.push();
@@ -51,15 +52,18 @@ public class ManaHudOverlay implements HudRenderCallback {
         int mana_x = (width / 2) + 100;
         int mana_y = height - 45;
 
+        // render the empty texture
         RenderSystem.setShader(GameRenderer::getPositionTexProgram);
         RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
         RenderSystem.setShaderTexture(0, Empty_Mana);
         drawContext.drawTexture(Empty_Mana, mana_x, mana_y, 0, 0, 16, 42, 16, 42);
 
+        // get values for determining where the level will be at
         ManaPlayerData userM = ((ManaPlayerData) client.player);
         int currentMana = userM.getMana();
         int maxMana = userM.getMaxMana();
 
+        // lerp so it has a nice smooth looking transition
         displayedMana = MathHelper.lerp(tickDelta * 0.25f, displayedMana, currentMana);
         int filledHeight = (int) ((displayedMana / (float) maxMana) * 33);
 
@@ -67,12 +71,15 @@ public class ManaHudOverlay implements HudRenderCallback {
         RenderSystem.enableBlend();
         RenderSystem.defaultBlendFunc();
 
+        // update alpha when at max
         currentAlpha = colorInterpolator.updateAndGetAlpha(tickDelta);
 
+        // reg mana bar
         RenderSystem.setShaderTexture(0, Filled_Mana);
         RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, currentAlpha);
         drawContext.drawTexture(Filled_Mana, mana_x + 4, mana_y + 4 + (33 - filledHeight), 0, 33 - filledHeight, 8, filledHeight, 8, 33);
 
+        // max mana bar
         RenderSystem.setShaderTexture(0, Filled_Mana_Second);
         RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f - currentAlpha);
         drawContext.drawTexture(Filled_Mana_Second, mana_x + 4, mana_y + 4 + (33 - filledHeight), 0, 33 - filledHeight, 8, filledHeight, 8, 33);
@@ -84,6 +91,7 @@ public class ManaHudOverlay implements HudRenderCallback {
 
         String displayZeros = "";
 
+        // zeros to display so numbers are always 3 digits
         if (Math.round(displayedMana) < 10) {
             displayZeros = "00";
         } else if (Math.round(displayedMana) < 100) {
@@ -91,6 +99,7 @@ public class ManaHudOverlay implements HudRenderCallback {
 
         }
 
+        // enable transitions if max / not max
         if (currentMana == maxMana && !transitionMinMax) {
             colorInterpolator.resetTransition(colorInterpolator.updateAndGetColor(tickDelta), 0xFF00FF5C, currentAlpha, 0.0f, 40.0f);
             transitionMinMax = true;
@@ -99,11 +108,13 @@ public class ManaHudOverlay implements HudRenderCallback {
             transitionMinMax = false;
         }
 
+        // number text
         Text filledAmountText =
                 Text.literal(displayZeros + Math.round(displayedMana) + " / " + maxMana).setStyle(Style.EMPTY.withFont(ZeldaCraft.ZELDA_FONT));
         matrices.translate(mana_x + 16, mana_y + 35, 0);
         matrices.scale(0.75f, 0.75f, 0.75f);
 
+        // change color of text
         int currentColor = colorInterpolator.updateAndGetColor(tickDelta);
 
         drawContext.drawText(textRenderer, filledAmountText, 0, 0, currentColor, false);

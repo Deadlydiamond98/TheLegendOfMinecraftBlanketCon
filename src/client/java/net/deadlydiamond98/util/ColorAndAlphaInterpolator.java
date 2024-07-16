@@ -3,6 +3,9 @@ package net.deadlydiamond98.util;
 import net.minecraft.util.math.MathHelper;
 
 public class ColorAndAlphaInterpolator {
+
+    // used for smoothly transitioning colors and textures (via alpha) for the Magic bar
+
     private int startColor;
     private int endColor;
     private float startAlpha;
@@ -19,6 +22,7 @@ public class ColorAndAlphaInterpolator {
         this.elapsedTime = 0;
     }
 
+    // return the color over time with lerping, my beloved
     public int updateAndGetColor(float deltaTime) {
 
         elapsedTime += deltaTime;
@@ -28,13 +32,16 @@ public class ColorAndAlphaInterpolator {
         return lerpColor(startColor, endColor, t);
     }
 
+    // same thing, but instead alpha
     public float updateAndGetAlpha(float deltaTime) {
         elapsedTime += deltaTime;
 
         float t = MathHelper.clamp(elapsedTime / transitionTime, 0, 1);
 
-        return (float) MathHelper.lerp(t, startAlpha, endAlpha);
+        return MathHelper.lerp(t, startAlpha, endAlpha);
     }
+
+    // Lerp the color, since it's not a number, but rather a hex code, this is how it's done
     private int lerpColor(int startColor, int endColor, float t) {
         int startA = (startColor >> 24) & 0xFF;
         int startR = (startColor >> 16) & 0xFF;
@@ -54,6 +61,7 @@ public class ColorAndAlphaInterpolator {
         return (a << 24) | (r << 16) | (g << 8) | b;
     }
 
+    // restart the transition and used variables for reuse
     public void resetTransition(int startColor, int endColor, float startAlpha, float endAlpha, float transitionTime) {
         this.startColor = startColor;
         this.endColor = endColor;

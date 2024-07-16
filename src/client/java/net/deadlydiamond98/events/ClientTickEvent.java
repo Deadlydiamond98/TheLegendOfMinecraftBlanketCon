@@ -30,9 +30,13 @@ public class ClientTickEvent {
     public static KeyBinding trinketBack;
     public static void endTickEvent() {
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
+            // This checks for left clicks/attacking
             if (client.options.attackKey.isPressed()) {
-                ZeldaClientPackets.sendSwordBeamPacket();
+                ZeldaClientPackets.sendSwordBeamPacket(); // Magic/Master sword functionality
 
+                // Loot grass cutting is handled here, as checkign for block breaking w/out fully breaking
+                // the block isn't fully possible, check on start breakign works, but doesn't work 100%
+                // when holding break
                 if (client.crosshairTarget != null && client.crosshairTarget.getType() == HitResult.Type.BLOCK) {
                     if (client.world.getBlockState((((BlockHitResult) client.crosshairTarget).getBlockPos())).isOf(ZeldaBlocks.Loot_Grass)) {
                         ZeldaClientPackets.sendSmashLootGrassPacket(((BlockHitResult) client.crosshairTarget).getBlockPos());

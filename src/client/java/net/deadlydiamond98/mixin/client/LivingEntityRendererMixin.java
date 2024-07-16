@@ -27,6 +27,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(LivingEntityRenderer.class)
 public abstract class LivingEntityRendererMixin<T extends LivingEntity, M extends EntityModel<T>> {
 
+	// this mixin adds the stunned overlay to living entities, changing the stun overlay texture and turning it on
+	// and on is handled in the stun overlay class
+
 	@Shadow
 	protected abstract boolean addFeature(FeatureRenderer<T, M> feature);
 	@Inject(method = "<init>", at = @At("TAIL"))

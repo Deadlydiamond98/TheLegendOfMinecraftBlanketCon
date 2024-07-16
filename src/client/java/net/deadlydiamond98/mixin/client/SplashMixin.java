@@ -20,6 +20,8 @@ import java.util.List;
 @Mixin(SplashTextResourceSupplier.class)
 public abstract class SplashMixin {
 
+    // this mixin just adds new splash screen texts for fun
+
     @Shadow @Final private List<String> splashTexts;
 
     @Unique
@@ -38,7 +40,7 @@ public abstract class SplashMixin {
             "");
 
 
-    @Inject(method = "apply(Ljava/util/List;Lnet/minecraft/resource/ResourceManager;Lnet/minecraft/util/profiler/Profiler;)V", at = @At("TAIL"))
+    @Inject(method = "apply", at = @At("TAIL"))
     private void apply(List<String> list, ResourceManager resourceManager, Profiler profiler, CallbackInfo ci) {
         this.splashTexts.addAll(newSplashText);
     }
