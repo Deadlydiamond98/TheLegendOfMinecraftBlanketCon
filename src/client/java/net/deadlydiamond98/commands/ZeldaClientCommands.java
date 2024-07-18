@@ -8,30 +8,32 @@ import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallba
 import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.command.CommandRegistryAccess;
+import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 
 public class ZeldaClientCommands {
 
     public static void register() {
-        fontDebugCommand();
+        ClientCommandRegistrationCallback.EVENT.register((dispatcher, registryAccess) -> {
+            fontDebugCommand(dispatcher, registryAccess);
+        });
 
     }
 
     // this is just a debug command for testing the zelda font
-    private static void fontDebugCommand() {
-        ClientCommandRegistrationCallback.EVENT.register((dispatcher, registryAccess) -> {
-            dispatcher.register(ClientCommandManager.literal("zeldafont")
-                    .then(ClientCommandManager.argument("message", StringArgumentType.greedyString())
-                            .executes(context -> {
-                                String message = StringArgumentType.getString(context, "message");
+    private static void fontDebugCommand(CommandDispatcher<FabricClientCommandSource> dispatcher,
+                                         CommandRegistryAccess registryAccess) {
+        dispatcher.register(ClientCommandManager.literal("zeldafont")
+                .then(ClientCommandManager.argument("message", StringArgumentType.greedyString())
+                        .executes(context -> {
+                            String message = StringArgumentType.getString(context, "message");
 
-                                MutableText text = Text.literal(message).styled(style -> style.withFont(ZeldaCraft.ZELDA_FONT));
+                            MutableText text = Text.literal(message).styled(style -> style.withFont(ZeldaCraft.ZELDA_FONT));
 
-                                MinecraftClient.getInstance().player.sendMessage(text, false);
-                                return 1;
-                            }))
-            );
-        });
+                            MinecraftClient.getInstance().player.sendMessage(text, false);
+                            return 1;
+                        }))
+        );
     }
 }

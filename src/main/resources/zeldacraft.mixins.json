@@ -11,7 +11,8 @@
     "MobEntityMixin",
     "PlayerEntityMixin",
     "PlayerInventoryMixin",
-    "RangedWeaponMixin"
+    "RangedWeaponMixin",
+    "WeatherCommandMixin"
   ],
   "injectors": {
     "defaultRequire": 1

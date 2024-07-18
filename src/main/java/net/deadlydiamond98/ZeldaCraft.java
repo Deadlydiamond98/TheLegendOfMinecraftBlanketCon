@@ -2,6 +2,7 @@ package net.deadlydiamond98;
 
 import net.deadlydiamond98.blocks.ZeldaBlocks;
 import net.deadlydiamond98.blocks.entities.ZeldaBlockEntities;
+import net.deadlydiamond98.commands.ZeldaServerCommands;
 import net.deadlydiamond98.enchantments.ZeldaEnchantments;
 import net.deadlydiamond98.entities.monsters.BeamosEntity;
 import net.deadlydiamond98.entities.monsters.BubbleEntity;
@@ -58,6 +59,7 @@ public class ZeldaCraft implements ModInitializer {
 		ZeldaServerLifecycleEvents.register();
 //		AttackBlockEvent.register();
 
+		ZeldaServerCommands.register();
 
 		ZeldaFeatures.register();
 		ZeldaCreativeTabs.registerItemGroups();

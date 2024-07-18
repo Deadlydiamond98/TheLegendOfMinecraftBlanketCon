@@ -14,23 +14,23 @@ import static com.mojang.brigadier.builder.LiteralArgumentBuilder.literal;
 public class ZeldaServerCommands {
     public static void register() {
         CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> {
-            //weatherCommand(dispatcher, registryAccess, environment);
+            weatherCommand(dispatcher, registryAccess, environment);
         });
     }
-
-    // this is just a debug command for testing the zelda font
-//    private static void weatherCommand(CommandDispatcher<ServerCommandSource> dispatcher,
-//                                       CommandRegistryAccess registryAccess,
-//                                       CommandManager.RegistrationEnvironment environment) {
-//        dispatcher.register(literal("weather")
-//                .then(literal("meteor_shower")
-//                        .executes(context -> {
-//                            ServerCommandSource source = (ServerCommandSource) context.getSource();
-//                            source.sendFeedback(() -> Text.literal("Setting weather to Mystic Fog...").formatted(Formatting.AQUA), true);
-//                            ZeldaSeverTickEvent.meteorShower.start(source.getWorld());
-//                            return 1;
-//                        })
-//                )
-//        );
-//    }
+    private static void weatherCommand(CommandDispatcher<ServerCommandSource> dispatcher,
+                                       CommandRegistryAccess registryAccess,
+                                       CommandManager.RegistrationEnvironment environment) {
+        dispatcher.register(CommandManager.literal("weather")
+                .then(CommandManager.literal("meteor")
+                        .executes(context -> {
+                            ServerCommandSource source = context.getSource();
+                            source.getWorld().setWeather(6000, 0, false, false);
+                            source.sendFeedback(() -> Text.literal("Set the weather to Meteor Shower")
+                                    .formatted(Formatting.AQUA), true);
+                            ZeldaSeverTickEvent.meteorShower.start(source.getWorld());
+                            return 1;
+                        })
+                )
+        );
+    }
 }

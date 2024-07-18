@@ -2,6 +2,7 @@ package net.deadlydiamond98.events.weather;
 
 import net.deadlydiamond98.ZeldaCraft;
 import net.deadlydiamond98.particle.ZeldaParticles;
+import net.deadlydiamond98.util.ManaHandler;
 import net.deadlydiamond98.world.ZeldaWorldDataManager;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.DefaultParticleType;
@@ -27,27 +28,30 @@ public class MeteorShower {
 
     public void updateWeather(ServerWorld world) {
         isMeteorShower = ZeldaWorldDataManager.getMeteorShower(world);
-        if (world.getGameRules().getBoolean(GameRules.DO_WEATHER_CYCLE)) {
-            if (shouldStart(world)) {
-                start(world);
-            } else if (isMeteorShower && shouldStop(world)) {
-                stop(world);
-            }
+        if (shouldStart(world) && world.getGameRules().getBoolean(GameRules.DO_WEATHER_CYCLE)) {
+            start(world);
+        }
+        else if (isMeteorShower && shouldStop(world)) {
+            stop(world, true);
         }
 
         if (isMeteorShowerActive()) {
             world.getPlayers().forEach(player -> {
                 double offsetX = (world.random.nextDouble() - 0.5) * 50;
                 double offsetZ = (world.random.nextDouble() - 0.5) * 50;
-                double spawnY = player.getY() + 25;
+                double spawnY = player.getY() + world.random.nextBetween(10, 25);
 
                 world.spawnParticles(ZeldaParticles.Meteor_Shower_Rain_Particle, player.getX() + offsetX, spawnY, player.getZ() + offsetZ,
                         1, 0, 0, 0, 0.2);
+
+                if (world.getRandom().nextInt(100) >= 95 && ManaHandler.CanAddManaToPlayer(player, 1)) {
+                    ManaHandler.addManaToPlayer(player, 1);
+                }
             });
         }
     }
 
-    private boolean shouldStart(ServerWorld world) {
+    public boolean shouldStart(ServerWorld world) {
         return world.getTimeOfDay() == 13000 && weatherClear(world)
                 && !isMeteorShowerActive() && world.getRandom().nextInt(100) >= 97;
     }
@@ -57,7 +61,7 @@ public class MeteorShower {
     }
 
     private boolean shouldStop(ServerWorld world) {
-        return world.getTimeOfDay() <= 13000 || world.getTimeOfDay() >= 23000;
+        return (world.getTimeOfDay() < 13000 || world.getTimeOfDay() > 23000) || !weatherClear(world);
     }
 
     public void start(ServerWorld world) {
@@ -71,15 +75,17 @@ public class MeteorShower {
         });
     }
 
-    private void stop(ServerWorld world) {
+    public void stop(ServerWorld world, boolean text) {
         isMeteorShower = false;
         ZeldaWorldDataManager.setMeteorShower(world, false);
         starChance = 0.005;
         ZeldaCraft.LOGGER.info("Stopped Meteor Shower");
-        world.getPlayers().forEach(player -> {
-            player.sendMessage(Text.translatable(stopTexts[world.getRandom().nextInt(3)])
-                    .formatted(Formatting.GOLD).formatted(Formatting.BOLD), false);
-        });
+        if (text) {
+            world.getPlayers().forEach(player -> {
+                player.sendMessage(Text.translatable(stopTexts[world.getRandom().nextInt(3)])
+                        .formatted(Formatting.GOLD).formatted(Formatting.BOLD), false);
+            });
+        }
     }
 
     public boolean isMeteorShowerActive() {
@@ -88,21 +94,6 @@ public class MeteorShower {
 
     public double getStarChance() {
         return starChance;
-    }
-
-    public void readNbt(NbtCompound nbt) {
-        isMeteorShower = nbt.getBoolean("isMeteorShowering");
-    }
-
-    public NbtCompound writeNbt(NbtCompound nbt) {
-        nbt.putBoolean("isMeteorShowering", isMeteorShower);
-        return nbt;
-    }
-
-    public static MeteorShower fromNbt(NbtCompound nbt) {
-        MeteorShower data = new MeteorShower();
-        data.readNbt(nbt);
-        return data;
     }
 
 }
