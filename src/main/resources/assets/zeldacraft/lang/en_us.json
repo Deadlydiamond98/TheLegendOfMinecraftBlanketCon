@@ -15,6 +15,13 @@
   "item.zeldacraft.deku_nut": "Deku Nut",
   "item.zeldacraft.dungeon_key": "Key",
 
+  "weather.zeldacraft.meteor_shower.starta": "The stars have started falling",
+  "weather.zeldacraft.meteor_shower.startb": "Magic fills the night skies",
+  "weather.zeldacraft.meteor_shower.startc": "The sky is now falling",
+  "weather.zeldacraft.meteor_shower.stopa": "The meteors have passed",
+  "weather.zeldacraft.meteor_shower.stopb": "The sky grows calm",
+  "weather.zeldacraft.meteor_shower.stopc": "The stars have settled",
+
   "block.zeldacraft.star_block": "Star Block",
   "item.zeldacraft.star_fragment": "Star Fragment",
   "item.zeldacraft.stardust": "Stardust",

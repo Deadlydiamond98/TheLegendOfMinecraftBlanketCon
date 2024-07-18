@@ -10,6 +10,7 @@ import net.deadlydiamond98.entities.monsters.KeeseEntity;
 import net.deadlydiamond98.entities.ZeldaEntities;
 import net.deadlydiamond98.events.AfterRespawnEvent;
 import net.deadlydiamond98.events.EntityDamagedEvent;
+import net.deadlydiamond98.events.ZeldaServerLifecycleEvents;
 import net.deadlydiamond98.events.ZeldaSeverTickEvent;
 import net.deadlydiamond98.items.ZeldaItems;
 import net.deadlydiamond98.networking.ZeldaServerPackets;
@@ -54,6 +55,7 @@ public class ZeldaCraft implements ModInitializer {
 		EntityDamagedEvent.register();
 		AfterRespawnEvent.register();
 		ZeldaSeverTickEvent.registerTickEvent();
+		ZeldaServerLifecycleEvents.register();
 //		AttackBlockEvent.register();
 
 
