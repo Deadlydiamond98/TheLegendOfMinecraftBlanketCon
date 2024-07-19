@@ -36,6 +36,7 @@ public class FairyCompanionRenderer extends EntityRenderer<PlayerFairyCompanion>
 
         if (mobEntity.getVisable()) {
             matrixStack.push();
+            matrixStack.translate(0, Math.sin(mobEntity.age * 0.1) * 0.1, 0);
 
             renderBody(mobEntity, matrixStack, vertexConsumerProvider);
             matrixStack.scale(0.5F, 0.5F, 0.5F);

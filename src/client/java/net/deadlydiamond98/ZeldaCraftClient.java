@@ -37,24 +37,30 @@ import net.fabricmc.fabric.api.client.rendering.v1.*;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.color.world.BiomeColors;
 import net.minecraft.client.color.world.GrassColors;
+import net.minecraft.client.gl.ShaderProgram;
 import net.minecraft.client.item.ModelPredicateProviderRegistry;
 import net.minecraft.client.render.RenderLayer;
+import net.minecraft.client.render.VertexFormat;
+import net.minecraft.client.render.VertexFormats;
 import net.minecraft.client.render.entity.PlayerEntityRenderer;
 import net.minecraft.client.render.entity.model.BatEntityModel;
 import net.minecraft.entity.EntityType;
 import net.minecraft.item.DyeableItem;
 import net.minecraft.nbt.NbtElement;
+import net.minecraft.resource.ResourceFactory;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 
+import java.io.IOException;
 import java.util.List;
 
 import static com.mojang.brigadier.builder.LiteralArgumentBuilder.literal;
 import static com.mojang.brigadier.builder.RequiredArgumentBuilder.argument;
 
 public class ZeldaCraftClient implements ClientModInitializer {
+
 	@Override
 	public void onInitializeClient() {
 

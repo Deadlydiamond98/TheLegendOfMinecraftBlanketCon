@@ -3,20 +3,17 @@ package net.deadlydiamond98.events;
 import net.deadlydiamond98.ZeldaCraft;
 import net.deadlydiamond98.entities.ShootingStar;
 import net.deadlydiamond98.entities.ZeldaEntities;
+import net.deadlydiamond98.events.weather.MeteorShower;
 import net.deadlydiamond98.networking.ZeldaServerPackets;
 import net.deadlydiamond98.statuseffects.StunStatusEffect;
 import net.deadlydiamond98.statuseffects.ZeldaStatusEffects;
 import net.deadlydiamond98.util.OtherPlayerData;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
@@ -24,6 +21,7 @@ import java.util.*;
 
 public class ZeldaSeverTickEvent {
 
+    public static final MeteorShower meteorShower = new MeteorShower();
     private static final Map<UUID, Integer> frozenEntities = new HashMap<>();
     private static final Map<UUID, Vec3d> velocity = new HashMap<>();
 
@@ -33,45 +31,61 @@ public class ZeldaSeverTickEvent {
 
     private static void onEndServerTick() {
         ServerTickEvents.END_SERVER_TICK.register(server -> {
-            for (ServerWorld world : server.getWorlds()) {
-                if (world.getRegistryKey() == World.OVERWORLD) {
-                    if (world.getTimeOfDay() >= 13000 && world.getTimeOfDay() <= 23000) {
-                        world.getPlayers().forEach(player -> {
-                            if (player.getRandom().nextDouble() < 0.005 && ((OtherPlayerData)player).canSpawnStar() && world.getTimeOfDay() % 30 == 0) {
-                                double x = player.getX() + player.getRandom().nextBetween(-50, 50);
-                                double z = player.getZ() + player.getRandom().nextBetween(-50, 50);
-
-                                ShootingStar star = new ShootingStar(ZeldaEntities.Shooting_Star, player.getWorld());
-                                star.setPosition(x, 50, z);
-                                star.setYaw(player.getRandom().nextBetween(0, 360));
-                                star.setGlowing(true);
-                                world.spawnEntity(star);
-                                world.getPlayers().forEach(playerForSound -> {
-                                    double xPos = playerForSound.getX() - star.getX();
-                                    double zPos = playerForSound.getZ() - star.getZ();
-
-                                    if (Math.abs(xPos) < 50 && Math.abs(zPos) < 50) {
-                                        ZeldaServerPackets.sendShootingStarSound(playerForSound);
-                                        ZeldaCraft.LOGGER.info("Star landed at: " + star.getPos());
-                                    }
-                                });
-                                ((OtherPlayerData) player).setTriedStarSpawn(false);
-                            }
-                        });
-                    }
-                    else {
-                        world.getPlayers().forEach(player -> ((OtherPlayerData) player).setTriedStarSpawn(true));
-                    }
-
-                    if (world.getTimeOfDay() == 23000) {
-                        ZeldaCraft.LOGGER.info("A Night has passed");
-                    }
-                }
-            }
-
-
+            shootingStarsAtNight(server);
+            meteorShowerEvent(server);
             timeBoxSlowing(server);
         });
+    }
+
+    private static void meteorShowerEvent(MinecraftServer server) {
+        for (ServerWorld world : server.getWorlds()) {
+            if (world.getRegistryKey() == World.OVERWORLD) {
+                meteorShower.updateWeather(world);
+            }
+        }
+    }
+
+    private static void shootingStarsAtNight(MinecraftServer server) {
+        for (ServerWorld world : server.getWorlds()) {
+            if (world.getRegistryKey() == World.OVERWORLD) {
+                if (world.getTimeOfDay() >= 13000 && world.getTimeOfDay() <= 23000) {
+                    world.getPlayers().forEach(player -> {
+                        if (player.getRandom().nextDouble() < meteorShower.getStarChance() && ((OtherPlayerData)player).canSpawnStar()
+                                && world.getTimeOfDay() % 30 == 0) {
+                            double x = player.getX() + player.getRandom().nextBetween(-50, 50);
+                            double z = player.getZ() + player.getRandom().nextBetween(-50, 50);
+
+                            ShootingStar star = new ShootingStar(ZeldaEntities.Shooting_Star, player.getWorld());
+                            star.setPosition(x, 50, z);
+                            star.setYaw(player.getRandom().nextBetween(0, 360));
+                            star.setGlowing(true);
+                            world.spawnEntity(star);
+                            world.getPlayers().forEach(playerForSound -> {
+                                double xPos = playerForSound.getX() - star.getX();
+                                double zPos = playerForSound.getZ() - star.getZ();
+
+                                if (Math.abs(xPos) < 50 && Math.abs(zPos) < 50) {
+                                    if (!meteorShower.isMeteorShowerActive()) {
+                                        ZeldaServerPackets.sendShootingStarSound(playerForSound);
+                                    }
+                                    ZeldaCraft.LOGGER.info("Star landed at: " + star.getPos());
+                                }
+                            });
+                            if (!meteorShower.isMeteorShowerActive()) {
+                                ((OtherPlayerData) player).setTriedStarSpawn(false);
+                            }
+                        }
+                    });
+                }
+                else {
+                    world.getPlayers().forEach(player -> ((OtherPlayerData) player).setTriedStarSpawn(true));
+                }
+//
+//                    if (world.getTimeOfDay() == 23000) {
+//                        ZeldaCraft.LOGGER.info("A Night has passed");
+//                    }
+            }
+        }
     }
 
     public static void addEntityToFrozen(Entity entity, int time) {

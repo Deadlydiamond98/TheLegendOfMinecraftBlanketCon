@@ -19,6 +19,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(Mouse.class)
 public abstract class MouseMixin {
+
+    // disables mouse input when stunned
     @Inject(method = "onMouseButton", at = @At("HEAD"), cancellable = true)
     private void onMouseButton(long window, int button, int action, int mods, CallbackInfo callbackInfo) {
         if ((MinecraftClient.getInstance().player) != null && !MinecraftClient.getInstance().isPaused() && (MinecraftClient.getInstance().player).isAlive()) {
@@ -34,6 +36,8 @@ public abstract class MouseMixin {
         }
     }
 
+    // checks if an item qualifies as a sword, for when the sword sick debuf is applied
+
     @Unique
     private boolean isSword(Item item) {
         return item instanceof SwordItem || item instanceof AxeItem;
@@ -48,6 +52,8 @@ public abstract class MouseMixin {
             }
         }
     }
+
+    // disables camera movement
 
     @Inject(method = "onCursorPos", at = @At("HEAD"), cancellable = true)
     private void onCursorPos(long window, double xpos, double ypos, CallbackInfo callbackInfo) {

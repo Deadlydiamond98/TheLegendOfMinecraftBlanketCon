@@ -2,6 +2,7 @@ package net.deadlydiamond98;
 
 import net.deadlydiamond98.blocks.ZeldaBlocks;
 import net.deadlydiamond98.blocks.entities.ZeldaBlockEntities;
+import net.deadlydiamond98.commands.ZeldaServerCommands;
 import net.deadlydiamond98.enchantments.ZeldaEnchantments;
 import net.deadlydiamond98.entities.monsters.BeamosEntity;
 import net.deadlydiamond98.entities.monsters.BubbleEntity;
@@ -10,6 +11,7 @@ import net.deadlydiamond98.entities.monsters.KeeseEntity;
 import net.deadlydiamond98.entities.ZeldaEntities;
 import net.deadlydiamond98.events.AfterRespawnEvent;
 import net.deadlydiamond98.events.EntityDamagedEvent;
+import net.deadlydiamond98.events.ZeldaServerLifecycleEvents;
 import net.deadlydiamond98.events.ZeldaSeverTickEvent;
 import net.deadlydiamond98.items.ZeldaItems;
 import net.deadlydiamond98.networking.ZeldaServerPackets;
@@ -54,8 +56,10 @@ public class ZeldaCraft implements ModInitializer {
 		EntityDamagedEvent.register();
 		AfterRespawnEvent.register();
 		ZeldaSeverTickEvent.registerTickEvent();
+		ZeldaServerLifecycleEvents.register();
 //		AttackBlockEvent.register();
 
+		ZeldaServerCommands.register();
 
 		ZeldaFeatures.register();
 		ZeldaCreativeTabs.registerItemGroups();

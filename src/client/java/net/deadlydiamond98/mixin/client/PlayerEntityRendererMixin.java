@@ -19,6 +19,8 @@ import java.util.UUID;
 
 @Mixin(PlayerEntityRenderer.class)
 public abstract class PlayerEntityRendererMixin {
+
+    // this mixin is used to apply custom models to the player for some accessories
     @Unique
     private FairyPlayerRenderer<AbstractClientPlayerEntity> fairyRenderer;
 
