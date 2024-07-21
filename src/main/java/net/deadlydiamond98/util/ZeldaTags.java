@@ -16,6 +16,7 @@ public class ZeldaTags {
     }
     public static class Items {
         public static final TagKey<Item> Bombs = createTag("bombs");
+        public static final TagKey<Item> Slingshot_Ammo = createTag("slingshot_ammo");
 
         private static TagKey<Item> createTag(String name) {
             return TagKey.of(RegistryKeys.ITEM, new Identifier(ZeldaCraft.MOD_ID, name));

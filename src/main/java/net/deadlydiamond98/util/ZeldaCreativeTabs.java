@@ -36,6 +36,7 @@ public class ZeldaCreativeTabs {
                         entry.add(ZeldaItems.Deku_Nut);
                         //Bags
                         entry.add(ZeldaItems.Bomb_Bag);
+//                        entry.add(ZeldaItems.Deku_Seed_Bullet_Bag);
                         entry.add(ZeldaItems.Quiver);
                         //Arrows
                         entry.add(ZeldaItems.Silver_Arrow);
@@ -55,8 +56,11 @@ public class ZeldaCreativeTabs {
                         //Equipment
                         entry.add(ZeldaItems.Red_Ring);
                         entry.add(ZeldaItems.Blue_Ring);
-                        entry.add(ZeldaItems.Fairy_Pendant);
                         entry.add(ZeldaItems.Fairy_Bell);
+                        entry.add(ZeldaItems.Shield_Pendant);
+                        entry.add(ZeldaItems.Jump_Pendant);
+                        entry.add(ZeldaItems.Heart_Pendant);
+                        entry.add(ZeldaItems.Fairy_Pendant);
                         //Consumables
                         entry.add(ZeldaItems.Magic_Jar);
                         entry.add(ZeldaItems.Magic_Tart);
@@ -66,13 +70,16 @@ public class ZeldaCreativeTabs {
                         entry.add(ZeldaItems.Magic_Downgrade);
                         //Util
                         entry.add(ZeldaItems.Dungeon_Key);
-                        //Misc
+                        //Misc / Materials
                         entry.add(ZeldaItems.Music_Disc_Legend);
                         entry.add(ZeldaItems.Music_Disc_Legend_Fragment);
                         entry.add(ZeldaItems.Emerald_Shard);
                         entry.add(ZeldaItems.Emerald_Chunk);
                         entry.add(ZeldaItems.Star_Fragment);
                         entry.add(ZeldaItems.Stardust);
+                        entry.add(ZeldaItems.Kokiri_Cloth);
+                        entry.add(ZeldaItems.Goron_Cloth);
+                        entry.add(ZeldaItems.Zora_Cloth);
                         for (String color : FairyBottle.colors) {
                             ItemStack stack = new ItemStack(ZeldaItems.Fairy_Bottle);
                             NbtCompound nbt = new NbtCompound();

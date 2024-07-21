@@ -81,6 +81,9 @@ public class ZeldaItems {
     public static final Item Quiver = registerItem("quiver", new Quiver(
             new FabricItemSettings().maxCount(1),640,
             List.of(ItemTags.ARROWS)));
+//    public static final Item Deku_Seed_Bullet_Bag = registerItem("seed_bag", new SeedBulletBag(
+//            new FabricItemSettings().maxCount(1),640,
+//            List.of(ZeldaTags.Items.Slingshot_Ammo)));
 
     //Arrows
     public static final Item Silver_Arrow = registerItem("silver_arrow", new SilverArrow(
@@ -93,7 +96,16 @@ public class ZeldaItems {
     public static final Item Pegasus_Boots = registerItem("pegasus_boots", new PegasusBoots(
             ArmorMaterials.LEATHER, ArmorItem.Type.BOOTS, new FabricItemSettings().maxCount(1)
     ));
-    public static final Item Fairy_Pendant = registerItem("fairy_pendant", new FairyPendant(
+    public static final Item Fairy_Pendant = registerItem("fairy_pendant", new MagicPendant(
+            new FabricItemSettings().maxCount(1),
+            "item.zeldacraft.fairy_pendant.tooltipa", true, "item.zeldacraft.fairy_pendant.tooltipb"));
+    public static final Item Heart_Pendant = registerItem("heart_pendant", new MagicPendant(
+            new FabricItemSettings().maxCount(1),
+            "item.zeldacraft.heart_pendant.tooltip", false, ""));
+    public static final Item Shield_Pendant = registerItem("shield_pendant", new MagicPendant(
+            new FabricItemSettings().maxCount(1),
+            "item.zeldacraft.shield_pendant.tooltip", false, ""));
+    public static final Item Jump_Pendant = registerItem("jump_pendant", new JumpPendant(
             new FabricItemSettings().maxCount(1)));
     public static final Item Fairy_Bell = registerItem("fairy_bell", new FairyBell(
             new FabricItemSettings().maxCount(1)));
@@ -144,7 +156,7 @@ public class ZeldaItems {
     public static final Item Dungeon_Key = registerItem("dungeon_key", new Item(
             new FabricItemSettings()));
 
-    //Misc
+    //Misc / Materials
     public static final Item Emerald_Shard = registerItem("emerald_shard", new EmeraldItem(
             new FabricItemSettings()));
     public static final Item Emerald_Chunk = registerItem("emerald_chunk", new EmeraldItem(
@@ -152,6 +164,12 @@ public class ZeldaItems {
     public static final Item Star_Fragment = registerItem("star_fragment", new StarFragment(
             new FabricItemSettings(), 25));
     public static final Item Stardust = registerItem("stardust", new Item(
+            new FabricItemSettings()));
+    public static final Item Kokiri_Cloth = registerItem("kokiri_cloth", new Item(
+            new FabricItemSettings()));
+    public static final Item Goron_Cloth = registerItem("goron_cloth", new Item(
+            new FabricItemSettings()));
+    public static final Item Zora_Cloth = registerItem("zora_cloth", new Item(
             new FabricItemSettings()));
     public static final Item Fairy_Bottle = registerItem("fairy_bottle", new FairyBottle(
             new FabricItemSettings().maxCount(1)));

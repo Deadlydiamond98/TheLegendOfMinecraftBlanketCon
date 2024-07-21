@@ -14,4 +14,11 @@ public interface OtherPlayerData {
 
     boolean canSpawnStar();
     void setTriedStarSpawn(boolean starSpawn);
+
+    boolean doubleJumpEnabled();
+    void enableddoubleJump(boolean doubleJump);
+    boolean hasntDoubleJumpped();
+    void canDoubleJump(boolean doubleJumpped);
+    boolean wasOnGround();
+    void setOnGround(boolean wasOnGround);
 }

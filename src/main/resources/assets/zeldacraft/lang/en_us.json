@@ -61,6 +61,11 @@
   "block.zeldacraft.brown_dungeoncite_pedestal": "Brown Dungeoncite Pedestal",
 
   "item.zeldacraft.quiver": "Quiver",
+  "item.zeldacraft.silver_arrow": "Silver Arrow",
+  "item.zeldacraft.bomb_arrow": "Bomb Arrow",
+
+  "item.zeldacraft.seed_bag": "Seed Bullet Bag",
+
   "item.zeldacraft.hylian_shield": "Hylian Shield",
   "item.zeldacraft.hylian_shield.tooltip": "Isn't harmed by Explosions",
   "item.zeldacraft.mirror_shield": "Mirror Shield",
@@ -100,14 +105,27 @@
 
   "item.zeldacraft.fairy_bell": "Fairy Bell",
   "item.zeldacraft.fairy_bell_with_color": "Fairy Bell (%s)",
-  "item.zeldacraft.fairy_bell.tooltipa": "Gives the player a fairy companion",
+  "item.zeldacraft.fairy_bell.tooltipa": "Gives the player a Fairy companion",
   "item.zeldacraft.fairy_bell.tooltipb": "Slowly restores Magic",
+
+
+  "item.zeldacraft.shield_pendant": "Shield Pendant",
+  "item.zeldacraft.shield_pendant.tooltip": "Applies Resistance at the cost of Magic",
+  "item.zeldacraft.jump_pendant": "Jump Pendant",
+  "item.zeldacraft.jump_pendant.tooltip": "Allows one to Double Jump",
+  "item.zeldacraft.heart_pendant": "Life Pendant",
+  "item.zeldacraft.heart_pendant.tooltip": "Applies Regeneration at the cost of Magic",
   "item.zeldacraft.fairy_pendant": "Fairy Pendant",
   "item.zeldacraft.fairy_pendant.tooltipa": "Allows one to turn into a fairy",
   "item.zeldacraft.fairy_pendant.tooltipb": "Rapidly consumes Magic",
 
   "item.zeldacraft.red_ring": "Red Ring",
   "item.zeldacraft.blue_ring": "Blue Ring",
+
+
+  "item.zeldacraft.kokiri_cloth": "Kokiri Cloth",
+  "item.zeldacraft.goron_cloth": "Goron Cloth",
+  "item.zeldacraft.zora_cloth": "Zora Cloth",
 
   "effect.zeldacraft.stunned": "Stunned",
   "effect.zeldacraft.sword_sick": "Sword Sick",

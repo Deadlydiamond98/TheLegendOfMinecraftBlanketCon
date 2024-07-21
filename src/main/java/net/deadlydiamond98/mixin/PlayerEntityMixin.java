@@ -5,6 +5,7 @@ import dev.emi.trinkets.api.TrinketsApi;
 import net.deadlydiamond98.items.ZeldaItems;
 import net.deadlydiamond98.networking.ZeldaServerPackets;
 import net.deadlydiamond98.sounds.ZeldaSounds;
+import net.deadlydiamond98.statuseffects.ZeldaStatusEffects;
 import net.deadlydiamond98.util.ManaHandler;
 import net.deadlydiamond98.util.ManaPlayerData;
 import net.deadlydiamond98.util.OtherPlayerData;
@@ -37,14 +38,14 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(PlayerEntity.class)
-public abstract class PlayerEntityMixin extends LivingEntity implements OtherPlayerData, ManaPlayerData {
+public abstract class PlayerEntityMixin implements OtherPlayerData, ManaPlayerData {
 
     @Unique
     private final PlayerEntity user = ((PlayerEntity)(Object)this);
 
-    protected PlayerEntityMixin(EntityType<? extends LivingEntity> entityType, World world) {
-        super(entityType, world);
-    }
+
+    @Unique
+    private final LivingEntityAccessor livingEntityAccessor = (LivingEntityAccessor) user;
 
     @Shadow public abstract void tick();
 
@@ -68,6 +69,12 @@ public abstract class PlayerEntityMixin extends LivingEntity implements OtherPla
     private int manaMaxLevelZelda;
     @Unique
     private boolean spawnStar;
+    @Unique
+    private boolean doubleJump;
+    @Unique
+    private boolean doubleJumpped;
+    @Unique
+    private boolean wasOnGround;
 
     @Inject(method = "<init>", at = @At("TAIL"))
     private void onInit(CallbackInfo ci) {
@@ -78,6 +85,9 @@ public abstract class PlayerEntityMixin extends LivingEntity implements OtherPla
         this.fairyfriend = false;
         this.fairyControl = false;
         this.shieldSource = null;
+        this.doubleJump = false;
+        this.doubleJumpped = false;
+        this.wasOnGround = true;
     }
 
     @Inject(method = "tick", at = @At("HEAD"))
@@ -92,12 +102,19 @@ public abstract class PlayerEntityMixin extends LivingEntity implements OtherPla
                     this.fairyControl, this.fairyfriend);
         }
 
-        user.setNoGravity(this.isFairy());
-
         TrinketComponent trinket = TrinketsApi.getTrinketComponent(user).get();
         if (!trinket.isEquipped(ZeldaItems.Fairy_Bell)) {
             this.setFairyFriend(false);
+        } else if (!trinket.isEquipped(ZeldaItems.Jump_Pendant)) {
+            this.enableddoubleJump(false);
         }
+
+        fairyAction();
+        doubleJumpAction();
+    }
+
+    private void fairyAction() {
+        user.setNoGravity(this.isFairy());
 
         if (this.isFairy()) {
             if (ManaHandler.CanRemoveManaFromPlayer(user, 2)) {
@@ -115,6 +132,23 @@ public abstract class PlayerEntityMixin extends LivingEntity implements OtherPla
         }
     }
 
+    private void doubleJumpAction() {
+        if (this.doubleJumpEnabled() && ManaHandler.CanRemoveManaFromPlayer(user, 10)
+                && livingEntityAccessor.getJumping() && this.hasntDoubleJumpped()
+                && livingEntityAccessor.getJumpingCooldown() == 0) {
+
+            user.jump();
+            this.canDoubleJump(false);
+        }
+
+        if (user.isOnGround() && !this.wasOnGround() && !this.hasntDoubleJumpped()) {
+            this.canDoubleJump(true);
+            ManaHandler.removeManaFromPlayer(user, 10);
+        }
+
+        this.setOnGround(user.isOnGround());
+    }
+
     @Inject(method = "writeCustomDataToNbt", at = @At("HEAD"))
     public void onSave(NbtCompound nbt, CallbackInfo info) {
         nbt.putInt("manaLevelZelda", manaLevelZelda);
@@ -123,6 +157,8 @@ public abstract class PlayerEntityMixin extends LivingEntity implements OtherPla
         nbt.putBoolean("transitionFairy", transitionFairy);
         nbt.putBoolean("fairyfriend", fairyfriend);
         nbt.putBoolean("spawnStar", spawnStar);
+        nbt.putBoolean("doubleJump", doubleJump);
+        nbt.putBoolean("doubleJumpped", doubleJumpped);
     }
 
     @Inject(method = "readCustomDataFromNbt", at = @At("HEAD"))
@@ -144,6 +180,12 @@ public abstract class PlayerEntityMixin extends LivingEntity implements OtherPla
         }
         if (nbt.contains("spawnStar")) {
             this.spawnStar = nbt.getBoolean("spawnStar");
+        }
+        if (nbt.contains("doubleJump")) {
+            this.doubleJump = nbt.getBoolean("doubleJump");
+        }
+        if (nbt.contains("doubleJumpped")) {
+            this.doubleJumpped = nbt.getBoolean("doubleJumpped");
         }
     }
 
@@ -169,11 +211,11 @@ public abstract class PlayerEntityMixin extends LivingEntity implements OtherPla
 
     @Inject(method = "damageShield", at = @At("HEAD"))
     private void shieldDurability(float amount, CallbackInfo ci) {
-        if (this.activeItemStack.isOf(ZeldaItems.Hylain_Shield) && this.shieldSource != null
+        if (livingEntityAccessor.getActiveItemStack().isOf(ZeldaItems.Hylain_Shield) && this.shieldSource != null
                 && !this.shieldSource.isOf(DamageTypes.EXPLOSION)) {
             damageShieldItem(amount);
         }
-        else if (this.activeItemStack.isOf(ZeldaItems.Mirror_Shield)) {
+        else if (livingEntityAccessor.getActiveItemStack().isOf(ZeldaItems.Mirror_Shield)) {
             damageShieldItem(amount);
         }
     }
@@ -182,29 +224,28 @@ public abstract class PlayerEntityMixin extends LivingEntity implements OtherPla
     private void shieldDurability(boolean sprinting, CallbackInfo ci) {
         this.getItemCooldownManager().set(ZeldaItems.Hylain_Shield, 100);
         this.getItemCooldownManager().set(ZeldaItems.Mirror_Shield, 100);
-
     }
 
+    @Unique
     private void damageShieldItem(float amount) {
-        if (!this.getWorld().isClient) {
-            this.incrementStat(Stats.USED.getOrCreateStat(this.activeItemStack.getItem()));
+        if (!user.getWorld().isClient) {
+            this.incrementStat(Stats.USED.getOrCreateStat(livingEntityAccessor.getActiveItemStack().getItem()));
         }
 
         if (amount >= 3.0F) {
             int i = 1 + MathHelper.floor(amount);
-            Hand hand = this.getActiveHand();
-            this.activeItemStack.damage(i, this, (player) -> {
+            Hand hand = user.getActiveHand();
+            livingEntityAccessor.getActiveItemStack().damage(i, user, (player) -> {
                 player.sendToolBreakStatus(hand);
             });
-            if (this.activeItemStack.isEmpty()) {
+            if (livingEntityAccessor.getActiveItemStack().isEmpty()) {
                 if (hand == Hand.MAIN_HAND) {
-                    this.equipStack(EquipmentSlot.MAINHAND, ItemStack.EMPTY);
+                    user.equipStack(EquipmentSlot.MAINHAND, ItemStack.EMPTY);
                 } else {
-                    this.equipStack(EquipmentSlot.OFFHAND, ItemStack.EMPTY);
+                    user.equipStack(EquipmentSlot.OFFHAND, ItemStack.EMPTY);
                 }
-
-                this.activeItemStack = ItemStack.EMPTY;
-                this.playSound(SoundEvents.ITEM_SHIELD_BREAK, 0.8F, 0.8F + this.getWorld().random.nextFloat() * 0.4F);
+                livingEntityAccessor.setActiveItemStack(ItemStack.EMPTY);
+                user.playSound(SoundEvents.ITEM_SHIELD_BREAK, 0.8F, 0.8F + user.getWorld().random.nextFloat() * 0.4F);
             }
         }
     }
@@ -270,5 +311,30 @@ public abstract class PlayerEntityMixin extends LivingEntity implements OtherPla
     @Override
     public void setTriedStarSpawn(boolean starSpawn) {
         this.spawnStar = starSpawn;
+    }
+
+    @Override
+    public boolean doubleJumpEnabled() {
+        return this.doubleJump;
+    }
+    @Override
+    public void enableddoubleJump(boolean doubleJump) {
+        this.doubleJump = doubleJump;
+    }
+    @Override
+    public boolean hasntDoubleJumpped() {
+        return this.doubleJumpped;
+    }
+    @Override
+    public void canDoubleJump(boolean doubleJumpped) {
+        this.doubleJumpped = doubleJumpped;
+    }
+    @Override
+    public boolean wasOnGround() {
+        return this.wasOnGround;
+    }
+    @Override
+    public void setOnGround(boolean wasOnGround) {
+        this.wasOnGround = wasOnGround;
     }
 }

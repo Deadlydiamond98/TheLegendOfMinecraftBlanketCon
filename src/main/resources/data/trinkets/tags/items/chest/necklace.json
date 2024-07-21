@@ -1,6 +1,9 @@
 {
   "replace": false,
   "values": [
+    "zeldacraft:shield_pendant",
+    "zeldacraft:jump_pendant",
+    "zeldacraft:heart_pendant",
     "zeldacraft:fairy_pendant",
     "zeldacraft:fairy_bell"
   ]
