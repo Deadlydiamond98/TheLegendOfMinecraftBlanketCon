@@ -20,6 +20,7 @@ import net.deadlydiamond98.statuseffects.ZeldaStatusEffects;
 import net.deadlydiamond98.util.ZeldaCreativeTabs;
 import net.deadlydiamond98.util.ZeldaPotionRecipes;
 import net.deadlydiamond98.world.ZeldaFeatures;
+import net.deadlydiamond98.world.zeldadungeons.ZeldaDungeons;
 import net.fabricmc.api.ModInitializer;
 
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
@@ -60,6 +61,7 @@ public class ZeldaCraft implements ModInitializer {
 		ZeldaServerCommands.register();
 
 		ZeldaFeatures.register();
+		ZeldaDungeons.registerDungeons();
 		ZeldaCreativeTabs.registerItemGroups();
 		LOGGER.info("Mod Loaded");
 	}

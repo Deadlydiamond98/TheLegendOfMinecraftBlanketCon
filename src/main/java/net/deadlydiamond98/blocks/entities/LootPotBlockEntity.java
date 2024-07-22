@@ -96,7 +96,6 @@ public class LootPotBlockEntity extends LootableContainerBlockEntity implements 
         }
     }
 
-    // add loot table if has one
     @Override
     public void checkLootInteraction(@Nullable PlayerEntity player) {
         if (this.lootTableId != null && this.world != null && !this.world.isClient) {
