@@ -58,7 +58,7 @@ public class GohmaDungeon extends Structure {
     private static Direction getRandomDirection() {
         Random random = new Random();
 
-        switch (random.nextInt(3)) {
+        switch (random.nextInt(4)) {
             case 0 -> {
                 return Direction.NORTH;
             }
@@ -84,11 +84,11 @@ public class GohmaDungeon extends Structure {
 
             ZeldaCraft.LOGGER.info("This Peice has a " + doorType.toString() + " door at: " + doorPos + "\n The door Direction is: " + rotatedDirection);
 
-            if (!(doorType == BaseDungeonPiece.EntranceType.OPENING)) {
+            if (doorType != BaseDungeonPiece.EntranceType.OPENING && doorType != BaseDungeonPiece.EntranceType.CRACKED_DOOR) {
 
                 BaseDungeonPiece newPiece = new TestingRoom(1, currentPiece.getBoundingBox(), rotatedDirection);
 
-                alignDoor(newPiece, doorPos, rotatedDirection, currentPiece);
+                alignDoor(newPiece, doorPos, rotatedDirection);
 
                 pieces.add(newPiece);
                 pieceQueue.add(newPiece);
@@ -96,17 +96,12 @@ public class GohmaDungeon extends Structure {
         }
     }
 
-    private static void alignDoor(BaseDungeonPiece newPiece, BlockPos doorPos, Direction rotatedDirection, BaseDungeonPiece currentPiece) {
+    private static void alignDoor(BaseDungeonPiece newPiece, BlockPos doorPos, Direction rotatedDirection) {
         for (Map.Entry<BlockPos, BaseDungeonPiece.EntranceType> newPieceEntry : newPiece.getDoors().entrySet()) {
             if (newPieceEntry.getValue() == BaseDungeonPiece.EntranceType.OPENING) {
-                BlockBox oldBoundingBox = newPiece.getBoundingBox();
+                BlockPos offset = doorPos.subtract(newPieceEntry.getKey()).offset(rotatedDirection, 0);
 
-                BlockPos offset;
-                if (rotatedDirection == Direction.NORTH || rotatedDirection == Direction.SOUTH) {
-                    offset = doorPos.subtract(newPieceEntry.getKey()).offset(rotatedDirection, currentPiece.getSizeZ());
-                } else {
-                    offset = doorPos.subtract(newPieceEntry.getKey()).offset(rotatedDirection, currentPiece.getSizeX());
-                }
+                BlockBox oldBoundingBox = newPiece.getBoundingBox();
 
                 BlockBox newBoundingBox = new BlockBox(
                         oldBoundingBox.getMinX() + offset.getX(),
@@ -124,9 +119,9 @@ public class GohmaDungeon extends Structure {
 
     private static Direction rotateDirection(Direction doorDirection, Direction facing) {
         return switch (facing) {
-            case EAST -> doorDirection.rotateYClockwise();
-            case SOUTH -> doorDirection.getOpposite();
-            case WEST -> doorDirection.rotateYCounterclockwise();
+            case WEST -> doorDirection.rotateYClockwise();
+            case NORTH -> doorDirection.getOpposite();
+            case EAST -> doorDirection.rotateYCounterclockwise();
             default -> doorDirection;
         };
     }
