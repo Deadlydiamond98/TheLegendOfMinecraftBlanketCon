@@ -22,9 +22,9 @@ import static net.minecraft.block.HorizontalFacingBlock.FACING;
 
 public class TestingRoomB extends BaseDungeonPiece {
 
-    public static final int sizeX = 13; // Width of the room
+    public static final int sizeX = 15; // Width of the room
     public static final int sizeY = 10;  // Height of the room
-    public static final int sizeZ = 13; // Depth of the room
+    public static final int sizeZ = 15; // Depth of the room
 
     public TestingRoomB(StructureContext structureContext, NbtCompound nbtCompound) {
         super(ZeldaDungeons.Test_PeiceB, nbtCompound);

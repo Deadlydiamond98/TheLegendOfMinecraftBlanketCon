@@ -39,22 +39,6 @@ public class BaseDungeonPiece extends StructurePiece {
         this.entryDoor = EntranceType.valueOf(nbtCompound.getString("EntryDoor"));
         this.doors = new HashMap<>();
         this.doorDirection = new HashMap<>();
-
-        NbtList doorList = nbtCompound.getList("Doors", 10);
-        for (int i = 0; i < doorList.size(); i++) {
-            NbtCompound doorNbt = doorList.getCompound(i);
-            BlockPos pos = BlockPos.fromLong(doorNbt.getLong("Pos"));
-            EntranceType type = EntranceType.valueOf(doorNbt.getString("Type"));
-            doors.put(pos, type);
-        }
-
-        NbtList doorDirectionList = nbtCompound.getList("DoorDirections", 10);
-        for (int i = 0; i < doorDirectionList.size(); i++) {
-            NbtCompound directionNbt = doorDirectionList.getCompound(i);
-            BlockPos pos = BlockPos.fromLong(directionNbt.getLong("Pos"));
-            Direction direction = Direction.valueOf(directionNbt.getString("Direction"));
-            doorDirection.put(pos, direction);
-        }
     }
     public BaseDungeonPiece(StructurePieceType testPeice, int chainLength, BlockBox box, int sizeX, int sizeY, int sizeZ, Direction orientation) {
         super(testPeice, chainLength, box);
@@ -68,23 +52,6 @@ public class BaseDungeonPiece extends StructurePiece {
 
     @Override
     protected void writeNbt(StructureContext context, NbtCompound nbt) {
-        NbtList doorList = new NbtList();
-        for (Map.Entry<BlockPos, EntranceType> entry : doors.entrySet()) {
-            NbtCompound doorNbt = new NbtCompound();
-            doorNbt.putLong("Pos", entry.getKey().asLong());
-            doorNbt.putString("Type", entry.getValue().name());
-            doorList.add(doorNbt);
-        }
-        nbt.put("Doors", doorList);
-
-        NbtList doorDirectionList = new NbtList();
-        for (Map.Entry<BlockPos, Direction> entry : doorDirection.entrySet()) {
-            NbtCompound directionNbt = new NbtCompound();
-            directionNbt.putLong("Pos", entry.getKey().asLong());
-            directionNbt.putString("Direction", entry.getValue().name());
-            doorDirectionList.add(directionNbt);
-        }
-        nbt.put("DoorDirections", doorDirectionList);
 
     }
 

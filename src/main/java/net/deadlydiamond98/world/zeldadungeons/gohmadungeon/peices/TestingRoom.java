@@ -20,7 +20,7 @@ import static net.minecraft.block.HorizontalFacingBlock.FACING;
 public class TestingRoom extends BaseDungeonPiece {
 
     public static final int sizeX = 13; // Width of the room
-    public static final int sizeY = 10;  // Height of the room
+    public static final int sizeY = 13;  // Height of the room
     public static final int sizeZ = 13; // Depth of the room
 
     public TestingRoom(StructureContext structureContext, NbtCompound nbtCompound) {
@@ -31,11 +31,6 @@ public class TestingRoom extends BaseDungeonPiece {
     public TestingRoom(int chainLength, BlockBox box, Direction orientation) {
         super(ZeldaDungeons.Test_Peice, chainLength, box, sizeX, sizeY, sizeZ, orientation);
         this.addEntrance(5, 0, 0, EntranceType.OPENING, Direction.NORTH);
-    }
-
-    @Override
-    protected void writeNbt(StructureContext context, NbtCompound nbt) {
-        super.writeNbt(context, nbt);
     }
 
     @Override

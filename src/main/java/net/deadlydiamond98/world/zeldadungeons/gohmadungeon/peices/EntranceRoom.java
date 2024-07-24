@@ -40,10 +40,6 @@ public class EntranceRoom extends BaseDungeonPiece {
         this.addEntrance(5, 0, 0, EntranceType.CRACKED_DOOR, Direction.NORTH);
         this.addEntrance(5, 0, this.getSizeZ(), EntranceType.WOOD_DOOR, Direction.SOUTH);
     }
-    @Override
-    protected void writeNbt(StructureContext context, NbtCompound nbt) {
-        super.writeNbt(context, nbt);
-    }
 
     @Override
     public void generate(StructureWorldAccess world, StructureAccessor structureAccessor, ChunkGenerator chunkGenerator, Random random, BlockBox chunkBox, ChunkPos chunkPos, BlockPos pivot) {

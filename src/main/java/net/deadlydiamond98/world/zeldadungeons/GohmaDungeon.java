@@ -85,7 +85,7 @@ public class GohmaDungeon extends Structure {
             Direction doorDirection = currentPiece.getDoorDirection().get(doorPos);
             Direction rotatedDirection = rotateDirection(doorDirection, currentPiece.getFacing());
 
-            ZeldaCraft.LOGGER.info("This Peice has a " + doorType.toString() + " door at: " + doorPos + "\n The door Direction is: " + rotatedDirection);
+//            ZeldaCraft.LOGGER.info("This Peice has a " + doorType.toString() + " door at: " + doorPos + "\n The door Direction is: " + rotatedDirection);
 
             if (doorType != BaseDungeonPiece.EntranceType.OPENING && doorType != BaseDungeonPiece.EntranceType.CRACKED_DOOR) {
 
@@ -93,11 +93,11 @@ public class GohmaDungeon extends Structure {
 
                 if (newPiece != null) {
                     alignDoor(newPiece, doorPos, rotatedDirection);
+                    ZeldaCraft.LOGGER.info("Generated new piece bounding box after alignment: " + newPiece.getBoundingBox());
 
                     pieces.add(newPiece);
                     pieceQueue.add(newPiece);
-                }
-                else {
+                } else {
                     ZeldaCraft.LOGGER.error("Tried to create a Piece for Gohma Dungeon, but Piece was Null");
                 }
             }
@@ -162,20 +162,36 @@ public class GohmaDungeon extends Structure {
             int sizeY = sizeYField.getInt(null);
             int sizeZ = sizeZField.getInt(null);
 
+            BlockPos newPos = calculateNewPosition(currentPiece.getBoundingBox(), rotatedDirection, sizeX, sizeY, sizeZ);
             BlockBox startBoundingBox = new BlockBox(
-                    currentPiece.getBoundingBox().getMinX(),
-                    currentPiece.getBoundingBox().getMinY(),
-                    currentPiece.getBoundingBox().getMinZ(),
-                    currentPiece.getBoundingBox().getMinX() + sizeX,
-                    currentPiece.getBoundingBox().getMinY() + sizeY,
-                    currentPiece.getBoundingBox().getMinZ() + sizeZ
+                    newPos.getX(),
+                    newPos.getY(),
+                    newPos.getZ(),
+                    newPos.getX() + sizeX,
+                    newPos.getY() + sizeY,
+                    newPos.getZ() + sizeZ
             );
 
             Constructor<?> constructor = roomClass.getConstructor(int.class, BlockBox.class, Direction.class);
-            return (BaseDungeonPiece) constructor.newInstance(1, startBoundingBox, rotatedDirection);
+            return (BaseDungeonPiece) constructor.newInstance(3, startBoundingBox, rotatedDirection);
         } catch (Exception e) {
             e.printStackTrace();
             return null;
+        }
+    }
+
+    private static BlockPos calculateNewPosition(BlockBox currentBoundingBox, Direction direction, int sizeX, int sizeY, int sizeZ) {
+        switch (direction) {
+            case NORTH:
+                return new BlockPos(currentBoundingBox.getMinX(), currentBoundingBox.getMinY(), currentBoundingBox.getMinZ() - sizeZ);
+            case SOUTH:
+                return new BlockPos(currentBoundingBox.getMinX(), currentBoundingBox.getMinY(), currentBoundingBox.getMaxZ());
+            case EAST:
+                return new BlockPos(currentBoundingBox.getMaxX(), currentBoundingBox.getMinY(), currentBoundingBox.getMinZ());
+            case WEST:
+                return new BlockPos(currentBoundingBox.getMinX() - sizeX, currentBoundingBox.getMinY(), currentBoundingBox.getMinZ());
+            default:
+                return new BlockPos(currentBoundingBox.getMinX(), currentBoundingBox.getMinY(), currentBoundingBox.getMinZ());
         }
     }
 }
