@@ -44,7 +44,8 @@ public class GohmaDungeon extends Structure {
                 startPos.getX() + EntranceRoom.sizeX,
                 startPos.getY() + EntranceRoom.sizeY,
                 startPos.getZ() + EntranceRoom.sizeZ);
-        BaseDungeonPiece startPiece = new EntranceRoom(1, startBoundingBox, getRandomDirection());
+        Direction direction = getRandomDirection();
+        BaseDungeonPiece startPiece = new EntranceRoom(1, startBoundingBox, direction);
         pieces.add(startPiece);
         pieceQueue.add(startPiece);
 
@@ -55,7 +56,7 @@ public class GohmaDungeon extends Structure {
             generateAdjacentPieces(currentPiece, pieces, pieceQueue);
         }
 
-        ZeldaCraft.LOGGER.info("Added pieces for Gohma Dungeon at: " + startPos);
+        ZeldaCraft.LOGGER.info("Added pieces for Gohma Dungeon at: " + startPos + "\n with rotation " + direction);
     }
 
     private static Direction getRandomDirection() {
@@ -78,7 +79,7 @@ public class GohmaDungeon extends Structure {
     }
 
     private static void generateAdjacentPieces(BaseDungeonPiece currentPiece, List<BaseDungeonPiece> pieces, Queue<BaseDungeonPiece> pieceQueue) {
-        ZeldaCraft.LOGGER.info("Processing piece with doors: " + currentPiece.getDoors().size());
+        ZeldaCraft.LOGGER.info("Processing piece with doors: " + (currentPiece.getDoors().size() - 1));
         for (Map.Entry<BlockPos, BaseDungeonPiece.EntranceType> entry : currentPiece.getDoors().entrySet()) {
             BlockPos doorPos = entry.getKey();
             BaseDungeonPiece.EntranceType doorType = entry.getValue();
@@ -107,7 +108,8 @@ public class GohmaDungeon extends Structure {
     private static void alignDoor(BaseDungeonPiece newPiece, BlockPos doorPos, Direction rotatedDirection) {
         for (Map.Entry<BlockPos, BaseDungeonPiece.EntranceType> newPieceEntry : newPiece.getDoors().entrySet()) {
             if (newPieceEntry.getValue() == BaseDungeonPiece.EntranceType.OPENING) {
-                BlockPos offset = doorPos.subtract(newPieceEntry.getKey()).offset(rotatedDirection, 0);
+                BlockPos offset = doorPos.subtract(newPieceEntry.getKey()).offset(rotatedDirection, 10);
+
 
                 BlockBox oldBoundingBox = newPiece.getBoundingBox();
 
@@ -145,8 +147,8 @@ public class GohmaDungeon extends Structure {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private static final Class<?>[] Regular_Pieces = {
-            TestingRoom.class,
-            TestingRoomB.class
+            TestingRoom.class
+//            TestingRoomB.class
     };
 
     private static BaseDungeonPiece generateRandomRoom(BaseDungeonPiece currentPiece, Direction rotatedDirection) {
@@ -181,17 +183,12 @@ public class GohmaDungeon extends Structure {
     }
 
     private static BlockPos calculateNewPosition(BlockBox currentBoundingBox, Direction direction, int sizeX, int sizeY, int sizeZ) {
-        switch (direction) {
-            case NORTH:
-                return new BlockPos(currentBoundingBox.getMinX(), currentBoundingBox.getMinY(), currentBoundingBox.getMinZ() - sizeZ);
-            case SOUTH:
-                return new BlockPos(currentBoundingBox.getMinX(), currentBoundingBox.getMinY(), currentBoundingBox.getMaxZ());
-            case EAST:
-                return new BlockPos(currentBoundingBox.getMaxX(), currentBoundingBox.getMinY(), currentBoundingBox.getMinZ());
-            case WEST:
-                return new BlockPos(currentBoundingBox.getMinX() - sizeX, currentBoundingBox.getMinY(), currentBoundingBox.getMinZ());
-            default:
-                return new BlockPos(currentBoundingBox.getMinX(), currentBoundingBox.getMinY(), currentBoundingBox.getMinZ());
-        }
+        return switch (direction) {
+            case NORTH -> new BlockPos(currentBoundingBox.getMinX(), currentBoundingBox.getMinY(), currentBoundingBox.getMinZ() - sizeZ);
+            case SOUTH -> new BlockPos(currentBoundingBox.getMinX(), currentBoundingBox.getMinY(), currentBoundingBox.getMaxZ());
+            case EAST -> new BlockPos(currentBoundingBox.getMaxX(), currentBoundingBox.getMinY(), currentBoundingBox.getMinZ());
+            case WEST -> new BlockPos(currentBoundingBox.getMinX() - sizeX, currentBoundingBox.getMinY(), currentBoundingBox.getMinZ());
+            default -> new BlockPos(currentBoundingBox.getMinX(), currentBoundingBox.getMinY(), currentBoundingBox.getMinZ());
+        };
     }
 }

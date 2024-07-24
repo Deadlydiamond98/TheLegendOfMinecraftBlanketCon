@@ -31,14 +31,18 @@ public class EntranceRoom extends BaseDungeonPiece {
 
     public EntranceRoom(StructureContext structureContext, NbtCompound nbtCompound) {
         super(ZeldaDungeons.Entrance_Peice, nbtCompound);
-        this.addEntrance(5, 0, 0, EntranceType.CRACKED_DOOR, Direction.NORTH);
+        this.addEntrance(5, 0, 0, EntranceType.WOOD_DOOR, Direction.NORTH);
         this.addEntrance(5, 0, this.getSizeZ(), EntranceType.WOOD_DOOR, Direction.SOUTH);
+        this.addEntrance(0, 0, 5, EntranceType.WOOD_DOOR, Direction.EAST);
+        this.addEntrance(this.getSizeX(), 0, 5, EntranceType.WOOD_DOOR, Direction.WEST);
     }
 
     public EntranceRoom(int chainLength, BlockBox box, Direction orientation) {
         super(ZeldaDungeons.Entrance_Peice, chainLength, box, sizeX, sizeY, sizeZ, orientation);
-        this.addEntrance(5, 0, 0, EntranceType.CRACKED_DOOR, Direction.NORTH);
+        this.addEntrance(5, 0, 0, EntranceType.WOOD_DOOR, Direction.NORTH);
         this.addEntrance(5, 0, this.getSizeZ(), EntranceType.WOOD_DOOR, Direction.SOUTH);
+        this.addEntrance(0, 0, 5, EntranceType.WOOD_DOOR, Direction.EAST);
+        this.addEntrance(this.getSizeX(), 0, 5, EntranceType.WOOD_DOOR, Direction.WEST);
     }
 
     @Override
@@ -99,7 +103,10 @@ public class EntranceRoom extends BaseDungeonPiece {
         // Entrance
         this.generateEntrance(world, boundingBox, EntranceType.CRACKED_DOOR, 5, 0, 0, Direction.NORTH);
 
-        //Exit
+//        Exit
         this.generateEntrance(world, boundingBox, EntranceType.WOOD_DOOR, 5, 0, this.getSizeZ(), Direction.SOUTH);
+
+        this.generateEntrance(world, boundingBox, EntranceType.WOOD_DOOR, 0, 0, 5, Direction.EAST);
+        this.generateEntrance(world, boundingBox, EntranceType.WOOD_DOOR, this.getSizeX(), 0, 5, Direction.WEST);
     }
 }
