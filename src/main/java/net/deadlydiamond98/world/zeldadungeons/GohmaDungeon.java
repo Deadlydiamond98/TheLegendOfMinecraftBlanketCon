@@ -86,7 +86,14 @@ public class GohmaDungeon extends Structure {
 
             if (doorType != BaseDungeonPiece.EntranceType.OPENING && doorType != BaseDungeonPiece.EntranceType.CRACKED_DOOR) {
 
-                BaseDungeonPiece newPiece = new TestingRoom(1, currentPiece.getBoundingBox(), rotatedDirection);
+                BlockBox startBoundingBox = new BlockBox(
+                        currentPiece.getBoundingBox().getMinX(),
+                        currentPiece.getBoundingBox().getMinY(),
+                        currentPiece.getBoundingBox().getMinZ(),
+                        currentPiece.getBoundingBox().getMinX() + TestingRoom.sizeX,
+                        currentPiece.getBoundingBox().getMinY() + TestingRoom.sizeY,
+                        currentPiece.getBoundingBox().getMinZ() + TestingRoom.sizeZ);
+                BaseDungeonPiece newPiece = new TestingRoom(1, startBoundingBox, rotatedDirection);
 
                 alignDoor(newPiece, doorPos, rotatedDirection);
 

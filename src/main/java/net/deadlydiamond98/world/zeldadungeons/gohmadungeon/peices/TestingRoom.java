@@ -18,6 +18,7 @@ import static net.minecraft.block.CandleBlock.LIT;
 import static net.minecraft.block.HorizontalFacingBlock.FACING;
 
 public class TestingRoom extends BaseDungeonPiece {
+
     public static final int sizeX = 13; // Width of the room
     public static final int sizeY = 10;  // Height of the room
     public static final int sizeZ = 13; // Depth of the room
@@ -28,7 +29,7 @@ public class TestingRoom extends BaseDungeonPiece {
     }
 
     public TestingRoom(int chainLength, BlockBox box, Direction orientation) {
-        super(ZeldaDungeons.Test_Peice, chainLength, box, 13, 10, 13, orientation);
+        super(ZeldaDungeons.Test_Peice, chainLength, box, sizeX, sizeY, sizeZ, orientation);
         this.addEntrance(5, 0, 0, EntranceType.OPENING, Direction.NORTH);
     }
 
@@ -40,14 +41,14 @@ public class TestingRoom extends BaseDungeonPiece {
     @Override
     public void generate(StructureWorldAccess world, StructureAccessor structureAccessor, ChunkGenerator chunkGenerator, Random random, BlockBox chunkBox, ChunkPos chunkPos, BlockPos pivot) {
         // Wall
-        this.fillWithOutline(world, chunkBox, 0, 0, 0, sizeX, sizeY, sizeZ,
+        this.fillWithOutline(world, chunkBox, 0, 0, 0, this.getSizeX(), this.getSizeY(), this.getSizeZ(),
                 false, random, new GohmaWallPlacer());
         // Floor
-        this.fillWithOutline(world, chunkBox, 1, 0, 1, sizeX - 1, 0, sizeZ - 1,
+        this.fillWithOutline(world, chunkBox, 1, 0, 1, this.getSizeX() - 1, 0, this.getSizeZ() - 1,
                 ZeldaBlocks.Brown_Dungeoncite_Tile.getDefaultState().with(FACING, this.getFacing()),
                 AIR, false);
         // Ceiling
-        this.fillWithOutline(world, chunkBox, 1, sizeY, 1, sizeX - 1, sizeY, sizeZ - 1,
+        this.fillWithOutline(world, chunkBox, 1, this.getSizeY(), 1, this.getSizeX() - 1, this.getSizeY(), this.getSizeZ() - 1,
                 ZeldaBlocks.Brown_Dungeoncite_Tile.getDefaultState().with(FACING, this.getFacing()),
                 AIR, false);
 
@@ -58,7 +59,7 @@ public class TestingRoom extends BaseDungeonPiece {
 //        this.createEntrance(world, boundingBox, EntranceType.WOOD_DOOR, 5, 0, sizeZ, Direction.SOUTH);
 
         //Add Random Pots
-        int[] size = new int[]{sizeX, sizeY, sizeZ};
+        int[] size = new int[]{this.getSizeX(), this.getSizeY(), this.getSizeZ()};
         this.addPots(world, random, chunkBox, random.nextBetween(6, 14), size);
         this.addDecoratedPots(world, random, chunkBox, random.nextBetween(0, 2), size);
 
@@ -77,23 +78,23 @@ public class TestingRoom extends BaseDungeonPiece {
         this.addBlock(world, Blocks.YELLOW_CANDLE.getDefaultState().with(CANDLES, random.nextBetween(1, 4)).with(LIT, true), 9, 2, 4, chunkBox);
 
         // Corner Pillars
-        this.fillWithOutline(world, chunkBox, 1, 1, 1, 1, sizeY - 1, 1,
+        this.fillWithOutline(world, chunkBox, 1, 1, 1, 1, this.getSizeY() - 1, 1,
                 ZeldaBlocks.Brown_Dungeoncite_Pillar.getDefaultState(),
                 AIR, false);
-        this.fillWithOutline(world, chunkBox, sizeX - 1, 1, 1, sizeX - 1, sizeY - 1, 1,
+        this.fillWithOutline(world, chunkBox, this.getSizeX() - 1, 1, 1, this.getSizeX() - 1, this.getSizeY() - 1, 1,
                 ZeldaBlocks.Brown_Dungeoncite_Pillar.getDefaultState(),
                 AIR, false);
-        this.fillWithOutline(world, chunkBox, 1, 1, sizeZ - 1, 1, sizeY - 1, sizeZ - 1,
+        this.fillWithOutline(world, chunkBox, 1, 1, this.getSizeZ() - 1, 1, this.getSizeY() - 1, this.getSizeZ() - 1,
                 ZeldaBlocks.Brown_Dungeoncite_Pillar.getDefaultState(),
                 AIR, false);
-        this.fillWithOutline(world, chunkBox, sizeX - 1, 1, sizeZ - 1, sizeX - 1, sizeY - 1, sizeZ - 1,
+        this.fillWithOutline(world, chunkBox, this.getSizeX() - 1, 1, this.getSizeZ() - 1, this.getSizeX() - 1, this.getSizeY() - 1, this.getSizeZ() - 1,
                 ZeldaBlocks.Brown_Dungeoncite_Pillar.getDefaultState(),
                 AIR, false);
 
         // Blocks Corner
         this.addBlock(world, ZeldaBlocks.Reinforced_Brown_Dungeoncite.getDefaultState(), 1, 1, 1, chunkBox);
-        this.addBlock(world, ZeldaBlocks.Reinforced_Brown_Dungeoncite.getDefaultState(), sizeX - 1, 1, 1, chunkBox);
-        this.addBlock(world, ZeldaBlocks.Reinforced_Brown_Dungeoncite.getDefaultState(), 1, 1, sizeZ - 1, chunkBox);
-        this.addBlock(world, ZeldaBlocks.Reinforced_Brown_Dungeoncite.getDefaultState(), sizeX - 1, 1, sizeZ - 1, chunkBox);
+        this.addBlock(world, ZeldaBlocks.Reinforced_Brown_Dungeoncite.getDefaultState(), this.getSizeX() - 1, 1, 1, chunkBox);
+        this.addBlock(world, ZeldaBlocks.Reinforced_Brown_Dungeoncite.getDefaultState(), 1, 1, this.getSizeZ() - 1, chunkBox);
+        this.addBlock(world, ZeldaBlocks.Reinforced_Brown_Dungeoncite.getDefaultState(), this.getSizeX() - 1, 1, this.getSizeZ() - 1, chunkBox);
     }
 }
