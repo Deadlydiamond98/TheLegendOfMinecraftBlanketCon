@@ -28,6 +28,11 @@ public class ZeldaCreativeTabs {
                         entry.add(ZeldaItems.Wooden_Boomerang);
                         entry.add(ZeldaItems.Iron_Boomerang);
                         entry.add(ZeldaItems.Magic_Boomerang);
+                        //Hammers
+                        entry.add(ZeldaItems.Wooden_Hammer);
+                        entry.add(ZeldaItems.Iron_Hammer);
+                        entry.add(ZeldaItems.Excellent_Hammer);
+                        entry.add(ZeldaItems.Magic_Hammer);
                         //Explosive
                         entry.add(ZeldaBlocks.Bomb_Flower);
                         entry.add(ZeldaItems.Bomb);

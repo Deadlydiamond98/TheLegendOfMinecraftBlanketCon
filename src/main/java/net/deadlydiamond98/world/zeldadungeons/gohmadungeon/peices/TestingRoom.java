@@ -24,15 +24,17 @@ public class TestingRoom extends BaseDungeonPiece {
 
     public TestingRoom(StructureContext structureContext, NbtCompound nbtCompound) {
         super(ZeldaDungeons.Test_Peice, nbtCompound);
+        this.addEntrance(5, 0, 0, EntranceType.OPENING, Direction.NORTH);
     }
 
     public TestingRoom(int chainLength, BlockBox box, Direction orientation) {
-        super(ZeldaDungeons.Test_Peice, chainLength, box, 13, 10, 13);
-        this.setOrientation(orientation);
+        super(ZeldaDungeons.Test_Peice, chainLength, box, 13, 10, 13, orientation);
+        this.addEntrance(5, 0, 0, EntranceType.OPENING, Direction.NORTH);
     }
 
     @Override
     protected void writeNbt(StructureContext context, NbtCompound nbt) {
+        super.writeNbt(context, nbt);
     }
 
     @Override
@@ -50,7 +52,7 @@ public class TestingRoom extends BaseDungeonPiece {
                 AIR, false);
 
         // Entrance
-        this.createEntrance(world, boundingBox, EntranceType.OPENING, 5, 0, 0, Direction.NORTH);
+        this.generateEntrance(world, boundingBox, EntranceType.WOOD_DOOR, 5, 0, 0, Direction.NORTH);
 
 //        //Exit
 //        this.createEntrance(world, boundingBox, EntranceType.WOOD_DOOR, 5, 0, sizeZ, Direction.SOUTH);

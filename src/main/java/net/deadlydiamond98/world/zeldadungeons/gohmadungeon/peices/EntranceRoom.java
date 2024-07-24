@@ -1,5 +1,6 @@
 package net.deadlydiamond98.world.zeldadungeons.gohmadungeon.peices;
 
+import net.deadlydiamond98.ZeldaCraft;
 import net.deadlydiamond98.blocks.ZeldaBlocks;
 import net.deadlydiamond98.world.zeldadungeons.BaseDungeonPiece;
 import net.deadlydiamond98.world.zeldadungeons.ZeldaDungeons;
@@ -16,6 +17,8 @@ import net.minecraft.world.StructureWorldAccess;
 import net.minecraft.world.gen.StructureAccessor;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
 
+import java.util.Map;
+
 import static net.minecraft.block.CandleBlock.CANDLES;
 import static net.minecraft.block.CandleBlock.LIT;
 import static net.minecraft.block.HorizontalFacingBlock.FACING;
@@ -28,15 +31,18 @@ public class EntranceRoom extends BaseDungeonPiece {
 
     public EntranceRoom(StructureContext structureContext, NbtCompound nbtCompound) {
         super(ZeldaDungeons.Entrance_Peice, nbtCompound);
+        this.addEntrance(5, 0, 0, EntranceType.CRACKED_DOOR, Direction.NORTH);
+        this.addEntrance(5, 0, sizeZ, EntranceType.WOOD_DOOR, Direction.SOUTH);
     }
 
     public EntranceRoom(int chainLength, BlockBox box, Direction orientation) {
-        super(ZeldaDungeons.Entrance_Peice, chainLength, box, 13, 10, 13);
-        this.setOrientation(orientation);
+        super(ZeldaDungeons.Entrance_Peice, chainLength, box, 13, 10, 13, orientation);
+        this.addEntrance(5, 0, 0, EntranceType.CRACKED_DOOR, Direction.NORTH);
+        this.addEntrance(5, 0, sizeZ, EntranceType.WOOD_DOOR, Direction.SOUTH);
     }
     @Override
     protected void writeNbt(StructureContext context, NbtCompound nbt) {
-
+        super.writeNbt(context, nbt);
     }
 
     @Override
@@ -54,12 +60,6 @@ public class EntranceRoom extends BaseDungeonPiece {
         this.fillWithOutline(world, chunkBox, 1, sizeY, 1, sizeX - 1, sizeY, sizeZ - 1,
                 ZeldaBlocks.Brown_Dungeoncite_Tile.getDefaultState().with(FACING, this.getFacing()),
                 AIR, false);
-
-        // Entrance
-        this.createEntrance(world, boundingBox, EntranceType.CRACKED_DOOR, 5, 0, 0, Direction.NORTH);
-
-        //Exit
-        this.createEntrance(world, boundingBox, EntranceType.WOOD_DOOR, 5, 0, sizeZ, Direction.SOUTH);
 
         //Add Random Pots
         int[] size = new int[]{sizeX, sizeY, sizeZ};
@@ -99,5 +99,11 @@ public class EntranceRoom extends BaseDungeonPiece {
         this.addBlock(world, ZeldaBlocks.Reinforced_Brown_Dungeoncite.getDefaultState(), sizeX - 1, 1, 1, chunkBox);
         this.addBlock(world, ZeldaBlocks.Reinforced_Brown_Dungeoncite.getDefaultState(), 1, 1, sizeZ - 1, chunkBox);
         this.addBlock(world, ZeldaBlocks.Reinforced_Brown_Dungeoncite.getDefaultState(), sizeX - 1, 1, sizeZ - 1, chunkBox);
+
+        // Entrance
+        this.generateEntrance(world, boundingBox, EntranceType.CRACKED_DOOR, 5, 0, 0, Direction.NORTH);
+
+        //Exit
+        this.generateEntrance(world, boundingBox, EntranceType.WOOD_DOOR, 5, 0, sizeZ, Direction.SOUTH);
     }
 }

@@ -7,6 +7,8 @@ import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.enums.DoubleBlockHalf;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtList;
+import net.minecraft.structure.StrongholdGenerator;
 import net.minecraft.structure.StructureContext;
 import net.minecraft.structure.StructurePiece;
 import net.minecraft.structure.StructurePieceType;
@@ -24,31 +26,66 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class BaseDungeonPiece extends StructurePiece {
-
     private int sizeX;
     private int sizeY;
     private int sizeZ;
 
     protected EntranceType entryDoor;
+    private final Map<BlockPos, Direction> doorDirection;
     private final Map<BlockPos, EntranceType> doors;
-
     public BaseDungeonPiece(StructurePieceType testPeice, NbtCompound nbtCompound) {
         super(testPeice, nbtCompound);
         this.entryDoor = EntranceType.OPENING;
         this.entryDoor = EntranceType.valueOf(nbtCompound.getString("EntryDoor"));
         this.doors = new HashMap<>();
+        this.doorDirection = new HashMap<>();
+
+        NbtList doorList = nbtCompound.getList("Doors", 10);
+        for (int i = 0; i < doorList.size(); i++) {
+            NbtCompound doorNbt = doorList.getCompound(i);
+            BlockPos pos = BlockPos.fromLong(doorNbt.getLong("Pos"));
+            EntranceType type = EntranceType.valueOf(doorNbt.getString("Type"));
+            doors.put(pos, type);
+        }
+
+        NbtList doorDirectionList = nbtCompound.getList("DoorDirections", 10);
+        for (int i = 0; i < doorDirectionList.size(); i++) {
+            NbtCompound directionNbt = doorDirectionList.getCompound(i);
+            BlockPos pos = BlockPos.fromLong(directionNbt.getLong("Pos"));
+            Direction direction = Direction.valueOf(directionNbt.getString("Direction"));
+            doorDirection.put(pos, direction);
+        }
     }
-    public BaseDungeonPiece(StructurePieceType testPeice, int chainLength, BlockBox box, int sizeX, int sizeY, int sizeZ) {
+    public BaseDungeonPiece(StructurePieceType testPeice, int chainLength, BlockBox box, int sizeX, int sizeY, int sizeZ, Direction orientation) {
         super(testPeice, chainLength, box);
+        this.setOrientation(orientation);
         this.sizeX = sizeX;
         this.sizeY = sizeY;
         this.sizeZ = sizeZ;
         this.doors = new HashMap<>();
+        this.doorDirection = new HashMap<>();
     }
 
     @Override
     protected void writeNbt(StructureContext context, NbtCompound nbt) {
-        nbt.putString("EntryDoor", this.entryDoor.name());
+        NbtList doorList = new NbtList();
+        for (Map.Entry<BlockPos, EntranceType> entry : doors.entrySet()) {
+            NbtCompound doorNbt = new NbtCompound();
+            doorNbt.putLong("Pos", entry.getKey().asLong());
+            doorNbt.putString("Type", entry.getValue().name());
+            doorList.add(doorNbt);
+        }
+        nbt.put("Doors", doorList);
+
+        NbtList doorDirectionList = new NbtList();
+        for (Map.Entry<BlockPos, Direction> entry : doorDirection.entrySet()) {
+            NbtCompound directionNbt = new NbtCompound();
+            directionNbt.putLong("Pos", entry.getKey().asLong());
+            directionNbt.putString("Direction", entry.getValue().name());
+            doorDirectionList.add(directionNbt);
+        }
+        nbt.put("DoorDirections", doorDirectionList);
+
     }
 
     @Override
@@ -56,25 +93,19 @@ public class BaseDungeonPiece extends StructurePiece {
 
     }
 
-    protected void createEntrance(StructureWorldAccess world, BlockBox boundingBox, EntranceType type, int x, int y, int z, Direction direction) {
-        type.setDirection(direction);
-        generateEntrance(world, boundingBox, type, x, y, z);
-    }
-
-    private void generateEntrance(StructureWorldAccess world, BlockBox boundingBox, EntranceType type, int x, int y, int z) {
+    public void generateEntrance(StructureWorldAccess world, BlockBox boundingBox, EntranceType type, int x, int y, int z, Direction direction) {
         switch (type) {
             case OPENING -> {
-                if (type.getDirection() == Direction.NORTH || type.getDirection() == Direction.SOUTH) {
+                if (direction == Direction.NORTH || direction == Direction.SOUTH) {
                     this.fillWithOutline(world, boundingBox, x, y, z, x + 3, y + 4, z,
                             AIR, AIR, false);
                 } else {
                     this.fillWithOutline(world, boundingBox, x, y, z, x, y + 4, z + 3,
                             AIR, AIR, false);
                 }
-                addEntrance(x, y, z, type);
             }
             case WOOD_DOOR -> {
-                if (type.getDirection() == Direction.NORTH || type.getDirection() == Direction.SOUTH) {
+                if (direction == Direction.NORTH || direction == Direction.SOUTH) {
                     this.fillWithOutline(world, boundingBox, x, y, z, x + 3, y + 4, z,
                             ZeldaBlocks.Reinforced_Brown_Dungeoncite.getDefaultState(),
                             AIR, false);
@@ -89,10 +120,9 @@ public class BaseDungeonPiece extends StructurePiece {
                             Blocks.SPRUCE_PLANKS.getDefaultState(),
                             AIR, false);
                 }
-                addEntrance(x, y, z, type);
             }
             case LOCKED_DOOR -> {
-                if (type.getDirection() == Direction.NORTH || type.getDirection() == Direction.SOUTH) {
+                if (direction == Direction.NORTH || direction == Direction.SOUTH) {
                     this.fillWithOutline(world, boundingBox, x, y, z, x + 3, y + 4, z,
                             ZeldaBlocks.Reinforced_Brown_Dungeoncite.getDefaultState(),
                             AIR, false);
@@ -107,10 +137,9 @@ public class BaseDungeonPiece extends StructurePiece {
                             Blocks.RED_WOOL.getDefaultState(),
                             AIR, false);
                 }
-                addEntrance(x, y, z, type);
             }
             case CRACKED_DOOR -> {
-                if (type.getDirection() == Direction.NORTH || type.getDirection() == Direction.SOUTH) {
+                if (direction == Direction.NORTH || direction == Direction.SOUTH) {
                     this.fillWithOutline(world, boundingBox, x, y, z, x + 3, y + 4, z,
                             ZeldaBlocks.Reinforced_Brown_Dungeoncite.getDefaultState(),
                             AIR, false);
@@ -130,10 +159,9 @@ public class BaseDungeonPiece extends StructurePiece {
                     this.addBlock(world, ZeldaBlocks.Brown_Dungeoncite_Tile_Bomb.getDefaultState(), x, y + 2, z, boundingBox);
                     this.addBlock(world, ZeldaBlocks.Brown_Dungeoncite_Tile_Bomb.getDefaultState(), x, y + 2, z + 3, boundingBox);
                 }
-                addEntrance(x, y, z, type);
             }
             case CRACKED_WALL -> {
-                if (type.getDirection() == Direction.NORTH || type.getDirection() == Direction.SOUTH) {
+                if (direction == Direction.NORTH || direction == Direction.SOUTH) {
                     this.fillWithOutline(world, boundingBox, x + 1, y + 1, z, x + 2, y + 3, z,
                             ZeldaBlocks.Secret_Cracked_Brown_Dungeoncite_Brick.getDefaultState(),
                             AIR, false);
@@ -142,10 +170,9 @@ public class BaseDungeonPiece extends StructurePiece {
                             ZeldaBlocks.Secret_Cracked_Brown_Dungeoncite_Brick.getDefaultState(),
                             AIR, false);
                 }
-                addEntrance(x, y, z, type);
             }
             case BOSS_DOOR -> {
-                if (type.getDirection() == Direction.NORTH || type.getDirection() == Direction.SOUTH) {
+                if (direction == Direction.NORTH || direction == Direction.SOUTH) {
                     this.fillWithOutline(world, boundingBox, x, y, z, x + 3, y + 4, z,
                             ZeldaBlocks.Reinforced_Brown_Dungeoncite.getDefaultState(),
                             AIR, false);
@@ -160,13 +187,13 @@ public class BaseDungeonPiece extends StructurePiece {
                             Blocks.NETHERRACK.getDefaultState(),
                             AIR, false);
                 }
-                addEntrance(x, y, z, type);
             }
         }
     }
-    public void addEntrance(int x, int y, int z, EntranceType type) {
+    public void addEntrance(int x, int y, int z, EntranceType type, Direction direction) {
         BlockPos pos = this.offsetPos(x, y, z);
         doors.put(pos, type);
+        doorDirection.put(pos, direction);
     }
 
     public boolean hasEntranceAt(int x, int y, int z) {
@@ -181,6 +208,9 @@ public class BaseDungeonPiece extends StructurePiece {
 
     public Map<BlockPos, EntranceType> getDoors() {
         return doors;
+    }
+    public Map<BlockPos, Direction> getDoorDirection() {
+        return doorDirection;
     }
 
     protected void addPots(StructureWorldAccess world, Random random, BlockBox chunkBox, int amount, int[] size) {
@@ -239,23 +269,7 @@ public class BaseDungeonPiece extends StructurePiece {
         CRACKED_DOOR,
         CRACKED_WALL,
         BOSS_DOOR;
-
-        private Direction direction;
-
         private EntranceType() {
-            this.direction = null;
-        }
-
-        public void setDirection(Direction direction) {
-            if (this.direction == null) {
-                this.direction = direction;
-            } else {
-                throw new IllegalStateException("Direction has already been set!");
-            }
-        }
-
-        public Direction getDirection() {
-            return this.direction;
         }
     }
 
@@ -271,5 +285,9 @@ public class BaseDungeonPiece extends StructurePiece {
 
     public int getSizeZ() {
         return sizeZ;
+    }
+
+    protected void setBoundingBox(BlockBox boundingBox) {
+        this.boundingBox = boundingBox;
     }
 }

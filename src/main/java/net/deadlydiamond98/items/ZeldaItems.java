@@ -60,6 +60,15 @@ public class ZeldaItems {
             new FabricItemSettings().maxCount(1).maxDamage(1000)));
     public static final Item Magic_Boomerang = registerItem("magic_boomerang", new MagicBoomerangItem(
             new FabricItemSettings().maxCount(1).maxDamage(6248)));
+    //Hammers
+    public static final Item Wooden_Hammer = registerItem("wooden_hammer", new SwordItem(
+            ToolMaterials.IRON, 4, -2.0F, new FabricItemSettings()));
+    public static final Item Iron_Hammer = registerItem("iron_hammer", new SwordItem(
+            ToolMaterials.IRON, 4, -2.0F, new FabricItemSettings()));
+    public static final Item Excellent_Hammer = registerItem("excellent_hammer", new SwordItem(
+            ToolMaterials.IRON, 4, -2.0F, new FabricItemSettings()));
+    public static final Item Magic_Hammer = registerItem("magic_hammer", new SwordItem(
+            ToolMaterials.IRON, 4, -2.0F, new FabricItemSettings()));
 
     //Explosives
     public static final Item Deku_Nut = registerItem("deku_nut", new DekuNutItem(

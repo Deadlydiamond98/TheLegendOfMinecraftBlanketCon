@@ -41,7 +41,7 @@ public class GohmaDungeon extends Structure {
                 startPos.getX() + EntranceRoom.sizeX,
                 startPos.getY() + EntranceRoom.sizeY,
                 startPos.getZ() + EntranceRoom.sizeZ);
-        BaseDungeonPiece startPiece = new EntranceRoom(1, startBoundingBox, Direction.NORTH);
+        BaseDungeonPiece startPiece = new EntranceRoom(1, startBoundingBox, getRandomDirection());
         pieces.add(startPiece);
         pieceQueue.add(startPiece);
 
@@ -49,53 +49,86 @@ public class GohmaDungeon extends Structure {
             BaseDungeonPiece currentPiece = pieceQueue.poll();
             collector.addPiece(currentPiece);
 
-            ZeldaCraft.LOGGER.info("Processing piece at: " + currentPiece.getBoundingBox());
-//            generateAdjacentPieces(currentPiece, pieces, pieceQueue);
+            generateAdjacentPieces(currentPiece, pieces, pieceQueue);
         }
 
         ZeldaCraft.LOGGER.info("Added pieces for Gohma Dungeon at: " + startPos);
     }
 
+    private static Direction getRandomDirection() {
+        Random random = new Random();
+
+        switch (random.nextInt(3)) {
+            case 0 -> {
+                return Direction.NORTH;
+            }
+            case 1 -> {
+                return Direction.SOUTH;
+            }
+            case 2 -> {
+                return Direction.EAST;
+            }
+            default -> {
+                return Direction.WEST;
+            }
+        }
+    }
+
     private static void generateAdjacentPieces(BaseDungeonPiece currentPiece, List<BaseDungeonPiece> pieces, Queue<BaseDungeonPiece> pieceQueue) {
-        ZeldaCraft.LOGGER.info("Generating adjacent pieces for current piece at: " + currentPiece.getBoundingBox());
+        ZeldaCraft.LOGGER.info("Processing piece with doors: " + currentPiece.getDoors().size());
         for (Map.Entry<BlockPos, BaseDungeonPiece.EntranceType> entry : currentPiece.getDoors().entrySet()) {
             BlockPos doorPos = entry.getKey();
             BaseDungeonPiece.EntranceType doorType = entry.getValue();
-            Direction doorDirection = doorType.getDirection();
+            Direction doorDirection = currentPiece.getDoorDirection().get(doorPos);
+            Direction rotatedDirection = rotateDirection(doorDirection, currentPiece.getFacing());
 
-            ZeldaCraft.LOGGER.info("Checking door at: " + doorPos + " with direction: " + doorDirection);
+            ZeldaCraft.LOGGER.info("This Peice has a " + doorType.toString() + " door at: " + doorPos + "\n The door Direction is: " + rotatedDirection);
 
-            BlockPos newStartPos = doorPos.offset(doorDirection);
+            if (!(doorType == BaseDungeonPiece.EntranceType.OPENING)) {
 
-            BlockBox newBoundingBox = new BlockBox(
-                    newStartPos.getX(),
-                    newStartPos.getY(),
-                    newStartPos.getZ(),
-                    newStartPos.getX() + TestingRoom.sizeX,
-                    newStartPos.getY() + TestingRoom.sizeY,
-                    newStartPos.getZ() + TestingRoom.sizeZ);
+                BaseDungeonPiece newPiece = new TestingRoom(1, currentPiece.getBoundingBox(), rotatedDirection);
 
-            ZeldaCraft.LOGGER.info("New piece bounding box: " + newBoundingBox);
+                alignDoor(newPiece, doorPos, rotatedDirection, currentPiece);
 
-            boolean intersects = false;
-            for (BaseDungeonPiece piece : pieces) {
-                if (piece.getBoundingBox().intersects(newBoundingBox)) {
-                    ZeldaCraft.LOGGER.info("Intersection found with piece at: " + piece.getBoundingBox());
-                    intersects = true;
-                    break;
-                }
-            }
-
-            if (!intersects) {
-                ZeldaCraft.LOGGER.info("No intersection, adding new piece at: " + newStartPos);
-                BaseDungeonPiece newPiece = new TestingRoom(1, newBoundingBox, doorDirection);
                 pieces.add(newPiece);
                 pieceQueue.add(newPiece);
             }
-            else {
-                ZeldaCraft.LOGGER.info("Intersection detected, skipping new piece at: " + newStartPos);
+        }
+    }
+
+    private static void alignDoor(BaseDungeonPiece newPiece, BlockPos doorPos, Direction rotatedDirection, BaseDungeonPiece currentPiece) {
+        for (Map.Entry<BlockPos, BaseDungeonPiece.EntranceType> newPieceEntry : newPiece.getDoors().entrySet()) {
+            if (newPieceEntry.getValue() == BaseDungeonPiece.EntranceType.OPENING) {
+                BlockBox oldBoundingBox = newPiece.getBoundingBox();
+
+                BlockPos offset;
+                if (rotatedDirection == Direction.NORTH || rotatedDirection == Direction.SOUTH) {
+                    offset = doorPos.subtract(newPieceEntry.getKey()).offset(rotatedDirection, currentPiece.getSizeZ());
+                } else {
+                    offset = doorPos.subtract(newPieceEntry.getKey()).offset(rotatedDirection, currentPiece.getSizeX());
+                }
+
+                BlockBox newBoundingBox = new BlockBox(
+                        oldBoundingBox.getMinX() + offset.getX(),
+                        oldBoundingBox.getMinY() + offset.getY(),
+                        oldBoundingBox.getMinZ() + offset.getZ(),
+                        oldBoundingBox.getMaxX() + offset.getX(),
+                        oldBoundingBox.getMaxY() + offset.getY(),
+                        oldBoundingBox.getMaxZ() + offset.getZ()
+                );
+                newPiece.setBoundingBox(newBoundingBox);
             }
         }
+    }
+
+
+    private static Direction rotateDirection(Direction doorDirection, Direction facing) {
+        return switch (facing) {
+            case EAST -> doorDirection.rotateYClockwise();
+            case SOUTH -> doorDirection.getOpposite();
+            case WEST -> doorDirection.rotateYCounterclockwise();
+            default -> doorDirection;
+        };
     }
 
     @Override

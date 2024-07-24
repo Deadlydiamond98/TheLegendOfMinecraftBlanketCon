@@ -82,7 +82,7 @@
   "item.zeldacraft.cracked_bat.tooltip": "25% Chance to do Smaaaash!! attacks",
   "item.zeldacraft.baseball": "Baseball",
 
-  "item.zeldacraft.wooden_boomerang": "Wood Boomerang",
+  "item.zeldacraft.wooden_boomerang": "Wooden Boomerang",
   "item.zeldacraft.wooden_boomerang.tooltip": "The bare minimum for a Boomerang",
   "item.zeldacraft.iron_boomerang": "Iron Boomerang",
   "item.zeldacraft.iron_boomerang.tooltip": "Can activate buttons and levers from afar",
@@ -90,6 +90,11 @@
   "item.zeldacraft.magic_boomerang.tooltipa": "Can pick up items from afar, Passive Loyalty",
   "item.zeldacraft.magic_boomerang.tooltipb": "Won't be damaged if you have Magic",
   "enchantment.zeldacraft.lawn_mower": "Lawn Mower",
+
+  "item.zeldacraft.wooden_hammer": "Wooden Hammer",
+  "item.zeldacraft.iron_hammer": "Iron Hammer",
+  "item.zeldacraft.excellent_hammer": "Excellent Hammer",
+  "item.zeldacraft.magic_hammer": "Magic Hammer",
 
   "item.zeldacraft.hookshot": "Hookshot",
 
