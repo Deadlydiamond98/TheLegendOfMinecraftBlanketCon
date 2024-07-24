@@ -34,10 +34,10 @@ public abstract class SplashMixin {
             "We don't have lamp oil or rope, but we most certainly have bombs!",
             "Watch out for falling stars!",
             "This is Zelda I N S P I R E D... plz don't sue :<",
+            "Z E L D A      I N S P I R E D",
             "OOOOOOOOOOOOOOOOOOOHHHHHHHHHHHHHH",
             "If all else fails, use fire.",
-            "Gee, it sure is BORING around here...",
-            "");
+            "Gee, it sure is BORING around here...");
 
 
     @Inject(method = "apply", at = @At("TAIL"))
