@@ -4,6 +4,7 @@ import com.mojang.serialization.Codec;
 import net.deadlydiamond98.ZeldaCraft;
 import net.deadlydiamond98.world.zeldadungeons.gohmadungeon.peices.EntranceRoom;
 import net.deadlydiamond98.world.zeldadungeons.gohmadungeon.peices.TestingRoom;
+import net.deadlydiamond98.world.zeldadungeons.gohmadungeon.peices.TestingRoomB;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
 import net.minecraft.registry.Registries;
@@ -19,6 +20,7 @@ import net.minecraft.world.gen.structure.StructureType;
 public class ZeldaDungeons {
 
     public static final StructurePieceType Test_Peice = registerPiece(TestingRoom::new, "test");
+    public static final StructurePieceType Test_PeiceB = registerPiece(TestingRoomB::new, "testb");
     public static final StructurePieceType Entrance_Peice = registerPiece(EntranceRoom::new, "entrance");
 
     // GOHMA DUNGEON
