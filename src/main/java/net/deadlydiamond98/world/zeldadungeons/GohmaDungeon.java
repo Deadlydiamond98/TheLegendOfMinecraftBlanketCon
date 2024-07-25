@@ -86,7 +86,7 @@ public class GohmaDungeon extends Structure {
             Direction doorDirection = currentPiece.getDoorDirection().get(doorPos);
             Direction rotatedDirection = rotateDirection(doorDirection, currentPiece.getFacing());
 
-//            ZeldaCraft.LOGGER.info("This Peice has a " + doorType.toString() + " door at: " + doorPos + "\n The door Direction is: " + rotatedDirection);
+//            /ZeldaCraft.LOGGER.info("This Peice has a " + doorType.toString() + " door at: " + doorPos + "\n The door Direction is: " + rotatedDirection);
 
             if (doorType != BaseDungeonPiece.EntranceType.OPENING && doorType != BaseDungeonPiece.EntranceType.CRACKED_DOOR) {
 
