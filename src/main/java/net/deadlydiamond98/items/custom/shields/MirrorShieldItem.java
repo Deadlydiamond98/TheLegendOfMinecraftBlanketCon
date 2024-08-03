@@ -1,6 +1,6 @@
 package net.deadlydiamond98.items.custom.shields;
 
-import net.deadlydiamond98.items.custom.manaItems.MagicItem;
+import net.deadlydiamond98.magiclib.items.MagicItemData;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ShieldItem;
@@ -11,7 +11,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class MirrorShieldItem extends ShieldItem implements MagicItem {
+public class MirrorShieldItem extends ShieldItem implements MagicItemData {
     public MirrorShieldItem(Settings settings) {
         super(settings);
     }

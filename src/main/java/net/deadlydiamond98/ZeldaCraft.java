@@ -9,7 +9,6 @@ import net.deadlydiamond98.entities.monsters.BubbleEntity;
 import net.deadlydiamond98.entities.monsters.FairyEntity;
 import net.deadlydiamond98.entities.monsters.KeeseEntity;
 import net.deadlydiamond98.entities.ZeldaEntities;
-import net.deadlydiamond98.events.AfterRespawnEvent;
 import net.deadlydiamond98.events.ZeldaServerLifecycleEvents;
 import net.deadlydiamond98.events.ZeldaSeverTickEvent;
 import net.deadlydiamond98.items.ZeldaItems;
@@ -33,7 +32,6 @@ public class ZeldaCraft implements ModInitializer {
 	public static final String MOD_ID = "zeldacraft";
 
 	//Custom Zelda Font
-	public static final Identifier ZELDA_FONT = new Identifier(MOD_ID, "zeldafont");
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
 	@Override
@@ -53,7 +51,6 @@ public class ZeldaCraft implements ModInitializer {
 
 		//Events
 //		PlayerRightClickedEntityEvent.register();
-		AfterRespawnEvent.register();
 		ZeldaSeverTickEvent.registerTickEvent();
 		ZeldaServerLifecycleEvents.register();
 //		AttackBlockEvent.register();

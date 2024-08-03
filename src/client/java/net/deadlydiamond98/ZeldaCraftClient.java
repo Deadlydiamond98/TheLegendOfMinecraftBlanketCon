@@ -1,20 +1,15 @@
 package net.deadlydiamond98;
 
-import com.mojang.brigadier.CommandDispatcher;
-import com.mojang.brigadier.arguments.StringArgumentType;
 import net.deadlydiamond98.blocks.ZeldaBlocks;
 import net.deadlydiamond98.commands.ZeldaClientCommands;
 import net.deadlydiamond98.entities.ZeldaEntities;
 import net.deadlydiamond98.events.ClientTickEvent;
 import net.deadlydiamond98.items.ZeldaItems;
-import net.deadlydiamond98.items.custom.manaItems.MagicItem;
 import net.deadlydiamond98.model.entity.*;
 import net.deadlydiamond98.networking.ZeldaClientPackets;
 import net.deadlydiamond98.particle.ZeldaParticleFactory;
 import net.deadlydiamond98.renderer.FairyCompanionRenderer;
-import net.deadlydiamond98.renderer.ManaHudOverlay;
 import net.deadlydiamond98.renderer.ShootingStarRenderer;
-import net.deadlydiamond98.renderer.armor.ZeldaEquipmentRedererRegistry;
 import net.deadlydiamond98.renderer.entity.*;
 import net.deadlydiamond98.renderer.entity.bombs.BombEntityRenderer;
 import net.deadlydiamond98.renderer.entity.bombs.BombchuEntityRenderer;
@@ -29,35 +24,15 @@ import net.deadlydiamond98.renderer.entity.MagicFireProjectileRenderer;
 import net.deadlydiamond98.renderer.entity.projectile_items.ZeldaArrowRenderer;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
-import net.fabricmc.fabric.api.client.command.v2.ClientCommandManager;
-import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
-import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
-import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback;
 import net.fabricmc.fabric.api.client.rendering.v1.*;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.color.world.BiomeColors;
 import net.minecraft.client.color.world.GrassColors;
-import net.minecraft.client.gl.ShaderProgram;
 import net.minecraft.client.item.ModelPredicateProviderRegistry;
 import net.minecraft.client.render.RenderLayer;
-import net.minecraft.client.render.VertexFormat;
-import net.minecraft.client.render.VertexFormats;
-import net.minecraft.client.render.entity.PlayerEntityRenderer;
 import net.minecraft.client.render.entity.model.BatEntityModel;
-import net.minecraft.entity.EntityType;
 import net.minecraft.item.DyeableItem;
 import net.minecraft.nbt.NbtElement;
-import net.minecraft.resource.ResourceFactory;
-import net.minecraft.text.MutableText;
-import net.minecraft.text.Text;
-import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
-
-import java.io.IOException;
-import java.util.List;
-
-import static com.mojang.brigadier.builder.LiteralArgumentBuilder.literal;
-import static com.mojang.brigadier.builder.RequiredArgumentBuilder.argument;
 
 public class ZeldaCraftClient implements ClientModInitializer {
 
@@ -76,7 +51,6 @@ public class ZeldaCraftClient implements ClientModInitializer {
 		registerEntityRenderers();
 		registerModelLayers();
 		registerTintables();
-		HudRenderCallback.EVENT.register(new ManaHudOverlay());
 
 		ZeldaClientCommands.register();
 //		ZeldaEquipmentRedererRegistry.register();
@@ -111,38 +85,6 @@ public class ZeldaCraftClient implements ClientModInitializer {
 				default -> 0.0f;
 			};
 		}));
-
-		ItemTooltipCallback.EVENT.register((stack, context, lines) -> {
-			if (stack.getItem() instanceof MagicItem magicItem) {
-
-				int manaCost = magicItem.getManaCost();
-				Text attributeText = Text.literal(" " + manaCost).append(Text.translatable("attribute.zeldacraft.magic_cost")).formatted(Formatting.DARK_GREEN);
-				int insertIndex = findInsertIndex(lines);
-
-				boolean hasMainHandText = lines.stream()
-						.anyMatch(text -> text.getString().equals(Text.translatable("item.modifiers.mainhand").getString()));
-				if (!hasMainHandText) {
-					Text mainHandText = Text.translatable("item.modifiers.mainhand").formatted(Formatting.GRAY);
-					lines.add(insertIndex, Text.empty());
-					insertIndex++;
-					lines.add(insertIndex, mainHandText);
-					insertIndex++;
-				}
-				lines.add(insertIndex, attributeText);
-			}
-		});
-	}
-	private int findInsertIndex(List<Text> lines) {
-		int insertIndex = lines.size();
-		for (int i = 0; i < lines.size(); i++) {
-			String lineString = lines.get(i).getString();
-			if (lineString.contains("Attack Speed") || lineString.contains("Attack Damage")) {
-				insertIndex = i + 1;
-			} else if (lineString.contains("NBT") || lineString.contains(":")) {
-				insertIndex = Math.min(insertIndex, i);
-			}
-		}
-		return insertIndex;
 	}
 
 

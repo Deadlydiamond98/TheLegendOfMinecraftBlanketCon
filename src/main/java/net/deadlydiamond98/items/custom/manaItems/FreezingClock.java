@@ -1,14 +1,13 @@
 package net.deadlydiamond98.items.custom.manaItems;
 
 import net.deadlydiamond98.events.ZeldaSeverTickEvent;
+import net.deadlydiamond98.magiclib.items.consumers.MagicItem;
 import net.deadlydiamond98.sounds.ZeldaSounds;
-import net.deadlydiamond98.util.ManaHandler;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
@@ -20,26 +19,22 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class FreezingClock extends Item implements MagicItem {
+public class FreezingClock extends MagicItem {
     public FreezingClock(Settings settings) {
-        super(settings);
+        super(settings, 100);
     }
 
     @Override
-    public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
+    protected void doManaAction(PlayerEntity user, World world) {
+        super.doManaAction(user, world);
 
-        if (ManaHandler.CanRemoveManaFromPlayer(user, 100)) {
-            Box box = new Box(user.getBlockPos()).expand(5);
-            List<Entity> entities = world.getEntitiesByClass(Entity.class, box, entity -> !(entity instanceof PlayerEntity));
-            for (Entity entity : entities) {
-                ZeldaSeverTickEvent.addEntityToFrozen(entity, 100);
-            }
-            ManaHandler.removeManaFromPlayer(user, 100);
-            user.getItemCooldownManager().set(this, 200);
-            return TypedActionResult.success(user.getStackInHand(hand));
+
+        Box box = new Box(user.getBlockPos()).expand(5);
+        List<Entity> entities = world.getEntitiesByClass(Entity.class, box, entity -> !(entity instanceof PlayerEntity));
+        for (Entity entity : entities) {
+            ZeldaSeverTickEvent.addEntityToFrozen(entity, 100);
         }
-        user.getWorld().playSound(null, user.getBlockPos(), ZeldaSounds.NotEnoughMana, SoundCategory.PLAYERS, 1.0f, 1.0f);
-        return TypedActionResult.fail(user.getStackInHand(hand));
+        user.getItemCooldownManager().set(this, 200);
     }
 
     @Override
@@ -49,7 +44,9 @@ public class FreezingClock extends Item implements MagicItem {
     }
 
     @Override
-    public int getManaCost() {
-        return 100;
+    protected void doNoManaEvent(PlayerEntity user, World world) {
+        super.doNoManaEvent(user, world);
+        world.playSound(null, user.getBlockPos(), ZeldaSounds.NotEnoughMana,
+                SoundCategory.PLAYERS, 3.0f, 1.0f);
     }
 }

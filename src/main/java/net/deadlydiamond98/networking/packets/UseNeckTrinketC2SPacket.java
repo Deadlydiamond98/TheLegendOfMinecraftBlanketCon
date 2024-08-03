@@ -4,7 +4,6 @@ import dev.emi.trinkets.api.TrinketComponent;
 import dev.emi.trinkets.api.TrinketsApi;
 import net.deadlydiamond98.items.ZeldaItems;
 import net.deadlydiamond98.sounds.ZeldaSounds;
-import net.deadlydiamond98.util.ManaHandler;
 import net.deadlydiamond98.util.OtherPlayerData;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
 import net.minecraft.entity.effect.StatusEffect;
@@ -22,7 +21,7 @@ public class UseNeckTrinketC2SPacket {
         server.execute(() -> {
             TrinketComponent trinket = TrinketsApi.getTrinketComponent(player).get();
             if (trinket.isEquipped(ZeldaItems.Fairy_Pendant)) {
-                if (ManaHandler.CanRemoveManaFromPlayer(player, 2)) {
+                if (player.canRemoveMana( 2)) {
                     OtherPlayerData userO = (OtherPlayerData) player;
                     userO.setFairyState(!userO.isFairy());
                 }
@@ -40,9 +39,10 @@ public class UseNeckTrinketC2SPacket {
     }
 
     private static void applyPotionEffect(ServerPlayerEntity player, int mana, StatusEffect effect, int length, int level) {
-        if (ManaHandler.CanRemoveManaFromPlayer(player, mana)) {
+        if (player.canRemoveMana(mana)) {
             player.addStatusEffect(new StatusEffectInstance(effect, length, level));
-            ManaHandler.removeManaFromPlayer(player, mana);
+            player.removeMana(mana);
+
         }
         else {
             player.getWorld().playSound(null, player.getBlockPos(), ZeldaSounds.NotEnoughMana, SoundCategory.PLAYERS, 1.0f, 1.0f);

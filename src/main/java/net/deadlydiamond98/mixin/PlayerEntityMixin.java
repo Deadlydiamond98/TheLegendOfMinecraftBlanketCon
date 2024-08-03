@@ -5,30 +5,23 @@ import dev.emi.trinkets.api.TrinketsApi;
 import net.deadlydiamond98.items.ZeldaItems;
 import net.deadlydiamond98.networking.ZeldaServerPackets;
 import net.deadlydiamond98.sounds.ZeldaSounds;
-import net.deadlydiamond98.statuseffects.ZeldaStatusEffects;
-import net.deadlydiamond98.util.ManaHandler;
-import net.deadlydiamond98.util.ManaPlayerData;
 import net.deadlydiamond98.util.OtherPlayerData;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityDimensions;
-import net.minecraft.entity.EntityType;
 import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.damage.DamageTypes;
 import net.minecraft.entity.player.ItemCooldownManager;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.stat.Stat;
 import net.minecraft.stat.Stats;
-import net.minecraft.text.Text;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -38,20 +31,19 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(PlayerEntity.class)
-public abstract class PlayerEntityMixin implements OtherPlayerData, ManaPlayerData {
-
-    @Unique
-    private final PlayerEntity user = ((PlayerEntity)(Object)this);
+public abstract class PlayerEntityMixin implements OtherPlayerData {
 
 
     @Unique
-    private final LivingEntityAccessor livingEntityAccessor = (LivingEntityAccessor) user;
+    private final LivingEntityAccessor livingEntityAccessor = (LivingEntityAccessor) getPlayer();
 
     @Shadow public abstract void tick();
 
     @Shadow public abstract void incrementStat(Stat<?> stat);
 
     @Shadow public abstract ItemCooldownManager getItemCooldownManager();
+
+    @Shadow public abstract void remove(Entity.RemovalReason reason);
 
     @Unique
     private DamageSource shieldSource;
@@ -90,21 +82,27 @@ public abstract class PlayerEntityMixin implements OtherPlayerData, ManaPlayerDa
         this.wasOnGround = true;
     }
 
+    @Unique
+    private PlayerEntity getPlayer() {
+        return (PlayerEntity)(Object)this;
+    }
+
     @Inject(method = "tick", at = @At("HEAD"))
     public void tick(CallbackInfo ci) {
 
-        if ((!this.isFairy() && this.transitionFairy) || (this.isFairy() && (user.isSubmergedInWater() || user.isOnFire()))) {
-            this.removeFairyEffect(user);
+        if ((!this.isFairy() && this.transitionFairy) || (this.isFairy() && (getPlayer().isSubmergedInWater() || getPlayer().isOnFire()))) {
+            this.removeFairyEffect(getPlayer());
         }
 
-        if (!user.getWorld().isClient()) {
-            ZeldaServerPackets.sendPlayerStatsPacket((ServerPlayerEntity) user, this.manaLevelZelda, this.manaMaxLevelZelda,
+        if (!getPlayer().getWorld().isClient()) {
+            ZeldaServerPackets.sendPlayerStatsPacket((ServerPlayerEntity) getPlayer(),
                     this.fairyControl, this.fairyfriend);
         }
 
-        TrinketComponent trinket = TrinketsApi.getTrinketComponent(user).get();
+        TrinketComponent trinket = TrinketsApi.getTrinketComponent(getPlayer()).get();
         if (!trinket.isEquipped(ZeldaItems.Fairy_Bell)) {
             this.setFairyFriend(false);
+            getPlayer().enableManaRegen(false, 40, 2);
         } else if (!trinket.isEquipped(ZeldaItems.Jump_Pendant)) {
             this.enableddoubleJump(false);
         }
@@ -114,39 +112,39 @@ public abstract class PlayerEntityMixin implements OtherPlayerData, ManaPlayerDa
     }
 
     private void fairyAction() {
-        user.setNoGravity(this.isFairy());
+        getPlayer().setNoGravity(this.isFairy());
 
         if (this.isFairy()) {
-            if (ManaHandler.CanRemoveManaFromPlayer(user, 2)) {
-                ManaHandler.removeManaFromPlayer(user, 2);
-                user.getAbilities().allowFlying = true;
-                user.getAbilities().flying = true;
+            if (getPlayer().canRemoveMana(2)) {
+                getPlayer().removeMana(2);
+                getPlayer().getAbilities().allowFlying = true;
+                getPlayer().getAbilities().flying = true;
                 this.transitionFairy = true;
-                user.getAbilities().setFlySpeed(0.02f);
-                user.calculateDimensions();
+                getPlayer().getAbilities().setFlySpeed(0.02f);
+                getPlayer().calculateDimensions();
             }
             else {
-                this.removeFairyEffect(user);
-                user.getWorld().playSound(null, user.getBlockPos(), ZeldaSounds.NotEnoughMana, SoundCategory.PLAYERS, 1.0f, 1.0f);
+                this.removeFairyEffect(getPlayer());
+                getPlayer().getWorld().playSound(null, getPlayer().getBlockPos(), ZeldaSounds.NotEnoughMana, SoundCategory.PLAYERS, 1.0f, 1.0f);
             }
         }
     }
 
     private void doubleJumpAction() {
-        if (this.doubleJumpEnabled() && ManaHandler.CanRemoveManaFromPlayer(user, 10)
+        if (this.doubleJumpEnabled() && getPlayer().canRemoveMana(10)
                 && livingEntityAccessor.getJumping() && this.hasntDoubleJumpped()
                 && livingEntityAccessor.getJumpingCooldown() == 0) {
 
-            user.jump();
+            getPlayer().jump();
             this.canDoubleJump(false);
         }
 
-        if (user.isOnGround() && !this.wasOnGround() && !this.hasntDoubleJumpped()) {
+        if (getPlayer().isOnGround() && !this.wasOnGround() && !this.hasntDoubleJumpped()) {
             this.canDoubleJump(true);
-            ManaHandler.removeManaFromPlayer(user, 10);
+            getPlayer().removeMana(10);
         }
 
-        this.setOnGround(user.isOnGround());
+        this.setOnGround(getPlayer().isOnGround());
     }
 
     @Inject(method = "writeCustomDataToNbt", at = @At("HEAD"))
@@ -228,27 +226,31 @@ public abstract class PlayerEntityMixin implements OtherPlayerData, ManaPlayerDa
 
     @Unique
     private void damageShieldItem(float amount) {
-        if (!user.getWorld().isClient) {
+        if (!getPlayer().getWorld().isClient) {
             this.incrementStat(Stats.USED.getOrCreateStat(livingEntityAccessor.getActiveItemStack().getItem()));
         }
 
         if (amount >= 3.0F) {
             int i = 1 + MathHelper.floor(amount);
-            Hand hand = user.getActiveHand();
-            livingEntityAccessor.getActiveItemStack().damage(i, user, (player) -> {
+            Hand hand = getPlayer().getActiveHand();
+            livingEntityAccessor.getActiveItemStack().damage(i, getPlayer(), (player) -> {
                 player.sendToolBreakStatus(hand);
             });
             if (livingEntityAccessor.getActiveItemStack().isEmpty()) {
                 if (hand == Hand.MAIN_HAND) {
-                    user.equipStack(EquipmentSlot.MAINHAND, ItemStack.EMPTY);
+                    getPlayer().equipStack(EquipmentSlot.MAINHAND, ItemStack.EMPTY);
                 } else {
-                    user.equipStack(EquipmentSlot.OFFHAND, ItemStack.EMPTY);
+                    getPlayer().equipStack(EquipmentSlot.OFFHAND, ItemStack.EMPTY);
                 }
                 livingEntityAccessor.setActiveItemStack(ItemStack.EMPTY);
-                user.playSound(SoundEvents.ITEM_SHIELD_BREAK, 0.8F, 0.8F + user.getWorld().random.nextFloat() * 0.4F);
+                getPlayer().playSound(SoundEvents.ITEM_SHIELD_BREAK, 0.8F, 0.8F + getPlayer().getWorld().random.nextFloat() * 0.4F);
             }
         }
     }
+
+
+
+
 
     @Override
     public boolean hasArrowBeenRemoved() {
@@ -260,22 +262,6 @@ public abstract class PlayerEntityMixin implements OtherPlayerData, ManaPlayerDa
         this.arrowRemoved = removed;
     }
 
-    @Override
-    public void setMana(int value) {
-        this.manaLevelZelda = value;
-    }
-    @Override
-    public int getMana() {
-        return this.manaLevelZelda;
-    }
-    @Override
-    public void setMaxMana(int value) {
-        this.manaMaxLevelZelda = value;
-    }
-    @Override
-    public int getMaxMana() {
-        return this.manaMaxLevelZelda;
-    }
     @Override
     public boolean isFairy() {
         return fairyControl;

@@ -1,25 +1,12 @@
 package net.deadlydiamond98.mixin;
 
-import dev.emi.trinkets.api.TrinketComponent;
-import dev.emi.trinkets.api.TrinketsApi;
-import net.deadlydiamond98.items.ZeldaItems;
-import net.deadlydiamond98.items.custom.bomb.BombchuItem;
-import net.deadlydiamond98.items.custom.custombundle.BombBag;
-import net.deadlydiamond98.items.custom.bomb.BombItem;
 import net.deadlydiamond98.items.custom.EmeraldItem;
-import net.deadlydiamond98.items.custom.custombundle.Quiver;
-import net.deadlydiamond98.items.custom.custombundle.CustomBundle;
 import net.deadlydiamond98.items.custom.manaItems.restoring.StarFragment;
 import net.deadlydiamond98.sounds.ZeldaSounds;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ArrowItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.stat.Stats;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;

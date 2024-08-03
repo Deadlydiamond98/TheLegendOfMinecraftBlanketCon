@@ -6,7 +6,6 @@ import net.deadlydiamond98.entities.ZeldaEntities;
 import net.deadlydiamond98.items.custom.Swords.MagicSword;
 import net.deadlydiamond98.items.custom.Swords.MasterSword;
 import net.deadlydiamond98.sounds.ZeldaSounds;
-import net.deadlydiamond98.util.ManaHandler;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
 import net.minecraft.item.Item;
 import net.minecraft.network.PacketByteBuf;
@@ -23,7 +22,7 @@ public class ShootBeamC2SPacket {
         server.execute(() -> {
             ServerWorld world = (ServerWorld) player.getWorld();
             Item item = player.getMainHandStack().getItem();
-            if (((player.getHealth() == player.getMaxHealth()) || ManaHandler.CanRemoveManaFromPlayer(player, 3) || player.isCreative())
+            if (((player.getHealth() == player.getMaxHealth()) || player.canRemoveMana(3) || player.isCreative())
                     && !(player.getItemCooldownManager().isCoolingDown(item))
                     && player.handSwinging) {
                 if (item instanceof MagicSword) {
@@ -41,7 +40,7 @@ public class ShootBeamC2SPacket {
                     ((MagicSword) item).setSoundPlay(true);
                     player.playSound(ZeldaSounds.SwordShoot, SoundCategory.PLAYERS, 1, 1);
                     if (!(player.getHealth() == player.getMaxHealth())) {
-                        ManaHandler.removeManaFromPlayer(player, 3);
+                        player.removeMana(3);
                     }
                 }
                 else if (item instanceof MasterSword) {
@@ -56,7 +55,7 @@ public class ShootBeamC2SPacket {
                     ((MasterSword) item).setSoundPlay(true);
                     player.playSound(ZeldaSounds.SwordShoot, SoundCategory.PLAYERS, 1, 1);
                     if (!(player.getHealth() == player.getMaxHealth())) {
-                        ManaHandler.removeManaFromPlayer(player, 3);
+                        player.removeMana(3);
                     }
                 }
             }

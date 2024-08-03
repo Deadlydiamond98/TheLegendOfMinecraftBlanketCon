@@ -18,16 +18,18 @@ import net.deadlydiamond98.items.custom.custombundle.BombBag;
 import net.deadlydiamond98.items.custom.custombundle.Quiver;
 import net.deadlydiamond98.items.custom.manaItems.*;
 import net.deadlydiamond98.items.custom.manaItems.restoring.MagicCandy;
-import net.deadlydiamond98.items.custom.manaItems.restoring.MagicFood;
 import net.deadlydiamond98.items.custom.manaItems.restoring.MagicJar;
 import net.deadlydiamond98.items.custom.manaItems.restoring.StarFragment;
 import net.deadlydiamond98.items.custom.manaItems.wearable.*;
 import net.deadlydiamond98.items.custom.shields.HylianShieldItem;
+import net.deadlydiamond98.magiclib.items.consumables.MagicConsumable;
+import net.deadlydiamond98.magiclib.items.consumables.MagicFood;
 import net.deadlydiamond98.sounds.ZeldaSounds;
 import net.deadlydiamond98.util.ZeldaTags;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroupEntries;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
+import net.minecraft.entity.mob.SlimeEntity;
 import net.minecraft.item.*;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
@@ -137,19 +139,19 @@ public class ZeldaItems {
     public static final Item Magic_Jar = registerItem("magic_jar", new MagicJar(
             new FabricItemSettings().food(new FoodComponent.Builder().alwaysEdible().snack().build()), 10));
     public static final Item Magic_Candy = registerItem("magic_candy", new MagicCandy(
-            new FabricItemSettings().maxCount(16).food(new FoodComponent.Builder().alwaysEdible().snack().build())));
+            new FabricItemSettings().maxCount(16).food(new FoodComponent.Builder().alwaysEdible().snack().build()), 0));
     public static final Item Magic_Tart = registerItem("magic_tart", new MagicFood(
             new FabricItemSettings().food(new FoodComponent.Builder().hunger(7).saturationModifier(2.0f).alwaysEdible().build()), 40));
     public static final Item Magic_Flan = registerItem("magic_flan", new MagicFood(
             new FabricItemSettings().food(new FoodComponent.Builder().hunger(8).saturationModifier(4.0f).alwaysEdible().build()), 100));
-    public static final Item Magic_Upgrade = registerItem("magic_upgrade", new MagicUpgrade(
-            new FabricItemSettings().maxCount(16)));
-    public static final Item Magic_Downgrade = registerItem("magic_downgrade", new MagicDowngrade(
-            new FabricItemSettings().maxCount(16)));
+    public static final Item Magic_Upgrade = registerItem("magic_upgrade", new MagicContainer(
+            new FabricItemSettings().maxCount(16), 500, 100, true, true, 20));
+    public static final Item Magic_Downgrade = registerItem("magic_downgrade", new EmptyMagicContainer(
+            new FabricItemSettings().maxCount(16), 100, 100, true, 20));
 
     //Magic Items
     public static final Item Magic_Powder = registerItem("magic_powder", new MagicPowder(
-            new FabricItemSettings().maxCount(16)));
+            new FabricItemSettings().maxCount(16), 5, true, 10, true));
     public static final Item Clock_Of_Time_Freeze = registerItem("clock_of_time_freeze", new FreezingClock(
             new FabricItemSettings()));
 
@@ -171,7 +173,7 @@ public class ZeldaItems {
     public static final Item Emerald_Chunk = registerItem("emerald_chunk", new EmeraldItem(
             new FabricItemSettings()));
     public static final Item Star_Fragment = registerItem("star_fragment", new StarFragment(
-            new FabricItemSettings(), 25));
+            new FabricItemSettings(), 25, true, 5));
     public static final Item Stardust = registerItem("stardust", new Item(
             new FabricItemSettings()));
     public static final Item Kokiri_Cloth = registerItem("kokiri_cloth", new Item(

@@ -2,11 +2,7 @@ package net.deadlydiamond98.events.weather;
 
 import net.deadlydiamond98.ZeldaCraft;
 import net.deadlydiamond98.particle.ZeldaParticles;
-import net.deadlydiamond98.util.ManaHandler;
 import net.deadlydiamond98.world.ZeldaWorldDataManager;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.particle.DefaultParticleType;
-import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
@@ -44,8 +40,8 @@ public class MeteorShower {
                 world.spawnParticles(ZeldaParticles.Meteor_Shower_Rain_Particle, player.getX() + offsetX, spawnY, player.getZ() + offsetZ,
                         1, 0, 0, 0, 0.2);
 
-                if (world.getRandom().nextInt(100) >= 95 && ManaHandler.CanAddManaToPlayer(player, 1)) {
-                    ManaHandler.addManaToPlayer(player, 1);
+                if (world.getRandom().nextInt(100) >= 95) {
+                    player.addMana(1);
                 }
             });
         }

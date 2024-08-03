@@ -1,27 +1,20 @@
 package net.deadlydiamond98.items.custom.boomerang;
 
 import net.deadlydiamond98.entities.ZeldaEntities;
-import net.deadlydiamond98.entities.projectiles.boomerangs.BaseBoomerangProjectile;
-import net.deadlydiamond98.entities.projectiles.boomerangs.IronBoomerang;
 import net.deadlydiamond98.entities.projectiles.boomerangs.MagicalBoomerang;
-import net.deadlydiamond98.entities.projectiles.boomerangs.WoodBoomerang;
-import net.deadlydiamond98.items.custom.manaItems.MagicItem;
-import net.deadlydiamond98.util.ManaHandler;
+import net.deadlydiamond98.magiclib.items.MagicItemData;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.DyeableItem;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Hand;
-import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class MagicBoomerangItem extends BaseBoomerangItem implements MagicItem {
+public class MagicBoomerangItem extends BaseBoomerangItem implements MagicItemData {
     private static final int DEFAULT_COLOR = 0xff4444;
 
     public MagicBoomerangItem(Settings settings) {
@@ -35,8 +28,8 @@ public class MagicBoomerangItem extends BaseBoomerangItem implements MagicItem {
 
     @Override
     protected void damageItem(ItemStack itemStack, PlayerEntity user, Hand hand) {
-        if (ManaHandler.CanRemoveManaFromPlayer(user, 3)) {
-            ManaHandler.removeManaFromPlayer(user, 3);
+        if (user.canRemoveMana(3)) {
+            user.removeMana(3);
         }
         else {
             super.damageItem(itemStack, user, hand);

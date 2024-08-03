@@ -3,9 +3,7 @@ package net.deadlydiamond98.items.custom.manaItems.wearable;
 import dev.emi.trinkets.api.SlotReference;
 import dev.emi.trinkets.api.TrinketItem;
 import net.deadlydiamond98.entities.PlayerFairyCompanion;
-import net.deadlydiamond98.items.ZeldaItems;
 import net.deadlydiamond98.sounds.ZeldaSounds;
-import net.deadlydiamond98.util.ManaHandler;
 import net.deadlydiamond98.util.OtherPlayerData;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.LivingEntity;
@@ -29,16 +27,6 @@ public class FairyBell extends TrinketItem {
     }
 
     @Override
-    public void tick(ItemStack stack, SlotReference slot, LivingEntity entity) {
-        super.tick(stack, slot, entity);
-        if (entity instanceof PlayerEntity user) {
-            if (ManaHandler.CanAddManaToPlayer(user, 1) && user.age % 40 == 0) {
-                ManaHandler.addManaToPlayer(user, 1);
-            }
-        }
-    }
-
-    @Override
     public void onEquip(ItemStack stack, SlotReference slot, LivingEntity entity) {
         super.onEquip(stack, slot, entity);
 
@@ -46,6 +34,7 @@ public class FairyBell extends TrinketItem {
             ((OtherPlayerData) user).setFairyFriend(true);
             PlayerFairyCompanion playerFairyCompanion = new PlayerFairyCompanion(user.getWorld(), user);
             user.getWorld().spawnEntity(playerFairyCompanion);
+            user.enableManaRegen(true, 40, 2);
         }
     }
 
@@ -54,6 +43,7 @@ public class FairyBell extends TrinketItem {
         super.onUnequip(stack, slot, entity);
         if (entity instanceof PlayerEntity user) {
             ((OtherPlayerData) user).setFairyFriend(false);
+            user.enableManaRegen(false, 40, 2);
         }
     }
 

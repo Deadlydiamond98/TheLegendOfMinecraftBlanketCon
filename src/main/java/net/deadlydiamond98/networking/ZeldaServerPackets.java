@@ -77,11 +77,9 @@ public class ZeldaServerPackets {
         buf.writeEnumConstant(overlay);
         ServerPlayNetworking.send(player, DekuStunOverlayPacket, buf);
     }
-    public static void sendPlayerStatsPacket(ServerPlayerEntity player, int level, int maxLevel, boolean fairyControl,
+    public static void sendPlayerStatsPacket(ServerPlayerEntity player, boolean fairyControl,
                                              boolean fairyfriend) {
         PacketByteBuf buf = PacketByteBufs.create();
-        buf.writeInt(level);
-        buf.writeInt(maxLevel);
         buf.writeBoolean(fairyControl);
         buf.writeBoolean(fairyfriend);
         ServerPlayNetworking.send(player, PlayerStatsPacket, buf);

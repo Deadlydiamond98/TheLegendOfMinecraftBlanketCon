@@ -23,9 +23,9 @@
 		]
 	},
 	"mixins": [
-		"zeldacraft.mixins.json",
+      "zelda.mixins.json",
 		{
-			"config": "zeldacraft.client.mixins.json",
+			"config": "zelda.client.mixins.json",
 			"environment": "client"
 		}
 	],

@@ -1,6 +1,5 @@
 package net.deadlydiamond98.statuseffects;
 
-import net.deadlydiamond98.util.ManaHandler;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.AttributeContainer;
@@ -20,7 +19,7 @@ public class DegenerationStatusEffect extends InstantStatusEffect {
         super.onApplied(entity, attributes, amplifier);
         if (entity instanceof PlayerEntity user) {
             if (!user.getWorld().isClient()) {
-                ManaHandler.removeManaFromPlayer(user, (20 * (amplifier + 1)));
+                user.removeMana(20 * (amplifier + 1));
             }
         }
     }
@@ -30,7 +29,7 @@ public class DegenerationStatusEffect extends InstantStatusEffect {
         super.applyInstantEffect(source, attacker, target, amplifier, proximity);
         if (target instanceof PlayerEntity user) {
             if (!user.getWorld().isClient()) {
-                ManaHandler.removeManaFromPlayer(user, (20 * (amplifier + 1)));
+                user.removeMana(20 * (amplifier + 1));
             }
         }
     }

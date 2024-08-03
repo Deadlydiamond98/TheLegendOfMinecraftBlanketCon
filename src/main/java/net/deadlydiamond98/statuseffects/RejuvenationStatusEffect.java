@@ -1,11 +1,9 @@
 package net.deadlydiamond98.statuseffects;
 
-import net.deadlydiamond98.util.ManaHandler;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.AttributeContainer;
 import net.minecraft.entity.effect.*;
-import net.minecraft.entity.player.PlayerEntity;
 import org.jetbrains.annotations.Nullable;
 
 public class RejuvenationStatusEffect extends InstantStatusEffect {

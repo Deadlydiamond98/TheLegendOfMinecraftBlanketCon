@@ -3,10 +3,9 @@ package net.deadlydiamond98.items.custom.manaItems;
 import net.deadlydiamond98.blocks.ZeldaBlocks;
 import net.deadlydiamond98.entities.ZeldaEntities;
 import net.deadlydiamond98.entities.monsters.BubbleEntity;
-import net.deadlydiamond98.entities.monsters.FairyEntity;
 import net.deadlydiamond98.items.ZeldaItems;
+import net.deadlydiamond98.magiclib.items.consumers.TransformationItem;
 import net.deadlydiamond98.sounds.ZeldaSounds;
-import net.deadlydiamond98.util.ManaHandler;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -15,42 +14,44 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.attribute.DefaultAttributeContainer;
+import net.minecraft.entity.attribute.DefaultAttributeRegistry;
+import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.mob.*;
-import net.minecraft.entity.passive.VillagerEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
 import net.minecraft.item.Items;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.registry.Registries;
 import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.property.Property;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Hand;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static net.minecraft.block.CoralParentBlock.WATERLOGGED;
+public class MagicPowder extends TransformationItem {
 
-public class MagicPowder extends Item implements MagicItem {
 
-    public static final Map<Block, Block> blockConversionMap = new HashMap<>();
+    public MagicPowder(Settings settings, int manaCost, boolean consumed, int cooldown, boolean hasDefault) {
+        super(settings, manaCost, consumed, cooldown, hasDefault, EntityType.SLIME);
+    }
 
-    static {
+    @Override
+    protected void initializeBlockConversions() {
+        super.initializeBlockConversions();
+
         blockConversionMap.put(Blocks.GRASS, ZeldaBlocks.Loot_Grass);
         blockConversionMap.put(Blocks.GRASS_BLOCK, Blocks.MYCELIUM);
 
@@ -103,120 +104,34 @@ public class MagicPowder extends Item implements MagicItem {
         blockConversionMap.put(Blocks.DEAD_TUBE_CORAL_WALL_FAN, Blocks.TUBE_CORAL_WALL_FAN);
     }
 
-    public MagicPowder(Settings settings) {
-        super(settings);
+    @Override
+    protected void initializeEntityConversions() {
+        super.initializeEntityConversions();
+        entityConversionMap.put(ZeldaEntities.Bubble_Entity, ZeldaEntities.Fairy_Entity);
+        entityConversionMap.put(EntityType.WITHER_SKELETON, EntityType.SKELETON);
+        entityConversionMap.put(EntityType.ZOMBIFIED_PIGLIN, EntityType.PIGLIN);
+        entityConversionMap.put(EntityType.ZOGLIN, EntityType.HOGLIN);
+        entityConversionMap.put(EntityType.WITCH, EntityType.VILLAGER);
     }
 
     @Override
-    public ActionResult useOnEntity(ItemStack stack, PlayerEntity user, LivingEntity entity, Hand hand) {
-        if (ManaHandler.CanRemoveManaFromPlayer(user, 10)) {
-            if (entity instanceof BubbleEntity) {
-                return convertEntity(ZeldaEntities.Fairy_Entity, entity, user, stack);
-            }
-            else if (entity instanceof WitherSkeletonEntity) {
-                return convertEntity(EntityType.SKELETON, entity, user, stack);
-            }
-            else if (entity instanceof ZombifiedPiglinEntity) {
-                return convertEntity(EntityType.PIGLIN, entity, user, stack);
-            }
-            else if (entity instanceof ZoglinEntity) {
-                return convertEntity(EntityType.HOGLIN, entity, user, stack);
-            }
-            else if (entity instanceof WitchEntity) {
-                return convertEntity(EntityType.VILLAGER, entity, user, stack);
-            }
-            else if (!(entity instanceof SlimeEntity) && !(entity instanceof PlayerEntity)) {
-                return convertEntity(EntityType.SLIME, entity, user, stack);
-            }
-        }
-        user.getWorld().playSound(null, user.getBlockPos(), ZeldaSounds.NotEnoughMana, SoundCategory.PLAYERS, 1.0f, 1.0f);
-        return super.useOnEntity(stack, user, entity, hand);
-    }
-
-    private <T extends Entity> ActionResult convertEntity(EntityType<T> converted, Entity entity, PlayerEntity user, ItemStack stack) {
-        World world = user.getWorld();
-
-        Entity newEntity = converted.create(world);
-        if (newEntity == null) {
-            return ActionResult.FAIL;
-        }
-
-        newEntity.setPos(entity.getX(), entity.getY() + 0.01, entity.getZ());
-
-        if (newEntity instanceof SlimeEntity slime) {
-            Box boundingBox = entity.getBoundingBox();
-
-            double width = boundingBox.getXLength();
-            double height = boundingBox.getYLength();
-            double depth = boundingBox.getZLength();
-            double volume = width * height * depth;
-            volume = volume == 0 ? 1 : volume;
-            slime.setSize((int) volume, false);
-        }
-
-        entity.discard();
-        world.spawnEntity(newEntity);
-
-        ManaHandler.removeManaFromPlayer(user, 10);
-        stack.decrement(1);
-        user.getItemCooldownManager().set(this, 20);
-
-        world.playSound(null, newEntity.getBlockPos(), ZeldaSounds.Transform,
-                SoundCategory.PLAYERS, 1.0f, 1.0f);
-
-        addParticles(user, entity.getX(), entity.getY(), entity.getZ());
-
-        return ActionResult.SUCCESS;
+    protected void initializeItemConversions() {
+        super.initializeItemConversions();
+        itemConversionMap.put(Items.ARROW, ZeldaItems.Silver_Arrow);
     }
 
     @Override
     public ActionResult useOnBlock(ItemUsageContext context) {
-        World world = context.getWorld();
-        BlockPos pos = context.getBlockPos();
-        BlockPos particlePos = pos.offset(context.getSide(), 1);
-        BlockState state = world.getBlockState(pos);
-
-        if (ManaHandler.CanRemoveManaFromPlayer(context.getPlayer(), 10)) {
-            Block replacementBlock = blockConversionMap.get(state.getBlock());
-            if (replacementBlock != null) {
-                BlockState newState = replacementBlock.getDefaultState();
-
-                for (Property<?> property : state.getProperties()) {
-                    if (newState.contains(property)) {
-                        newState = copyProperty(state, newState, property);
-                    }
-                }
-
-                world.setBlockState(pos, newState);
-
-            }
-
-            Box box = new Box(particlePos);
-            List<Entity> entities = world.getEntitiesByClass(Entity.class, box, entity -> entity instanceof ItemEntity);
-
-            for (Entity entity : entities) {
-                ItemEntity itemEntity = (ItemEntity) entity;
-                if (itemEntity.getStack().isOf(Items.ARROW)) {
-                    ItemStack item = ZeldaItems.Silver_Arrow.getDefaultStack();
-                    item.setCount(itemEntity.getStack().getCount());
-                    itemEntity.setStack(item);
-                }
-            }
-
-            world.playSound(null, pos, ZeldaSounds.Transform,
-                    SoundCategory.PLAYERS, 1.0f, 1.0f);
-            addParticles(context.getPlayer(), particlePos.getX(), particlePos.getY(), particlePos.getZ());
-            ManaHandler.removeManaFromPlayer(context.getPlayer(), 10);
-            context.getStack().decrement(1);
-            context.getPlayer().getItemCooldownManager().set(this, 20);
-            return ActionResult.SUCCESS;
-        }
-        world.playSound(null, context.getPlayer().getBlockPos(), ZeldaSounds.NotEnoughMana, SoundCategory.PLAYERS, 1.0f, 1.0f);
+        context.getWorld().playSound(null, context.getBlockPos(), ZeldaSounds.Transform,
+                SoundCategory.PLAYERS, 1.0f, 1.0f);
         return super.useOnBlock(context);
     }
 
-    private static <T extends Comparable<T>> BlockState copyProperty(BlockState fromState, BlockState toState, Property<T> property) {
-        return toState.with(property, fromState.get(property));
+    @Override
+    public ActionResult useOnEntity(ItemStack stack, PlayerEntity user, LivingEntity entity, Hand hand) {
+        user.getWorld().playSound(null, user.getBlockPos(), ZeldaSounds.Transform,
+                SoundCategory.PLAYERS, 1.0f, 1.0f);
+        return super.useOnEntity(stack, user, entity, hand);
     }
 
     private void addParticles(PlayerEntity user, double x, double y, double z) {
@@ -232,10 +147,5 @@ public class MagicPowder extends Item implements MagicItem {
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
         tooltip.add(Text.translatable("item.zeldacraft.magic_powder.tooltipa".formatted(Formatting.GREEN)));
         tooltip.add(Text.translatable("item.zeldacraft.magic_powder.tooltipb".formatted(Formatting.GREEN)));
-    }
-
-    @Override
-    public int getManaCost() {
-        return 10;
     }
 }
