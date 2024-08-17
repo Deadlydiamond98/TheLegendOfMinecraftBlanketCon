@@ -102,6 +102,22 @@ public class ZeldaCreativeTabs {
                         //Lootables
                         entry.add(ZeldaBlocks.Loot_Grass);
                         entry.add(ZeldaBlocks.Plain_Pot);
+                        entry.add(ZeldaBlocks.White_Pot);
+                        entry.add(ZeldaBlocks.Light_Gray_Pot);
+                        entry.add(ZeldaBlocks.Gray_Pot);
+                        entry.add(ZeldaBlocks.Black_Pot);
+                        entry.add(ZeldaBlocks.Brown_Pot);
+                        entry.add(ZeldaBlocks.Red_Pot);
+                        entry.add(ZeldaBlocks.Orange_Pot);
+                        entry.add(ZeldaBlocks.Yellow_Pot);
+                        entry.add(ZeldaBlocks.Lime_Pot);
+                        entry.add(ZeldaBlocks.Green_Pot);
+                        entry.add(ZeldaBlocks.Cyan_Pot);
+                        entry.add(ZeldaBlocks.Light_Blue_Pot);
+                        entry.add(ZeldaBlocks.Blue_Pot);
+                        entry.add(ZeldaBlocks.Purple_Pot);
+                        entry.add(ZeldaBlocks.Magenta_Pot);
+                        entry.add(ZeldaBlocks.Pink_Pot);
                         //Dungeon 1 Build Palette
                         entry.add(ZeldaBlocks.Secret_Cracked_Stone_Brick);
                         entry.add(ZeldaBlocks.Brown_Dungeoncite_Brick);

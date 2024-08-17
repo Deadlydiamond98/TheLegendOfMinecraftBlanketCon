@@ -43,9 +43,11 @@ import java.util.Map;
 
 public class MagicPowder extends TransformationItem {
 
+    private BlockPos particlePos;
 
     public MagicPowder(Settings settings, int manaCost, boolean consumed, int cooldown, boolean hasDefault) {
         super(settings, manaCost, consumed, cooldown, hasDefault, EntityType.SLIME);
+        this.particlePos = new BlockPos(0, 0,0);
     }
 
     @Override
@@ -122,16 +124,29 @@ public class MagicPowder extends TransformationItem {
 
     @Override
     public ActionResult useOnBlock(ItemUsageContext context) {
-        context.getWorld().playSound(null, context.getBlockPos(), ZeldaSounds.Transform,
-                SoundCategory.PLAYERS, 1.0f, 1.0f);
+        this.particlePos = context.getBlockPos().offset(context.getSide(), 1);
         return super.useOnBlock(context);
     }
 
     @Override
     public ActionResult useOnEntity(ItemStack stack, PlayerEntity user, LivingEntity entity, Hand hand) {
-        user.getWorld().playSound(null, user.getBlockPos(), ZeldaSounds.Transform,
-                SoundCategory.PLAYERS, 1.0f, 1.0f);
+        this.particlePos = entity.getBlockPos();
         return super.useOnEntity(stack, user, entity, hand);
+    }
+
+    @Override
+    protected void consumeMana(PlayerEntity user, ItemStack stack, World world) {
+        super.consumeMana(user, stack, world);
+        world.playSound(null, user.getBlockPos(), ZeldaSounds.Transform,
+                SoundCategory.PLAYERS, 1.0f, 1.0f);
+        addParticles(user, this.particlePos.getX(), this.particlePos.getY(), this.particlePos.getZ());
+    }
+
+    @Override
+    protected void doNoManaEvent(PlayerEntity user, World world) {
+        super.doNoManaEvent(user, world);
+        world.playSound(null, user.getBlockPos(), ZeldaSounds.NotEnoughMana,
+                SoundCategory.PLAYERS, 1.0f, 1.0f);
     }
 
     private void addParticles(PlayerEntity user, double x, double y, double z) {

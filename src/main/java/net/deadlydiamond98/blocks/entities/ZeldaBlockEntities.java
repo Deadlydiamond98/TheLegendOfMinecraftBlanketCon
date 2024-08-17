@@ -15,7 +15,23 @@ public class ZeldaBlockEntities {
 
     public static void registerBlockEntities() {
         Block[] lootPotBlocks = new Block[]{
-                ZeldaBlocks.Plain_Pot
+                ZeldaBlocks.Plain_Pot,
+                ZeldaBlocks.Red_Pot,
+                ZeldaBlocks.Orange_Pot,
+                ZeldaBlocks.Yellow_Pot,
+                ZeldaBlocks.Lime_Pot,
+                ZeldaBlocks.Green_Pot,
+                ZeldaBlocks.Blue_Pot,
+                ZeldaBlocks.Light_Blue_Pot,
+                ZeldaBlocks.Cyan_Pot,
+                ZeldaBlocks.Purple_Pot,
+                ZeldaBlocks.Magenta_Pot,
+                ZeldaBlocks.Pink_Pot,
+                ZeldaBlocks.White_Pot,
+                ZeldaBlocks.Black_Pot,
+                ZeldaBlocks.Gray_Pot,
+                ZeldaBlocks.Light_Gray_Pot,
+                ZeldaBlocks.Brown_Pot
         };
 
         LOOT_POT = Registry.register(Registries.BLOCK_ENTITY_TYPE,

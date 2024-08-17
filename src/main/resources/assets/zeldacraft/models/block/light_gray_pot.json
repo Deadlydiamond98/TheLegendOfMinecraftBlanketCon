@@ -1,0 +1,71 @@
+{
+	"texture_size": [32, 16],
+	"textures": {
+		"0": "zeldacraft:block/light_gray_pot",
+		"particle": "minecraft:block/light_gray_terracotta"
+	},
+	"elements": [
+		{
+			"from": [5, 0, 5],
+			"to": [11, 6, 11],
+			"faces": {
+				"north": {"uv": [0, 0, 3, 6], "texture": "#0"},
+				"east": {"uv": [0, 0, 3, 6], "texture": "#0"},
+				"south": {"uv": [0, 0, 3, 6], "texture": "#0"},
+				"west": {"uv": [0, 0, 3, 6], "texture": "#0"},
+				"up": {"uv": [3, 0, 6, 6], "texture": "#0"},
+				"down": {"uv": [6, 0, 9, 6], "texture": "#0"}
+			}
+		},
+		{
+			"from": [6.5, 6, 6.5],
+			"to": [9.5, 7, 9.5],
+			"faces": {
+				"north": {"uv": [2, 7, 3.5, 8], "texture": "#0"},
+				"east": {"uv": [2, 7, 3.5, 8], "texture": "#0"},
+				"south": {"uv": [2, 7, 3.5, 8], "texture": "#0"},
+				"west": {"uv": [2, 7, 3.5, 8], "texture": "#0"},
+				"up": {"uv": [6.5, 1.5, 8, 4.5], "texture": "#0"},
+				"down": {"uv": [6.5, 1.5, 8, 4.5], "texture": "#0"}
+			}
+		},
+		{
+			"from": [6, 7, 6],
+			"to": [10, 8, 10],
+			"faces": {
+				"north": {"uv": [2, 6, 4, 7], "texture": "#0"},
+				"east": {"uv": [2, 6, 4, 7], "texture": "#0"},
+				"south": {"uv": [2, 6, 4, 7], "texture": "#0"},
+				"west": {"uv": [2, 6, 4, 7], "texture": "#0"},
+				"up": {"uv": [0, 6, 2, 10], "texture": "#0"},
+				"down": {"uv": [0, 10, 2, 14], "texture": "#0"}
+			}
+		}
+	],
+	"display": {
+		"thirdperson_righthand": {
+			"translation": [0, 3.25, 0]
+		},
+		"thirdperson_lefthand": {
+			"translation": [0, 3.25, 0]
+		},
+		"firstperson_righthand": {
+			"translation": [2.25, 4.5, 0]
+		},
+		"firstperson_lefthand": {
+			"translation": [2.5, 4.5, 0]
+		},
+		"ground": {
+			"rotation": [ 0, 0, 0 ],
+			"translation": [ 0, 3, 0],
+			"scale":[ 0.5, 0.5, 0.5 ]
+		},
+		"head": {
+			"translation": [0, 14.25, 0]
+		},
+		"gui": {
+			"rotation": [ 30, 225, 0 ],
+			"translation": [ 0, 2.25, 0]
+		}
+	}
+}

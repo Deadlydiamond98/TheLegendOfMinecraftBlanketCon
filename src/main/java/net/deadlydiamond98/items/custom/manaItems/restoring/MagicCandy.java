@@ -19,6 +19,8 @@ public class MagicCandy extends MagicFood {
     @Override
     public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
         user.addMana(user.getMaxMana());
+        world.playSound(null, user.getBlockPos(), ZeldaSounds.StarUsed,
+                SoundCategory.PLAYERS, 1.0f, 0.5f);
         return super.finishUsing(stack, world, user);
     }
 }

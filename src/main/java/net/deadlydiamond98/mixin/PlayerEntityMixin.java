@@ -103,8 +103,12 @@ public abstract class PlayerEntityMixin implements OtherPlayerData {
         if (!trinket.isEquipped(ZeldaItems.Fairy_Bell)) {
             this.setFairyFriend(false);
             getPlayer().enableManaRegen(false, 40, 2);
-        } else if (!trinket.isEquipped(ZeldaItems.Jump_Pendant)) {
+        }
+        if (!trinket.isEquipped(ZeldaItems.Jump_Pendant)) {
             this.enableddoubleJump(false);
+        }
+        if (!trinket.isEquipped(ZeldaItems.Fairy_Pendant)) {
+            this.setFairyState(false);
         }
 
         fairyAction();
