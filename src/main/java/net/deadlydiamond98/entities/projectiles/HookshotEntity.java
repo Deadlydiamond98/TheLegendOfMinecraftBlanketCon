@@ -45,7 +45,6 @@ public class HookshotEntity extends ProjectileEntity implements Ownable {
         this.length = length;
         this.returning = false;
         this.woodAttached = false;
-        this.prevLength = -1.0;
         ((OtherPlayerData) user).setHookUsability(false);
     }
 
