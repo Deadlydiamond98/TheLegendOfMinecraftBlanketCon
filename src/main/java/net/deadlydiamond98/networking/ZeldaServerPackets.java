@@ -24,6 +24,7 @@ public class ZeldaServerPackets {
     public static final Identifier SmashLootGrassPacket = new Identifier(ZeldaCraft.MOD_ID, "smash_loot_grass_packet");
     public static final Identifier DekuStunOverlayPacket = new Identifier(ZeldaCraft.MOD_ID, "deku_stun_overlay_packet");
     public static final Identifier PlayerStatsPacket = new Identifier(ZeldaCraft.MOD_ID, "player_stats_packet");
+    public static final Identifier EntityStatsPacket = new Identifier(ZeldaCraft.MOD_ID, "entity_stats_packet");
     public static final Identifier NeckTrinketPacket = new Identifier(ZeldaCraft.MOD_ID, "neck_trinket_packet");
     public static final Identifier BackTrinketPacket = new Identifier(ZeldaCraft.MOD_ID, "back_trinket_packet");
 
@@ -83,6 +84,12 @@ public class ZeldaServerPackets {
         buf.writeBoolean(fairyControl);
         buf.writeBoolean(fairyfriend);
         ServerPlayNetworking.send(player, PlayerStatsPacket, buf);
+    }
+    public static void sendEntityStatsPacket(ServerPlayerEntity player, boolean flip, int entityId) {
+        PacketByteBuf buf = PacketByteBufs.create();
+        buf.writeInt(entityId);
+        buf.writeBoolean(flip);
+        ServerPlayNetworking.send(player, EntityStatsPacket, buf);
     }
     public static void sendShootingStarSound(ServerPlayerEntity player) {
         PacketByteBuf buf = PacketByteBufs.create();

@@ -22,6 +22,12 @@ public class UseBackTrinketC2SPacket {
                     ((Quiver) stack.getItem()).cycleStack(stack);
                 }
             }
+            if (trinket.isEquipped(ZeldaItems.Better_Quiver)) {
+                for (int i = 0; i < trinket.getEquipped(ZeldaItems.Better_Quiver).size(); i++) {
+                    ItemStack stack = trinket.getEquipped(ZeldaItems.Better_Quiver).get(i).getRight();
+                    ((Quiver) stack.getItem()).cycleStack(stack);
+                }
+            }
         });
     }
 }

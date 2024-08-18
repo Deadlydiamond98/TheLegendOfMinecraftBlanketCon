@@ -47,6 +47,7 @@ public class ZeldaCraftClient implements ClientModInitializer {
 
 		BlockRenderLayerMap.INSTANCE.putBlock(ZeldaBlocks.Bomb_Flower, RenderLayer.getCutout());
 		BlockRenderLayerMap.INSTANCE.putBlock(ZeldaBlocks.Loot_Grass, RenderLayer.getCutout());
+		BlockRenderLayerMap.INSTANCE.putBlock(ZeldaBlocks.Somaria_Block, RenderLayer.getTranslucent());
 
 		registerModelPredicatees();
 
@@ -60,6 +61,14 @@ public class ZeldaCraftClient implements ClientModInitializer {
 
 	private void registerModelPredicatees() {
 		ModelPredicateProviderRegistry.register(ZeldaItems.Quiver, new Identifier("filled"), (stack, world, entity, seed) -> {
+			if (stack.getNbt() != null && stack.getNbt().contains("filled", NbtElement.INT_TYPE)) {
+				return stack.getNbt().getInt("filled");
+			}
+			else {
+				return 0;
+			}
+		});
+		ModelPredicateProviderRegistry.register(ZeldaItems.Better_Quiver, new Identifier("filled"), (stack, world, entity, seed) -> {
 			if (stack.getNbt() != null && stack.getNbt().contains("filled", NbtElement.INT_TYPE)) {
 				return stack.getNbt().getInt("filled");
 			}

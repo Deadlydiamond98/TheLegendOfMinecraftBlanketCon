@@ -17,6 +17,7 @@ public class ZeldaClientPackets {
     public static final Identifier SmashLootGrassPacket = new Identifier(ZeldaCraft.MOD_ID, "smash_loot_grass_packet");
     public static final Identifier DekuStunOverlayPacket = new Identifier(ZeldaCraft.MOD_ID, "deku_stun_overlay_packet");
     public static final Identifier PlayerStatsPacket = new Identifier(ZeldaCraft.MOD_ID, "player_stats_packet");
+    public static final Identifier EntityStatsPacket = new Identifier(ZeldaCraft.MOD_ID, "entity_stats_packet");
     public static final Identifier NeckTrinketPacket = new Identifier(ZeldaCraft.MOD_ID, "neck_trinket_packet");
     public static final Identifier BackTrinketPacket = new Identifier(ZeldaCraft.MOD_ID, "back_trinket_packet");
     public static final Identifier PlayShootingStarSound = new Identifier(ZeldaCraft.MOD_ID, "play_shooting_star_sound");
@@ -29,6 +30,7 @@ public class ZeldaClientPackets {
         ClientPlayNetworking.registerGlobalReceiver(BombPacket, BombParticleS2CPacket::recieve);
         ClientPlayNetworking.registerGlobalReceiver(DekuStunOverlayPacket, DekuStunOverlayS2CPacket::recieve);
         ClientPlayNetworking.registerGlobalReceiver(PlayerStatsPacket, PlayerStatsS2CPacket::recieve);
+        ClientPlayNetworking.registerGlobalReceiver(EntityStatsPacket, EntityStatsS2CPacket::recieve);
         ClientPlayNetworking.registerGlobalReceiver(PlayShootingStarSound, PlayShootingStarSoundS2CPacket::recieve);
     }
 

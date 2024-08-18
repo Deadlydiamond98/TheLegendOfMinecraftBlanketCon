@@ -93,10 +93,12 @@ public class BeamEntity extends ProjectileEntity {
     protected void onEntityHit(EntityHitResult entityHitResult) {
         super.onEntityHit(entityHitResult);
         Entity entity = entityHitResult.getEntity();
-        if (this.getOwner() instanceof PlayerEntity user) {
-            entity.damage(entity.getDamageSources().playerAttack(user), 2.0F);
-        } else if (this.getOwner() instanceof LivingEntity attacker) {
-            entity.damage(entity.getDamageSources().mobAttack(attacker), 2.0F);
+        if (!entityHitResult.getEntity().equals(this.getOwner())) {
+            if (this.getOwner() instanceof PlayerEntity user) {
+                entity.damage(entity.getDamageSources().playerAttack(user), 3.0F);
+            } else if (this.getOwner() instanceof LivingEntity attacker) {
+                entity.damage(entity.getDamageSources().mobAttack(attacker), 3.0F);
+            }
         }
     }
 

@@ -45,23 +45,23 @@ public class MagicIceProjectileEntity extends ProjectileEntity {
                 this.getWorld().getBlockState(blockHitResult.getBlockPos()).getSoundGroup().getHitSound(),
                 SoundCategory.BLOCKS, 1.0f, 1.0f);
 
-        int radius = 3;
-
-        for (int dx = -radius; dx <= radius; dx++) {
-            for (int dy = -radius; dy <= radius; dy++) {
-                for (int dz = -radius; dz <= radius; dz++) {
-                    BlockPos nearbyPos = blockPos.add(dx, dy, dz);
-                    BlockState nearbyState = this.getWorld().getBlockState(nearbyPos);
-
-                    if (nearbyState.getBlock() == Blocks.WATER) {
-                        this.getWorld().setBlockState(nearbyPos, Blocks.ICE.getDefaultState());
-                    }
-                    else if (nearbyState == Blocks.LAVA.getDefaultState().with(LEVEL, 0)) {
-                        this.getWorld().setBlockState(nearbyPos, Blocks.MAGMA_BLOCK.getDefaultState());
-                    }
-                }
-            }
-        }
+//        int radius = 3;
+//
+//        for (int dx = -radius; dx <= radius; dx++) {
+//            for (int dy = -radius; dy <= radius; dy++) {
+//                for (int dz = -radius; dz <= radius; dz++) {
+//                    BlockPos nearbyPos = blockPos.add(dx, dy, dz);
+//                    BlockState nearbyState = this.getWorld().getBlockState(nearbyPos);
+//
+//                    if (nearbyState.getBlock() == Blocks.WATER) {
+//                        this.getWorld().setBlockState(nearbyPos, Blocks.ICE.getDefaultState());
+//                    }
+//                    else if (nearbyState == Blocks.LAVA.getDefaultState().with(LEVEL, 0)) {
+//                        this.getWorld().setBlockState(nearbyPos, Blocks.MAGMA_BLOCK.getDefaultState());
+//                    }
+//                }
+//            }
+//        }
     }
 
     @Override
@@ -79,12 +79,14 @@ public class MagicIceProjectileEntity extends ProjectileEntity {
     protected void onEntityHit(EntityHitResult entityHitResult) {
         super.onEntityHit(entityHitResult);
         Entity entity = entityHitResult.getEntity();
-        entity.damage(entity.getDamageSources().freeze(), 4.0F);
-        entity.setFireTicks(0);
-        if (entity instanceof LivingEntity livingEntity) {
-            StunStatusEffect statusEffect = (StunStatusEffect) ZeldaStatusEffects.Stun_Status_Effect;
-            statusEffect.giveOverlay(StunStatusEffect.OverlayType.ICE);
-            livingEntity.addStatusEffect(new StatusEffectInstance(statusEffect, 20, 0));
+        if (!entityHitResult.getEntity().equals(this.getOwner())) {
+            entity.damage(entity.getDamageSources().freeze(), 3.0F);
+            entity.setFireTicks(0);
+            if (entity instanceof LivingEntity livingEntity) {
+                StunStatusEffect statusEffect = (StunStatusEffect) ZeldaStatusEffects.Stun_Status_Effect;
+                statusEffect.giveOverlay(StunStatusEffect.OverlayType.ICE);
+                livingEntity.addStatusEffect(new StatusEffectInstance(statusEffect, 20, 0));
+            }
         }
     }
 
@@ -115,6 +117,26 @@ public class MagicIceProjectileEntity extends ProjectileEntity {
             }
         }
 
+        if (this.touchingWater || this.isInLava()) {
+            int radius = 3;
+            BlockPos entityPos = this.getBlockPos();
+
+            for (int x = -radius; x <= radius; x++) {
+                for (int z = -radius; z <= radius; z++) {
+                    BlockPos targetPos = entityPos.add(x, 0, z);
+                    BlockPos surfacePos = findSurface(targetPos);
+                    if (surfacePos != null) {
+                        if (this.getWorld().getBlockState(surfacePos).getBlock() == Blocks.WATER) {
+                            this.getWorld().setBlockState(surfacePos, Blocks.ICE.getDefaultState());
+                        } else if (this.getWorld().getBlockState(surfacePos).getBlock() == Blocks.LAVA) {
+                            this.getWorld().setBlockState(surfacePos, Blocks.SMOOTH_BASALT.getDefaultState());
+                        }
+                    }
+                }
+            }
+            this.discard();
+        }
+
         if (hitResult.getType() != HitResult.Type.MISS && !bl) {
             this.onCollision(hitResult);
         }
@@ -133,6 +155,17 @@ public class MagicIceProjectileEntity extends ProjectileEntity {
         if (this.age >= 15) {
             this.discard();
         }
+    }
+
+    private BlockPos findSurface(BlockPos pos) {
+        for (int y = 0; y <= 2; y++) {
+            BlockPos targetPos = pos.up(y);
+            if (this.getWorld().getBlockState(targetPos).getBlock() == Blocks.WATER ||
+                    this.getWorld().getBlockState(targetPos).getBlock() == Blocks.LAVA) {
+                return targetPos;
+            }
+        }
+        return null;
     }
 
     @Override

@@ -37,6 +37,15 @@ public abstract class RangedWeaponMixin {
                     }
                 }
             }
+            if (trinket.isEquipped(ZeldaItems.Better_Quiver)) {
+                for (int i = 0; i < trinket.getEquipped(ZeldaItems.Better_Quiver).size(); i++) {
+                    ItemStack stack = trinket.getEquipped(ZeldaItems.Better_Quiver).get(i).getRight();
+                    handleQuiver(stack, accessor, cir);
+                    if (cir.getReturnValue() != null) {
+                        return;
+                    }
+                }
+            }
 
             for (int i = 0; i < player.getInventory().size(); i++) {
                 ItemStack stack = player.getInventory().getStack(i);

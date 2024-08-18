@@ -84,13 +84,16 @@ public class ZeldaItems {
 
     //Bags
     public static final Item Bomb_Bag = registerItem("bomb_bag", new BombBag(
-            new FabricItemSettings().maxCount(1),96,
+            new FabricItemSettings().maxCount(1),64,
             List.of(ZeldaTags.Items.Bombs)));
-//    public static final Item Better_Bomb_Bag = registerItem("better_bomb_bag", new BombBag(
-//            new FabricItemSettings().maxCount(1),192,
-//            List.of(Bomb, Super_Bomb, Bombchu)));
+    public static final Item Better_Bomb_Bag = registerItem("better_bomb_bag", new BombBag(
+            new FabricItemSettings().maxCount(1),128,
+            List.of(ZeldaTags.Items.Bombs)));
     public static final Item Quiver = registerItem("quiver", new Quiver(
-            new FabricItemSettings().maxCount(1),640,
+            new FabricItemSettings().maxCount(1),160,
+            List.of(ItemTags.ARROWS)));
+    public static final Item Better_Quiver = registerItem("better_quiver", new Quiver(
+            new FabricItemSettings().maxCount(1),320,
             List.of(ItemTags.ARROWS)));
 //    public static final Item Deku_Seed_Bullet_Bag = registerItem("seed_bag", new SeedBulletBag(
 //            new FabricItemSettings().maxCount(1),640,
@@ -163,6 +166,10 @@ public class ZeldaItems {
     public static final Item Ice_Rod = registerItem("ice_rod", new IceRod(
             new FabricItemSettings().maxCount(1)));
     public static final Item Beam_Rod = registerItem("beam_rod", new BeamRod(
+            new FabricItemSettings().maxCount(1)));
+    public static final Item Cane_Of_Pacci = registerItem("cane_of_pacci", new PacciCane(
+            new FabricItemSettings().maxCount(1)));
+    public static final Item Cane_Of_Somaria = registerItem("cane_of_somaria", new SomariaCane(
             new FabricItemSettings().maxCount(1)));
 
     //Util

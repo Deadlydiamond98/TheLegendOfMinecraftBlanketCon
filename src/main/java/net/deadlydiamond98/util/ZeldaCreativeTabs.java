@@ -41,8 +41,9 @@ public class ZeldaCreativeTabs {
                         entry.add(ZeldaItems.Deku_Nut);
                         //Bags
                         entry.add(ZeldaItems.Bomb_Bag);
-//                        entry.add(ZeldaItems.Deku_Seed_Bullet_Bag);
+                        entry.add(ZeldaItems.Better_Bomb_Bag);
                         entry.add(ZeldaItems.Quiver);
+                        entry.add(ZeldaItems.Better_Quiver);
                         //Arrows
                         entry.add(ZeldaItems.Silver_Arrow);
                         entry.add(ZeldaItems.Bomb_Arrow);
@@ -56,6 +57,8 @@ public class ZeldaCreativeTabs {
                         entry.add(ZeldaItems.Fire_Rod);
                         entry.add(ZeldaItems.Ice_Rod);
                         entry.add(ZeldaItems.Beam_Rod);
+                        entry.add(ZeldaItems.Cane_Of_Pacci);
+                        entry.add(ZeldaItems.Cane_Of_Somaria);
                         //Magic
                         entry.add(ZeldaItems.Magic_Powder);
                         entry.add(ZeldaItems.Clock_Of_Time_Freeze);
@@ -64,7 +67,7 @@ public class ZeldaCreativeTabs {
                         entry.add(ZeldaItems.Blue_Ring);
                         entry.add(ZeldaItems.Fairy_Bell);
                         entry.add(ZeldaItems.Shield_Pendant);
-                        entry.add(ZeldaItems.Jump_Pendant);
+//                        entry.add(ZeldaItems.Jump_Pendant);
                         entry.add(ZeldaItems.Heart_Pendant);
                         entry.add(ZeldaItems.Fairy_Pendant);
                         //Consumables

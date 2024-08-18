@@ -71,6 +71,26 @@ public class PlayerInventoryMixin {
                 }
             }
         }
+        if (trinket.isEquipped(ZeldaItems.Better_Quiver)) {
+            for (int i = 0; i < trinket.getEquipped(ZeldaItems.Better_Quiver).size(); i++) {
+                ItemStack stack = trinket.getEquipped(ZeldaItems.Better_Quiver).get(i).getRight();
+                if (itemClass.isInstance(stack.getItem())) {
+                    T customBundle = (T) stack.getItem();
+                    if (customBundle.getItemBarStep(customBundle.getDefaultStack()) < 13) {
+                        int added = customBundle.addToBundle(stack, itemStack);
+                        if (added > 0) {
+                            itemStack.decrement(added);
+                            if (itemStack.isEmpty()) {
+                                player.increaseStat(Stats.PICKED_UP.getOrCreateStat(itemStack.getItem()), added);
+                                player.playSound(SoundEvents.ITEM_BUNDLE_INSERT, 0.8F,
+                                        0.8F + player.getWorld().getRandom().nextFloat() * 0.4F);
+                                return true;
+                            }
+                        }
+                    }
+                }
+            }
+        }
         return false;
     }
 

@@ -53,9 +53,11 @@ public class MagicFireProjectileEntity extends ProjectileEntity {
     @Override
     protected void onEntityHit(EntityHitResult entityHitResult) {
         super.onEntityHit(entityHitResult);
-        Entity entity = entityHitResult.getEntity();
-        entity.setOnFireFor(4);
-        entity.damage(entity.getDamageSources().magic(), 2.0F);
+        if (!entityHitResult.getEntity().equals(this.getOwner())) {
+            Entity entity = entityHitResult.getEntity();
+            entity.setOnFireFor(4);
+            entity.damage(entity.getDamageSources().magic(), 6.0F);
+        }
     }
 
     @Override

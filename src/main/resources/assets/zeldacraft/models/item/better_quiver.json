@@ -1,0 +1,10 @@
+{
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "zeldacraft:item/better_quiver"
+    },
+    "overrides": [
+        { "predicate": { "filled": 0 }, "model": "zeldacraft:item/better_quiver"},
+        { "predicate": { "filled": 1 }, "model": "zeldacraft:item/better_quiver_filled"}
+    ]
+}

@@ -4,6 +4,9 @@ import net.deadlydiamond98.entities.ZeldaEntities;
 import net.deadlydiamond98.entities.projectiles.MagicIceProjectileEntity;
 import net.deadlydiamond98.magiclib.items.consumers.MagicItem;
 import net.deadlydiamond98.sounds.ZeldaSounds;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -40,5 +43,14 @@ public class IceRod extends MagicItem {
         super.doNoManaEvent(user, world);
         world.playSound(null, user.getBlockPos(), ZeldaSounds.NotEnoughMana,
                 SoundCategory.PLAYERS, 3.0f, 1.0f);
+    }
+
+    @Override
+    public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
+        if (attacker.canRemoveMana(this.getManaCost())) {
+            attacker.removeMana(this.getManaCost());
+            target.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 5, 0));
+        }
+        return super.postHit(stack, target, attacker);
     }
 }

@@ -11,6 +11,7 @@
   "item.zeldacraft.super_bomb": "Super Bomb",
   "item.zeldacraft.bombchu": "Bombchu",
   "item.zeldacraft.bomb_bag": "Bomb Bag",
+  "item.zeldacraft.better_bomb_bag": "Gilded Bomb Bag",
   "block.zeldacraft.bomb_flower": "Bomb Flower Seeds",
   "item.zeldacraft.deku_nut": "Deku Nut",
   "item.zeldacraft.dungeon_key": "Key",
@@ -38,7 +39,9 @@
   "item.zeldacraft.fire_rod": "Fire Rod",
   "item.zeldacraft.ice_rod": "Ice Rod",
   "item.zeldacraft.beam_rod": "Beam Rod",
-  "item.zeldacraft.clock_of_time_freeze": "Stopwatch",
+  "item.zeldacraft.cane_of_pacci": "Cane of Pacci",
+  "item.zeldacraft.cane_of_somaria": "Cane of Somaria",
+  "item.zeldacraft.clock_of_time_freeze": "Stopwatch [Creative Only]",
   "item.zeldacraft.frozen_clock.tooltipa": "Temperarory freezes entities for",
   "item.zeldacraft.frozen_clock.tooltipb": "a short duration near you",
 
@@ -75,16 +78,19 @@
   "block.zeldacraft.brown_dungeoncite_tile_tbl": "Brown Dungeoncite Triforce C",
   "block.zeldacraft.brown_dungeoncite_tile_tbr": "Brown Dungeoncite Triforce D",
   "block.zeldacraft.brown_dungeoncite_pedestal": "Brown Dungeoncite Pedestal",
+  "block.zeldacraft.brown_dungeoncite_tile_bomb": "Brown Dungeoncite Bomb Tile",
+  "block.zeldacraft.brown_dungeoncite_pillar": "Brown Dungeoncite Pillar",
 
   "item.zeldacraft.quiver": "Quiver",
+  "item.zeldacraft.better_quiver": "Gilded Quiver",
   "item.zeldacraft.silver_arrow": "Silver Arrow",
   "item.zeldacraft.bomb_arrow": "Bomb Arrow",
 
-  "item.zeldacraft.seed_bag": "Seed Bullet Bag",
+  "item.zeldacraft.seed_bag": "Seed Bullet Bag [Creative Only]",
 
   "item.zeldacraft.hylian_shield": "Hylian Shield",
   "item.zeldacraft.hylian_shield.tooltip": "Isn't harmed by Explosions",
-  "item.zeldacraft.mirror_shield": "Mirror Shield",
+  "item.zeldacraft.mirror_shield": "Mirror Shield [Creative Only]",
   "item.zeldacraft.mirror_shield.tooltipa": "Reflects all Projectiles as beams",
   "item.zeldacraft.mirror_shield.tooltipb": "of light at the cost of magic",
 
@@ -113,6 +119,7 @@
   "item.zeldacraft.magic_hammer": "Magic Hammer",
 
   "item.zeldacraft.hookshot": "Hookshot",
+  "item.zeldacraft.longshot": "Longshot",
 
 
   "item.zeldacraft.music_disc_legend": "Music Disc",
@@ -132,7 +139,7 @@
 
   "item.zeldacraft.shield_pendant": "Shield Pendant",
   "item.zeldacraft.shield_pendant.tooltip": "Applies Resistance at the cost of Magic",
-  "item.zeldacraft.jump_pendant": "Jump Pendant",
+  "item.zeldacraft.jump_pendant": "Jump Pendant [Creative Only]",
   "item.zeldacraft.jump_pendant.tooltip": "Allows one to Double Jump",
   "item.zeldacraft.heart_pendant": "Life Pendant",
   "item.zeldacraft.heart_pendant.tooltip": "Applies Regeneration at the cost of Magic",

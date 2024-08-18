@@ -5,6 +5,7 @@ import net.deadlydiamond98.entities.monsters.FairyEntity;
 import net.deadlydiamond98.renderer.FairyCompanionRenderer;
 import net.deadlydiamond98.renderer.StunOverlay;
 import net.deadlydiamond98.renderer.entity.monster.FairyRenderer;
+import net.deadlydiamond98.util.OtherEntityData;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.EntityRendererFactory;
@@ -35,6 +36,19 @@ public abstract class LivingEntityRendererMixin<T extends LivingEntity, M extend
 	@Inject(method = "<init>", at = @At("TAIL"))
 	private void onInit(CallbackInfo ci) {
 		this.addFeature(new StunOverlay<>((FeatureRendererContext<T, M>) this));
-
 	}
+
+	@Inject(method = "scale", at = @At("HEAD"))
+	private void flip(T entity, MatrixStack matrices, float amount, CallbackInfo ci) {
+		if (((OtherEntityData) entity).flipped()) {
+			matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees(180));
+			matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(180));
+			matrices.translate(0, entity.getBoundingBox().getYLength(), 0);
+		}
+		else {
+			matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees(0));
+			matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(0));
+		}
+	}
+
 }

@@ -5,10 +5,7 @@ import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroupEntries;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.GlazedTerracottaBlock;
-import net.minecraft.block.PillarBlock;
+import net.minecraft.block.*;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroups;
@@ -18,6 +15,10 @@ import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.Identifier;
 
 public class ZeldaBlocks {
+
+    public static final Block Somaria_Block = registerBlock("somaria_block",
+            new GlassBlock(FabricBlockSettings.copyOf(Blocks.GLASS).breakInstantly().dropsNothing()
+                    .sounds(BlockSoundGroup.MUD).luminance(2).nonOpaque().notSolid()));
 
     public static final Block Bomb_Flower = registerBlock("bomb_flower",
             new BombFlower(FabricBlockSettings.copyOf(Blocks.MOSS_BLOCK).strength(1.5F, 0.0F)
