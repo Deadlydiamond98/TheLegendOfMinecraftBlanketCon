@@ -133,7 +133,9 @@ public class ZeldaItems {
 
     //Grapples
     public static final Item Hookshot = registerItem("hookshot", new HookshotItem(
-            new FabricItemSettings()));
+            new FabricItemSettings().maxCount(1), 15));
+    public static final Item Longshot = registerItem("longshot", new HookshotItem(
+            new FabricItemSettings().maxCount(1), 20));
 
     //Magic Consumables
     public static final Item Magic_Jar = registerItem("magic_jar", new MagicJar(

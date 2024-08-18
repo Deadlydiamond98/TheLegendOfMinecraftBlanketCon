@@ -48,6 +48,7 @@ public class ZeldaCreativeTabs {
                         entry.add(ZeldaItems.Bomb_Arrow);
                         //Grapples
                         entry.add(ZeldaItems.Hookshot);
+                        entry.add(ZeldaItems.Longshot);
                         //Shields
                         entry.add(ZeldaItems.Hylain_Shield);
                         entry.add(ZeldaItems.Mirror_Shield);

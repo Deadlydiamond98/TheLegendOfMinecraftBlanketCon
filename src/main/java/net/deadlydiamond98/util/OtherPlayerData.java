@@ -21,4 +21,7 @@ public interface OtherPlayerData {
     void canDoubleJump(boolean doubleJumpped);
     boolean wasOnGround();
     void setOnGround(boolean wasOnGround);
+
+    boolean canUseHook();
+    void setHookUsability(boolean hookusable);
 }

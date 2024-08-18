@@ -2,5 +2,9 @@
   "parent": "item/generated",
   "textures": {
     "layer0": "zeldacraft:item/hookshot"
-  }
+  },
+  "overrides": [
+    { "predicate": { "shot": 0 }, "model": "zeldacraft:item/hookshot"},
+    { "predicate": { "shot": 1 }, "model": "zeldacraft:item/hookshot_shot"}
+  ]
 }

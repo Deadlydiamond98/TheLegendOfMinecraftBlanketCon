@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " g ",
+    "gBg",
+    " g "
+  ],
+  "key": {
+    "g": {
+      "item": "zeldacraft:plain_pot"
+    },
+    "B": {
+      "item": "minecraft:brown_dye"
+    }
+  },
+  "result": {
+    "item": "zeldacraft:brown_pot",
+    "count": 4
+  }
+}

@@ -22,6 +22,7 @@ import net.deadlydiamond98.renderer.entity.projectile_items.BoomerangProjectileR
 import net.deadlydiamond98.renderer.entity.projectile_items.DekuNutRenderer;
 import net.deadlydiamond98.renderer.entity.MagicFireProjectileRenderer;
 import net.deadlydiamond98.renderer.entity.projectile_items.ZeldaArrowRenderer;
+import net.deadlydiamond98.util.OtherPlayerData;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.rendering.v1.*;
@@ -30,6 +31,7 @@ import net.minecraft.client.color.world.GrassColors;
 import net.minecraft.client.item.ModelPredicateProviderRegistry;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.entity.model.BatEntityModel;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.DyeableItem;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.util.Identifier;
@@ -84,6 +86,23 @@ public class ZeldaCraftClient implements ClientModInitializer {
 				case "purple" -> 0.6f;
 				default -> 0.0f;
 			};
+		}));
+
+		ModelPredicateProviderRegistry.register(ZeldaItems.Hookshot, new Identifier("shot"), ((stack, world, entity, seed) -> {
+			if (stack.getNbt() != null && stack.getNbt().contains("shot", NbtElement.INT_TYPE)) {
+				return stack.getNbt().getInt("shot");
+			}
+			else {
+				return 0;
+			}
+		}));
+		ModelPredicateProviderRegistry.register(ZeldaItems.Longshot, new Identifier("shot"), ((stack, world, entity, seed) -> {
+			if (stack.getNbt() != null && stack.getNbt().contains("shot", NbtElement.INT_TYPE)) {
+				return stack.getNbt().getInt("shot");
+			}
+			else {
+				return 0;
+			}
 		}));
 	}
 

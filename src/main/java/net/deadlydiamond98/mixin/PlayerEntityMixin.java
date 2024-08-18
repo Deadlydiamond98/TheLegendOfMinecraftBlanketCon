@@ -68,6 +68,9 @@ public abstract class PlayerEntityMixin implements OtherPlayerData {
     @Unique
     private boolean wasOnGround;
 
+    @Unique
+    private boolean canUseHook;
+
     @Inject(method = "<init>", at = @At("TAIL"))
     private void onInit(CallbackInfo ci) {
         this.spawnStar = true;
@@ -80,6 +83,7 @@ public abstract class PlayerEntityMixin implements OtherPlayerData {
         this.doubleJump = false;
         this.doubleJumpped = false;
         this.wasOnGround = true;
+        this.canUseHook = true;
     }
 
     @Unique
@@ -326,5 +330,16 @@ public abstract class PlayerEntityMixin implements OtherPlayerData {
     @Override
     public void setOnGround(boolean wasOnGround) {
         this.wasOnGround = wasOnGround;
+    }
+
+
+    @Override
+    public boolean canUseHook() {
+        return this.canUseHook;
+    }
+
+    @Override
+    public void setHookUsability(boolean hookusable) {
+        this.canUseHook = hookusable;
     }
 }
