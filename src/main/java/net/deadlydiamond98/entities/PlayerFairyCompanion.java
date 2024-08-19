@@ -293,7 +293,6 @@ public class PlayerFairyCompanion extends Entity implements Ownable {
     public Boolean getVisable() {
         return this.dataTracker.get(visable);
     }
-
     private void setVisable(Boolean vis) {
         this.dataTracker.set(visable, vis);
     }

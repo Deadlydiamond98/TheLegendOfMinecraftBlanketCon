@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ACC",
+    "AHC",
+    "CAA"
+  ],
+  "key": {
+    "C": {
+      "item": "minecraft:chain"
+    },
+    "A": {
+      "item": "minecraft:amethyst_shard"
+    },
+    "H": {
+      "item": "zeldacraft:hookshot"
+    }
+  },
+  "result": {
+    "item": "zeldacraft:longshot",
+    "count": 1
+  }
+}

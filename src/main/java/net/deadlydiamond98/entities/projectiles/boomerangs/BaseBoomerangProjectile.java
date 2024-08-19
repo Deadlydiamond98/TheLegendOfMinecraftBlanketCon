@@ -74,8 +74,7 @@ public class BaseBoomerangProjectile extends ProjectileEntity {
         this.setBoomerangItem(boomerangItem);
         this.speed = speed;
         this.hand = hand;
-        this.hasLoyalty = EnchantmentHelper.getLevel(Enchantments.LOYALTY, this.getBoomerangItem()) > 0 ||
-                this.getBoomerangItem().getItem() instanceof MagicBoomerangItem;
+        this.hasLoyalty = this.getBoomerangItem().getItem() instanceof MagicBoomerangItem;
         this.hasLawnMower = EnchantmentHelper.getLevel(ZeldaEnchantments.Lawn_Mower, this.getBoomerangItem()) > 0;
         this.lawnMowerLevel = EnchantmentHelper.getLevel(ZeldaEnchantments.Lawn_Mower, this.getBoomerangItem());
         this.setVelocity(player, player.getPitch(), player.getYaw(), 0.0f, speed, 1.0f);

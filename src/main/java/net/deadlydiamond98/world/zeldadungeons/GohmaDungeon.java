@@ -3,6 +3,7 @@ package net.deadlydiamond98.world.zeldadungeons;
 import com.mojang.serialization.Codec;
 import net.deadlydiamond98.ZeldaCraft;
 import net.deadlydiamond98.world.zeldadungeons.gohmadungeon.peices.EntranceRoom;
+import net.deadlydiamond98.world.zeldadungeons.gohmadungeon.peices.EntranceRoomPlaceholder;
 import net.deadlydiamond98.world.zeldadungeons.gohmadungeon.peices.TestingRoom;
 import net.deadlydiamond98.world.zeldadungeons.gohmadungeon.peices.TestingRoomB;
 import net.minecraft.structure.StructurePiecesCollector;
@@ -45,7 +46,7 @@ public class GohmaDungeon extends Structure {
                 startPos.getY() + EntranceRoom.sizeY,
                 startPos.getZ() + EntranceRoom.sizeZ);
         Direction direction = getRandomDirection();
-        BaseDungeonPiece startPiece = new EntranceRoom(1, startBoundingBox, direction);
+        BaseDungeonPiece startPiece = new EntranceRoomPlaceholder(1, startBoundingBox, direction);
         pieces.add(startPiece);
         pieceQueue.add(startPiece);
 

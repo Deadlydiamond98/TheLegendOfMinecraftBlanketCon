@@ -6,7 +6,11 @@ import net.deadlydiamond98.util.OtherPlayerData;
 import net.deadlydiamond98.util.RaycastUtil;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.*;
+import net.minecraft.entity.data.DataTracker;
+import net.minecraft.entity.data.TrackedData;
+import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.entity.projectile.ProjectileUtil;
 import net.minecraft.item.Item;
@@ -18,6 +22,7 @@ import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
@@ -25,11 +30,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class HookshotEntity extends ProjectileEntity implements Ownable {
+    private static final TrackedData<Boolean> woodAttached;
     private float movementSpeed;
     private int length;
     private int ticksInAir;
     private boolean returning;
-    private boolean woodAttached;
     public HookshotEntity(EntityType<HookshotEntity> entityType, World world) {
         super(entityType, world);
     }
@@ -44,16 +49,20 @@ public class HookshotEntity extends ProjectileEntity implements Ownable {
         this.setPitch(user.getPitch());
         this.length = length;
         this.returning = false;
-        this.woodAttached = false;
+        this.setWoodAttached(false);
         ((OtherPlayerData) user).setHookUsability(false);
     }
 
 
     @Override
     protected void onBlockHit(BlockHitResult blockHitResult) {
-        super.onBlockHit(blockHitResult);
         BlockPos pos = blockHitResult.getBlockPos();
         BlockState blockState = this.getWorld().getBlockState(pos);
+        super.onBlockHit(blockHitResult);
+        Vec3d vec3d = blockHitResult.getPos().subtract(this.getX(), this.getY(), this.getZ());
+        this.setVelocity(vec3d);
+        Vec3d vec3d2 = vec3d.normalize().multiply(0.05000000074505806);
+        this.setPos(this.getX() - vec3d2.x, this.getY() - vec3d2.y, this.getZ() - vec3d2.z);
         pullPlayer(blockState);
     }
 
@@ -80,6 +89,22 @@ public class HookshotEntity extends ProjectileEntity implements Ownable {
     @Override
     public void tick() {
         super.tick();
+
+        double checkDistance = 1;
+        HitResult frontHit = RaycastUtil.getCollisionFromEntityFront(this, checkDistance);
+
+        if (frontHit.getType() == HitResult.Type.BLOCK && !this.getWoodAttached() && this.getOwner() != null) {
+            BlockState frontBlock = this.getWorld().getBlockState(((BlockHitResult) frontHit).getBlockPos());
+            pullPlayer(frontBlock);
+        }
+
+        HitResult hitResult = ProjectileUtil.getCollision(this, this::canHit);
+
+        if (hitResult.getType() != HitResult.Type.MISS) {
+            this.onCollision(hitResult);
+        }
+
+        this.checkBlockCollision();
 
         if (!this.getWorld().isClient()) {
 
@@ -115,12 +140,12 @@ public class HookshotEntity extends ProjectileEntity implements Ownable {
                     this.setVelocity(interpolatedVelocity);
                 }
 
-                if (this.woodAttached) {
+                if (this.getWoodAttached()) {
 
                     this.getOwner().setNoGravity(true);
 
                     Vec3d distance = this.getPos().subtract(this.getOwner().getPos().add(0, this.getOwner().getHeight() / 2, 0));
-                    Vec3d motion = distance.normalize().multiply(0.5);
+                    Vec3d motion = distance.normalize();
 
                     user.fallDistance = 0;
                     user.setVelocity(motion);
@@ -147,25 +172,9 @@ public class HookshotEntity extends ProjectileEntity implements Ownable {
             }
         }
 
-        double checkDistance = 0.51;
-        HitResult frontHit = RaycastUtil.getCollisionFromEntityFront(this, checkDistance);
-
-        if (frontHit.getType() == HitResult.Type.BLOCK && !this.woodAttached && this.getOwner() != null) {
-            BlockState frontBlock = this.getWorld().getBlockState(((BlockHitResult) frontHit).getBlockPos());
-            pullPlayer(frontBlock);
+        if (!this.getWoodAttached()) {
+            this.move(MovementType.SELF, this.getVelocity());
         }
-
-        HitResult hitResult = ProjectileUtil.getCollision(this, this::canHit);
-
-        if (hitResult.getType() != HitResult.Type.MISS) {
-            this.onCollision(hitResult);
-        }
-
-        this.checkBlockCollision();
-
-
-
-        this.move(MovementType.SELF, this.getVelocity());
 
         Vec3d vec3d = this.getVelocity();
         double d = this.getX() + vec3d.x;
@@ -179,9 +188,7 @@ public class HookshotEntity extends ProjectileEntity implements Ownable {
         if (blockState.isIn(BlockTags.LOGS) || blockState.isIn(BlockTags.PLANKS) || blockState.isIn(BlockTags.WOODEN_DOORS)
                 || blockState.isIn(BlockTags.WOODEN_FENCES) || blockState.isIn(BlockTags.WOODEN_SLABS) || blockState.isIn(BlockTags.WOODEN_STAIRS)
                 || blockState.isIn(BlockTags.WOODEN_TRAPDOORS)) {
-            this.woodAttached = true;
-            this.setVelocity(0, 0,0);
-            this.velocityModified = true;
+            this.setWoodAttached(true);
         }
         else {
             returnBack();
@@ -190,6 +197,18 @@ public class HookshotEntity extends ProjectileEntity implements Ownable {
 
     @Override
     protected void initDataTracker() {
+        this.dataTracker.startTracking(woodAttached, false);
+    }
+
+    static {
+        woodAttached = DataTracker.registerData(HookshotEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+    }
+
+    public Boolean getWoodAttached() {
+        return this.dataTracker.get(woodAttached);
+    }
+    private void setWoodAttached(Boolean vis) {
+        this.dataTracker.set(woodAttached, vis);
     }
 
     @Override

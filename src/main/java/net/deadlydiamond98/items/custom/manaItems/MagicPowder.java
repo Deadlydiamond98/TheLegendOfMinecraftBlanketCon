@@ -120,6 +120,8 @@ public class MagicPowder extends TransformationItem {
     protected void initializeItemConversions() {
         super.initializeItemConversions();
         itemConversionMap.put(Items.ARROW, ZeldaItems.Silver_Arrow);
+        itemConversionMap.put(Items.IRON_SWORD, ZeldaItems.Magic_Sword);
+        itemConversionMap.put(ZeldaItems.Red_Ring, ZeldaItems.Blue_Ring);
     }
 
     @Override
@@ -160,7 +162,7 @@ public class MagicPowder extends TransformationItem {
 
     @Override
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-        tooltip.add(Text.translatable("item.zeldacraft.magic_powder.tooltipa".formatted(Formatting.GREEN)));
-        tooltip.add(Text.translatable("item.zeldacraft.magic_powder.tooltipb".formatted(Formatting.GREEN)));
+        tooltip.add(Text.translatable("item.zeldacraft.magic_powder.tooltipa").formatted(Formatting.GREEN));
+        tooltip.add(Text.translatable("item.zeldacraft.magic_powder.tooltipb").formatted(Formatting.GREEN));
     }
 }

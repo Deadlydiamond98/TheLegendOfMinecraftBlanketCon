@@ -79,7 +79,7 @@ public class ZeldaEntities {
             new Identifier(ZeldaCraft.MOD_ID, "hookshot_hook"),
             FabricEntityTypeBuilder.create(SpawnGroup.MISC, (EntityType<HookshotEntity> type, World world) ->
                             new HookshotEntity(type, world))
-                    .dimensions(EntityDimensions.fixed(0.4f,0.4f))
+                    .dimensions(EntityDimensions.fixed(0.6f,0.6f))
                     .build()
     );
     public static final EntityType<BombEntity> Bomb_Entity = Registry.register(

@@ -49,7 +49,7 @@ public class ClientTickEvent {
             if (trinketBack.wasPressed()) {
                 ZeldaClientPackets.sendBackTrinketPacket();
                 TrinketComponent trinket = TrinketsApi.getTrinketComponent(client.player).get();
-                if (trinket.isEquipped(ZeldaItems.Quiver)) {
+                if (trinket.isEquipped(ZeldaItems.Quiver) || trinket.isEquipped(ZeldaItems.Better_Quiver)) {
                     client.player.playSound(SoundEvents.ITEM_BUNDLE_INSERT, 0.8F, 0.8F + client.player.getWorld().getRandom().nextFloat() * 0.4F);
                 }
             }

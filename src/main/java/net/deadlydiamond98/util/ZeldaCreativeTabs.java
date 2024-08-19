@@ -19,7 +19,7 @@ public class ZeldaCreativeTabs {
             FabricItemGroup.builder().displayName(Text.translatable("itemgroup.zeldacraft_items"))
                     .icon(ZeldaItems.Master_Sword::getDefaultStack).entries((displayContext, entry) -> {
                         //Swords
-                        entry.add(ZeldaItems.Kokiri_Sword);
+//                        entry.add(ZeldaItems.Kokiri_Sword);
                         entry.add(ZeldaItems.Magic_Sword);
                         entry.add(ZeldaItems.Master_Sword);
                         entry.add(ZeldaItems.Cracked_Bat);
@@ -29,10 +29,10 @@ public class ZeldaCreativeTabs {
                         entry.add(ZeldaItems.Iron_Boomerang);
                         entry.add(ZeldaItems.Magic_Boomerang);
                         //Hammers
-                        entry.add(ZeldaItems.Wooden_Hammer);
-                        entry.add(ZeldaItems.Iron_Hammer);
-                        entry.add(ZeldaItems.Excellent_Hammer);
-                        entry.add(ZeldaItems.Magic_Hammer);
+//                        entry.add(ZeldaItems.Wooden_Hammer);
+//                        entry.add(ZeldaItems.Iron_Hammer);
+//                        entry.add(ZeldaItems.Excellent_Hammer);
+//                        entry.add(ZeldaItems.Magic_Hammer);
                         //Explosive
                         entry.add(ZeldaBlocks.Bomb_Flower);
                         entry.add(ZeldaItems.Bomb);
@@ -52,7 +52,7 @@ public class ZeldaCreativeTabs {
                         entry.add(ZeldaItems.Longshot);
                         //Shields
                         entry.add(ZeldaItems.Hylain_Shield);
-                        entry.add(ZeldaItems.Mirror_Shield);
+//                        entry.add(ZeldaItems.Mirror_Shield);
                         //Rods
                         entry.add(ZeldaItems.Fire_Rod);
                         entry.add(ZeldaItems.Ice_Rod);
@@ -61,7 +61,7 @@ public class ZeldaCreativeTabs {
                         entry.add(ZeldaItems.Cane_Of_Somaria);
                         //Magic
                         entry.add(ZeldaItems.Magic_Powder);
-                        entry.add(ZeldaItems.Clock_Of_Time_Freeze);
+//                        entry.add(ZeldaItems.Clock_Of_Time_Freeze);
                         //Equipment
                         entry.add(ZeldaItems.Red_Ring);
                         entry.add(ZeldaItems.Blue_Ring);
@@ -78,7 +78,7 @@ public class ZeldaCreativeTabs {
                         entry.add(ZeldaItems.Magic_Upgrade);
                         entry.add(ZeldaItems.Magic_Downgrade);
                         //Util
-                        entry.add(ZeldaItems.Dungeon_Key);
+//                        entry.add(ZeldaItems.Dungeon_Key);
                         //Misc / Materials
                         entry.add(ZeldaItems.Music_Disc_Legend);
                         entry.add(ZeldaItems.Music_Disc_Legend_Fragment);
@@ -86,9 +86,9 @@ public class ZeldaCreativeTabs {
                         entry.add(ZeldaItems.Emerald_Chunk);
                         entry.add(ZeldaItems.Star_Fragment);
                         entry.add(ZeldaItems.Stardust);
-                        entry.add(ZeldaItems.Kokiri_Cloth);
-                        entry.add(ZeldaItems.Goron_Cloth);
-                        entry.add(ZeldaItems.Zora_Cloth);
+//                        entry.add(ZeldaItems.Kokiri_Cloth);
+//                        entry.add(ZeldaItems.Goron_Cloth);
+//                        entry.add(ZeldaItems.Zora_Cloth);
                         for (String color : FairyBottle.colors) {
                             ItemStack stack = new ItemStack(ZeldaItems.Fairy_Bottle);
                             NbtCompound nbt = new NbtCompound();

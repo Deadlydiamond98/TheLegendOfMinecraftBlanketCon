@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "SSS",
+    "DFD",
+    " C "
+  ],
+  "key": {
+    "D": {
+      "item": "minecraft:diamond"
+    },
+    "S": {
+      "item": "minecraft:string"
+    },
+    "C": {
+      "item": "zeldacraft:magic_candy"
+    },
+    "F": {
+      "item": "zeldacraft:fairy_bottle"
+    }
+  },
+  "result": {
+    "item": "zeldacraft:fairy_pendant",
+    "count": 1
+  }
+}

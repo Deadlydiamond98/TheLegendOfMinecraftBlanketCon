@@ -1,0 +1,32 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "OIY",
+    "OSR",
+    "OIB"
+  ],
+  "key": {
+    "O": {
+      "item": "minecraft:obsidian"
+    },
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "S": {
+      "item": "minecraft:shield"
+    },
+    "Y": {
+      "item": "minecraft:yellow_dye"
+    },
+    "R": {
+      "item": "minecraft:red_dye"
+    },
+    "B": {
+      "item": "minecraft:blue_dye"
+    }
+  },
+  "result": {
+    "item": "zeldacraft:hylian_shield",
+    "count": 1
+  }
+}

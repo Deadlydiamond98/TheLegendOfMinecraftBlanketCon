@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "SGS",
+    "GBG",
+    "SGS"
+  ],
+  "key": {
+    "S": {
+      "item": "zeldacraft:star_fragment"
+    },
+    "G": {
+      "item": "minecraft:gold_ingot"
+    },
+    "B": {
+      "item": "zeldacraft:quiver"
+    }
+  },
+  "result": {
+    "item": "zeldacraft:better_quiver",
+    "count": 1
+  }
+}

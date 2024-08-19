@@ -22,6 +22,7 @@ public class ZeldaDungeons {
     public static final StructurePieceType Test_Peice = registerPiece(TestingRoom::new, "test");
     public static final StructurePieceType Test_PeiceB = registerPiece(TestingRoomB::new, "testb");
     public static final StructurePieceType Entrance_Peice = registerPiece(EntranceRoom::new, "entrance");
+    public static final StructurePieceType Entrance_Peice_Placeholder = registerPiece(EntranceRoom::new, "entrance_placeholder");
 
     // GOHMA DUNGEON
     public static final StructureType<GohmaDungeon> Gohma_Dungeon = registerType("gohma_dungeon", GohmaDungeon.CODEC);

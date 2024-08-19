@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ALS",
+    "LLS",
+    "LLS"
+  ],
+  "key": {
+    "L": {
+      "item": "minecraft:leather"
+    },
+    "S": {
+      "item": "minecraft:string"
+    },
+    "A": {
+      "item": "minecraft:arrow"
+    }
+  },
+  "result": {
+    "item": "zeldacraft:quiver",
+    "count": 1
+  }
+}

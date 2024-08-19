@@ -41,7 +41,8 @@
   "item.zeldacraft.beam_rod": "Beam Rod",
   "item.zeldacraft.cane_of_pacci": "Cane of Pacci",
   "item.zeldacraft.cane_of_somaria": "Cane of Somaria",
-  "item.zeldacraft.clock_of_time_freeze": "Stopwatch [Creative Only]",
+  "block.zeldacraft.somaria_block": "Somaria Block",
+  "item.zeldacraft.clock_of_time_freeze": "Stopwatch",
   "item.zeldacraft.frozen_clock.tooltipa": "Temperarory freezes entities for",
   "item.zeldacraft.frozen_clock.tooltipb": "a short duration near you",
 
@@ -86,11 +87,11 @@
   "item.zeldacraft.silver_arrow": "Silver Arrow",
   "item.zeldacraft.bomb_arrow": "Bomb Arrow",
 
-  "item.zeldacraft.seed_bag": "Seed Bullet Bag [Creative Only]",
+  "item.zeldacraft.seed_bag": "Seed Bullet Bag",
 
   "item.zeldacraft.hylian_shield": "Hylian Shield",
   "item.zeldacraft.hylian_shield.tooltip": "Isn't harmed by Explosions",
-  "item.zeldacraft.mirror_shield": "Mirror Shield [Creative Only]",
+  "item.zeldacraft.mirror_shield": "Mirror Shield",
   "item.zeldacraft.mirror_shield.tooltipa": "Reflects all Projectiles as beams",
   "item.zeldacraft.mirror_shield.tooltipb": "of light at the cost of magic",
 
@@ -109,7 +110,7 @@
   "item.zeldacraft.iron_boomerang": "Iron Boomerang",
   "item.zeldacraft.iron_boomerang.tooltip": "Can activate buttons and levers from afar",
   "item.zeldacraft.magic_boomerang": "Magic Boomerang",
-  "item.zeldacraft.magic_boomerang.tooltipa": "Can pick up items from afar, Passive Loyalty",
+  "item.zeldacraft.magic_boomerang.tooltipa": "Can pick up items from afar, Always comes back",
   "item.zeldacraft.magic_boomerang.tooltipb": "Won't be damaged if you have Magic",
   "enchantment.zeldacraft.lawn_mower": "Lawn Mower",
 
@@ -150,7 +151,6 @@
   "item.zeldacraft.red_ring": "Red Ring",
   "item.zeldacraft.blue_ring": "Blue Ring",
 
-
   "item.zeldacraft.kokiri_cloth": "Kokiri Cloth",
   "item.zeldacraft.goron_cloth": "Goron Cloth",
   "item.zeldacraft.zora_cloth": "Zora Cloth",
@@ -187,5 +187,25 @@
   "item.zeldacraft.beamos_spawn_egg": "Beamos Spawn Egg",
   "entity.zeldacraft.beamos": "Beamos",
   "item.zeldacraft.keese_spawn_egg": "Keese Spawn Egg",
-  "entity.zeldacraft.keese": "Keese"
+  "entity.zeldacraft.keese": "Keese",
+
+
+
+  "sounds.zeldacraft.falling_star": "Star Falling from Sky",
+  "sounds.zeldacraft.fire_magic": "Fire Rod Shot",
+  "sounds.zeldacraft.ice_magic": "Ice Rod Shot",
+  "sounds.zeldacraft.sword_shoot": "Sword Beam Shot",
+  "sounds.zeldacraft.fairy_ambient": "Fairy Ambience",
+  "sounds.zeldacraft.fairy_hurt": "Fairy Hurt",
+  "sounds.zeldacraft.fairy_death": "Fairy Dying",
+  "sounds.zeldacraft.fairy_in": "Fairy Entering Owner's Pocket",
+  "sounds.zeldacraft.fairy_out": "Fairy Exiting Owner's Pocket",
+  "sounds.zeldacraft.navi_hello": "Navi Saying Hello",
+  "sounds.zeldacraft.navi_attention": "Navi Grabbing Your Attention",
+  "sounds.zeldacraft.tatl_attention": "Tatl Grabbing Your Attention",
+  "sounds.zeldacraft.tatl_sad": "Tatl Being Depressed due to Your Absence",
+  "sounds.zeldacraft.tatl_hello": "Tatl Saying Hello",
+  "sounds.zeldacraft.hookshot_active": "Hookshot Chain Clinks",
+  "sounds.zeldacraft.boomerang_in_air": "Boomerang in Air",
+  "sounds.zeldacraft.boomerang_caught": "Boomerang being caught"
 }

@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " S ",
+    "DFD",
+    "DBD"
+  ],
+  "key": {
+    "B": {
+      "item": "minecraft:bell"
+    },
+    "S": {
+      "item": "zeldacraft:star_fragment"
+    },
+    "D": {
+      "item": "zeldacraft:stardust"
+    },
+    "F": {
+      "item": "zeldacraft:fairy_bottle"
+    }
+  },
+  "result": {
+    "item": "zeldacraft:fairy_bell",
+    "count": 1
+  }
+}

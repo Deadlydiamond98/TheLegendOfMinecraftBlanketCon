@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "CCA",
+    "CLC",
+    "CCC"
+  ],
+  "key": {
+    "C": {
+      "item": "minecraft:chain"
+    },
+    "A": {
+      "item": "minecraft:arrow"
+    },
+    "L": {
+      "item": "minecraft:lapis_block"
+    }
+  },
+  "result": {
+    "item": "zeldacraft:hookshot",
+    "count": 1
+  }
+}
