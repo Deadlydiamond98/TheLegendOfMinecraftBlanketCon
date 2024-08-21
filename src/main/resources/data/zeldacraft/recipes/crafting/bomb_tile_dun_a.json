@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "zeldacraft:brown_dungeoncite_tile"
+    },
+    {
+      "item": "minecraft:blue_dye"
+    }
+
+  ],
+  "result": {
+    "item": "zeldacraft:brown_dungeoncite_tile_bomb",
+    "count": 1
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "B",
+    "P"
+  ],
+  "key": {
+    "B": {
+      "item": "zeldacraft:brown_dungeoncite_tile"
+    },
+    "P": {
+      "item": "zeldacraft:brown_dungeoncite_pillar"
+    }
+  },
+  "result": {
+    "item": "zeldacraft:brown_dungeoncite_pedestal",
+    "count": 2
+  }
+}

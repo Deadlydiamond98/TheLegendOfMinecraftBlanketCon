@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "minecraft:stone"
+    },
+    {
+      "item": "minecraft:packed_mud"
+    }
+
+  ],
+  "result": {
+    "item": "zeldacraft:brown_dungeoncite_tile",
+    "count": 4
+  }
+}

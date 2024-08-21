@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "zeldacraft:brown_dungeoncite_tile_ttr"
+    }
+  ],
+  "result": {
+    "item": "zeldacraft:brown_dungeoncite_tile_ttl",
+    "count": 1
+  }
+}

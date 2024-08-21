@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "minecraft:moss_block"
+    },
+    {
+      "item": "zeldacraft:brown_dungeoncite_bricks"
+    }
+
+  ],
+  "result": {
+    "item": "zeldacraft:mossy_brown_dungeoncite_bricks",
+    "count": 1
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "BBB",
+    "BBB",
+    "BBB"
+  ],
+  "key": {
+    "B": {
+      "item": "zeldacraft:brown_dungeoncite_tile"
+    }
+  },
+  "result": {
+    "item": "zeldacraft:reinforced_brown_dungeoncite",
+    "count": 9
+  }
+}

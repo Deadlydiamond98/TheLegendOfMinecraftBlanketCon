@@ -7,18 +7,15 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUsageContext;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
-import net.minecraft.util.TypedActionResult;
-import net.minecraft.world.World;
 
 public class PacciCane extends Item implements MagicItemData {
     private int magicCost;
     public PacciCane(Settings settings) {
         super(settings);
-        this.magicCost = 2;
+        this.magicCost = 1;
     }
 
     @Override

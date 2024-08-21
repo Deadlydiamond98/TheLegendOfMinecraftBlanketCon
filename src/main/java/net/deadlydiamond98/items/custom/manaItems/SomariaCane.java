@@ -17,7 +17,7 @@ import net.minecraft.world.World;
 
 public class SomariaCane extends MagicItem {
     public SomariaCane(Settings settings) {
-        super(settings, 5);
+        super(settings, 15);
     }
 
     @Override
