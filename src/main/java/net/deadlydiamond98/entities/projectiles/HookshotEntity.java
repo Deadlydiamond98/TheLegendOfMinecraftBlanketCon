@@ -51,6 +51,7 @@ public class HookshotEntity extends ProjectileEntity implements Ownable {
         this.returning = false;
         this.setWoodAttached(false);
         ((OtherPlayerData) user).setHookUsability(false);
+        this.noClip = true;
     }
 
 
@@ -73,7 +74,7 @@ public class HookshotEntity extends ProjectileEntity implements Ownable {
 
     private void returnBack() {
         this.returning = true;
-        this.noClip = true;
+        this.setWoodAttached(false);
     }
 
     @Override
@@ -82,21 +83,21 @@ public class HookshotEntity extends ProjectileEntity implements Ownable {
         Entity entity = entityHitResult.getEntity();
         if (entity instanceof LivingEntity livingEntity && this.getOwner() != null && !this.getOwner().equals(livingEntity)) {
             livingEntity.damage(livingEntity.getDamageSources().playerAttack((PlayerEntity) this.getOwner()), 2);
+            returnBack();
         }
-        returnBack();
     }
 
     @Override
     public void tick() {
         super.tick();
 
-        double checkDistance = 1;
-        HitResult frontHit = RaycastUtil.getCollisionFromEntityFront(this, checkDistance);
-
-        if (frontHit.getType() == HitResult.Type.BLOCK && !this.getWoodAttached() && this.getOwner() != null) {
-            BlockState frontBlock = this.getWorld().getBlockState(((BlockHitResult) frontHit).getBlockPos());
-            pullPlayer(frontBlock);
-        }
+//        double checkDistance = 1;
+//        HitResult frontHit = RaycastUtil.getCollisionFromEntityFront(this, checkDistance);
+//
+//        if (frontHit.getType() == HitResult.Type.BLOCK && !this.getWoodAttached() && this.getOwner() != null) {
+//            BlockState frontBlock = this.getWorld().getBlockState(((BlockHitResult) frontHit).getBlockPos());
+//            pullPlayer(frontBlock);
+//        }
 
         HitResult hitResult = ProjectileUtil.getCollision(this, this::canHit);
 
@@ -176,11 +177,13 @@ public class HookshotEntity extends ProjectileEntity implements Ownable {
             this.move(MovementType.SELF, this.getVelocity());
         }
 
-        Vec3d vec3d = this.getVelocity();
-        double d = this.getX() + vec3d.x;
-        double e = this.getY() + vec3d.y;
-        double f = this.getZ() + vec3d.z;
-        this.setPosition(d, e, f);
+        if (!this.getWoodAttached()) {
+            Vec3d vec3d = this.getVelocity();
+            double d = this.getX() + vec3d.x;
+            double e = this.getY() + vec3d.y;
+            double f = this.getZ() + vec3d.z;
+            this.setPosition(d, e, f);
+        }
         this.getWorld().getProfiler().pop();
     }
 

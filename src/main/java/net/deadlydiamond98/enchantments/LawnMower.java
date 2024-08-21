@@ -21,5 +21,4 @@ public class LawnMower extends Enchantment {
         return stack.getItem() instanceof BaseBoomerangItem;
     }
 
-
 }

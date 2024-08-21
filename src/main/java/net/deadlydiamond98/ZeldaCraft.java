@@ -9,6 +9,7 @@ import net.deadlydiamond98.entities.monsters.BubbleEntity;
 import net.deadlydiamond98.entities.monsters.FairyEntity;
 import net.deadlydiamond98.entities.monsters.KeeseEntity;
 import net.deadlydiamond98.entities.ZeldaEntities;
+import net.deadlydiamond98.events.ZeldaEntityDeathEvent;
 import net.deadlydiamond98.events.ZeldaServerLifecycleEvents;
 import net.deadlydiamond98.events.ZeldaSeverTickEvent;
 import net.deadlydiamond98.events.ZeldaUseEntityCallbackEvent;
@@ -23,6 +24,7 @@ import net.deadlydiamond98.world.ZeldaFeatures;
 import net.deadlydiamond98.world.zeldadungeons.ZeldaDungeons;
 import net.fabricmc.api.ModInitializer;
 
+import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.util.Identifier;
@@ -55,6 +57,7 @@ public class ZeldaCraft implements ModInitializer {
 		ZeldaSeverTickEvent.registerTickEvent();
 		ZeldaServerLifecycleEvents.register();
 		ZeldaUseEntityCallbackEvent.registerUseEntityEvent();
+		ServerLivingEntityEvents.AFTER_DEATH.register(new ZeldaEntityDeathEvent());
 //		AttackBlockEvent.register();
 
 		ZeldaServerCommands.register();

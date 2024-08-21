@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "zeldacraft:magic_candy"
+    },
+    {
+      "item": "zeldacraft:magic_downgrade"
+    },
+    {
+      "item": "zeldacraft:fairy_bottle"
+    }
+  ],
+  "result": {
+    "item": "zeldacraft:magic_upgrade",
+    "count": 1
+  }
+}

@@ -2,10 +2,15 @@ package net.deadlydiamond98.world.zeldadungeons.gohmadungeon.peices;
 
 import net.deadlydiamond98.ZeldaCraft;
 import net.deadlydiamond98.blocks.ZeldaBlocks;
+import net.deadlydiamond98.entities.ZeldaEntities;
 import net.deadlydiamond98.world.zeldadungeons.BaseDungeonPiece;
 import net.deadlydiamond98.world.zeldadungeons.ZeldaDungeons;
 import net.deadlydiamond98.world.zeldadungeons.gohmadungeon.GohmaWallPlacer;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.entity.MobSpawnerBlockEntity;
+import net.minecraft.entity.EntityType;
 import net.minecraft.loot.LootTables;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.structure.StrongholdGenerator;
@@ -99,7 +104,16 @@ public class EntranceRoomPlaceholder extends BaseDungeonPiece {
         this.generateEntrance(world, boundingBox, EntranceType.CRACKED_DOOR, 5, 0, 0, Direction.NORTH);
 
         Identifier placeholderDungeonLoot = new Identifier(ZeldaCraft.MOD_ID, "chests/placeholder");
-        this.addChest(world, chunkBox, random, 6, 1, 8, placeholderDungeonLoot);
-        this.addChest(world, chunkBox, random, 11, 1, 8, placeholderDungeonLoot);
+        this.addChest(world, chunkBox, random, 8, 1, 4, placeholderDungeonLoot);
+        this.addChest(world, chunkBox, random, 8, 1, 9, placeholderDungeonLoot);
+
+        BlockPos spawnerBlockPosA = this.offsetPos(5, 1, 9);
+        world.setBlockState(spawnerBlockPosA, Blocks.SPAWNER.getDefaultState(), 2);
+        BlockEntity blockEntity = world.getBlockEntity(spawnerBlockPosA);
+        if (blockEntity instanceof MobSpawnerBlockEntity) {
+            MobSpawnerBlockEntity mobSpawnerBlockEntity = (MobSpawnerBlockEntity)blockEntity;
+            mobSpawnerBlockEntity.setEntityType(ZeldaEntities.Keese_Entity, random);
+        }
+
     }
 }

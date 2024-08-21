@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "gsg",
+    "mpm",
+    "gng"
+  ],
+  "key": {
+    "m": {
+      "item": "zeldacraft:emerald_shard"
+    },
+    "g": {
+      "item": "minecraft:gold_ingot"
+    },
+    "n": {
+      "item": "minecraft:gold_nugget"
+    },
+    "p": {
+      "item": "minecraft:glass_pane"
+    },
+    "s": {
+      "item": "zeldacraft:stardust"
+    }
+  },
+  "result": {
+    "item": "zeldacraft:magic_downgrade",
+    "count": 1
+  }
+}

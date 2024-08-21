@@ -31,13 +31,14 @@ public class HookshotRenderer extends EntityRenderer<HookshotEntity> {
         PlayerEntity player = (PlayerEntity) entity.getOwner();
 
         if (player != null) {
+            int brightness = 15728880;
 
             matrices.push();
             matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(entity.getYaw() + 180));
             matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees(entity.getPitch()));
             matrices.translate(0, -0.75f, 0);
             VertexConsumer vertexConsumer = vertexConsumers.getBuffer(this.entityModel.getLayer(getTexture(entity)));
-            this.entityModel.render(matrices, vertexConsumer, light, OverlayTexture.DEFAULT_UV, 1.0F, 1.0F, 1.0F, 1.0F);
+            this.entityModel.render(matrices, vertexConsumer, brightness, OverlayTexture.DEFAULT_UV, 1.0F, 1.0F, 1.0F, 1.0F);
             matrices.pop();
 
             //Chain Rendering
@@ -51,7 +52,7 @@ public class HookshotRenderer extends EntityRenderer<HookshotEntity> {
 
             VertexConsumer vertexConsumerChain = vertexConsumers.getBuffer(RenderLayer.getEntityTranslucent(CHAIN_TEXTURE));
             matrices.translate(playerPos.x, playerPos.y, playerPos.z);
-            renderChain(headPos, matrices, vertexConsumerChain, light, OverlayTexture.DEFAULT_UV);
+            renderChain(headPos, matrices, vertexConsumerChain, brightness, OverlayTexture.DEFAULT_UV);
             matrices.pop();
         }
     }

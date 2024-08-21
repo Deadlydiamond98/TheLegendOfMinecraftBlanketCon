@@ -46,4 +46,14 @@ public abstract class BaseBoomerangItem extends Item implements DyeableItem {
     public int getColor(ItemStack stack) {
         return hasColor(stack) ? DyeableItem.super.getColor(stack) : boomerangColor;
     }
+
+    @Override
+    public boolean isEnchantable(ItemStack stack) {
+        return true;
+    }
+
+    @Override
+    public int getEnchantability() {
+        return 10;
+    }
 }

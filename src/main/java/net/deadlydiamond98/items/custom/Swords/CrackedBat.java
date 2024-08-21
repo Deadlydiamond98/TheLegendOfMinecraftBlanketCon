@@ -37,8 +37,8 @@ public class CrackedBat extends SwordItem {
     public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         boolean result = super.postHit(stack, target, attacker);
         if (Math.floor(Math.random() * (4 - 1 + 1) + 1) == 1) {
-            target.damage(target.getDamageSources().magic(), 10.0F);
-            target.takeKnockback(0.75, attacker.getX() - target.getX(), attacker.getZ() - target.getZ());
+            target.damage(target.getDamageSources().magic(), 11.0F);
+            target.takeKnockback(1.0, attacker.getX() - target.getX(), attacker.getZ() - target.getZ());
             ZeldaServerPackets.sendSmaaashParticlePacket((ServerPlayerEntity) attacker, target.getX(),
                     target.getEyeY(), target.getZ());
             attacker.getWorld().playSound(null, attacker.getBlockPos(),
