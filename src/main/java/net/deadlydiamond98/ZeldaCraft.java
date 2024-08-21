@@ -1,5 +1,6 @@
 package net.deadlydiamond98;
 
+import eu.midnightdust.lib.config.MidnightConfig;
 import net.deadlydiamond98.blocks.ZeldaBlocks;
 import net.deadlydiamond98.blocks.entities.ZeldaBlockEntities;
 import net.deadlydiamond98.commands.ZeldaServerCommands;
@@ -18,6 +19,7 @@ import net.deadlydiamond98.networking.ZeldaServerPackets;
 import net.deadlydiamond98.particle.ZeldaParticles;
 import net.deadlydiamond98.sounds.ZeldaSounds;
 import net.deadlydiamond98.statuseffects.ZeldaStatusEffects;
+import net.deadlydiamond98.util.ZeldaConfig;
 import net.deadlydiamond98.util.ZeldaCreativeTabs;
 import net.deadlydiamond98.util.ZeldaPotionRecipes;
 import net.deadlydiamond98.world.ZeldaFeatures;
@@ -39,6 +41,8 @@ public class ZeldaCraft implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
+
+		MidnightConfig.init(MOD_ID, ZeldaConfig.class);
 
 		ZeldaItems.registerItems();
 		ZeldaBlocks.registerBlocks();

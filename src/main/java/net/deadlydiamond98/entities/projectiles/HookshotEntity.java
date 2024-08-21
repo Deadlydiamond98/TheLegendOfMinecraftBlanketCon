@@ -4,6 +4,7 @@ import net.deadlydiamond98.items.ZeldaItems;
 import net.deadlydiamond98.sounds.ZeldaSounds;
 import net.deadlydiamond98.util.OtherPlayerData;
 import net.deadlydiamond98.util.RaycastUtil;
+import net.deadlydiamond98.util.ZeldaConfig;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.*;
 import net.minecraft.entity.data.DataTracker;
@@ -188,9 +189,9 @@ public class HookshotEntity extends ProjectileEntity implements Ownable {
     }
 
     private void pullPlayer(BlockState blockState) {
-        if (blockState.isIn(BlockTags.LOGS) || blockState.isIn(BlockTags.PLANKS) || blockState.isIn(BlockTags.WOODEN_DOORS)
+        if ((blockState.isIn(BlockTags.LOGS) || blockState.isIn(BlockTags.PLANKS) || blockState.isIn(BlockTags.WOODEN_DOORS)
                 || blockState.isIn(BlockTags.WOODEN_FENCES) || blockState.isIn(BlockTags.WOODEN_SLABS) || blockState.isIn(BlockTags.WOODEN_STAIRS)
-                || blockState.isIn(BlockTags.WOODEN_TRAPDOORS)) {
+                || blockState.isIn(BlockTags.WOODEN_TRAPDOORS)) || ZeldaConfig.hookShotAnything) {
             this.setWoodAttached(true);
         }
         else {

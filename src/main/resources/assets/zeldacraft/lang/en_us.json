@@ -207,5 +207,11 @@
   "sounds.zeldacraft.tatl_hello": "Tatl Saying Hello",
   "sounds.zeldacraft.hookshot_active": "Hookshot Chain Clinks",
   "sounds.zeldacraft.boomerang_in_air": "Boomerang in Air",
-  "sounds.zeldacraft.boomerang_caught": "Boomerang being caught"
+  "sounds.zeldacraft.boomerang_caught": "Boomerang being caught",
+
+
+  "zeldacraft.midnightconfig.title": "Legend of Steve Configs",
+  "zeldacraft.midnightconfig.mobsDropShards": "Mobs can drop Emerald Shards",
+  "zeldacraft.midnightconfig.hookShotAnything": "Make any block Hookshot-able",
+  "zeldacraft.midnightconfig.healpgoodcompat": "Allow grass to drop hearts from Healing Pretty Good"
 }

@@ -5,13 +5,13 @@
 	"name": "The Legend of Minecraft: The Adventure of Steve",
 	"description": "Zelda-like things, but in minecraft",
 	"authors": [
-		"Me!"
+		"Deadlydiamond98"
 	],
 	"contact": {
-		"homepage": "https://fabricmc.net/",
+		"homepage": "https://legacy.curseforge.com/minecraft/mc-mods/the-legend-of-steve",
 		"sources": "https://github.com/FabricMC/fabric-example-mod"
 	},
-	"license": "CC0-1.0",
+	"license": "All Rights Reserved",
 	"icon": "assets/zeldacraft/icon.png",
 	"environment": "*",
 	"entrypoints": {

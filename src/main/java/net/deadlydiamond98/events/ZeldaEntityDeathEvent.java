@@ -3,6 +3,7 @@ package net.deadlydiamond98.events;
 import net.deadlydiamond98.ZeldaCraft;
 import net.deadlydiamond98.entities.ZeldaEntities;
 import net.deadlydiamond98.items.ZeldaItems;
+import net.deadlydiamond98.util.ZeldaConfig;
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.LivingEntity;
@@ -18,7 +19,7 @@ public class ZeldaEntityDeathEvent implements ServerLivingEntityEvents.AfterDeat
         World world = entity.getEntityWorld();
         if (!world.isClient) {
             if (damageSource.getAttacker() instanceof PlayerEntity) {
-                if (!(entity instanceof PlayerEntity) && entity instanceof LivingEntity) {
+                if (!(entity instanceof PlayerEntity) && entity instanceof LivingEntity && ZeldaConfig.mobsDropShards) {
                     Random random = new Random();
                     int randomNumber = random.nextInt(0, 100);
 
