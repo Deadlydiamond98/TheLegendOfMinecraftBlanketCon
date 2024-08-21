@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "SSS",
+    "SSS",
+    "SSS"
+  ],
+  "key": {
+    "S": {
+      "item": "zeldacraft:star_fragment"
+    }
+  },
+  "result": {
+    "item": "zeldacraft:star_block",
+    "count": 1
+  }
+}

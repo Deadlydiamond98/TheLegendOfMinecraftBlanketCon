@@ -84,17 +84,21 @@ public class ZeldaCraftClient implements ClientModInitializer {
 		}));
 
 		ModelPredicateProviderRegistry.register(ZeldaItems.Fairy_Bottle, new Identifier("fairycolor"), ((stack, world, entity, seed) -> {
-			String color = stack.getNbt().getString("fairycolor");
+			if (stack.getNbt() != null && stack.getNbt().contains("fairycolor")) {
+				String color = stack.getNbt().getString("fairycolor");
 
-			return switch (color) {
-				case "blue" -> 0.1f;
-				case "yellow" -> 0.2f;
-				case "green" -> 0.3f;
-				case "pink" -> 0.4f;
-				case "red" -> 0.5f;
-				case "purple" -> 0.6f;
-				default -> 0.0f;
-			};
+				return switch (color) {
+					case "yellow" -> 0.2f;
+					case "green" -> 0.3f;
+					case "pink" -> 0.4f;
+					case "red" -> 0.5f;
+					case "purple" -> 0.6f;
+					default -> 0.1f;
+				};
+			}
+			else {
+				return 0.1f;
+			}
 		}));
 
 		ModelPredicateProviderRegistry.register(ZeldaItems.Hookshot, new Identifier("shot"), ((stack, world, entity, seed) -> {
