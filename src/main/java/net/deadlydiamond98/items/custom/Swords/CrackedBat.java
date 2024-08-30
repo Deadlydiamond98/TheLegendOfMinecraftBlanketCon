@@ -39,8 +39,8 @@ public class CrackedBat extends SwordItem {
         if (Math.floor(Math.random() * (4 - 1 + 1) + 1) == 1) {
             target.damage(target.getDamageSources().magic(), 11.0F);
             target.takeKnockback(1.0, attacker.getX() - target.getX(), attacker.getZ() - target.getZ());
-            ZeldaServerPackets.sendSmaaashParticlePacket((ServerPlayerEntity) attacker, target.getX(),
-                    target.getEyeY(), target.getZ());
+            ZeldaServerPackets.sendParticlePacket((ServerPlayerEntity) attacker, target.getX(),
+                    target.getEyeY(), target.getZ(), 1);
             attacker.getWorld().playSound(null, attacker.getBlockPos(),
                     ZeldaSounds.Smaaash_Sound, SoundCategory.PLAYERS, 1.0F, 1.0F);
         }

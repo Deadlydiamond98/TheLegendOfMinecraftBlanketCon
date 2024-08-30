@@ -85,6 +85,12 @@ public class ZeldaBlocks {
             new SecretStone(FabricBlockSettings.copyOf(Blocks.CRACKED_STONE_BRICKS).strength(1.5F, 6.0F)
                     .sounds(BlockSoundGroup.STONE)));
 
+    //Doors
+
+    public static final Block Dungeon_Door = registerBlock("dungeon_door",
+            new DungeonDoor(FabricBlockSettings.copyOf(Blocks.CRACKED_STONE_BRICKS).strength(1.5F, 6.0F)
+                    .sounds(BlockSoundGroup.STONE).nonOpaque().notSolid()));
+
 
     //Dungeoncite
     public static final Block Brown_Dungeoncite_Brick = registerBlock("brown_dungeoncite_bricks",

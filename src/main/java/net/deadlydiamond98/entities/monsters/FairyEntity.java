@@ -1,6 +1,7 @@
 package net.deadlydiamond98.entities.monsters;
 
 import net.deadlydiamond98.sounds.ZeldaSounds;
+import net.deadlydiamond98.util.FairyColorUtil;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -41,14 +42,12 @@ import java.util.List;
 import java.util.Random;
 
 public class FairyEntity extends PassiveEntity {
-
-    private static final List<String> colors = List.of("purple", "blue", "yellow", "green", "pink", "red");
     private static final Random random = new Random();
     private static final TrackedData<String> color;
     @Override
     protected void initDataTracker() {
         super.initDataTracker();
-        this.dataTracker.startTracking(color, colors.get(0));
+        this.dataTracker.startTracking(color, FairyColorUtil.colors.get(0));
     }
 
     static {
@@ -64,7 +63,11 @@ public class FairyEntity extends PassiveEntity {
         this.setPathfindingPenalty(PathNodeType.WATER_BORDER, 16.0F);
         this.setPathfindingPenalty(PathNodeType.COCOA, -1.0F);
         this.setPathfindingPenalty(PathNodeType.FENCE, -1.0F);
-        this.setColor(colors.get(random.nextInt(colors.size())));
+        int colorint = random.nextInt(FairyColorUtil.colors.size());
+        if (colorint == 0) {
+            colorint++;
+        }
+        this.setColor(FairyColorUtil.colors.get(colorint));
     }
 
     @Nullable

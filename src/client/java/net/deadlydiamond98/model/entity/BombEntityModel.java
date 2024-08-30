@@ -5,7 +5,7 @@
 package net.deadlydiamond98.model.entity;
 
 import net.deadlydiamond98.ZeldaCraft;
-import net.deadlydiamond98.entities.bombs.BombEntity;
+import net.deadlydiamond98.entities.bombs.AbstractBombEntity;
 import net.minecraft.client.model.*;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.entity.model.EntityModel;
@@ -13,7 +13,7 @@ import net.minecraft.client.render.entity.model.EntityModelLayer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 
-public class BombEntityModel<T extends BombEntity> extends EntityModel<BombEntity> {
+public class BombEntityModel<T extends AbstractBombEntity> extends EntityModel<AbstractBombEntity> {
 	public static final EntityModelLayer LAYER_LOCATION = new EntityModelLayer(new Identifier(ZeldaCraft.MOD_ID, "bomb_entity"), "main");
 	private final ModelPart top;
 	private final ModelPart cube_r1;
@@ -34,7 +34,7 @@ public class BombEntityModel<T extends BombEntity> extends EntityModel<BombEntit
 		return TexturedModelData.of(modelData, 32, 21);
 	}
 	@Override
-	public void setAngles(BombEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+	public void setAngles(AbstractBombEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
 	}
 	@Override
 	public void render(MatrixStack matrices, VertexConsumer vertexConsumer, int light, int overlay, float red, float green, float blue, float alpha) {

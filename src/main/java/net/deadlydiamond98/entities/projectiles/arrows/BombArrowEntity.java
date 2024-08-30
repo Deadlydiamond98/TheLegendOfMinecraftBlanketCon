@@ -10,7 +10,6 @@ import net.deadlydiamond98.networking.ZeldaServerPackets;
 import net.deadlydiamond98.sounds.ZeldaSounds;
 import net.deadlydiamond98.util.ZeldaTags;
 import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
@@ -20,8 +19,6 @@ import net.minecraft.sound.SoundCategory;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-
-import java.util.List;
 
 import static net.deadlydiamond98.blocks.BombFlower.AGE;
 
@@ -68,7 +65,7 @@ public class BombArrowEntity extends PersistentProjectileEntity {
                             if (((BombFlower) block).getAge(getWorld().getBlockState(blockPos)) == 3) {
                                 this.getWorld().setBlockState(blockPos, block.getDefaultState().with(AGE, 0));
                                 BombEntity bombEntity = new BombEntity(this.getWorld(), blockPos.getX() + 0.5, blockPos.getY() + 0.2,
-                                        blockPos.getZ()  + 0.5, 2, 20, 1);
+                                        blockPos.getZ()  + 0.5);
                                 bombEntity.setYaw((((BombFlower) block).getFacing(getWorld().getBlockState(blockPos))).getHorizontal() - 90);
                                 this.getWorld().spawnEntity(bombEntity);
                             }
@@ -82,8 +79,10 @@ public class BombArrowEntity extends PersistentProjectileEntity {
             }
 
             this.getWorld().createExplosion(this, this.getX(), this.getY(), this.getZ(), this.power, false, World.ExplosionSourceType.NONE);
-            ZeldaServerPackets.sendBombParticlePacket((List<ServerPlayerEntity>) this.getWorld().getPlayers(), this.getX(),
-                    this.getY() + 1.5, this.getZ());
+            this.getWorld().getPlayers().forEach(player -> {
+                ZeldaServerPackets.sendParticlePacket((ServerPlayerEntity) player, this.getX(),
+                        this.getY(), this.getZ(), 0);
+            });
         }
     }
 

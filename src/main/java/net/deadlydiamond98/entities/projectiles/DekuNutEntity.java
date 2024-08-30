@@ -66,8 +66,10 @@ public class DekuNutEntity extends ThrownItemEntity {
                 statusEffect.giveOverlay(StunStatusEffect.OverlayType.DEKU);
                 entity.addStatusEffect(new StatusEffectInstance(statusEffect, 50, 0));
             }
-            ZeldaServerPackets.sendSnapParticlePacket((List<ServerPlayerEntity>) this.getWorld().getPlayers(), this.getX(),
-                    this.getY() - 0.5, this.getZ());
+            this.getWorld().getPlayers().forEach(player -> {
+                ZeldaServerPackets.sendParticlePacket((ServerPlayerEntity) player, this.getX(),
+                        this.getY() - 0.5, this.getZ(), 2);
+            });
             this.getWorld().playSound(null, this.getBlockPos(), SoundEvents.ITEM_FLINTANDSTEEL_USE, SoundCategory.BLOCKS, 2.0f, 2.0f);
             this.getWorld().playSound(null, this.getBlockPos(), SoundEvents.ITEM_FLINTANDSTEEL_USE, SoundCategory.BLOCKS, 2.0f, 1.0f);
             this.getWorld().playSound(null, this.getBlockPos(), SoundEvents.ITEM_FLINTANDSTEEL_USE, SoundCategory.BLOCKS, 2.0f, 0.5f);

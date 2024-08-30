@@ -69,8 +69,10 @@ public class MagicIceProjectileEntity extends ProjectileEntity {
         super.onCollision(hitResult);
         if (!this.getWorld().isClient) {
             this.getWorld().sendEntityStatus(this, (byte)3);
-            ZeldaServerPackets.sendMagicIceParticlePacket((List<ServerPlayerEntity>) this.getWorld().getPlayers(), this.getX(),
-                    this.getEyeY(), this.getZ());
+            this.getWorld().getPlayers().forEach(player -> {
+                ZeldaServerPackets.sendParticlePacket((ServerPlayerEntity) player, this.getX(),
+                        this.getEyeY(), this.getZ(), 3);
+            });
             this.discard();
         }
     }

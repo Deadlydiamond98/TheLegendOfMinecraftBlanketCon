@@ -8,9 +8,10 @@ import net.deadlydiamond98.items.custom.Swords.MagicSword;
 import net.deadlydiamond98.items.custom.Swords.MasterSword;
 import net.deadlydiamond98.items.custom.arrows.BombArrow;
 import net.deadlydiamond98.items.custom.arrows.SilverArrow;
-import net.deadlydiamond98.items.custom.bomb.BombItem;
+import net.deadlydiamond98.items.custom.bomb.regular_bombs.BombItem;
 import net.deadlydiamond98.items.custom.bomb.BombchuItem;
 import net.deadlydiamond98.items.custom.bomb.DekuNutItem;
+import net.deadlydiamond98.items.custom.bomb.regular_bombs.SuperBombItem;
 import net.deadlydiamond98.items.custom.boomerang.IronBoomerangItem;
 import net.deadlydiamond98.items.custom.boomerang.MagicBoomerangItem;
 import net.deadlydiamond98.items.custom.boomerang.WoodBoomerangItem;
@@ -22,14 +23,12 @@ import net.deadlydiamond98.items.custom.manaItems.restoring.MagicJar;
 import net.deadlydiamond98.items.custom.manaItems.restoring.StarFragment;
 import net.deadlydiamond98.items.custom.manaItems.wearable.*;
 import net.deadlydiamond98.items.custom.shields.HylianShieldItem;
-import net.deadlydiamond98.magiclib.items.consumables.MagicConsumable;
 import net.deadlydiamond98.magiclib.items.consumables.MagicFood;
 import net.deadlydiamond98.sounds.ZeldaSounds;
 import net.deadlydiamond98.util.ZeldaTags;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroupEntries;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
-import net.minecraft.entity.mob.SlimeEntity;
 import net.minecraft.item.*;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
@@ -76,9 +75,9 @@ public class ZeldaItems {
     public static final Item Deku_Nut = registerItem("deku_nut", new DekuNutItem(
             new FabricItemSettings().maxCount(16)));
     public static final Item Bomb = registerItem("bomb", new BombItem(
-            new FabricItemSettings().maxCount(16), 3, 50, 1));
-    public static final Item Super_Bomb = registerItem("super_bomb", new BombItem(
-            new FabricItemSettings().maxCount(16), 5, 80, 2));
+            new FabricItemSettings().maxCount(16)));
+    public static final Item Super_Bomb = registerItem("super_bomb", new SuperBombItem(
+            new FabricItemSettings().maxCount(16)));
     public static final Item Bombchu = registerItem("bombchu", new BombchuItem(
             new FabricItemSettings().maxCount(16), 3, 100, 0.25F));
 

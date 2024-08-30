@@ -1,18 +1,24 @@
 package net.deadlydiamond98;
 
 import net.deadlydiamond98.blocks.ZeldaBlocks;
+import net.deadlydiamond98.blocks.entities.ZeldaBlockEntities;
 import net.deadlydiamond98.commands.ZeldaClientCommands;
 import net.deadlydiamond98.entities.ZeldaEntities;
 import net.deadlydiamond98.events.ClientTickEvent;
 import net.deadlydiamond98.items.ZeldaItems;
+import net.deadlydiamond98.model.DungeonDoorModel;
 import net.deadlydiamond98.model.entity.*;
 import net.deadlydiamond98.networking.ZeldaClientPackets;
 import net.deadlydiamond98.particle.ZeldaParticleFactory;
+import net.deadlydiamond98.renderer.DungeonDoorRenderer;
 import net.deadlydiamond98.renderer.FairyCompanionRenderer;
 import net.deadlydiamond98.renderer.ShootingStarRenderer;
 import net.deadlydiamond98.renderer.entity.*;
-import net.deadlydiamond98.renderer.entity.bombs.BombEntityRenderer;
+import net.deadlydiamond98.renderer.entity.bombs.BombRenderer;
 import net.deadlydiamond98.renderer.entity.bombs.BombchuEntityRenderer;
+import net.deadlydiamond98.renderer.entity.bombs.SuperBombRenderer;
+import net.deadlydiamond98.renderer.entity.magic.BeamProjectileRenderer;
+import net.deadlydiamond98.renderer.entity.magic.MagicIceProjectileRenderer;
 import net.deadlydiamond98.renderer.entity.monster.BeamosRenderer;
 import net.deadlydiamond98.renderer.entity.monster.BubbleRenderer;
 import net.deadlydiamond98.renderer.entity.monster.FairyRenderer;
@@ -20,9 +26,8 @@ import net.deadlydiamond98.renderer.entity.monster.KeeseRenderer;
 import net.deadlydiamond98.renderer.entity.projectile_items.BaseballRenderer;
 import net.deadlydiamond98.renderer.entity.projectile_items.BoomerangProjectileRenderer;
 import net.deadlydiamond98.renderer.entity.projectile_items.DekuNutRenderer;
-import net.deadlydiamond98.renderer.entity.MagicFireProjectileRenderer;
+import net.deadlydiamond98.renderer.entity.magic.MagicFireProjectileRenderer;
 import net.deadlydiamond98.renderer.entity.projectile_items.ZeldaArrowRenderer;
-import net.deadlydiamond98.util.OtherPlayerData;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.rendering.v1.*;
@@ -30,8 +35,8 @@ import net.minecraft.client.color.world.BiomeColors;
 import net.minecraft.client.color.world.GrassColors;
 import net.minecraft.client.item.ModelPredicateProviderRegistry;
 import net.minecraft.client.render.RenderLayer;
+import net.minecraft.client.render.block.entity.BlockEntityRendererFactories;
 import net.minecraft.client.render.entity.model.BatEntityModel;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.DyeableItem;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.util.Identifier;
@@ -47,6 +52,7 @@ public class ZeldaCraftClient implements ClientModInitializer {
 
 		BlockRenderLayerMap.INSTANCE.putBlock(ZeldaBlocks.Bomb_Flower, RenderLayer.getCutout());
 		BlockRenderLayerMap.INSTANCE.putBlock(ZeldaBlocks.Loot_Grass, RenderLayer.getCutout());
+		BlockRenderLayerMap.INSTANCE.putBlock(ZeldaBlocks.Dungeon_Door, RenderLayer.getCutout());
 		BlockRenderLayerMap.INSTANCE.putBlock(ZeldaBlocks.Somaria_Block, RenderLayer.getTranslucent());
 
 		registerModelPredicatees();
@@ -144,12 +150,15 @@ public class ZeldaCraftClient implements ClientModInitializer {
 
 		EntityRendererRegistry.register(ZeldaEntities.Baseball_Entity, BaseballRenderer::new);
 		EntityRendererRegistry.register(ZeldaEntities.Deku_Nut_Entity, DekuNutRenderer::new);
-		EntityRendererRegistry.register(ZeldaEntities.Bomb_Entity, BombEntityRenderer::new);
+		EntityRendererRegistry.register(ZeldaEntities.Bomb_Entity, BombRenderer::new);
+		EntityRendererRegistry.register(ZeldaEntities.Super_Bomb_Entity, SuperBombRenderer::new);
 
 		EntityRendererRegistry.register(ZeldaEntities.Bombchu_Entity, BombchuEntityRenderer::new);
 
 		EntityRendererRegistry.register(ZeldaEntities.Silver_Arrow, ZeldaArrowRenderer::new);
 		EntityRendererRegistry.register(ZeldaEntities.Bomb_Arrow, ZeldaArrowRenderer::new);
+
+		BlockEntityRendererFactories.register(ZeldaBlockEntities.DUNGEON_DOOR, DungeonDoorRenderer::new);
 	}
 
 	public void registerModelLayers() {
@@ -162,6 +171,8 @@ public class ZeldaCraftClient implements ClientModInitializer {
 		EntityModelLayerRegistry.registerModelLayer(BubbleEntityModel.LAYER_LOCATION, BubbleEntityModel::getTexturedModelData);
 		EntityModelLayerRegistry.registerModelLayer(FairyEntityModel.LAYER_LOCATION, FairyEntityModel::getTexturedModelData);
 		EntityModelLayerRegistry.registerModelLayer(BeamosEntityModel.LAYER_LOCATION, BeamosEntityModel::getTexturedModelData);
+
+		EntityModelLayerRegistry.registerModelLayer(DungeonDoorModel.LAYER_LOCATION, DungeonDoorModel::getTexturedModelData);
 	}
 
 	public void registerTintables() {

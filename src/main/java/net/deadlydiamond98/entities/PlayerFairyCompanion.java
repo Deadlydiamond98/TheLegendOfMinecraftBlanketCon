@@ -4,6 +4,7 @@ import dev.emi.trinkets.api.TrinketComponent;
 import dev.emi.trinkets.api.TrinketsApi;
 import net.deadlydiamond98.items.ZeldaItems;
 import net.deadlydiamond98.sounds.ZeldaSounds;
+import net.deadlydiamond98.util.FairyColorUtil;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.MovementType;
@@ -29,7 +30,6 @@ public class PlayerFairyCompanion extends Entity implements Ownable {
 
     private static final TrackedData<String> color;
     private static final TrackedData<Boolean> visable;
-    private static final List<String> colors = List.of("purple", "blue", "yellow", "green", "pink", "red");
     private int fairyType;
     private int idleTime;
     private boolean fireSound;
@@ -41,7 +41,7 @@ public class PlayerFairyCompanion extends Entity implements Ownable {
 
     @Override
     protected void initDataTracker() {
-        this.dataTracker.startTracking(color, colors.get(0));
+        this.dataTracker.startTracking(color, FairyColorUtil.colors.get(0));
         this.dataTracker.startTracking(visable, true);
     }
     static {

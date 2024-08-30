@@ -12,6 +12,7 @@ import net.minecraft.util.Identifier;
 
 public class ZeldaBlockEntities {
     public static BlockEntityType<LootPotBlockEntity> LOOT_POT;
+    public static BlockEntityType<DungeonDoorEntity> DUNGEON_DOOR;
 
     public static void registerBlockEntities() {
         Block[] lootPotBlocks = new Block[]{
@@ -38,5 +39,9 @@ public class ZeldaBlockEntities {
                 new Identifier(ZeldaCraft.MOD_ID, "loot_pot"),
                 FabricBlockEntityTypeBuilder.create(LootPotBlockEntity::new,
                         lootPotBlocks).build(null));
+        DUNGEON_DOOR = Registry.register(Registries.BLOCK_ENTITY_TYPE,
+                new Identifier(ZeldaCraft.MOD_ID, "dungeon_door"),
+                FabricBlockEntityTypeBuilder.create(DungeonDoorEntity::new,
+                        ZeldaBlocks.Dungeon_Door).build(null));
     }
 }

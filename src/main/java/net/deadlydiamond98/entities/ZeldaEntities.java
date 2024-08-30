@@ -3,6 +3,7 @@ package net.deadlydiamond98.entities;
 import net.deadlydiamond98.ZeldaCraft;
 import net.deadlydiamond98.entities.bombs.BombEntity;
 import net.deadlydiamond98.entities.bombs.BombchuEntity;
+import net.deadlydiamond98.entities.bombs.SuperBombEntity;
 import net.deadlydiamond98.entities.monsters.BeamosEntity;
 import net.deadlydiamond98.entities.monsters.BubbleEntity;
 import net.deadlydiamond98.entities.monsters.FairyEntity;
@@ -10,7 +11,6 @@ import net.deadlydiamond98.entities.monsters.KeeseEntity;
 import net.deadlydiamond98.entities.projectiles.*;
 import net.deadlydiamond98.entities.projectiles.arrows.BombArrowEntity;
 import net.deadlydiamond98.entities.projectiles.arrows.SilverArrowEntity;
-import net.deadlydiamond98.entities.projectiles.boomerangs.BaseBoomerangProjectile;
 import net.deadlydiamond98.entities.projectiles.boomerangs.IronBoomerang;
 import net.deadlydiamond98.entities.projectiles.boomerangs.MagicalBoomerang;
 import net.deadlydiamond98.entities.projectiles.boomerangs.WoodBoomerang;
@@ -80,6 +80,7 @@ public class ZeldaEntities {
             FabricEntityTypeBuilder.create(SpawnGroup.MISC, (EntityType<HookshotEntity> type, World world) ->
                             new HookshotEntity(type, world))
                     .dimensions(EntityDimensions.fixed(0.6f,0.6f))
+                    .disableSummon()
                     .build()
     );
     public static final EntityType<BombEntity> Bomb_Entity = Registry.register(
@@ -87,6 +88,14 @@ public class ZeldaEntities {
             new Identifier(ZeldaCraft.MOD_ID, "bomb_entity"),
             FabricEntityTypeBuilder.create(SpawnGroup.MISC, (EntityType<BombEntity> type, World world) ->
                             new BombEntity(type, world))
+                    .dimensions(EntityDimensions.fixed(0.5f,0.5f))
+                    .build()
+    );
+    public static final EntityType<SuperBombEntity> Super_Bomb_Entity = Registry.register(
+            Registries.ENTITY_TYPE,
+            new Identifier(ZeldaCraft.MOD_ID, "super_bomb_entity"),
+            FabricEntityTypeBuilder.create(SpawnGroup.MISC, (EntityType<SuperBombEntity> type, World world) ->
+                            new SuperBombEntity(type, world))
                     .dimensions(EntityDimensions.fixed(0.5f,0.5f))
                     .build()
     );
@@ -168,8 +177,7 @@ public class ZeldaEntities {
     public static final EntityType<FairyEntity> Fairy_Entity = Registry.register(
             Registries.ENTITY_TYPE,
             new Identifier(ZeldaCraft.MOD_ID, "fairy"),
-            FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, (EntityType<FairyEntity> type, World world) ->
-                            new FairyEntity(type, world))
+            FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, FairyEntity::new)
                     .dimensions(EntityDimensions.fixed(0.4f,0.4f))
                     .build()
     );

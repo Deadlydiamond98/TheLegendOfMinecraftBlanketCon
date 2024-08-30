@@ -1,8 +1,7 @@
-package net.deadlydiamond98.renderer.entity;
+package net.deadlydiamond98.renderer.entity.magic;
 
 import net.deadlydiamond98.ZeldaCraft;
-import net.deadlydiamond98.entities.projectiles.BaseBallEntity;
-import net.deadlydiamond98.entities.projectiles.MagicFireProjectileEntity;
+import net.deadlydiamond98.entities.projectiles.MagicIceProjectileEntity;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.*;
 import net.minecraft.client.render.entity.EntityRenderer;
@@ -14,13 +13,13 @@ import net.minecraft.util.math.RotationAxis;
 import org.joml.Matrix3f;
 import org.joml.Matrix4f;
 
-public class MagicFireProjectileRenderer<T extends Entity> extends EntityRenderer<MagicFireProjectileEntity> {
-    public MagicFireProjectileRenderer(EntityRendererFactory.Context ctx) {
+public class MagicIceProjectileRenderer<T extends Entity> extends EntityRenderer<MagicIceProjectileEntity> {
+    public MagicIceProjectileRenderer(EntityRendererFactory.Context ctx) {
         super(ctx);
     }
 
     @Override
-    public void render(MagicFireProjectileEntity entity, float yaw, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light) {
+    public void render(MagicIceProjectileEntity entity, float yaw, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light) {
         matrices.push();
         matrices.scale(-1.0F, -1.0F, 1.0F);
         matrices.translate(0.0D, -0.25D, 0.0D);
@@ -46,7 +45,7 @@ public class MagicFireProjectileRenderer<T extends Entity> extends EntityRendere
     }
 
     @Override
-    public Identifier getTexture(MagicFireProjectileEntity entity) {
-        return new Identifier(ZeldaCraft.MOD_ID, "textures/particle/fire_particle_14.png");
+    public Identifier getTexture(MagicIceProjectileEntity entity) {
+        return new Identifier(ZeldaCraft.MOD_ID, "textures/particle/ice_particle_shoot_00.png");
     }
 }

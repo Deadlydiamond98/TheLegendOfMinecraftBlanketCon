@@ -17,7 +17,6 @@ import net.minecraft.world.World;
 import java.util.List;
 
 public class FairyBottle extends Item {
-    public static final List<String> colors = List.of("purple", "blue", "yellow", "green", "pink", "red");
     public FairyBottle(Settings settings) {
         super(settings);
     }

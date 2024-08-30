@@ -3,7 +3,7 @@ package net.deadlydiamond98.mixin;
 import dev.emi.trinkets.api.TrinketComponent;
 import dev.emi.trinkets.api.TrinketsApi;
 import net.deadlydiamond98.items.ZeldaItems;
-import net.deadlydiamond98.items.custom.bomb.BombItem;
+import net.deadlydiamond98.items.custom.bomb.regular_bombs.BombItem;
 import net.deadlydiamond98.items.custom.bomb.BombchuItem;
 import net.deadlydiamond98.items.custom.custombundle.BombBag;
 import net.deadlydiamond98.items.custom.custombundle.CustomBundle;

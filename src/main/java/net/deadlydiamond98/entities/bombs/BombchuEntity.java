@@ -193,7 +193,7 @@ public class BombchuEntity extends Entity implements Ownable {
                             if (((BombFlower) block).getAge(getWorld().getBlockState(blockPos)) == 3) {
                                 this.getWorld().setBlockState(blockPos, block.getDefaultState().with(AGE, 0));
                                 BombEntity bombEntity = new BombEntity(this.getWorld(), blockPos.getX() + 0.5, blockPos.getY() + 0.2,
-                                        blockPos.getZ()  + 0.5, 2, 20, 1);
+                                        blockPos.getZ()  + 0.5);
                                 bombEntity.setYaw((((BombFlower) block).getFacing(getWorld().getBlockState(blockPos))).getHorizontal() - 90);
                                 this.getWorld().spawnEntity(bombEntity);
                             }
@@ -208,8 +208,10 @@ public class BombchuEntity extends Entity implements Ownable {
 
             this.getWorld().createExplosion(this, this.getX(), this.getY(), this.getZ(), power, false, World.ExplosionSourceType.NONE);
             Vec3d newPos = this.getPos().offset(this.getAttachedFace(), -1.5);
-            ZeldaServerPackets.sendBombParticlePacket((List<ServerPlayerEntity>) this.getWorld().getPlayers(), this.getX(),
-                    newPos.getY(), this.getZ());
+            this.getWorld().getPlayers().forEach(player -> {
+                ZeldaServerPackets.sendParticlePacket((ServerPlayerEntity) player, this.getX(),
+                        newPos.getY(), this.getZ(), 0);
+            });
         }
     }
     @Override

@@ -183,7 +183,16 @@ public class CustomBundle extends Item {
         if (firstItemNbt.contains("tag")) {
             itemStack.setNbt(firstItemNbt.getCompound("tag"));
         }
-        nbtList.remove(0);
+
+        if (itemStack.getMaxCount() >= bundledItemData.getCount()) {
+            nbtList.remove(0);
+        }
+        else {
+            bundledItemData.setCount(bundledItemData.getCount() - itemStack.getMaxCount());
+            nbtList.set(0, bundledItemData.toNbt());
+            itemStack.setCount(itemStack.getMaxCount());
+        }
+
         if (nbtList.isEmpty()) {
             stack.removeSubNbt(ITEMS_KEY);
         } else {

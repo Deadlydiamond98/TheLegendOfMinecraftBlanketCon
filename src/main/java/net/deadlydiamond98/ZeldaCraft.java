@@ -2,6 +2,7 @@ package net.deadlydiamond98;
 
 import eu.midnightdust.lib.config.MidnightConfig;
 import net.deadlydiamond98.blocks.ZeldaBlocks;
+import net.deadlydiamond98.blocks.ZeldaBlocksTab;
 import net.deadlydiamond98.blocks.entities.ZeldaBlockEntities;
 import net.deadlydiamond98.commands.ZeldaServerCommands;
 import net.deadlydiamond98.enchantments.ZeldaEnchantments;
@@ -15,12 +16,12 @@ import net.deadlydiamond98.events.ZeldaServerLifecycleEvents;
 import net.deadlydiamond98.events.ZeldaSeverTickEvent;
 import net.deadlydiamond98.events.ZeldaUseEntityCallbackEvent;
 import net.deadlydiamond98.items.ZeldaItems;
+import net.deadlydiamond98.items.ZeldaItemsTab;
 import net.deadlydiamond98.networking.ZeldaServerPackets;
 import net.deadlydiamond98.particle.ZeldaParticles;
 import net.deadlydiamond98.sounds.ZeldaSounds;
 import net.deadlydiamond98.statuseffects.ZeldaStatusEffects;
 import net.deadlydiamond98.util.ZeldaConfig;
-import net.deadlydiamond98.util.ZeldaCreativeTabs;
 import net.deadlydiamond98.util.ZeldaPotionRecipes;
 import net.deadlydiamond98.world.ZeldaFeatures;
 import net.deadlydiamond98.world.zeldadungeons.ZeldaDungeons;
@@ -29,7 +30,6 @@ import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 import net.fabricmc.loader.api.FabricLoader;
-import net.minecraft.util.Identifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -68,7 +68,8 @@ public class ZeldaCraft implements ModInitializer {
 
 		ZeldaFeatures.register();
 		ZeldaDungeons.registerDungeons();
-		ZeldaCreativeTabs.registerItemGroups();
+		ZeldaItemsTab.registerItemGroup();
+		ZeldaBlocksTab.registerBlockItemGroup();
 		LOGGER.info("Mod Loaded");
 	}
 

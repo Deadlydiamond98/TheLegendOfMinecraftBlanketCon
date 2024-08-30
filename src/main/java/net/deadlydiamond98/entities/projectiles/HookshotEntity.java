@@ -22,10 +22,13 @@ import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.shape.VoxelShape;
+import net.minecraft.world.RaycastContext;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
+import org.joml.Vector3d;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -35,7 +38,9 @@ public class HookshotEntity extends ProjectileEntity implements Ownable {
     private float movementSpeed;
     private int length;
     private int ticksInAir;
+    private int ticksInBlock;
     private boolean returning;
+    private double prevDistance;
     public HookshotEntity(EntityType<HookshotEntity> entityType, World world) {
         super(entityType, world);
     }
@@ -44,6 +49,7 @@ public class HookshotEntity extends ProjectileEntity implements Ownable {
         super(entityType, world);
         this.setOwner(user);
         this.ticksInAir = 0;
+        this.ticksInBlock = 0;
         this.movementSpeed = 0.5f;
         this.setVelocity(user, user.getPitch(), user.getYaw(), 0.0f, this.movementSpeed, 1.0f);
         this.setYaw(user.getHeadYaw());
@@ -53,6 +59,7 @@ public class HookshotEntity extends ProjectileEntity implements Ownable {
         this.setWoodAttached(false);
         ((OtherPlayerData) user).setHookUsability(false);
         this.noClip = true;
+        this.prevDistance = 100;
     }
 
 
@@ -61,10 +68,6 @@ public class HookshotEntity extends ProjectileEntity implements Ownable {
         BlockPos pos = blockHitResult.getBlockPos();
         BlockState blockState = this.getWorld().getBlockState(pos);
         super.onBlockHit(blockHitResult);
-        Vec3d vec3d = blockHitResult.getPos().subtract(this.getX(), this.getY(), this.getZ());
-        this.setVelocity(vec3d);
-        Vec3d vec3d2 = vec3d.normalize().multiply(0.05000000074505806);
-        this.setPos(this.getX() - vec3d2.x, this.getY() - vec3d2.y, this.getZ() - vec3d2.z);
         pullPlayer(blockState);
     }
 
@@ -86,19 +89,14 @@ public class HookshotEntity extends ProjectileEntity implements Ownable {
             livingEntity.damage(livingEntity.getDamageSources().playerAttack((PlayerEntity) this.getOwner()), 2);
             returnBack();
         }
+        if (this.getOwner() != null && this.getOwner() instanceof PlayerEntity) {
+            this.discard();
+        }
     }
 
     @Override
     public void tick() {
         super.tick();
-
-//        double checkDistance = 1;
-//        HitResult frontHit = RaycastUtil.getCollisionFromEntityFront(this, checkDistance);
-//
-//        if (frontHit.getType() == HitResult.Type.BLOCK && !this.getWoodAttached() && this.getOwner() != null) {
-//            BlockState frontBlock = this.getWorld().getBlockState(((BlockHitResult) frontHit).getBlockPos());
-//            pullPlayer(frontBlock);
-//        }
 
         HitResult hitResult = ProjectileUtil.getCollision(this, this::canHit);
 
@@ -156,6 +154,13 @@ public class HookshotEntity extends ProjectileEntity implements Ownable {
                     if (distance.length() < 1) {
                         this.discard();
                     }
+
+                    if (this.prevDistance - distance.length() < 0.05 && this.ticksInBlock >= 5) {
+                        returnBack();
+                    }
+
+                    this.prevDistance = distance.length();
+                    this.ticksInBlock++;
                 }
 
                 if (this.returning) {
@@ -189,10 +194,11 @@ public class HookshotEntity extends ProjectileEntity implements Ownable {
     }
 
     private void pullPlayer(BlockState blockState) {
-        if ((blockState.isIn(BlockTags.LOGS) || blockState.isIn(BlockTags.PLANKS) || blockState.isIn(BlockTags.WOODEN_DOORS)
+        if (((blockState.isIn(BlockTags.LOGS) || blockState.isIn(BlockTags.PLANKS) || blockState.isIn(BlockTags.WOODEN_DOORS)
                 || blockState.isIn(BlockTags.WOODEN_FENCES) || blockState.isIn(BlockTags.WOODEN_SLABS) || blockState.isIn(BlockTags.WOODEN_STAIRS)
-                || blockState.isIn(BlockTags.WOODEN_TRAPDOORS)) || ZeldaConfig.hookShotAnything) {
+                || blockState.isIn(BlockTags.WOODEN_TRAPDOORS)) || ZeldaConfig.hookShotAnything) && !this.returning) {
             this.setWoodAttached(true);
+            this.setVelocity(Vec3d.ZERO);
         }
         else {
             returnBack();
