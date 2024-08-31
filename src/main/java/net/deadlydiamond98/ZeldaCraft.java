@@ -22,6 +22,7 @@ import net.deadlydiamond98.particle.ZeldaParticles;
 import net.deadlydiamond98.sounds.ZeldaSounds;
 import net.deadlydiamond98.statuseffects.ZeldaStatusEffects;
 import net.deadlydiamond98.util.ZeldaConfig;
+import net.deadlydiamond98.util.ZeldaLootTables;
 import net.deadlydiamond98.util.ZeldaPotionRecipes;
 import net.deadlydiamond98.world.ZeldaFeatures;
 import net.deadlydiamond98.world.zeldadungeons.ZeldaDungeons;
@@ -57,12 +58,11 @@ public class ZeldaCraft implements ModInitializer {
 		ZeldaPotionRecipes.registerBrewingRecipes();
 
 		//Events
-//		PlayerRightClickedEntityEvent.register();
 		ZeldaSeverTickEvent.registerTickEvent();
 		ZeldaServerLifecycleEvents.register();
 		ZeldaUseEntityCallbackEvent.registerUseEntityEvent();
 		ServerLivingEntityEvents.AFTER_DEATH.register(new ZeldaEntityDeathEvent());
-//		AttackBlockEvent.register();
+		ZeldaLootTables.modifyLootTables();
 
 		ZeldaServerCommands.register();
 

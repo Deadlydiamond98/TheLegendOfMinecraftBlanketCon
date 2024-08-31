@@ -88,8 +88,8 @@ public class ZeldaBlocks {
     //Doors
 
     public static final Block Dungeon_Door = registerBlock("dungeon_door",
-            new DungeonDoor(FabricBlockSettings.copyOf(Blocks.CRACKED_STONE_BRICKS).strength(1.5F, 6.0F)
-                    .sounds(BlockSoundGroup.STONE).nonOpaque().notSolid()));
+            new DungeonDoor(FabricBlockSettings.copyOf(Blocks.SPRUCE_PLANKS).strength(1.5F, 6.0F)
+                    .sounds(BlockSoundGroup.HANGING_SIGN).nonOpaque().notSolid()));
 
 
     //Dungeoncite
@@ -150,6 +150,16 @@ public class ZeldaBlocks {
             new Block(FabricBlockSettings.copyOf(Blocks.DIAMOND_BLOCK).strength(
                             5, 6.0F)
                     .sounds(BlockSoundGroup.CALCITE).requiresTool()));
+
+    public static final Block Master_Block = registerBlock("master_block",
+            new Block(FabricBlockSettings.copyOf(Blocks.DIAMOND_BLOCK).strength(
+                            50, 1200.0F)
+                    .sounds(BlockSoundGroup.NETHERITE).requiresTool()));
+
+    public static final Block Master_Ore = registerBlock("master_ore",
+            new Block(FabricBlockSettings.copyOf(Blocks.DEEPSLATE_DIAMOND_ORE).strength(
+                            30, 1200.0F)
+                    .sounds(BlockSoundGroup.DEEPSLATE).requiresTool()));
 
 
 

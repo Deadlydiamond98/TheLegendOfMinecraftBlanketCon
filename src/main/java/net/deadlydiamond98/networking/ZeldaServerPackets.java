@@ -10,6 +10,7 @@ import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.state.property.Properties;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 
@@ -42,10 +43,11 @@ public class ZeldaServerPackets {
         buf.writeDouble(z);
         ServerPlayNetworking.send(player, ParticlePacket, buf);
     }
-    public static void sendDoorOpeningAnimationPacket(ServerPlayerEntity player, BlockPos pos, int openingTicks) {
+    public static void sendDoorOpeningAnimationPacket(ServerPlayerEntity player, BlockPos pos, int openingTicks, int rotation) {
         PacketByteBuf buf = PacketByteBufs.create();
         buf.writeBlockPos(pos);
         buf.writeInt(openingTicks);
+        buf.writeInt(rotation);
         ServerPlayNetworking.send(player, DoorAnimationPacket, buf);
     }
     public static void sendDekuStunOverlayPacket(ServerPlayerEntity player, int entityId, boolean hasEffect, StunStatusEffect.OverlayType overlay) {

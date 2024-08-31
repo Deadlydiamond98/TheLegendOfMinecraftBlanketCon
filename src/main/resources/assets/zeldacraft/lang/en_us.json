@@ -14,7 +14,16 @@
   "item.zeldacraft.better_bomb_bag": "Gilded Bomb Bag",
   "block.zeldacraft.bomb_flower": "Bomb Flower Seeds",
   "item.zeldacraft.deku_nut": "Deku Nut",
+
+
   "item.zeldacraft.dungeon_key": "Key",
+  "block.zeldacraft.dungeon_door": "Dungeon Door",
+
+  "block.zeldacraft.master_block": "Master Block",
+  "block.zeldacraft.master_ore": "Master Ore",
+  "item.zeldacraft.raw_master_ore": "Raw Master Ore",
+  "item.zeldacraft.master_scrap": "Master Scrap",
+  "item.zeldacraft.master_ingot": "Master Ingot",
 
   "weather.zeldacraft.meteor_shower.starta": "The stars have started falling",
   "weather.zeldacraft.meteor_shower.startb": "Magic fills the night skies",
@@ -43,7 +52,7 @@
   "item.zeldacraft.cane_of_somaria": "Cane of Somaria",
   "block.zeldacraft.somaria_block": "Somaria Block",
   "item.zeldacraft.clock_of_time_freeze": "Stopwatch",
-  "item.zeldacraft.frozen_clock.tooltipa": "Temperarory freezes entities for",
+  "item.zeldacraft.frozen_clock.tooltipa": "Temporary freezes entities for",
   "item.zeldacraft.frozen_clock.tooltipb": "a short duration near you",
 
   "block.zeldacraft.loot_grass": "Loot Grass",
@@ -140,7 +149,7 @@
 
   "item.zeldacraft.shield_pendant": "Shield Pendant",
   "item.zeldacraft.shield_pendant.tooltip": "Applies Resistance at the cost of Magic",
-  "item.zeldacraft.jump_pendant": "Jump Pendant [Creative Only]",
+  "item.zeldacraft.jump_pendant": "Jump Pendant",
   "item.zeldacraft.jump_pendant.tooltip": "Allows one to Double Jump",
   "item.zeldacraft.heart_pendant": "Life Pendant",
   "item.zeldacraft.heart_pendant.tooltip": "Applies Regeneration at the cost of Magic",

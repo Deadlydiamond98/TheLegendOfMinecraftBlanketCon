@@ -39,4 +39,8 @@ public class DungeonDoorModel extends EntityModel<Entity> {
 	public void render(MatrixStack matrices, VertexConsumer vertexConsumer, int light, int overlay, float red, float green, float blue, float alpha) {
 		bb_main.render(matrices, vertexConsumer, light, overlay, red, green, blue, alpha);
 	}
+
+	public ModelPart getPart() {
+		return this.bb_main;
+	}
 }

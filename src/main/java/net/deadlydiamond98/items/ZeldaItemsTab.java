@@ -85,6 +85,9 @@ public class ZeldaItemsTab {
                         entry.add(ZeldaItems.Emerald_Chunk);
                         entry.add(ZeldaItems.Star_Fragment);
                         entry.add(ZeldaItems.Stardust);
+                        entry.add(ZeldaItems.Raw_Master_Ore);
+                        entry.add(ZeldaItems.Master_Scrap);
+                        entry.add(ZeldaItems.Master_Ingot);
 //                        entry.add(ZeldaItems.Kokiri_Cloth);
 //                        entry.add(ZeldaItems.Goron_Cloth);
 //                        entry.add(ZeldaItems.Zora_Cloth);

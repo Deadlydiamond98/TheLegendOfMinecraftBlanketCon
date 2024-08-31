@@ -7,8 +7,10 @@ import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
+import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemPlacementContext;
+import net.minecraft.item.ItemStack;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.DirectionProperty;
@@ -32,12 +34,16 @@ public class DungeonDoor extends BlockWithEntity {
     public static final DirectionProperty FACING;
     public static final IntProperty PART_X;
     public static final IntProperty PART_Y;
+    protected static final VoxelShape NORTH_SOUTH_SHAPE;
+    protected static final VoxelShape EAST_WEST_SHAPE;
 
     static {
         OPEN = Properties.OPEN;
         FACING = Properties.FACING;
         PART_X = IntProperty.of("part_x", 0, 1);
         PART_Y = IntProperty.of("part_y", 0, 2);
+        NORTH_SOUTH_SHAPE = Block.createCuboidShape(0.0, 0.0, 6.0, 16.0, 16.0, 10.0);
+        EAST_WEST_SHAPE = Block.createCuboidShape(6.0, 0.0, 0.0, 10.0, 16.0, 16.0);
     }
 
 
@@ -57,21 +63,20 @@ public class DungeonDoor extends BlockWithEntity {
             return null;
         }
 
-        BlockPos bottomLeft = pos;
         BlockPos bottomRight = pos.offset(direction.rotateYCounterclockwise());
         BlockPos middleLeft = pos.up();
         BlockPos middleRight = bottomRight.up();
         BlockPos topLeft = pos.up(2);
         BlockPos topRight = bottomRight.up(2);
 
-        placePart(world, bottomLeft, direction, 0, 0); // Bottom Left
+
         placePart(world, bottomRight, direction, 1, 0); // Bottom Right
         placePart(world, middleLeft, direction, 0, 1); // Middle Left
         placePart(world, middleRight, direction, 1, 1); // Middle Right
         placePart(world, topLeft, direction, 0, 2); // Top Left
         placePart(world, topRight, direction, 1, 2); // Top Right
 
-        return (BlockState) this.getDefaultState().with(FACING, direction).with(OPEN, false).with(PART_X, 0).with(PART_Y, 0);
+        return this.getDefaultState().with(FACING, direction).with(OPEN, false).with(PART_X, 0).with(PART_Y, 0);
     }
 
     private boolean canPlaceAt(ItemPlacementContext context, BlockPos pos, Direction direction) {
@@ -90,6 +95,7 @@ public class DungeonDoor extends BlockWithEntity {
 
     @Override
     public void onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
+        super.onBreak(world, pos, state, player);
         if (!world.isClient) {
             Direction direction = state.get(FACING);
             int partX = state.get(PART_X);
@@ -115,24 +121,21 @@ public class DungeonDoor extends BlockWithEntity {
                 destroyPart(world, basePos.offset(direction.rotateYClockwise()).up(2)); // Top Right
             }
         }
-
-        super.onBreak(world, pos, state, player);
     }
 
     private void destroyPart(World world, BlockPos pos) {
         BlockState state = world.getBlockState(pos);
-        if (state.isOf(this)) {
+        if (state.isOf(this) && !(state.get(PART_X) == 0 && state.get(PART_Y) == 0)) {
             world.breakBlock(pos, false);
+        }
+        else {
+            world.breakBlock(pos, true);
         }
     }
 
     @Override
     protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
         builder.add(FACING, PART_X, PART_Y, OPEN);
-    }
-
-    private BooleanProperty getOpenProperty() {
-        return OPEN;
     }
 
     @Override
@@ -174,8 +177,14 @@ public class DungeonDoor extends BlockWithEntity {
     }
 
     @Override
+    public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
+        return (state.get(FACING) == Direction.NORTH || state.get(FACING) == Direction.SOUTH)
+                ? NORTH_SOUTH_SHAPE : EAST_WEST_SHAPE;
+    }
+
+    @Override
     public VoxelShape getCollisionShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-        return state.get(OPEN) ? VoxelShapes.empty() : VoxelShapes.fullCube();
+        return state.get(OPEN) ? VoxelShapes.empty() : getOutlineShape(state, world, pos, context);
     }
 
     @Override

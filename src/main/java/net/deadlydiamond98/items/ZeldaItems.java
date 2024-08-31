@@ -184,6 +184,12 @@ public class ZeldaItems {
             new FabricItemSettings(), 25, true, 5));
     public static final Item Stardust = registerItem("stardust", new Item(
             new FabricItemSettings()));
+    public static final Item Raw_Master_Ore = registerItem("raw_master_ore", new Item(
+            new FabricItemSettings()));
+    public static final Item Master_Scrap = registerItem("master_scrap", new Item(
+            new FabricItemSettings()));
+    public static final Item Master_Ingot = registerItem("master_ingot", new Item(
+            new FabricItemSettings()));
     public static final Item Kokiri_Cloth = registerItem("kokiri_cloth", new Item(
             new FabricItemSettings()));
     public static final Item Goron_Cloth = registerItem("goron_cloth", new Item(

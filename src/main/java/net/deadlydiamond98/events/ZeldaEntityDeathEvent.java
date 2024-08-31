@@ -8,6 +8,8 @@ import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.mob.HostileEntity;
+import net.minecraft.entity.mob.SlimeEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.world.World;
 
@@ -19,7 +21,7 @@ public class ZeldaEntityDeathEvent implements ServerLivingEntityEvents.AfterDeat
         World world = entity.getEntityWorld();
         if (!world.isClient) {
             if (damageSource.getAttacker() instanceof PlayerEntity) {
-                if (!(entity instanceof PlayerEntity) && entity instanceof LivingEntity && ZeldaConfig.mobsDropShards) {
+                if ((entity instanceof HostileEntity || entity instanceof SlimeEntity) && ZeldaConfig.mobsDropShards) {
                     Random random = new Random();
                     int randomNumber = random.nextInt(0, 100);
 

@@ -4,6 +4,7 @@ import net.deadlydiamond98.ZeldaCraft;
 import net.deadlydiamond98.blocks.entities.DungeonDoorEntity;
 import net.deadlydiamond98.model.DungeonDoorModel;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.client.model.ModelPart;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.VertexConsumerProvider;
@@ -34,13 +35,12 @@ public class DungeonDoorRenderer<T extends BlockEntity> implements BlockEntityRe
 
         matrices.translate(0.5, -1.501 - currentPos, -0.5);
         entity.setPrevopeningPosition(currentPos);
+        matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(entity.getRotation()));
 
         VertexConsumer vertexConsumer = vertexConsumers.getBuffer(RenderLayer.getEntitySolid(
                 new Identifier(ZeldaCraft.MOD_ID, "textures/entity/dungeon_door.png")));
-        this.model.render(matrices, vertexConsumer, light, overlay, 1.0F, 1.0F, 1.0F, 1.0F);
+        model.render(matrices, vertexConsumer, light, overlay, 1.0F, 1.0F, 1.0F, 1.0F);
 
         matrices.pop();
     }
-
-
 }

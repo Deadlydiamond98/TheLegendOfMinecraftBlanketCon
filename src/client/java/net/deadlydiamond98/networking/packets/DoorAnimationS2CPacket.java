@@ -15,12 +15,14 @@ public class DoorAnimationS2CPacket {
                                PacketSender responseSender) {
         BlockPos pos = buf.readBlockPos();
         int openingTicks = buf.readInt();
+        int rotation = buf.readInt();
 
         client.execute(() -> {
             if (client.world != null) {
                 BlockEntity entity = client.world.getBlockEntity(pos);
                 if (entity instanceof DungeonDoorEntity door) {
                     door.setOpeningPosition(openingTicks);
+                    door.setRotation(rotation);
                 }
             }
         });
