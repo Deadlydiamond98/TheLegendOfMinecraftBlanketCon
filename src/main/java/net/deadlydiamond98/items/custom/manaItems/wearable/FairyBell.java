@@ -4,7 +4,7 @@ import dev.emi.trinkets.api.SlotReference;
 import dev.emi.trinkets.api.TrinketItem;
 import net.deadlydiamond98.entities.PlayerFairyCompanion;
 import net.deadlydiamond98.sounds.ZeldaSounds;
-import net.deadlydiamond98.util.OtherPlayerData;
+import net.deadlydiamond98.util.ZeldaPlayerData;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -31,7 +31,7 @@ public class FairyBell extends TrinketItem {
         super.onEquip(stack, slot, entity);
 
         if (entity instanceof PlayerEntity user) {
-            ((OtherPlayerData) user).setFairyFriend(true);
+            ((ZeldaPlayerData) user).setFairyFriend(true);
             PlayerFairyCompanion playerFairyCompanion = new PlayerFairyCompanion(user.getWorld(), user);
             user.getWorld().spawnEntity(playerFairyCompanion);
             user.enableManaRegen(true, 40, 2);
@@ -42,7 +42,7 @@ public class FairyBell extends TrinketItem {
     public void onUnequip(ItemStack stack, SlotReference slot, LivingEntity entity) {
         super.onUnequip(stack, slot, entity);
         if (entity instanceof PlayerEntity user) {
-            ((OtherPlayerData) user).setFairyFriend(false);
+            ((ZeldaPlayerData) user).setFairyFriend(false);
             user.enableManaRegen(false, 40, 2);
         }
     }

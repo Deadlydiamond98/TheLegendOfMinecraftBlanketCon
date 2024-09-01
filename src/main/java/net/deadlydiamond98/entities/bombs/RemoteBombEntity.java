@@ -10,13 +10,22 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
-public class SuperBombEntity extends AbstractBombEntity {
-    public SuperBombEntity(EntityType<? extends Entity> entityType, World world) {
+public class RemoteBombEntity extends AbstractBombEntity {
+    public RemoteBombEntity(EntityType<? extends Entity> entityType, World world) {
         super(entityType, world);
     }
 
-    public SuperBombEntity(World world, double x, double y, double z, @Nullable PlayerEntity user) {
-        super(ZeldaEntities.Super_Bomb_Entity, world, x, y, z, 5, 80, user);
+    public RemoteBombEntity(World world, double x, double y, double z, @Nullable PlayerEntity user) {
+        super(ZeldaEntities.Remote_Bomb_Entity, world, x, y, z, 3, 100, user);
+    }
+
+    @Override
+    public void tick() {
+        if (this.getOwner() != null && this.getOwner() instanceof PlayerEntity player
+                && player.isSneaking() && this.getFuse() > 10) {
+            this.setFuse(10);
+        }
+        super.tick();
     }
 
     @Override

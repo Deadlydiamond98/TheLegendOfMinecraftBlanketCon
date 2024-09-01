@@ -2,8 +2,7 @@ package net.deadlydiamond98.items.custom.manaItems.wearable;
 
 import dev.emi.trinkets.api.SlotReference;
 import dev.emi.trinkets.api.TrinketItem;
-import net.deadlydiamond98.entities.PlayerFairyCompanion;
-import net.deadlydiamond98.util.OtherPlayerData;
+import net.deadlydiamond98.util.ZeldaPlayerData;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -24,7 +23,7 @@ public class JumpPendant extends TrinketItem {
     public void onEquip(ItemStack stack, SlotReference slot, LivingEntity entity) {
         super.onEquip(stack, slot, entity);
         if (entity instanceof PlayerEntity user) {
-            ((OtherPlayerData) user).enableddoubleJump(true);
+            ((ZeldaPlayerData) user).enableddoubleJump(true);
         }
     }
 
@@ -32,7 +31,7 @@ public class JumpPendant extends TrinketItem {
     public void onUnequip(ItemStack stack, SlotReference slot, LivingEntity entity) {
         super.onUnequip(stack, slot, entity);
         if (entity instanceof PlayerEntity user) {
-            ((OtherPlayerData) user).enableddoubleJump(false);
+            ((ZeldaPlayerData) user).enableddoubleJump(false);
         }
     }
 

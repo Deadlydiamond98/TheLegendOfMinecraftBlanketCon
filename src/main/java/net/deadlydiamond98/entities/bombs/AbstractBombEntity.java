@@ -41,7 +41,7 @@ public abstract class AbstractBombEntity extends Entity implements Ownable {
         power = 0;
     }
 
-    public AbstractBombEntity(EntityType<? extends Entity> entityType, World world, double x, double y, double z, float power, int fuse) {
+    public AbstractBombEntity(EntityType<? extends Entity> entityType, World world, double x, double y, double z, float power, int fuse, @Nullable PlayerEntity player) {
         this(entityType, world);
         this.setPosition(x, y, z);
         this.power = power;
@@ -93,7 +93,7 @@ public abstract class AbstractBombEntity extends Entity implements Ownable {
         }
     }
 
-    private void explode() {
+    protected void explode() {
         if (!this.getWorld().isClient) {
             boolean playSecret = false;
             int radius = (int) power;
@@ -131,7 +131,7 @@ public abstract class AbstractBombEntity extends Entity implements Ownable {
             if (((BombFlower) block).getAge(getWorld().getBlockState(blockPos)) == 3) {
                 this.getWorld().setBlockState(blockPos, block.getDefaultState().with(AGE, 0));
                 BombEntity bombEntity = new BombEntity(this.getWorld(), blockPos.getX() + 0.5, blockPos.getY() + 0.2,
-                        blockPos.getZ()  + 0.5);
+                        blockPos.getZ()  + 0.5, null);
                 bombEntity.setYaw((((BombFlower) block).getFacing(getWorld().getBlockState(blockPos))).getHorizontal() - 90);
                 this.getWorld().spawnEntity(bombEntity);
             }

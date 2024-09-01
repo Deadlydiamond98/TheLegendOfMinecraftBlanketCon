@@ -1,9 +1,8 @@
 package net.deadlydiamond98.util;
 
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.nbt.NbtCompound;
 
-public interface OtherPlayerData {
+public interface ZeldaPlayerData {
     boolean hasArrowBeenRemoved();
     void setArrowRemoved(boolean removed);
     boolean isFairy();

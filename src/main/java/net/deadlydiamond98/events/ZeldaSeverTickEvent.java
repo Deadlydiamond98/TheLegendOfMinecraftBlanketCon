@@ -1,13 +1,12 @@
 package net.deadlydiamond98.events;
 
-import net.deadlydiamond98.ZeldaCraft;
 import net.deadlydiamond98.entities.ShootingStar;
 import net.deadlydiamond98.entities.ZeldaEntities;
 import net.deadlydiamond98.events.weather.MeteorShower;
 import net.deadlydiamond98.networking.ZeldaServerPackets;
 import net.deadlydiamond98.statuseffects.StunStatusEffect;
 import net.deadlydiamond98.statuseffects.ZeldaStatusEffects;
-import net.deadlydiamond98.util.OtherPlayerData;
+import net.deadlydiamond98.util.ZeldaPlayerData;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -50,7 +49,7 @@ public class ZeldaSeverTickEvent {
             if (world.getRegistryKey() == World.OVERWORLD) {
                 if (world.getTimeOfDay() >= 13000 && world.getTimeOfDay() <= 23000) {
                     world.getPlayers().forEach(player -> {
-                        if (player.getRandom().nextDouble() < meteorShower.getStarChance() && ((OtherPlayerData)player).canSpawnStar()
+                        if (player.getRandom().nextDouble() < meteorShower.getStarChance() && ((ZeldaPlayerData)player).canSpawnStar()
                                 && world.getTimeOfDay() % 30 == 0) {
                             double x = player.getX() + player.getRandom().nextBetween(-50, 50);
                             double z = player.getZ() + player.getRandom().nextBetween(-50, 50);
@@ -68,17 +67,16 @@ public class ZeldaSeverTickEvent {
                                     if (!meteorShower.isMeteorShowerActive()) {
                                         ZeldaServerPackets.sendShootingStarSound(playerForSound);
                                     }
-                                    ZeldaCraft.LOGGER.info("Star landed at: " + star.getPos());
                                 }
                             });
                             if (!meteorShower.isMeteorShowerActive()) {
-                                ((OtherPlayerData) player).setTriedStarSpawn(false);
+                                ((ZeldaPlayerData) player).setTriedStarSpawn(false);
                             }
                         }
                     });
                 }
                 else {
-                    world.getPlayers().forEach(player -> ((OtherPlayerData) player).setTriedStarSpawn(true));
+                    world.getPlayers().forEach(player -> ((ZeldaPlayerData) player).setTriedStarSpawn(true));
                 }
 //
 //                    if (world.getTimeOfDay() == 23000) {

@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "#n#",
+    "#n#",
+    "AnA"
+  ],
+  "key": {
+    "A": {
+      "item": "minecraft:polished_andesite"
+    },
+    "n": {
+      "item": "minecraft:iron_nugget"
+    },
+    "#": {
+      "tag": "minecraft:planks"
+    }
+  },
+  "result": {
+    "item": "zeldacraft:dungeon_door",
+    "count": 3
+  }
+}

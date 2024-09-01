@@ -4,7 +4,7 @@ import dev.emi.trinkets.api.TrinketComponent;
 import dev.emi.trinkets.api.TrinketsApi;
 import net.deadlydiamond98.items.ZeldaItems;
 import net.deadlydiamond98.items.custom.custombundle.Quiver;
-import net.deadlydiamond98.util.OtherPlayerData;
+import net.deadlydiamond98.util.ZeldaPlayerData;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -24,7 +24,7 @@ public abstract class RangedWeaponMixin {
     private static void getArrowFromQuiver(LivingEntity entity, Predicate<ItemStack> predicate, CallbackInfoReturnable<ItemStack> cir) {
         if (entity instanceof PlayerEntity) {
             PlayerEntity player = (PlayerEntity) entity;
-            OtherPlayerData accessor = (OtherPlayerData) player;
+            ZeldaPlayerData accessor = (ZeldaPlayerData) player;
 
 
             TrinketComponent trinket = TrinketsApi.getTrinketComponent(player).get();
@@ -60,7 +60,7 @@ public abstract class RangedWeaponMixin {
     }
 
     @Unique
-    private static void handleQuiver(ItemStack stack, OtherPlayerData accessor, CallbackInfoReturnable<ItemStack> cir) {
+    private static void handleQuiver(ItemStack stack, ZeldaPlayerData accessor, CallbackInfoReturnable<ItemStack> cir) {
         Quiver customBundle = (Quiver) stack.getItem();
         Optional<ItemStack> arrowStack = customBundle.getFirstItem(stack);
         if (arrowStack.isPresent()) {

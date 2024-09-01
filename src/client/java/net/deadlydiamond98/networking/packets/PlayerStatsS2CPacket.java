@@ -1,6 +1,6 @@
 package net.deadlydiamond98.networking.packets;
 
-import net.deadlydiamond98.util.OtherPlayerData;
+import net.deadlydiamond98.util.ZeldaPlayerData;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
@@ -12,8 +12,8 @@ public class PlayerStatsS2CPacket {
         boolean fairyControl = buf.readBoolean();
         boolean fairyfriend = buf.readBoolean();
         client.execute(() -> {
-                ((OtherPlayerData) client.player).setFairyState(fairyControl);
-                ((OtherPlayerData) client.player).setFairyFriend(fairyfriend);
+                ((ZeldaPlayerData) client.player).setFairyState(fairyControl);
+                ((ZeldaPlayerData) client.player).setFairyFriend(fairyfriend);
         });
     }
 }

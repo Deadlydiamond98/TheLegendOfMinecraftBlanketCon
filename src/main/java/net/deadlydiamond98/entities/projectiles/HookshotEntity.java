@@ -2,8 +2,7 @@ package net.deadlydiamond98.entities.projectiles;
 
 import net.deadlydiamond98.items.ZeldaItems;
 import net.deadlydiamond98.sounds.ZeldaSounds;
-import net.deadlydiamond98.util.OtherPlayerData;
-import net.deadlydiamond98.util.RaycastUtil;
+import net.deadlydiamond98.util.ZeldaPlayerData;
 import net.deadlydiamond98.util.ZeldaConfig;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.*;
@@ -11,27 +10,17 @@ import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.entity.projectile.ProjectileUtil;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.shape.VoxelShape;
-import net.minecraft.world.RaycastContext;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
-import org.joml.Vector3d;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class HookshotEntity extends ProjectileEntity implements Ownable {
     private static final TrackedData<Boolean> woodAttached;
@@ -57,7 +46,7 @@ public class HookshotEntity extends ProjectileEntity implements Ownable {
         this.length = length;
         this.returning = false;
         this.setWoodAttached(false);
-        ((OtherPlayerData) user).setHookUsability(false);
+        ((ZeldaPlayerData) user).setHookUsability(false);
         this.noClip = true;
         this.prevDistance = 100;
     }
@@ -232,7 +221,7 @@ public class HookshotEntity extends ProjectileEntity implements Ownable {
             this.getOwner().setNoGravity(false);
             this.getOwner().setVelocity(0, 0, 0);
             if (this.getOwner() instanceof PlayerEntity player) {
-                ((OtherPlayerData) player).setHookUsability(true);
+                ((ZeldaPlayerData) player).setHookUsability(true);
             }
         }
         super.remove(reason);

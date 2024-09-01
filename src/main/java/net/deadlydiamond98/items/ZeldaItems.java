@@ -11,6 +11,7 @@ import net.deadlydiamond98.items.custom.arrows.SilverArrow;
 import net.deadlydiamond98.items.custom.bomb.regular_bombs.BombItem;
 import net.deadlydiamond98.items.custom.bomb.BombchuItem;
 import net.deadlydiamond98.items.custom.bomb.DekuNutItem;
+import net.deadlydiamond98.items.custom.bomb.regular_bombs.RemoteBombItem;
 import net.deadlydiamond98.items.custom.bomb.regular_bombs.SuperBombItem;
 import net.deadlydiamond98.items.custom.boomerang.IronBoomerangItem;
 import net.deadlydiamond98.items.custom.boomerang.MagicBoomerangItem;
@@ -34,6 +35,8 @@ import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.registry.tag.TagKey;
+import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Rarity;
 
@@ -77,6 +80,8 @@ public class ZeldaItems {
     public static final Item Bomb = registerItem("bomb", new BombItem(
             new FabricItemSettings().maxCount(16)));
     public static final Item Super_Bomb = registerItem("super_bomb", new SuperBombItem(
+            new FabricItemSettings().maxCount(16)));
+    public static final Item Remote_Bomb = registerItem("remote_bomb", new RemoteBombItem(
             new FabricItemSettings().maxCount(16)));
     public static final Item Bombchu = registerItem("bombchu", new BombchuItem(
             new FabricItemSettings().maxCount(16), 3, 100, 0.25F));
@@ -190,6 +195,16 @@ public class ZeldaItems {
             new FabricItemSettings()));
     public static final Item Master_Ingot = registerItem("master_ingot", new Item(
             new FabricItemSettings()));
+    public static final Item Master_Smithing_Template = registerItem("master_smithing_template", new SmithingTemplateItem(
+            Text.translatable("smithing_template.zeldacraft.master_smithing_template.applies_to").formatted(Formatting.BLUE),
+            Text.translatable("smithing_template.zeldacraft.master_smithing_template.ingredients").formatted(Formatting.BLUE),
+            Text.translatable("smithing_template.zeldacraft.master_smithing_template.title").formatted(Formatting.GRAY),
+            Text.translatable("smithing_template.zeldacraft.master_smithing_template.base_slot_description"),
+            Text.translatable("smithing_template.zeldacraft.master_smithing_template.additions_slot_description"),
+            List.of(new Identifier(ZeldaCraft.MOD_ID,"item/template/magic_sword_template"),
+                    new Identifier(ZeldaCraft.MOD_ID,"item/template/boomerang_template")),
+            List.of(new Identifier("item/empty_slot_ingot"))));
+
     public static final Item Kokiri_Cloth = registerItem("kokiri_cloth", new Item(
             new FabricItemSettings()));
     public static final Item Goron_Cloth = registerItem("goron_cloth", new Item(
@@ -234,18 +249,5 @@ public class ZeldaItems {
     public static void registerItems() {
         ZeldaCraft.LOGGER.debug("Registering Items for" + ZeldaCraft.MOD_ID);
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.SPAWN_EGGS).register(ZeldaItems::addEggs);
-    }
-
-
-
-    //Tag to list for some items
-    public static List<Item> getItemsFromTag(TagKey<Item> tag) {
-        List<Item> items = new ArrayList<>();
-
-        Registries.ITEM.stream()
-                .filter(item -> item.getRegistryEntry().isIn(tag))
-                .forEach(items::add);
-
-        return items;
     }
 }

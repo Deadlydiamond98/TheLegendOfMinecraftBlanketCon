@@ -4,12 +4,12 @@
     "item": "zeldacraft:master_smithing_template"
   },
   "base": {
-    "item": "zeldacraft:magic_sword"
+    "item": "zeldacraft:iron_boomerang"
   },
   "addition": {
     "item": "zeldacraft:master_ingot"
   },
   "result": {
-    "item": "zeldacraft:master_sword"
+    "item": "zeldacraft:magic_boomerang"
   }
 }

@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "grg",
+    "gBg",
+    "grg"
+  ],
+  "key": {
+    "B": {
+      "item": "zeldacraft:bomb"
+    },
+    "r": {
+      "item": "minecraft:diamond"
+    },
+    "g": {
+      "item": "minecraft:gunpowder"
+    }
+  },
+  "result": {
+    "item": "zeldacraft:remote_bomb",
+    "count": 1
+  }
+}

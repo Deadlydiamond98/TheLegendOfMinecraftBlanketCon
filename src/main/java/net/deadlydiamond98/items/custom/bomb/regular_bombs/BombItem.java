@@ -15,6 +15,6 @@ public class BombItem extends AbstractBombItem {
 
     @Override
     protected AbstractBombEntity createBombEntity(World world, PlayerEntity user, Hand hand) {
-        return new BombEntity(world, user.getX(), user.getEyeY(), user.getZ());
+        return new BombEntity(world, user.getX(), user.getEyeY(), user.getZ(), user);
     }
 }

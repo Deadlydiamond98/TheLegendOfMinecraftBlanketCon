@@ -16,6 +16,7 @@ import net.deadlydiamond98.renderer.ShootingStarRenderer;
 import net.deadlydiamond98.renderer.entity.*;
 import net.deadlydiamond98.renderer.entity.bombs.BombRenderer;
 import net.deadlydiamond98.renderer.entity.bombs.BombchuEntityRenderer;
+import net.deadlydiamond98.renderer.entity.bombs.RemoteBombRenderer;
 import net.deadlydiamond98.renderer.entity.bombs.SuperBombRenderer;
 import net.deadlydiamond98.renderer.entity.magic.BeamProjectileRenderer;
 import net.deadlydiamond98.renderer.entity.magic.MagicIceProjectileRenderer;
@@ -152,6 +153,7 @@ public class ZeldaCraftClient implements ClientModInitializer {
 		EntityRendererRegistry.register(ZeldaEntities.Deku_Nut_Entity, DekuNutRenderer::new);
 		EntityRendererRegistry.register(ZeldaEntities.Bomb_Entity, BombRenderer::new);
 		EntityRendererRegistry.register(ZeldaEntities.Super_Bomb_Entity, SuperBombRenderer::new);
+		EntityRendererRegistry.register(ZeldaEntities.Remote_Bomb_Entity, RemoteBombRenderer::new);
 
 		EntityRendererRegistry.register(ZeldaEntities.Bombchu_Entity, BombchuEntityRenderer::new);
 

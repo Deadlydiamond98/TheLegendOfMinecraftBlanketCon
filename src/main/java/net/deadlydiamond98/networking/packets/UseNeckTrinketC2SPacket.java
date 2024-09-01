@@ -4,7 +4,7 @@ import dev.emi.trinkets.api.TrinketComponent;
 import dev.emi.trinkets.api.TrinketsApi;
 import net.deadlydiamond98.items.ZeldaItems;
 import net.deadlydiamond98.sounds.ZeldaSounds;
-import net.deadlydiamond98.util.OtherPlayerData;
+import net.deadlydiamond98.util.ZeldaPlayerData;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
@@ -22,7 +22,7 @@ public class UseNeckTrinketC2SPacket {
             TrinketComponent trinket = TrinketsApi.getTrinketComponent(player).get();
             if (trinket.isEquipped(ZeldaItems.Fairy_Pendant)) {
                 if (player.canRemoveMana( 2)) {
-                    OtherPlayerData userO = (OtherPlayerData) player;
+                    ZeldaPlayerData userO = (ZeldaPlayerData) player;
                     userO.setFairyState(!userO.isFairy());
                 }
                 else {

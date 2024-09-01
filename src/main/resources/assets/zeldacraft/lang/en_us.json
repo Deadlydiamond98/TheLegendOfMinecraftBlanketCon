@@ -9,6 +9,8 @@
 
   "item.zeldacraft.bomb": "Bomb",
   "item.zeldacraft.super_bomb": "Super Bomb",
+  "item.zeldacraft.remote_bomb": "Remote Bomb",
+  "item.zeldacraft.remote_bomb.tooltip": "Primes the bomb when shifting",
   "item.zeldacraft.bombchu": "Bombchu",
   "item.zeldacraft.bomb_bag": "Bomb Bag",
   "item.zeldacraft.better_bomb_bag": "Gilded Bomb Bag",
@@ -20,10 +22,17 @@
   "block.zeldacraft.dungeon_door": "Dungeon Door",
 
   "block.zeldacraft.master_block": "Master Block",
-  "block.zeldacraft.master_ore": "Master Ore",
+  "block.zeldacraft.deepslate_master_ore": "Deepslate Master Ore",
   "item.zeldacraft.raw_master_ore": "Raw Master Ore",
   "item.zeldacraft.master_scrap": "Master Scrap",
   "item.zeldacraft.master_ingot": "Master Ingot",
+  "item.zeldacraft.master_smithing_template": "Master Smithing Template",
+
+  "smithing_template.zeldacraft.master_smithing_template.applies_to": "Master Upgradables",
+  "smithing_template.zeldacraft.master_smithing_template.ingredients": "Master Ingots",
+  "smithing_template.zeldacraft.master_smithing_template.title": "Master Upgrade",
+  "smithing_template.zeldacraft.master_smithing_template.base_slot_description": "Add upgradeable weapon or tool",
+  "smithing_template.zeldacraft.master_smithing_template.additions_slot_description": "Add Master Ingot",
 
   "weather.zeldacraft.meteor_shower.starta": "The stars have started falling",
   "weather.zeldacraft.meteor_shower.startb": "Magic fills the night skies",

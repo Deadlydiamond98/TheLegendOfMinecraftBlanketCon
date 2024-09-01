@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "d#d",
+    "ddd",
+    "dsd"
+  ],
+  "key": {
+    "d": {
+      "item": "minecraft:deepslate"
+    },
+    "s": {
+      "item": "zeldacraft:master_scrap"
+    },
+    "#": {
+      "item": "zeldacraft:master_smithing_template"
+    }
+  },
+  "result": {
+    "item": "zeldacraft:master_smithing_template",
+    "count": 2
+  }
+}

@@ -1,7 +1,7 @@
 package net.deadlydiamond98.mixin.client;
 
 import net.deadlydiamond98.renderer.transformations.FairyPlayerRenderer;
-import net.deadlydiamond98.util.OtherPlayerData;
+import net.deadlydiamond98.util.ZeldaPlayerData;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.EntityRendererFactory;
@@ -12,10 +12,6 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
 
 @Mixin(PlayerEntityRenderer.class)
 public abstract class PlayerEntityRendererMixin {
@@ -33,7 +29,7 @@ public abstract class PlayerEntityRendererMixin {
     private void onRender(AbstractClientPlayerEntity player, float yaw, float tickDelta, MatrixStack matrices,
                           VertexConsumerProvider vertexConsumers, int light, CallbackInfo info) {
 
-        if (((OtherPlayerData) player).isFairy()) {
+        if (((ZeldaPlayerData) player).isFairy()) {
             matrices.push();
             this.fairyRenderer.render(player, yaw, tickDelta, matrices, vertexConsumers, light);
             matrices.pop();

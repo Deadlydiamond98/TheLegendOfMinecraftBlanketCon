@@ -13,6 +13,6 @@ public class SuperBombItem extends AbstractBombItem {
 
     @Override
     protected AbstractBombEntity createBombEntity(World world, PlayerEntity user, Hand hand) {
-        return new SuperBombEntity(world, user.getX(), user.getEyeY(), user.getZ());
+        return new SuperBombEntity(world, user.getX(), user.getEyeY(), user.getZ(), user);
     }
 }

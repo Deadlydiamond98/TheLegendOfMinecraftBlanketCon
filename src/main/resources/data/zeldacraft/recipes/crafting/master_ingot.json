@@ -1,0 +1,36 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "zeldacraft:master_scrap"
+    },
+    {
+      "item": "zeldacraft:master_scrap"
+    },
+    {
+      "item": "zeldacraft:master_scrap"
+    },
+    {
+      "item": "zeldacraft:master_scrap"
+    },
+    {
+      "item": "minecraft:netherite_ingot"
+    },
+    {
+      "item": "zeldacraft:stardust"
+    },
+    {
+      "item": "zeldacraft:stardust"
+    },
+    {
+      "item": "zeldacraft:stardust"
+    },
+    {
+      "item": "zeldacraft:stardust"
+    }
+  ],
+  "result": {
+    "item": "zeldacraft:master_ingot",
+    "count": 1
+  }
+}

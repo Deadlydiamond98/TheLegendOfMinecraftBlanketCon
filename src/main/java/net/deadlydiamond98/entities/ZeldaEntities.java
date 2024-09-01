@@ -3,6 +3,7 @@ package net.deadlydiamond98.entities;
 import net.deadlydiamond98.ZeldaCraft;
 import net.deadlydiamond98.entities.bombs.BombEntity;
 import net.deadlydiamond98.entities.bombs.BombchuEntity;
+import net.deadlydiamond98.entities.bombs.RemoteBombEntity;
 import net.deadlydiamond98.entities.bombs.SuperBombEntity;
 import net.deadlydiamond98.entities.monsters.BeamosEntity;
 import net.deadlydiamond98.entities.monsters.BubbleEntity;
@@ -96,6 +97,14 @@ public class ZeldaEntities {
             new Identifier(ZeldaCraft.MOD_ID, "super_bomb_entity"),
             FabricEntityTypeBuilder.create(SpawnGroup.MISC, (EntityType<SuperBombEntity> type, World world) ->
                             new SuperBombEntity(type, world))
+                    .dimensions(EntityDimensions.fixed(0.5f,0.5f))
+                    .build()
+    );
+    public static final EntityType<RemoteBombEntity> Remote_Bomb_Entity = Registry.register(
+            Registries.ENTITY_TYPE,
+            new Identifier(ZeldaCraft.MOD_ID, "remote_bomb_entity"),
+            FabricEntityTypeBuilder.create(SpawnGroup.MISC, (EntityType<RemoteBombEntity> type, World world) ->
+                            new RemoteBombEntity(type, world))
                     .dimensions(EntityDimensions.fixed(0.5f,0.5f))
                     .build()
     );

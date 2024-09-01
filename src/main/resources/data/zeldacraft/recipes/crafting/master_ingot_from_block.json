@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "zeldacraft:master_block"
+    }
+  ],
+  "result": {
+    "item": "zeldacraft:master_ingot",
+    "count": 9
+  }
+}

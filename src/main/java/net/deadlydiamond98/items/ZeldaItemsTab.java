@@ -36,6 +36,7 @@ public class ZeldaItemsTab {
                         entry.add(ZeldaBlocks.Bomb_Flower);
                         entry.add(ZeldaItems.Bomb);
                         entry.add(ZeldaItems.Super_Bomb);
+                        entry.add(ZeldaItems.Remote_Bomb);
                         entry.add(ZeldaItems.Bombchu);
                         entry.add(ZeldaItems.Deku_Nut);
                         //Bags
@@ -88,6 +89,7 @@ public class ZeldaItemsTab {
                         entry.add(ZeldaItems.Raw_Master_Ore);
                         entry.add(ZeldaItems.Master_Scrap);
                         entry.add(ZeldaItems.Master_Ingot);
+                        entry.add(ZeldaItems.Master_Smithing_Template);
 //                        entry.add(ZeldaItems.Kokiri_Cloth);
 //                        entry.add(ZeldaItems.Goron_Cloth);
 //                        entry.add(ZeldaItems.Zora_Cloth);

@@ -13,6 +13,7 @@ import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.intprovider.UniformIntProvider;
 
 public class ZeldaBlocks {
 
@@ -156,11 +157,10 @@ public class ZeldaBlocks {
                             50, 1200.0F)
                     .sounds(BlockSoundGroup.NETHERITE).requiresTool()));
 
-    public static final Block Master_Ore = registerBlock("master_ore",
-            new Block(FabricBlockSettings.copyOf(Blocks.DEEPSLATE_DIAMOND_ORE).strength(
+    public static final Block Master_Ore = registerBlock("deepslate_master_ore",
+            new ExperienceDroppingBlock(FabricBlockSettings.copyOf(Blocks.DEEPSLATE_DIAMOND_ORE).strength(
                             30, 1200.0F)
-                    .sounds(BlockSoundGroup.DEEPSLATE).requiresTool()));
-
+                    .sounds(BlockSoundGroup.DEEPSLATE).requiresTool(), UniformIntProvider.create(3, 7)));
 
 
 
