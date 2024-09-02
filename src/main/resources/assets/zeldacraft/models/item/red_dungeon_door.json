@@ -1,0 +1,6 @@
+{
+  "parent": "item/handheld",
+  "textures": {
+    "layer0": "zeldacraft:item/red_dungeon_door_item"
+  }
+}

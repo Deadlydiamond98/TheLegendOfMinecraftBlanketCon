@@ -49,6 +49,11 @@ public class ZeldaBlocksTab {
                         entry.add(ZeldaBlocks.Brown_Dungeoncite_Pillar);
                         //Dungeon Doors
                         entry.add(ZeldaBlocks.Dungeon_Door);
+                        entry.add(ZeldaBlocks.Red_Dungeon_Door);
+                        entry.add(ZeldaBlocks.Blue_Dungeon_Door);
+                        entry.add(ZeldaBlocks.Opening_Dungeon_Door);
+                        entry.add(ZeldaBlocks.Red_Opening_Dungeon_Door);
+                        entry.add(ZeldaBlocks.Blue_Opening_Dungeon_Door);
                         //Material Blocks
                         entry.add(ZeldaBlocks.Master_Ore);
                         entry.add(ZeldaBlocks.Master_Block);

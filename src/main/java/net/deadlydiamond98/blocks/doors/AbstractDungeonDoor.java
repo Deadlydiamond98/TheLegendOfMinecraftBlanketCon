@@ -1,23 +1,23 @@
-package net.deadlydiamond98.blocks;
+package net.deadlydiamond98.blocks.doors;
 
-import net.deadlydiamond98.ZeldaCraft;
-import net.deadlydiamond98.blocks.entities.DungeonDoorEntity;
-import net.deadlydiamond98.blocks.entities.ZeldaBlockEntities;
+import net.deadlydiamond98.blocks.entities.doors.AbstractDungeonDoorEntity;
+import net.deadlydiamond98.items.ZeldaItems;
+import net.deadlydiamond98.sounds.ZeldaSounds;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
-import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.DirectionProperty;
 import net.minecraft.state.property.IntProperty;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.ActionResult;
-import net.minecraft.util.BlockRotation;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
@@ -26,12 +26,13 @@ import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldAccess;
 import org.jetbrains.annotations.Nullable;
 
-public class DungeonDoor extends BlockWithEntity {
+public abstract class AbstractDungeonDoor extends BlockWithEntity {
     public static final BooleanProperty OPEN;
+    public static final BooleanProperty AUTO;
     public static final DirectionProperty FACING;
+    public static final BooleanProperty LOCKED;
     public static final IntProperty PART_X;
     public static final IntProperty PART_Y;
     protected static final VoxelShape NORTH_SOUTH_SHAPE;
@@ -39,6 +40,8 @@ public class DungeonDoor extends BlockWithEntity {
 
     static {
         OPEN = Properties.OPEN;
+        AUTO = Properties.TRIGGERED;
+        LOCKED = Properties.LOCKED;
         FACING = Properties.FACING;
         PART_X = IntProperty.of("part_x", 0, 1);
         PART_Y = IntProperty.of("part_y", 0, 2);
@@ -47,9 +50,10 @@ public class DungeonDoor extends BlockWithEntity {
     }
 
 
-    protected DungeonDoor(Settings settings) {
+    protected AbstractDungeonDoor(Settings settings) {
         super(settings);
-        setDefaultState(this.stateManager.getDefaultState().with(OPEN, false).with(FACING, Direction.NORTH).with(PART_X, 0).with(PART_Y, 0));;
+        setDefaultState(this.stateManager.getDefaultState().with(OPEN, false).with(FACING, Direction.NORTH)
+                .with(PART_X, 0).with(PART_Y, 0).with(LOCKED, false).with(AUTO, isAuto()));
     }
 
     @Nullable
@@ -76,7 +80,12 @@ public class DungeonDoor extends BlockWithEntity {
         placePart(world, topLeft, direction, 0, 2); // Top Left
         placePart(world, topRight, direction, 1, 2); // Top Right
 
-        return this.getDefaultState().with(FACING, direction).with(OPEN, false).with(PART_X, 0).with(PART_Y, 0);
+        return this.getDefaultState().with(FACING, direction).with(OPEN, false)
+                .with(PART_X, 0).with(PART_Y, 0).with(LOCKED, false).with(AUTO, isAuto());
+    }
+
+    protected Boolean isAuto() {
+        return false;
     }
 
     private boolean canPlaceAt(ItemPlacementContext context, BlockPos pos, Direction direction) {
@@ -89,8 +98,8 @@ public class DungeonDoor extends BlockWithEntity {
                 && world.getBlockState(pos.offset(direction.rotateYCounterclockwise()).up(2)).canReplace(context);
     }
 
-    private void placePart(World world, BlockPos pos, Direction direction, int partX, int partY) {
-        world.setBlockState(pos, this.getDefaultState().with(FACING, direction).with(PART_X, partX).with(PART_Y, partY));
+    protected void placePart(World world, BlockPos pos, Direction direction, int partX, int partY) {
+        world.setBlockState(pos, this.getDefaultState().with(FACING, direction).with(PART_X, partX).with(PART_Y, partY).with(LOCKED, false).with(AUTO, isAuto()));
     }
 
     @Override
@@ -135,44 +144,120 @@ public class DungeonDoor extends BlockWithEntity {
 
     @Override
     protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
-        builder.add(FACING, PART_X, PART_Y, OPEN);
+        builder.add(FACING, PART_X, PART_Y, OPEN, LOCKED, AUTO);
     }
 
     @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-        boolean isOpen = state.get(OPEN);
-        boolean newOpenState = !isOpen;
+        boolean currentOpenState = state.get(OPEN);
+        boolean newOpenState = !currentOpenState;
 
         Direction direction = state.get(FACING);
         int partX = state.get(PART_X);
         int partY = state.get(PART_Y);
 
+        ItemStack itemStack = player.getStackInHand(hand);
+        if (isLockItem(itemStack) && canLock(state)) {
+            updateDoor(partX, partY, world, pos, direction, currentOpenState, true, false);
+            world.playSound(null, pos, SoundEvents.BLOCK_HANGING_SIGN_PLACE, SoundCategory.BLOCKS);
+            if (!player.getAbilities().creativeMode) {
+                itemStack.decrement(1);
+            }
+            return ActionResult.SUCCESS;
+        }
+
+        if (tryUnlocking(itemStack, state, partX, partY, pos, direction, currentOpenState, world, player)) {
+            return ActionResult.SUCCESS;
+        }
+
+        if (!state.get(LOCKED)) {
+            updateDoor(partX, partY, world, pos, direction, newOpenState, false, false);
+            return ActionResult.SUCCESS;
+        }
+        else {
+            return super.onUse(state, world, pos, player, hand, hit);
+        }
+    }
+
+    private boolean tryUnlocking(ItemStack itemStack, BlockState state, int partX, int partY, BlockPos pos,
+                              Direction direction, boolean currentOpenState, World world, PlayerEntity player) {
+        if ((isKeyItem(itemStack)) && state.get(LOCKED)) {
+            updateDoor(partX, partY, world, pos, direction, currentOpenState, false, true);
+            world.playSound(null, pos, SoundEvents.BLOCK_HANGING_SIGN_BREAK, SoundCategory.BLOCKS);
+            if (!player.getAbilities().creativeMode) {
+                itemStack.decrement(1);
+            }
+            return true;
+        }
+
+        if ((isMagicKeyItem(itemStack)) && state.get(LOCKED)) {
+            if (player.canRemoveMana(25)) {
+                updateDoor(partX, partY, world, pos, direction, currentOpenState, false, true);
+                world.playSound(null, pos, SoundEvents.BLOCK_HANGING_SIGN_BREAK, SoundCategory.BLOCKS);
+                player.removeMana(25);
+                return true;
+            }
+            world.playSound(null, pos, ZeldaSounds.NotEnoughMana, SoundCategory.BLOCKS);
+        }
+
+        return false;
+    }
+
+    @Override
+    public float calcBlockBreakingDelta(BlockState state, PlayerEntity player, BlockView world, BlockPos pos) {
+        float f = state.getHardness(world, pos);
+        if (f == -1.0F || state.get(LOCKED)) {
+            return 0.0F;
+        }
+        int i = player.canHarvest(state) ? 30 : 100;
+        return player.getBlockBreakingSpeed(state) / f / (float)i;
+    }
+
+    private void updateDoor(int partX, int partY, World world, BlockPos pos, Direction direction, boolean open, boolean locked, boolean spawnParticles) {
+
         if (partX == 0) {
             BlockPos basePos = pos.offset(direction.getOpposite(), partX).down(partY);
-            updatePart(world, basePos, direction, newOpenState); // Bottom Left
-            updatePart(world, basePos.offset(direction.rotateYCounterclockwise()), direction, newOpenState); // Bottom Right
-            updatePart(world, basePos.up(), direction, newOpenState); // Middle Left
-            updatePart(world, basePos.offset(direction.rotateYCounterclockwise()).up(), direction, newOpenState); // Middle Right
-            updatePart(world, basePos.up(2), direction, newOpenState); // Top Left
-            updatePart(world, basePos.offset(direction.rotateYCounterclockwise()).up(2), direction, newOpenState); // Top Right
+            updatePart(world, basePos, direction, open, locked, spawnParticles); // Bottom Left
+            updatePart(world, basePos.offset(direction.rotateYCounterclockwise()), direction, open, locked, spawnParticles); // Bottom Right
+            updatePart(world, basePos.up(), direction, open, locked,spawnParticles); // Middle Left
+            updatePart(world, basePos.offset(direction.rotateYCounterclockwise()).up(), direction, open, locked, spawnParticles); // Middle Right
+            updatePart(world, basePos.up(2), direction, open, locked, spawnParticles); // Top Left
+            updatePart(world, basePos.offset(direction.rotateYCounterclockwise()).up(2), direction, open, locked, spawnParticles); // Top Right
         }
         else {
             BlockPos basePos = pos.down(partY);
-            updatePart(world, basePos, direction, newOpenState); // Bottom Left
-            updatePart(world, basePos.offset(direction.rotateYClockwise()), direction, newOpenState); // Bottom Right
-            updatePart(world, basePos.up(), direction, newOpenState); // Middle Left
-            updatePart(world, basePos.offset(direction.rotateYClockwise()).up(), direction, newOpenState); // Middle Right
-            updatePart(world, basePos.up(2), direction, newOpenState); // Top Left
-            updatePart(world, basePos.offset(direction.rotateYClockwise()).up(2), direction, newOpenState); // Top Right
+            updatePart(world, basePos, direction, open ,locked, spawnParticles); // Bottom Left
+            updatePart(world, basePos.offset(direction.rotateYClockwise()), direction, open, locked, spawnParticles); // Bottom Right
+            updatePart(world, basePos.up(), direction, open, locked, spawnParticles); // Middle Left
+            updatePart(world, basePos.offset(direction.rotateYClockwise()).up(), direction, open, locked, spawnParticles); // Middle Right
+            updatePart(world, basePos.up(2), direction, open, locked, spawnParticles); // Top Left
+            updatePart(world, basePos.offset(direction.rotateYClockwise()).up(2), direction, open, locked, spawnParticles); // Top Right
         }
-
-        return ActionResult.SUCCESS;
     }
 
-    private void updatePart(World world, BlockPos pos, Direction direction, boolean open) {
+    private boolean canLock(BlockState state) {
+        return !state.get(OPEN) && !state.get(LOCKED);
+    }
+
+    private static boolean isKeyItem(ItemStack stack) {
+        return stack.isOf(ZeldaItems.Dungeon_Key);
+    }
+
+    private static boolean isMagicKeyItem(ItemStack stack) {
+        return stack.isOf(ZeldaItems.Master_Key);
+    }
+
+    private static boolean isLockItem(ItemStack stack) {
+        return stack.isOf(ZeldaItems.Dungeon_Lock);
+    }
+
+    private void updatePart(World world, BlockPos pos, Direction direction, boolean open, boolean locked, boolean spawnParticles) {
         BlockState state = world.getBlockState(pos);
         if (state.isOf(this)) {
-            world.setBlockState(pos, state.with(OPEN, open).with(FACING, direction), 3);
+            world.setBlockState(pos, state.with(OPEN, open).with(FACING, direction).with(LOCKED, locked).with(AUTO, isAuto()), 3);
+            if (spawnParticles) {
+                world.addBlockBreakParticles(pos, Blocks.GOLD_BLOCK.getDefaultState());
+            }
         }
     }
 
@@ -199,15 +284,23 @@ public class DungeonDoor extends BlockWithEntity {
         int partY = state.get(PART_Y);
 
         if (partX == 0 && partY == 0) {
-            return new DungeonDoorEntity(pos, state);
+            return createDungeonDoor(pos, state);
         }
 
         return null;
     }
 
+    protected abstract BlockEntity createDungeonDoor(BlockPos pos, BlockState state);
+
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
-        return checkType(type, ZeldaBlockEntities.DUNGEON_DOOR, DungeonDoorEntity::tick);
+        return checkType(type, getDungeonDoorEntity(), doorTickMethod());
     }
+
+    protected abstract BlockEntityTicker<? super AbstractDungeonDoorEntity> doorTickMethod();
+
+    protected abstract BlockEntityType<? extends AbstractDungeonDoorEntity> getDungeonDoorEntity();
+
+
 }

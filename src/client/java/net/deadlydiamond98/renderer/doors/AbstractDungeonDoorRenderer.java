@@ -1,10 +1,8 @@
-package net.deadlydiamond98.renderer;
+package net.deadlydiamond98.renderer.doors;
 
-import net.deadlydiamond98.ZeldaCraft;
-import net.deadlydiamond98.blocks.entities.DungeonDoorEntity;
+import net.deadlydiamond98.blocks.entities.doors.AbstractDungeonDoorEntity;
 import net.deadlydiamond98.model.DungeonDoorModel;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.client.model.ModelPart;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.VertexConsumerProvider;
@@ -15,15 +13,15 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RotationAxis;
 
-public class DungeonDoorRenderer<T extends BlockEntity> implements BlockEntityRenderer<DungeonDoorEntity> {
+public abstract class AbstractDungeonDoorRenderer<T extends BlockEntity> implements BlockEntityRenderer<AbstractDungeonDoorEntity> {
     private final DungeonDoorModel model;
 
-    public DungeonDoorRenderer(BlockEntityRendererFactory.Context ctx) {
+    public AbstractDungeonDoorRenderer(BlockEntityRendererFactory.Context ctx) {
         this.model = new DungeonDoorModel(ctx.getLayerModelPart(DungeonDoorModel.LAYER_LOCATION));
     }
 
     @Override
-    public void render(DungeonDoorEntity entity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
+    public void render(AbstractDungeonDoorEntity entity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
         matrices.push();
 
         matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees(180.0f));
@@ -37,10 +35,20 @@ public class DungeonDoorRenderer<T extends BlockEntity> implements BlockEntityRe
         entity.setPrevopeningPosition(currentPos);
         matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(entity.getRotation()));
 
-        VertexConsumer vertexConsumer = vertexConsumers.getBuffer(RenderLayer.getEntitySolid(
-                new Identifier(ZeldaCraft.MOD_ID, "textures/entity/dungeon_door.png")));
+        VertexConsumer vertexConsumer = vertexConsumers.getBuffer(RenderLayer.getEntitySolid(this.getDoorTexture(entity)));
         model.render(matrices, vertexConsumer, light, overlay, 1.0F, 1.0F, 1.0F, 1.0F);
 
         matrices.pop();
     }
+
+    private Identifier getDoorTexture(AbstractDungeonDoorEntity entity) {
+        if (entity.getLocked()) {
+            return getLockedTexture();
+        }
+        return getTexture();
+    }
+
+    public abstract Identifier getLockedTexture();
+
+    public abstract Identifier getTexture();
 }

@@ -19,7 +19,16 @@
 
 
   "item.zeldacraft.dungeon_key": "Key",
+  "item.zeldacraft.master_key": "Master Key",
+  "item.zeldacraft.master_key.tooltip": "Unlock any door at the cost of mana",
+  "item.zeldacraft.dungeon_lock": "Lock",
   "block.zeldacraft.dungeon_door": "Dungeon Door",
+  "block.zeldacraft.red_dungeon_door": "Red Dungeon Door",
+  "block.zeldacraft.blue_dungeon_door": "Blue Dungeon Door",
+
+  "block.zeldacraft.auto_dungeon_door": "Auto Dungeon Door",
+  "block.zeldacraft.red_auto_dungeon_door": "Red Auto Dungeon Door",
+  "block.zeldacraft.blue_auto_dungeon_door": "Blue Auto Dungeon Door",
 
   "block.zeldacraft.master_block": "Master Block",
   "block.zeldacraft.deepslate_master_ore": "Deepslate Master Ore",

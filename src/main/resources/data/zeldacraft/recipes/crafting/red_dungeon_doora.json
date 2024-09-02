@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "#m#",
+    "#n#",
+    "AnA"
+  ],
+  "key": {
+    "A": {
+      "item": "minecraft:polished_andesite"
+    },
+    "m": {
+      "item": "zeldacraft:master_scrap"
+    },
+    "n": {
+      "item": "minecraft:iron_nugget"
+    },
+    "#": {
+      "item": "minecraft:iron_ingot"
+    }
+  },
+  "result": {
+    "item": "zeldacraft:red_dungeon_door",
+    "count": 3
+  }
+}

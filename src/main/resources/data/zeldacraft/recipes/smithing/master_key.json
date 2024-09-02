@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:smithing_transform",
+  "template": {
+    "item": "zeldacraft:master_smithing_template"
+  },
+  "base": {
+    "item": "zeldacraft:dungeon_key"
+  },
+  "addition": {
+    "item": "zeldacraft:master_ingot"
+  },
+  "result": {
+    "item": "zeldacraft:master_key"
+  }
+}

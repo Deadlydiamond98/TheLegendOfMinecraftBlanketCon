@@ -10,7 +10,7 @@ import net.deadlydiamond98.model.DungeonDoorModel;
 import net.deadlydiamond98.model.entity.*;
 import net.deadlydiamond98.networking.ZeldaClientPackets;
 import net.deadlydiamond98.particle.ZeldaParticleFactory;
-import net.deadlydiamond98.renderer.DungeonDoorRenderer;
+import net.deadlydiamond98.renderer.doors.*;
 import net.deadlydiamond98.renderer.FairyCompanionRenderer;
 import net.deadlydiamond98.renderer.ShootingStarRenderer;
 import net.deadlydiamond98.renderer.entity.*;
@@ -54,6 +54,8 @@ public class ZeldaCraftClient implements ClientModInitializer {
 		BlockRenderLayerMap.INSTANCE.putBlock(ZeldaBlocks.Bomb_Flower, RenderLayer.getCutout());
 		BlockRenderLayerMap.INSTANCE.putBlock(ZeldaBlocks.Loot_Grass, RenderLayer.getCutout());
 		BlockRenderLayerMap.INSTANCE.putBlock(ZeldaBlocks.Dungeon_Door, RenderLayer.getCutout());
+		BlockRenderLayerMap.INSTANCE.putBlock(ZeldaBlocks.Red_Dungeon_Door, RenderLayer.getCutout());
+		BlockRenderLayerMap.INSTANCE.putBlock(ZeldaBlocks.Blue_Dungeon_Door, RenderLayer.getCutout());
 		BlockRenderLayerMap.INSTANCE.putBlock(ZeldaBlocks.Somaria_Block, RenderLayer.getTranslucent());
 
 		registerModelPredicatees();
@@ -161,6 +163,11 @@ public class ZeldaCraftClient implements ClientModInitializer {
 		EntityRendererRegistry.register(ZeldaEntities.Bomb_Arrow, ZeldaArrowRenderer::new);
 
 		BlockEntityRendererFactories.register(ZeldaBlockEntities.DUNGEON_DOOR, DungeonDoorRenderer::new);
+		BlockEntityRendererFactories.register(ZeldaBlockEntities.OPENING_DUNGEON_DOOR, OpeningDungeonDoorRenderer::new);
+		BlockEntityRendererFactories.register(ZeldaBlockEntities.RED_DUNGEON_DOOR, RedDungeonDoorRenderer::new);
+		BlockEntityRendererFactories.register(ZeldaBlockEntities.RED_OPENING_DUNGEON_DOOR, RedOpeningDungeonDoorRenderer::new);
+		BlockEntityRendererFactories.register(ZeldaBlockEntities.BLUE_DUNGEON_DOOR, BlueDungeonDoorRenderer::new);
+		BlockEntityRendererFactories.register(ZeldaBlockEntities.BLUE_OPENING_DUNGEON_DOOR, BlueOpeningDungeonDoorRenderer::new);
 	}
 
 	public void registerModelLayers() {

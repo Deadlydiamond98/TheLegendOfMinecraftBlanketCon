@@ -78,7 +78,9 @@ public class ZeldaItemsTab {
                         entry.add(ZeldaItems.Magic_Upgrade);
                         entry.add(ZeldaItems.Magic_Downgrade);
                         //Util
-//                        entry.add(ZeldaItems.Dungeon_Key);
+                        entry.add(ZeldaItems.Dungeon_Key);
+                        entry.add(ZeldaItems.Master_Key);
+                        entry.add(ZeldaItems.Dungeon_Lock);
                         //Misc / Materials
                         entry.add(ZeldaItems.Music_Disc_Legend);
                         entry.add(ZeldaItems.Music_Disc_Legend_Fragment);

@@ -179,6 +179,11 @@ public class ZeldaItems {
     //Util
     public static final Item Dungeon_Key = registerItem("dungeon_key", new Item(
             new FabricItemSettings()));
+    public static final Item Master_Key = registerItem("master_key", new MasterKey(
+            new FabricItemSettings().maxCount(1)));
+
+    public static final Item Dungeon_Lock = registerItem("dungeon_lock", new Item(
+            new FabricItemSettings()));
 
     //Misc / Materials
     public static final Item Emerald_Shard = registerItem("emerald_shard", new EmeraldItem(
@@ -202,7 +207,8 @@ public class ZeldaItems {
             Text.translatable("smithing_template.zeldacraft.master_smithing_template.base_slot_description"),
             Text.translatable("smithing_template.zeldacraft.master_smithing_template.additions_slot_description"),
             List.of(new Identifier(ZeldaCraft.MOD_ID,"item/template/magic_sword_template"),
-                    new Identifier(ZeldaCraft.MOD_ID,"item/template/boomerang_template")),
+                    new Identifier(ZeldaCraft.MOD_ID,"item/template/boomerang_template"),
+                    new Identifier(ZeldaCraft.MOD_ID,"item/template/key_template")),
             List.of(new Identifier("item/empty_slot_ingot"))));
 
     public static final Item Kokiri_Cloth = registerItem("kokiri_cloth", new Item(
