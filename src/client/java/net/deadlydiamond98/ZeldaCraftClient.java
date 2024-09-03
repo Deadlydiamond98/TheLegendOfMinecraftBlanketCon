@@ -20,10 +20,7 @@ import net.deadlydiamond98.renderer.entity.bombs.RemoteBombRenderer;
 import net.deadlydiamond98.renderer.entity.bombs.SuperBombRenderer;
 import net.deadlydiamond98.renderer.entity.magic.BeamProjectileRenderer;
 import net.deadlydiamond98.renderer.entity.magic.MagicIceProjectileRenderer;
-import net.deadlydiamond98.renderer.entity.monster.BeamosRenderer;
-import net.deadlydiamond98.renderer.entity.monster.BubbleRenderer;
-import net.deadlydiamond98.renderer.entity.monster.FairyRenderer;
-import net.deadlydiamond98.renderer.entity.monster.KeeseRenderer;
+import net.deadlydiamond98.renderer.entity.monster.*;
 import net.deadlydiamond98.renderer.entity.projectile_items.BaseballRenderer;
 import net.deadlydiamond98.renderer.entity.projectile_items.BoomerangProjectileRenderer;
 import net.deadlydiamond98.renderer.entity.projectile_items.DekuNutRenderer;
@@ -149,6 +146,8 @@ public class ZeldaCraftClient implements ClientModInitializer {
 		EntityRendererRegistry.register(ZeldaEntities.Companion_Fairy_Entity, FairyCompanionRenderer::new);
 
 		EntityRendererRegistry.register(ZeldaEntities.Bubble_Entity, BubbleRenderer::new);
+		EntityRendererRegistry.register(ZeldaEntities.Red_Tektite_Entity, RedTektiteRenderer::new);
+		EntityRendererRegistry.register(ZeldaEntities.Blue_Tektite_Entity, BlueTektiteRenderer::new);
 		EntityRendererRegistry.register(ZeldaEntities.Beamos_Entity, BeamosRenderer::new);
 
 		EntityRendererRegistry.register(ZeldaEntities.Baseball_Entity, BaseballRenderer::new);
@@ -180,6 +179,7 @@ public class ZeldaCraftClient implements ClientModInitializer {
 		EntityModelLayerRegistry.registerModelLayer(BubbleEntityModel.LAYER_LOCATION, BubbleEntityModel::getTexturedModelData);
 		EntityModelLayerRegistry.registerModelLayer(FairyEntityModel.LAYER_LOCATION, FairyEntityModel::getTexturedModelData);
 		EntityModelLayerRegistry.registerModelLayer(BeamosEntityModel.LAYER_LOCATION, BeamosEntityModel::getTexturedModelData);
+		EntityModelLayerRegistry.registerModelLayer(TektiteModel.LAYER_LOCATION, TektiteModel::getTexturedModelData);
 
 		EntityModelLayerRegistry.registerModelLayer(DungeonDoorModel.LAYER_LOCATION, DungeonDoorModel::getTexturedModelData);
 	}

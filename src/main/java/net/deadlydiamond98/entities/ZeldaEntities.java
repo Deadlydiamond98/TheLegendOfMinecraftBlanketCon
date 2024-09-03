@@ -5,27 +5,30 @@ import net.deadlydiamond98.entities.bombs.BombEntity;
 import net.deadlydiamond98.entities.bombs.BombchuEntity;
 import net.deadlydiamond98.entities.bombs.RemoteBombEntity;
 import net.deadlydiamond98.entities.bombs.SuperBombEntity;
-import net.deadlydiamond98.entities.monsters.BeamosEntity;
-import net.deadlydiamond98.entities.monsters.BubbleEntity;
-import net.deadlydiamond98.entities.monsters.FairyEntity;
-import net.deadlydiamond98.entities.monsters.KeeseEntity;
+import net.deadlydiamond98.entities.monsters.*;
 import net.deadlydiamond98.entities.projectiles.*;
 import net.deadlydiamond98.entities.projectiles.arrows.BombArrowEntity;
 import net.deadlydiamond98.entities.projectiles.arrows.SilverArrowEntity;
 import net.deadlydiamond98.entities.projectiles.boomerangs.IronBoomerang;
 import net.deadlydiamond98.entities.projectiles.boomerangs.MagicalBoomerang;
 import net.deadlydiamond98.entities.projectiles.boomerangs.WoodBoomerang;
+import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
+import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
 import net.minecraft.entity.EntityDimensions;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnGroup;
+import net.minecraft.entity.SpawnRestriction;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
+import net.minecraft.registry.tag.BiomeTags;
 import net.minecraft.util.Identifier;
+import net.minecraft.world.Heightmap;
 import net.minecraft.world.World;
 
 public class ZeldaEntities {
     public static void registerEntities() {
+        addEntitiesToWorld();
     }
 
     public static final EntityType<SwordBeamEntity> Sword_Beam = Registry.register(
@@ -176,6 +179,12 @@ public class ZeldaEntities {
                     .build()
     );
 
+
+
+
+
+    // LIVING
+
     public static final EntityType<KeeseEntity> Keese_Entity = Registry.register(
             Registries.ENTITY_TYPE,
             new Identifier(ZeldaCraft.MOD_ID, "keese"),
@@ -214,4 +223,32 @@ public class ZeldaEntities {
                     .spawnableFarFromPlayer()
                     .build()
     );
+    public static final EntityType<RedTektite> Red_Tektite_Entity = Registry.register(
+            Registries.ENTITY_TYPE,
+            new Identifier(ZeldaCraft.MOD_ID, "red_tektite"),
+            FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, RedTektite::new)
+                    .dimensions(EntityDimensions.fixed(0.75f,0.75f))
+                    .build()
+    );
+    public static final EntityType<BlueTektite> Blue_Tektite_Entity = Registry.register(
+            Registries.ENTITY_TYPE,
+            new Identifier(ZeldaCraft.MOD_ID, "blue_tektite"),
+            FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, BlueTektite::new)
+                    .dimensions(EntityDimensions.fixed(0.75f,0.75f))
+                    .build()
+    );
+
+    public static void addEntitiesToWorld() {
+        //Restrictions
+        SpawnRestriction.register(Blue_Tektite_Entity, SpawnRestriction.Location.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
+                TektiteEntity::canSpawnIgnoreLightLevel);
+        SpawnRestriction.register(Red_Tektite_Entity, SpawnRestriction.Location.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
+                TektiteEntity::canMobSpawn);
+
+        //Spawning
+        BiomeModifications.addSpawn(BiomeSelectors.tag(BiomeTags.IS_MOUNTAIN), SpawnGroup.MONSTER,
+                Blue_Tektite_Entity, 100, 2, 3);
+        BiomeModifications.addSpawn(BiomeSelectors.tag(BiomeTags.IS_MOUNTAIN), SpawnGroup.MONSTER,
+                Red_Tektite_Entity, 100, 1, 2);
+    }
 }

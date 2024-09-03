@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "zeldacraft:blue_tektite_chitin"
+    }
+  ],
+  "result": {
+    "item": "minecraft:blue_dye",
+    "count": 3
+  }
+}

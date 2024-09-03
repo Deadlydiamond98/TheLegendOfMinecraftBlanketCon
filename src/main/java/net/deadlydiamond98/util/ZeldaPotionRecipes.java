@@ -2,6 +2,7 @@ package net.deadlydiamond98.util;
 
 import net.deadlydiamond98.items.ZeldaItems;
 import net.deadlydiamond98.statuseffects.ZeldaStatusEffects;
+import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.item.Items;
 import net.minecraft.potion.Potions;
 import net.minecraft.recipe.BrewingRecipeRegistry;

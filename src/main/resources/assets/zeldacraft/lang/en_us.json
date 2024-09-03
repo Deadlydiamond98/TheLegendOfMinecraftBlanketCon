@@ -30,6 +30,9 @@
   "block.zeldacraft.red_auto_dungeon_door": "Red Auto Dungeon Door",
   "block.zeldacraft.blue_auto_dungeon_door": "Blue Auto Dungeon Door",
 
+  "item.zeldacraft.red_tektite_chitin": "Red Tektite Chitin",
+  "item.zeldacraft.blue_tektite_chitin": "Blue Tektite Chitin",
+
   "block.zeldacraft.master_block": "Master Block",
   "block.zeldacraft.deepslate_master_ore": "Deepslate Master Ore",
   "item.zeldacraft.raw_master_ore": "Raw Master Ore",
@@ -215,7 +218,10 @@
   "entity.zeldacraft.beamos": "Beamos",
   "item.zeldacraft.keese_spawn_egg": "Keese Spawn Egg",
   "entity.zeldacraft.keese": "Keese",
-
+  "item.zeldacraft.red_tektite_spawn_egg": "Red Tektite Spawn Egg",
+  "entity.zeldacraft.red_tektite": "Red Tektite",
+  "item.zeldacraft.blue_tektite_spawn_egg": "Blue Tektite Spawn Egg",
+  "entity.zeldacraft.blue_tektite": "Blue Tektite",
 
 
   "sounds.zeldacraft.falling_star": "Star Falling from Sky",
@@ -223,8 +229,8 @@
   "sounds.zeldacraft.ice_magic": "Ice Rod Shot",
   "sounds.zeldacraft.sword_shoot": "Sword Beam Shot",
   "sounds.zeldacraft.fairy_ambient": "Fairy Ambience",
-  "sounds.zeldacraft.fairy_hurt": "Fairy Hurt",
-  "sounds.zeldacraft.fairy_death": "Fairy Dying",
+  "sounds.zeldacraft.fairy_hurt": "Fairy hurts",
+  "sounds.zeldacraft.fairy_death": "Fairy dies",
   "sounds.zeldacraft.fairy_in": "Fairy Entering Owner's Pocket",
   "sounds.zeldacraft.fairy_out": "Fairy Exiting Owner's Pocket",
   "sounds.zeldacraft.navi_hello": "Navi Saying Hello",
@@ -235,6 +241,9 @@
   "sounds.zeldacraft.hookshot_active": "Hookshot Chain Clinks",
   "sounds.zeldacraft.boomerang_in_air": "Boomerang in Air",
   "sounds.zeldacraft.boomerang_caught": "Boomerang being caught",
+
+  "sounds.zeldacraft.tektite_hurt": "Tektite hurts",
+  "sounds.zeldacraft.tektite_death": "Tektite dies",
 
 
   "zeldacraft.midnightconfig.title": "Legend of Steve Configs",

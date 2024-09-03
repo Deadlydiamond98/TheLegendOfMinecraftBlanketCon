@@ -1,15 +1,23 @@
 {
-  "type": "minecraft:crafting_shapeless",
-  "ingredients": [
-    {
-      "item": "zeldacraft:red_dungeon_door"
-    },
-    {
-      "item": "minecraft:blue_dye"
-    }
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "#n#",
+    "#n#",
+    "AnA"
   ],
+  "key": {
+    "A": {
+      "item": "minecraft:polished_andesite"
+    },
+    "n": {
+      "item": "minecraft:iron_nugget"
+    },
+    "#": {
+      "item": "zeldacraft:blue_tektite_chitin"
+    }
+  },
   "result": {
     "item": "zeldacraft:blue_dungeon_door",
-    "count": 1
+    "count": 3
   }
 }

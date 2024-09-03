@@ -84,6 +84,8 @@ public class ZeldaItemsTab {
                         //Misc / Materials
                         entry.add(ZeldaItems.Music_Disc_Legend);
                         entry.add(ZeldaItems.Music_Disc_Legend_Fragment);
+                        entry.add(ZeldaItems.Red_Tektite_Chitin);
+                        entry.add(ZeldaItems.Blue_Tektite_Chitin);
                         entry.add(ZeldaItems.Emerald_Shard);
                         entry.add(ZeldaItems.Emerald_Chunk);
                         entry.add(ZeldaItems.Star_Fragment);

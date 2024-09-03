@@ -225,6 +225,10 @@ public class ZeldaItems {
     public static final Item Music_Disc_Legend_Fragment = registerItem("music_disc_legend_fragment", new ToolTipItem(
             new FabricItemSettings()));
 
+    public static final Item Red_Tektite_Chitin = registerItem("red_tektite_chitin", new Item(
+            new FabricItemSettings()));
+    public static final Item Blue_Tektite_Chitin = registerItem("blue_tektite_chitin", new Item(
+            new FabricItemSettings()));
 
 
 
@@ -238,6 +242,10 @@ public class ZeldaItems {
             ZeldaEntities.Fairy_Entity, 0xffffff, 0x5d8fc2, new FabricItemSettings()));
     public static final Item Keese_Spawn_Egg = registerItem("keese_spawn_egg", new SpawnEggItem(
             ZeldaEntities.Keese_Entity, 0x1412a8, 0x9390fe, new FabricItemSettings()));
+    public static final Item Red_Tektite_Spawn_Egg = registerItem("red_tektite_spawn_egg", new SpawnEggItem(
+            ZeldaEntities.Red_Tektite_Entity, 0x831f4b, 0xf76e24, new FabricItemSettings()));
+    public static final Item Blue_Tektite_Spawn_Egg = registerItem("blue_tektite_spawn_egg", new SpawnEggItem(
+            ZeldaEntities.Blue_Tektite_Entity, 0x2e55b2, 0xf76e24, new FabricItemSettings()));
 
 
 
@@ -251,6 +259,8 @@ public class ZeldaItems {
         entry.add(Bubble_Spawn_Egg);
         entry.add(Fairy_Spawn_Egg);
         entry.add(Keese_Spawn_Egg);
+        entry.add(Red_Tektite_Spawn_Egg);
+        entry.add(Blue_Tektite_Spawn_Egg);
     }
     public static void registerItems() {
         ZeldaCraft.LOGGER.debug("Registering Items for" + ZeldaCraft.MOD_ID);

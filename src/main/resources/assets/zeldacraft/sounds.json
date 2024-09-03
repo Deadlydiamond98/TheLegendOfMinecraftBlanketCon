@@ -186,5 +186,19 @@
     "sounds": [
       "zeldacraft:boomerang_caught"
     ]
+  },
+
+
+  "tektite_hurt": {
+    "subtitle": "sounds.zeldacraft.tektite_hurt",
+    "sounds": [
+      "zeldacraft:tektite_hurt"
+    ]
+  },
+  "tektite_death": {
+    "subtitle": "sounds.zeldacraft.tektite_death",
+    "sounds": [
+      "zeldacraft:tektite_death"
+    ]
   }
 }

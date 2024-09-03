@@ -1,7 +1,7 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "#m#",
+    "#n#",
     "#n#",
     "AnA"
   ],
@@ -9,14 +9,11 @@
     "A": {
       "item": "minecraft:polished_andesite"
     },
-    "m": {
-      "item": "zeldacraft:master_scrap"
-    },
     "n": {
       "item": "minecraft:iron_nugget"
     },
     "#": {
-      "item": "minecraft:iron_ingot"
+      "item": "zeldacraft:red_tektite_chitin"
     }
   },
   "result": {

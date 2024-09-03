@@ -6,10 +6,7 @@ import net.deadlydiamond98.blocks.ZeldaBlocksTab;
 import net.deadlydiamond98.blocks.entities.ZeldaBlockEntities;
 import net.deadlydiamond98.commands.ZeldaServerCommands;
 import net.deadlydiamond98.enchantments.ZeldaEnchantments;
-import net.deadlydiamond98.entities.monsters.BeamosEntity;
-import net.deadlydiamond98.entities.monsters.BubbleEntity;
-import net.deadlydiamond98.entities.monsters.FairyEntity;
-import net.deadlydiamond98.entities.monsters.KeeseEntity;
+import net.deadlydiamond98.entities.monsters.*;
 import net.deadlydiamond98.entities.ZeldaEntities;
 import net.deadlydiamond98.events.ZeldaEntityDeathEvent;
 import net.deadlydiamond98.events.ZeldaServerLifecycleEvents;
@@ -78,6 +75,8 @@ public class ZeldaCraft implements ModInitializer {
 		FabricDefaultAttributeRegistry.register(ZeldaEntities.Fairy_Entity, FairyEntity.createCustomAttributes());
 		FabricDefaultAttributeRegistry.register(ZeldaEntities.Bubble_Entity, BubbleEntity.createCustomAttributes());
 		FabricDefaultAttributeRegistry.register(ZeldaEntities.Beamos_Entity, BeamosEntity.createCustomAttributes());
+		FabricDefaultAttributeRegistry.register(ZeldaEntities.Red_Tektite_Entity, RedTektite.createCustomAttributes());
+		FabricDefaultAttributeRegistry.register(ZeldaEntities.Blue_Tektite_Entity, BlueTektite.createCustomAttributes());
 	}
 
 	public static boolean isModLoaded(String modid) {

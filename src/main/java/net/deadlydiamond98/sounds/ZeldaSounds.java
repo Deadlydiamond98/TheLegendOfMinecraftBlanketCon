@@ -61,6 +61,10 @@ public class ZeldaSounds {
 
     public static SoundEvent HookshotActive = registerSoundEvent("hookshot_active");
 
+    //Tektite
+    public static SoundEvent TektiteHurt = registerSoundEvent("tektite_hurt");
+    public static SoundEvent TektiteDeath = registerSoundEvent("tektite_death");
+
     public static SoundEvent registerSoundEvent(String name) {
         Identifier id = new Identifier(ZeldaCraft.MOD_ID, name);
         return Registry.register(Registries.SOUND_EVENT, id, SoundEvent.of(id));
