@@ -2,11 +2,13 @@ package net.deadlydiamond98.blocks.entities.doors;
 
 import net.deadlydiamond98.blocks.doors.AbstractDungeonDoor;
 import net.deadlydiamond98.networking.ZeldaServerPackets;
+import net.deadlydiamond98.sounds.ZeldaSounds;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.sound.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
@@ -32,10 +34,12 @@ public class AbstractDungeonDoorEntity extends BlockEntity {
                 PlayerEntity playerEntity = world.getClosestPlayer((double) pos.getX() + 0.5, (double) pos.getY() + 0.5, (double) pos.getZ() + 0.5, 4.0, false);
                 if (playerEntity != null && !blockState.get(OPEN) && !blockState.get(LOCKED)) {
                     world.setBlockState(pos, blockState.with(OPEN, true));
+                    world.playSound(null, pos, ZeldaSounds.DungeonDoorOpen, SoundCategory.BLOCKS);
                     updateDoor(blockState.get(PART_X), blockState.get(PART_Y), world, pos, blockState.get(FACING), true);
                 }
                 else if (playerEntity == null && blockState.get(OPEN) && !blockState.get(LOCKED)) {
                     world.setBlockState(pos, blockState.with(OPEN, false));
+                    world.playSound(null, pos, ZeldaSounds.DungeonDoorClose, SoundCategory.BLOCKS);
                     updateDoor(blockState.get(PART_X), blockState.get(PART_Y), world, pos, blockState.get(FACING), false);
                 }
             }

@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "geg",
+    "LIL"
+  ],
+  "key": {
+    "I": {
+      "item": "minecraft:iron_sword"
+    },
+    "L": {
+      "item": "minecraft:leather"
+    },
+    "g": {
+      "item": "minecraft:gold_nugget"
+    },
+    "e": {
+      "item": "zeldacraft:emerald_chunk"
+    }
+  },
+  "result": {
+    "item": "zeldacraft:kokiri_sword",
+    "count": 1
+  }
+}

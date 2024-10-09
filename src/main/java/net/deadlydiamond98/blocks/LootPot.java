@@ -42,15 +42,32 @@ public class LootPot extends BlockWithEntity {
             LootPotBlockEntity blockEntity = (LootPotBlockEntity) world.getBlockEntity(pos);
             if (blockEntity != null) {
                 ItemStack stack = player.getStackInHand(hand);
-                if (!stack.isEmpty()) {
-                    ItemStack existingStack = blockEntity.getStack(0);
-                    if (existingStack.isEmpty()) {
-                        blockEntity.setStack(0, stack.split(1));
-                    } else if (ItemStack.areItemsEqual(existingStack, stack)) {
-                        existingStack.increment(1);
-                        stack.decrement(1);
+                if (blockEntity.hasLootTable()) {
+                    blockEntity.checkLootInteraction(player);
+                    ItemStack loot = blockEntity.getStack(0);
+                    if (player.isSneaking() && stack.isEmpty()) {
+                        player.giveItemStack(loot);
+                        blockEntity.removeStack(0);
                     }
-                    blockEntity.markDirty();
+                }
+                else {
+                    ItemStack existingStack = blockEntity.getStack(0);
+                    if (!stack.isEmpty()) {
+                        if (existingStack.isEmpty()) {
+                            blockEntity.setStack(0, stack.split(stack.getCount()));
+                        } else if (ItemStack.areItemsEqual(existingStack, stack) && existingStack.getCount() < existingStack.getMaxCount()) {
+                            int spaceAvailable = existingStack.getMaxCount() - existingStack.getCount();
+                            int amount = Math.min(stack.getCount(), spaceAvailable);
+
+                            existingStack.increment(amount);
+                            stack.decrement(amount);
+                        }
+                        blockEntity.markDirty();
+                    }
+                    else if (player.isSneaking() && !existingStack.isEmpty() && stack.isEmpty()) {
+                        player.giveItemStack(existingStack);
+                        blockEntity.removeStack(0);
+                    }
                 }
             }
         }

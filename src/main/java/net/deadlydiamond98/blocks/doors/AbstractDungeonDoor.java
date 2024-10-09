@@ -171,6 +171,12 @@ public abstract class AbstractDungeonDoor extends BlockWithEntity {
         }
 
         if (!state.get(LOCKED)) {
+            if (!currentOpenState) {
+                world.playSound(null, pos, ZeldaSounds.DungeonDoorOpen, SoundCategory.BLOCKS);
+            }
+            else {
+                world.playSound(null, pos, ZeldaSounds.DungeonDoorClose, SoundCategory.BLOCKS);
+            }
             updateDoor(partX, partY, world, pos, direction, newOpenState, false, false);
             return ActionResult.SUCCESS;
         }

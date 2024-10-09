@@ -9,6 +9,8 @@ import net.minecraft.client.render.entity.MobEntityRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.RotationAxis;
 
 public abstract class TektiteRenderer<T extends TektiteEntity> extends MobEntityRenderer<T, TektiteModel<T>> {
 
@@ -27,10 +29,11 @@ public abstract class TektiteRenderer<T extends TektiteEntity> extends MobEntity
     protected void scale(T entity, MatrixStack matrices, float amount) {
         super.scale(entity, matrices, amount);
         matrices.scale(1.25f, 1.25f, 1.25f);
+
     }
 
-    protected void setupTransforms(T batEntity, MatrixStack matrixStack, float f, float g, float h) {
-
-        super.setupTransforms(batEntity, matrixStack, f, g, h);
+    protected void setupTransforms(T mob, MatrixStack matrixStack, float f, float g, float h) {
+        g = mob.getYawClient();
+        super.setupTransforms(mob, matrixStack, f, g, h);
     }
 }

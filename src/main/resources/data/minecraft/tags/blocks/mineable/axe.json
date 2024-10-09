@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "zeldacraft:dungeon_door"
+    "zeldacraft:dungeon_door",
+    "zeldacraft:auto_dungeon_door"
   ]
 }

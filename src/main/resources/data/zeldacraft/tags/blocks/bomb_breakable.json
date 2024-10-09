@@ -2,7 +2,15 @@
   "replace": false,
   "values": [
     "minecraft:cracked_stone_bricks",
+    "minecraft:cracked_deepslate_bricks",
+    "minecraft:cracked_nether_bricks",
+    "minecraft:cracked_polished_blackstone_bricks",
+    "minecraft:cracked_deepslate_tiles",
     "zeldacraft:secret_cracked_stone_bricks",
+    "zeldacraft:secret_cracked_deepslate_bricks",
+    "zeldacraft:secret_cracked_nether_bricks",
+    "zeldacraft:secret_cracked_polished_blackstone_bricks",
+    "zeldacraft:secret_cracked_deepslate_tiles",
     "zeldacraft:secret_cracked_brown_dungeoncite_bricks",
     "zeldacraft:cracked_brown_dungeoncite_bricks"
   ]

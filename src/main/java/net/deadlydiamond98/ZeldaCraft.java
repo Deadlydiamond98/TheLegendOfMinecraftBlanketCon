@@ -67,6 +67,7 @@ public class ZeldaCraft implements ModInitializer {
 		ZeldaDungeons.registerDungeons();
 		ZeldaItemsTab.registerItemGroup();
 		ZeldaBlocksTab.registerBlockItemGroup();
+		ZeldaEntities.addEntitiesToWorld();
 		LOGGER.info("Mod Loaded");
 	}
 

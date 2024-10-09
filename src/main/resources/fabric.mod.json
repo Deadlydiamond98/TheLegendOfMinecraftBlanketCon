@@ -2,14 +2,14 @@
 	"schemaVersion": 1,
 	"id": "zeldacraft",
 	"version": "${version}",
-	"name": "The Legend of Minecraft: The Adventure of Steve",
+	"name": "The Legend of Steve",
 	"description": "Zelda-like things, but in minecraft",
 	"authors": [
 		"Deadlydiamond98"
 	],
 	"contact": {
 		"homepage": "https://legacy.curseforge.com/minecraft/mc-mods/the-legend-of-steve",
-		"sources": "https://github.com/FabricMC/fabric-example-mod"
+		"sources": "https://github.com/Deadlydiamond98/Legend-Of-Steve-Wiki/wiki"
 	},
 	"license": "All Rights Reserved",
 	"icon": "assets/zeldacraft/icon.png",
@@ -36,7 +36,7 @@
 		"java": ">=17",
 		"fabric-api": "*",
 		"midnightlib": ">=1.0.0",
-		"magiclib": ">=1.0.1"
+		"magiclib": ">=1.0.3"
 	},
 	"suggests": {
 		"another-mod": "*"

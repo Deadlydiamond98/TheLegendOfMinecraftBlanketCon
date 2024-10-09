@@ -6,19 +6,22 @@ import net.deadlydiamond98.ZeldaCraft;
 import net.deadlydiamond98.blocks.ZeldaBlocks;
 import net.deadlydiamond98.items.ZeldaItems;
 import net.deadlydiamond98.networking.ZeldaClientPackets;
-import net.deadlydiamond98.networking.ZeldaServerPackets;
+import net.deadlydiamond98.sounds.ZeldaSounds;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
-import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
-import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.option.KeyBinding;
+import net.minecraft.client.sound.MusicTracker;
 import net.minecraft.client.util.InputUtil;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.entry.RegistryEntry;
+import net.minecraft.sound.MusicSound;
+import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.text.Text;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.HitResult;
+import net.minecraft.world.World;
 import org.lwjgl.glfw.GLFW;
 
 public class ClientTickEvent {
@@ -28,14 +31,25 @@ public class ClientTickEvent {
 
     public static KeyBinding trinketNeck;
     public static KeyBinding trinketBack;
+
+    public static boolean attackKeyWasPressed = false;
+
     public static void endTickEvent() {
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
             // This checks for left clicks/attacking
-            if (client.options.attackKey.isPressed()) {
-                ZeldaClientPackets.sendSwordBeamPacket(); // Magic/Master sword functionality
 
-                // Loot grass cutting is handled here, as checkign for block breaking w/out fully breaking
-                // the block isn't fully possible, check on start breakign works, but doesn't work 100%
+            if (ZeldaCraft.isModLoaded("bettercombat")) {
+                attackKeyWasPressed = false;
+            }
+
+            if (client.options.attackKey.isPressed()) {
+                if (!attackKeyWasPressed) {
+                    ZeldaClientPackets.sendSwordBeamPacket(); // Magic/Master sword functionality
+                    attackKeyWasPressed = true;
+                }
+
+                // Loot grass cutting is handled here, as checking for block breaking w/out fully breaking
+                // the block isn't fully possible, check on start breaking works, but doesn't work 100%
                 // when holding break
                 if (client.crosshairTarget != null && client.crosshairTarget.getType() == HitResult.Type.BLOCK) {
                     if (client.world.getBlockState((((BlockHitResult) client.crosshairTarget).getBlockPos())).isOf(ZeldaBlocks.Loot_Grass)) {
@@ -43,6 +57,10 @@ public class ClientTickEvent {
                     }
                 }
             }
+            else if (attackKeyWasPressed && !client.options.attackKey.isPressed()) {
+                attackKeyWasPressed = false;
+            }
+
             if (trinketNeck.wasPressed()) {
                 ZeldaClientPackets.sendNeckTrinketPacket();
             }
@@ -55,6 +73,7 @@ public class ClientTickEvent {
             }
         });
     }
+
 
     public static void registerTickEvent() {
         registerKeybindings();

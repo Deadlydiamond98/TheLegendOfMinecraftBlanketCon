@@ -29,11 +29,6 @@ public class CrackedBat extends SwordItem {
     }
 
     @Override
-    public boolean canRepair(ItemStack stack, ItemStack ingredient) {
-        return ingredient.isIn(ItemTags.LOGS);
-    }
-
-    @Override
     public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         boolean result = super.postHit(stack, target, attacker);
         if (Math.floor(Math.random() * (4 - 1 + 1) + 1) == 1) {

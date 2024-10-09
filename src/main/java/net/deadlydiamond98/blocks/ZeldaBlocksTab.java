@@ -32,8 +32,13 @@ public class ZeldaBlocksTab {
                         entry.add(ZeldaBlocks.Purple_Pot);
                         entry.add(ZeldaBlocks.Magenta_Pot);
                         entry.add(ZeldaBlocks.Pink_Pot);
-                        //Dungeon 1 Build Palette
+                        //Secret Cracked Bricks
                         entry.add(ZeldaBlocks.Secret_Cracked_Stone_Brick);
+                        entry.add(ZeldaBlocks.Secret_Cracked_Deepslate_Brick);
+                        entry.add(ZeldaBlocks.Secret_Cracked_Deepslate_Tile);
+                        entry.add(ZeldaBlocks.Secret_Cracked_Nether_Brick);
+                        entry.add(ZeldaBlocks.Secret_Cracked_Polished_Blackstone_Brick);
+                        //Dungeon 1 Build Palette
                         entry.add(ZeldaBlocks.Brown_Dungeoncite_Brick);
                         entry.add(ZeldaBlocks.Cracked_Brown_Dungeoncite_Brick);
                         entry.add(ZeldaBlocks.Mossy_Brown_Dungeoncite_Brick);
@@ -54,6 +59,8 @@ public class ZeldaBlocksTab {
                         entry.add(ZeldaBlocks.Opening_Dungeon_Door);
                         entry.add(ZeldaBlocks.Red_Opening_Dungeon_Door);
                         entry.add(ZeldaBlocks.Blue_Opening_Dungeon_Door);
+                        //Pedestals
+                        entry.add(ZeldaBlocks.Stone_Pedestal);
                         //Material Blocks
                         entry.add(ZeldaBlocks.Master_Ore);
                         entry.add(ZeldaBlocks.Master_Block);

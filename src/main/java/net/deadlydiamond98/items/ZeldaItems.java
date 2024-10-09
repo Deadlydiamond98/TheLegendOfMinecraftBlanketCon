@@ -18,11 +18,12 @@ import net.deadlydiamond98.items.custom.boomerang.MagicBoomerangItem;
 import net.deadlydiamond98.items.custom.boomerang.WoodBoomerangItem;
 import net.deadlydiamond98.items.custom.custombundle.BombBag;
 import net.deadlydiamond98.items.custom.custombundle.Quiver;
-import net.deadlydiamond98.items.custom.manaItems.*;
-import net.deadlydiamond98.items.custom.manaItems.restoring.MagicCandy;
-import net.deadlydiamond98.items.custom.manaItems.restoring.MagicJar;
-import net.deadlydiamond98.items.custom.manaItems.restoring.StarFragment;
-import net.deadlydiamond98.items.custom.manaItems.wearable.*;
+import net.deadlydiamond98.items.custom.manaitems.*;
+import net.deadlydiamond98.items.custom.manaitems.magicpower.MagicPowder;
+import net.deadlydiamond98.items.custom.manaitems.restoring.MagicCandy;
+import net.deadlydiamond98.items.custom.manaitems.restoring.MagicJar;
+import net.deadlydiamond98.items.custom.manaitems.restoring.StarFragment;
+import net.deadlydiamond98.items.custom.manaitems.wearable.*;
 import net.deadlydiamond98.items.custom.shields.HylianShieldItem;
 import net.deadlydiamond98.magiclib.items.consumables.MagicFood;
 import net.deadlydiamond98.sounds.ZeldaSounds;
@@ -34,26 +35,28 @@ import net.minecraft.item.*;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.tag.ItemTags;
-import net.minecraft.registry.tag.TagKey;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Rarity;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ZeldaItems {
 
     //Swords
     public static final Item Kokiri_Sword = registerItem("kokiri_sword", new SwordItem(
-            ToolMaterials.IRON, 4, -2.0F, new FabricItemSettings()));
+            ToolMaterials.IRON, 3, -2.0F, new FabricItemSettings()));
     public static final Item Magic_Sword = registerItem("magic_sword", new MagicSword(
-            ToolMaterials.IRON, 3, -0.5F, new FabricItemSettings()));
+            ToolMaterials.IRON, 4, -2.4F, new FabricItemSettings()));
     public static final Item Master_Sword = registerItem("master_sword", new MasterSword(
-            ToolMaterials.IRON, 6, -0.5F, new FabricItemSettings()));
+            ToolMaterials.IRON, 5, -2.4F, new FabricItemSettings()));
+    public static final Item Master_Sword_LV2 = registerItem("master_sword_lv2", new MasterSword(
+            ToolMaterials.IRON, 6, -2.0F, new FabricItemSettings()));
+    public static final Item Master_Sword_LV3 = registerItem("master_sword_lv3", new MasterSword(
+            ToolMaterials.IRON, 7, -1.5F, new FabricItemSettings()));
     public static final Item Cracked_Bat = registerItem("cracked_bat", new CrackedBat(
-            ToolMaterials.IRON, 3, -2.2F, new FabricItemSettings()));
+            ToolMaterials.WOOD, 3, -2.2F, new FabricItemSettings()));
     public static final Item Baseball = registerItem("baseball", new Baseball(
             new FabricItemSettings().maxCount(16)));
 
@@ -111,9 +114,9 @@ public class ZeldaItems {
 
 
     //Equipment
-    public static final Item Pegasus_Boots = registerItem("pegasus_boots", new PegasusBoots(
-            ArmorMaterials.LEATHER, ArmorItem.Type.BOOTS, new FabricItemSettings().maxCount(1)
-    ));
+//    public static final Item Pegasus_Boots = registerItem("pegasus_boots", new PegasusBoots(
+//            ArmorMaterials.LEATHER, ArmorItem.Type.BOOTS, new FabricItemSettings().maxCount(1)
+//    ));
     public static final Item Fairy_Pendant = registerItem("fairy_pendant", new MagicPendant(
             new FabricItemSettings().maxCount(1),
             "item.zeldacraft.fairy_pendant.tooltipa", true, "item.zeldacraft.fairy_pendant.tooltipb"));
@@ -208,7 +211,8 @@ public class ZeldaItems {
             Text.translatable("smithing_template.zeldacraft.master_smithing_template.additions_slot_description"),
             List.of(new Identifier(ZeldaCraft.MOD_ID,"item/template/magic_sword_template"),
                     new Identifier(ZeldaCraft.MOD_ID,"item/template/boomerang_template"),
-                    new Identifier(ZeldaCraft.MOD_ID,"item/template/key_template")),
+                    new Identifier(ZeldaCraft.MOD_ID,"item/template/key_template"),
+                    new Identifier(ZeldaCraft.MOD_ID,"item/template/cane_template")),
             List.of(new Identifier("item/empty_slot_ingot"))));
 
     public static final Item Kokiri_Cloth = registerItem("kokiri_cloth", new Item(

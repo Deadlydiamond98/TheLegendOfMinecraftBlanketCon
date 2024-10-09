@@ -37,7 +37,12 @@ public abstract class SplashMixin {
             "Z E L D A      I N S P I R E D",
             "OOOOOOOOOOOOOOOOOOOHHHHHHHHHHHHHH",
             "If all else fails, use fire.",
-            "Gee, it sure is BORING around here...");
+            "Gee, it sure is BORING around here...",
+            "Shoutout to SOSSALMON for composing some music!",
+            "Big Dungeons coming soon",
+            "Also check out Healing Pretty Good",
+            "Also check out Vinyl Frontier"
+    );
 
 
     @Inject(method = "apply", at = @At("TAIL"))

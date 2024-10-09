@@ -28,7 +28,9 @@ public abstract class AbstractBombItem extends Item {
             bombEntity.setOwner(user);
             world.spawnEntity(bombEntity);
         }
-        user.getStackInHand(hand).decrement(1);
+        if (user.getStackInHand(hand).getItem() instanceof AbstractBombItem) {
+            user.getStackInHand(hand).decrement(1);
+        }
         user.getItemCooldownManager().set(this, 20);
         user.getItemCooldownManager().set(ZeldaItems.Bomb_Bag, 40);
 

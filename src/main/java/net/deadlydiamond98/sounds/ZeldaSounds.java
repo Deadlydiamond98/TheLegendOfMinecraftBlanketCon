@@ -9,6 +9,10 @@ import net.minecraft.util.Identifier;
 
 public class ZeldaSounds {
 
+    //MUSIC
+
+    public static SoundEvent StarMusic = registerSoundEvent("star_fall");
+
     //pickup
     public static SoundEvent EmeraldShardPickedUp = registerSoundEvent("emeraldshardpickedup");
     public static SoundEvent StarPickedUp = registerSoundEvent("starpickedup");
@@ -56,6 +60,10 @@ public class ZeldaSounds {
     //Boomerang
     public static SoundEvent BoomerangInAir = registerSoundEvent("boomerang_in_air");
     public static SoundEvent BoomerangCaught = registerSoundEvent("boomerang_caught");
+
+    //Door
+    public static SoundEvent DungeonDoorOpen = registerSoundEvent("dungeon_door_open");
+    public static SoundEvent DungeonDoorClose = registerSoundEvent("dungeon_door_close");
 
     //Hookshot
 

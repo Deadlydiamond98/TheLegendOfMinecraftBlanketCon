@@ -5,6 +5,7 @@
   "client": [
     "KeyboardMixin",
     "LivingEntityRendererMixin",
+    "MinecraftMixin",
     "MouseMixin",
     "PlayerEntityRendererMixin",
     "SplashMixin"

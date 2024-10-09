@@ -4,6 +4,7 @@
 		"1": "zeldacraft:block/spore_blossom_base_tintable",
 		"particle": "zeldacraft:block/loot_grass_tintable"
 	},
+	"ambientocclusion": false,
 	"elements": [
 		{
 			"from": [9, 0, 4.5],
@@ -61,12 +62,7 @@
 			"from": [0, 0.01, 0],
 			"to": [16, 0.01, 16],
 			"faces": {
-				"north": {"uv": [0, 0, 16, 0], "texture": "#missing"},
-				"east": {"uv": [0, 0, 16, 0], "texture": "#missing"},
-				"south": {"uv": [0, 0, 16, 0], "texture": "#missing"},
-				"west": {"uv": [0, 0, 16, 0], "texture": "#missing"},
-				"up": {"uv": [0, 0, 16, 16], "texture": "#1", "tintindex": 0},
-				"down": {"uv": [0, 0, 16, 16], "texture": "#1", "tintindex": 0}
+				"up": {"uv": [0, 0, 16, 16], "texture": "#1", "tintindex": 0}
 			}
 		}
 	]

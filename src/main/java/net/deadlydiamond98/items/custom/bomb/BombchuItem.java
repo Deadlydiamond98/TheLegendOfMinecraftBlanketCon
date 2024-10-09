@@ -2,6 +2,7 @@ package net.deadlydiamond98.items.custom.bomb;
 
 import net.deadlydiamond98.entities.bombs.BombchuEntity;
 import net.deadlydiamond98.items.ZeldaItems;
+import net.deadlydiamond98.items.custom.bomb.regular_bombs.AbstractBombItem;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -34,7 +35,9 @@ public class BombchuItem extends Item {
         bombEntity.setVelocity(vec3d.x * speed, 0.1, vec3d.z * speed);
         bombEntity.setOwner(user);
         world.spawnEntity(bombEntity);
-        user.getStackInHand(hand).decrement(1);
+        if (user.getStackInHand(hand).getItem() instanceof BombchuItem) {
+            user.getStackInHand(hand).decrement(1);
+        }
         user.getItemCooldownManager().set(this, 20);
         user.getItemCooldownManager().set(ZeldaItems.Bomb_Bag, 40);
 

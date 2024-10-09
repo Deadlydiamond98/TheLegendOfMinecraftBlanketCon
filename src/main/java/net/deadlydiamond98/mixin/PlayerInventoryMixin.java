@@ -3,6 +3,7 @@ package net.deadlydiamond98.mixin;
 import dev.emi.trinkets.api.TrinketComponent;
 import dev.emi.trinkets.api.TrinketsApi;
 import net.deadlydiamond98.items.ZeldaItems;
+import net.deadlydiamond98.items.custom.bomb.regular_bombs.AbstractBombItem;
 import net.deadlydiamond98.items.custom.bomb.regular_bombs.BombItem;
 import net.deadlydiamond98.items.custom.bomb.BombchuItem;
 import net.deadlydiamond98.items.custom.custombundle.BombBag;
@@ -39,7 +40,7 @@ public class PlayerInventoryMixin {
                 cir.cancel();
             }
         }
-        else if (item instanceof BombItem || item instanceof BombchuItem) {
+        else if (item instanceof AbstractBombItem || item instanceof BombchuItem) {
             if (addItemToBag(player, stack, BombBag.class, cir)) {
                 cir.setReturnValue(true);
                 cir.cancel();

@@ -25,9 +25,9 @@ public class ZeldaBlocks {
 
     public static final Block Loot_Grass = registerBlock("loot_grass",
             new LootGrass(FabricBlockSettings.copyOf(Blocks.MOSS_BLOCK).strength(0.3F, 0.0F)
-                    .sounds(BlockSoundGroup.GRASS).nonOpaque().luminance(2).noCollision()));
+                    .sounds(BlockSoundGroup.GRASS).nonOpaque().noCollision()));
 
-    //Pots
+    // Pots
     public static final Block Plain_Pot = registerBlock("plain_pot",
             new LootPot(FabricBlockSettings.copyOf(Blocks.DECORATED_POT).strength(0.3F, 0.0F)
                     .sounds(BlockSoundGroup.DECORATED_POT_SHATTER).nonOpaque().breakInstantly()));
@@ -84,7 +84,23 @@ public class ZeldaBlocks {
             new SecretStone(FabricBlockSettings.copyOf(Blocks.CRACKED_STONE_BRICKS).strength(1.5F, 6.0F)
                     .sounds(BlockSoundGroup.STONE)));
 
-    //Doors
+    public static final Block Secret_Cracked_Deepslate_Brick = registerBlock("secret_cracked_deepslate_bricks",
+            new SecretStone(FabricBlockSettings.copyOf(Blocks.CRACKED_STONE_BRICKS).strength(1.5F, 6.0F)
+                    .sounds(BlockSoundGroup.DEEPSLATE_BRICKS)));
+
+    public static final Block Secret_Cracked_Deepslate_Tile = registerBlock("secret_cracked_deepslate_tiles",
+            new SecretStone(FabricBlockSettings.copyOf(Blocks.CRACKED_STONE_BRICKS).strength(1.5F, 6.0F)
+                    .sounds(BlockSoundGroup.DEEPSLATE_TILES)));
+
+    public static final Block Secret_Cracked_Nether_Brick = registerBlock("secret_cracked_nether_bricks",
+            new SecretStone(FabricBlockSettings.copyOf(Blocks.CRACKED_STONE_BRICKS).strength(1.5F, 6.0F)
+                    .sounds(BlockSoundGroup.NETHER_BRICKS)));
+
+    public static final Block Secret_Cracked_Polished_Blackstone_Brick = registerBlock("secret_cracked_polished_blackstone_bricks",
+            new SecretStone(FabricBlockSettings.copyOf(Blocks.CRACKED_STONE_BRICKS).strength(1.5F, 6.0F)
+                    .sounds(BlockSoundGroup.DEEPSLATE_BRICKS)));
+
+    // Doors
 
     public static final Block Dungeon_Door = registerBlock("dungeon_door",
             new DungeonDoor(FabricBlockSettings.copyOf(Blocks.SPRUCE_PLANKS).strength(1.5F, 1200.0F)
@@ -106,8 +122,14 @@ public class ZeldaBlocks {
             new BlueOpeningDungeonDoor(FabricBlockSettings.copyOf(Blocks.SPRUCE_PLANKS).strength(1.5F, 1200.0F)
                     .sounds(BlockSoundGroup.HANGING_SIGN).nonOpaque().notSolid()));
 
+    // Pedestals
 
-    //Dungeoncite
+    public static final Block Stone_Pedestal = registerBlock("stone_pedestal",
+            new PedestalBlock(FabricBlockSettings.copyOf(Blocks.STONE).strength(1.5F, 6.0F)
+                    .sounds(BlockSoundGroup.TUFF).nonOpaque()));
+
+    // Dungeoncite
+
     public static final Block Brown_Dungeoncite_Brick = registerBlock("brown_dungeoncite_bricks",
             new Block(FabricBlockSettings.copyOf(Blocks.STONE_BRICKS).strength(
                             50, 6.0F)
@@ -160,6 +182,8 @@ public class ZeldaBlocks {
             new PillarBlock(FabricBlockSettings.copyOf(Blocks.QUARTZ_PILLAR).strength(
                             50, 6.0F)
                     .sounds(BlockSoundGroup.STONE).requiresTool()));
+
+    // Other
 
     public static final Block Star_Block = registerBlock("star_block",
             new Block(FabricBlockSettings.copyOf(Blocks.DIAMOND_BLOCK).strength(

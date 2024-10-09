@@ -1,6 +1,7 @@
 package net.deadlydiamond98;
 
 import net.deadlydiamond98.blocks.ZeldaBlocks;
+import net.deadlydiamond98.blocks.entities.PedestalBlockEntity;
 import net.deadlydiamond98.blocks.entities.ZeldaBlockEntities;
 import net.deadlydiamond98.commands.ZeldaClientCommands;
 import net.deadlydiamond98.entities.ZeldaEntities;
@@ -10,6 +11,7 @@ import net.deadlydiamond98.model.DungeonDoorModel;
 import net.deadlydiamond98.model.entity.*;
 import net.deadlydiamond98.networking.ZeldaClientPackets;
 import net.deadlydiamond98.particle.ZeldaParticleFactory;
+import net.deadlydiamond98.renderer.blocks.SwordPedestalRenderer;
 import net.deadlydiamond98.renderer.doors.*;
 import net.deadlydiamond98.renderer.FairyCompanionRenderer;
 import net.deadlydiamond98.renderer.ShootingStarRenderer;
@@ -167,6 +169,7 @@ public class ZeldaCraftClient implements ClientModInitializer {
 		BlockEntityRendererFactories.register(ZeldaBlockEntities.RED_OPENING_DUNGEON_DOOR, RedOpeningDungeonDoorRenderer::new);
 		BlockEntityRendererFactories.register(ZeldaBlockEntities.BLUE_DUNGEON_DOOR, BlueDungeonDoorRenderer::new);
 		BlockEntityRendererFactories.register(ZeldaBlockEntities.BLUE_OPENING_DUNGEON_DOOR, BlueOpeningDungeonDoorRenderer::new);
+		BlockEntityRendererFactories.register(ZeldaBlockEntities.PEDESTAL, SwordPedestalRenderer::new);
 	}
 
 	public void registerModelLayers() {

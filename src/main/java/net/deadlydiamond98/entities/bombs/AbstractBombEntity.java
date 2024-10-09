@@ -38,7 +38,7 @@ public abstract class AbstractBombEntity extends Entity implements Ownable {
 
     public AbstractBombEntity(EntityType<? extends Entity> entityType, World world) {
         super(entityType, world);
-        power = 0;
+        this.power = 0;
     }
 
     public AbstractBombEntity(EntityType<? extends Entity> entityType, World world, double x, double y, double z, float power, int fuse, @Nullable PlayerEntity player) {
@@ -96,7 +96,7 @@ public abstract class AbstractBombEntity extends Entity implements Ownable {
     protected void explode() {
         if (!this.getWorld().isClient) {
             boolean playSecret = false;
-            int radius = (int) power;
+            int radius = (int) this.power;
             for (int x = -radius; x <= radius; x++) {
                 for (int y = -radius; y <= radius; y++) {
                     for (int z = -radius; z <= radius; z++) {
@@ -111,7 +111,7 @@ public abstract class AbstractBombEntity extends Entity implements Ownable {
                 this.getWorld().playSound(null, this.getBlockPos(), ZeldaSounds.SecretRoom, SoundCategory.BLOCKS, 1.0f, 1.0f);
             }
 
-            this.getWorld().createExplosion(this, this.getX(), this.getY(), this.getZ(), power, false, World.ExplosionSourceType.NONE);
+            this.getWorld().createExplosion(this, this.getX(), this.getY(), this.getZ(), (int) Math.ceil(this.power * 0.5), false, World.ExplosionSourceType.NONE);
 
             this.getWorld().getPlayers().forEach(player -> {
                 ZeldaServerPackets.sendParticlePacket((ServerPlayerEntity) player, this.getX(),

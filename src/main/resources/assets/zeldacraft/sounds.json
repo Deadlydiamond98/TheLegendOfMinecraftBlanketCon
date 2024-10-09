@@ -1,4 +1,13 @@
 {
+  "star_fall": {
+    "sounds": [
+      {
+        "name": "zeldacraft:star_fall",
+        "stream": true
+      }
+    ]
+  },
+
   "emeraldshardpickedup": {
     "sounds": [
       "zeldacraft:emerald_shard_picked_up"
@@ -199,6 +208,19 @@
     "subtitle": "sounds.zeldacraft.tektite_death",
     "sounds": [
       "zeldacraft:tektite_death"
+    ]
+  },
+
+  "dungeon_door_open": {
+    "subtitle": "subtitles.block.door.toggle",
+    "sounds": [
+      "zeldacraft:dungeon_door_open"
+    ]
+  },
+  "dungeon_door_close": {
+    "subtitle": "subtitles.block.door.toggle",
+    "sounds": [
+      "zeldacraft:dungeon_door_close"
     ]
   }
 }

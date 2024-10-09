@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "nn",
+    "AA"
+  ],
+  "key": {
+    "A": {
+      "item": "minecraft:polished_andesite"
+    },
+    "n": {
+      "item": "minecraft:iron_nugget"
+    }
+  },
+  "result": {
+    "item": "zeldacraft:stone_pedestal",
+    "count": 1
+  }
+}

@@ -1,6 +1,4 @@
 {
-  "attribute.zeldacraft.magic_cost": " Magic Cost",
-
   "itemgroup.zeldacraft_items": "The Legend of Steve Items",
   "itemgroup.zeldacraft_blocks": "The Legend of Steve Blocks",
 
@@ -17,6 +15,7 @@
   "block.zeldacraft.bomb_flower": "Bomb Flower Seeds",
   "item.zeldacraft.deku_nut": "Deku Nut",
 
+  "block.zeldacraft.stone_pedestal": "Stone Sword Pedestal",
 
   "item.zeldacraft.dungeon_key": "Key",
   "item.zeldacraft.master_key": "Master Key",
@@ -33,7 +32,7 @@
   "item.zeldacraft.red_tektite_chitin": "Red Tektite Chitin",
   "item.zeldacraft.blue_tektite_chitin": "Blue Tektite Chitin",
 
-  "block.zeldacraft.master_block": "Master Block",
+  "block.zeldacraft.master_block": "Block of Master Ingots",
   "block.zeldacraft.deepslate_master_ore": "Deepslate Master Ore",
   "item.zeldacraft.raw_master_ore": "Raw Master Ore",
   "item.zeldacraft.master_scrap": "Master Scrap",
@@ -53,7 +52,7 @@
   "weather.zeldacraft.meteor_shower.stopb": "The sky grows calm",
   "weather.zeldacraft.meteor_shower.stopc": "The stars have settled",
 
-  "block.zeldacraft.star_block": "Star Block",
+  "block.zeldacraft.star_block": "Block of Stars",
   "item.zeldacraft.star_fragment": "Star Fragment",
   "item.zeldacraft.stardust": "Stardust",
   "item.zeldacraft.magic_jar": "Magic Jar",
@@ -96,6 +95,10 @@
   "block.zeldacraft.brown_pot": "Brown Pot",
 
   "block.zeldacraft.secret_cracked_stone_bricks": "Secret Cracked Stone Bricks",
+  "block.zeldacraft.secret_cracked_deepslate_bricks": "Secret Cracked Deepslate Bricks",
+  "block.zeldacraft.secret_cracked_deepslate_tiles": "Secret Cracked Deepslate Tiles",
+  "block.zeldacraft.secret_cracked_nether_bricks": "Secret Cracked Nether Bricks",
+  "block.zeldacraft.secret_cracked_polished_blackstone_bricks": "Secret Cracked Polished Blackstone Bricks",
   "block.zeldacraft.secret_cracked_brown_dungeoncite_bricks": "Secret Cracked Brown Dungeoncite Bricks",
 
 
@@ -129,6 +132,8 @@
   "item.zeldacraft.magic_sword": "Magic Sword",
   "item.zeldacraft.magic_sword.tooltip": "Shoots Sword Beams",
   "item.zeldacraft.master_sword": "Master Sword",
+  "item.zeldacraft.master_sword_lv2": "Master Sword Lv2",
+  "item.zeldacraft.master_sword_lv3": "Master Sword Lv3",
   "item.zeldacraft.master_sword.tooltip": "Shoots Piercing Sword Beams",
   "item.zeldacraft.mana_sword.tooltip": "Consumes Magic if Players Health isn't full",
   "item.zeldacraft.cracked_bat": "Cracked Bat",

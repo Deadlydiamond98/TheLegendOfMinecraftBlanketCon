@@ -18,9 +18,11 @@ public class ZeldaItemsTab {
             FabricItemGroup.builder().displayName(Text.translatable("itemgroup.zeldacraft_items"))
                     .icon(ZeldaItems.Master_Sword::getDefaultStack).entries((displayContext, entry) -> {
                         //Swords
-//                        entry.add(ZeldaItems.Kokiri_Sword);
+                        entry.add(ZeldaItems.Kokiri_Sword);
                         entry.add(ZeldaItems.Magic_Sword);
                         entry.add(ZeldaItems.Master_Sword);
+                        entry.add(ZeldaItems.Master_Sword_LV2);
+                        entry.add(ZeldaItems.Master_Sword_LV3);
                         entry.add(ZeldaItems.Cracked_Bat);
                         entry.add(ZeldaItems.Baseball); //Not Melee, but pairs w/ bat
                         //Boomerangs

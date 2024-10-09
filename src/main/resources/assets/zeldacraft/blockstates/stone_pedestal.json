@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "zeldacraft:block/stone_pedestal",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "zeldacraft:block/stone_pedestal"
+    },
+    "facing=south": {
+      "model": "zeldacraft:block/stone_pedestal",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "zeldacraft:block/stone_pedestal",
+      "y": 270
+    }
+  }
+}

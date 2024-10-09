@@ -8,6 +8,7 @@ import net.deadlydiamond98.networking.packets.UseNeckTrinketC2SPacket;
 import net.deadlydiamond98.statuseffects.StunStatusEffect;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.state.property.Properties;
@@ -18,6 +19,7 @@ public class ZeldaServerPackets {
 
     public static final Identifier ParticlePacket = new Identifier(ZeldaCraft.MOD_ID, "particle_packet");
     public static final Identifier DoorAnimationPacket = new Identifier(ZeldaCraft.MOD_ID, "door_animation_packet");
+    public static final Identifier PedestalPacket = new Identifier(ZeldaCraft.MOD_ID, "pedestal_packet");
     public static final Identifier ShootBeamPacket = new Identifier(ZeldaCraft.MOD_ID, "shoot_beam_packet");
     public static final Identifier SmashLootGrassPacket = new Identifier(ZeldaCraft.MOD_ID, "smash_loot_grass_packet");
     public static final Identifier DekuStunOverlayPacket = new Identifier(ZeldaCraft.MOD_ID, "deku_stun_overlay_packet");
@@ -50,6 +52,13 @@ public class ZeldaServerPackets {
         buf.writeInt(rotation);
         buf.writeBoolean(locked);
         ServerPlayNetworking.send(player, DoorAnimationPacket, buf);
+    }
+    public static void sendPedestalPacket(ServerPlayerEntity player, BlockPos pos, ItemStack stack, float rotation) {
+        PacketByteBuf buf = PacketByteBufs.create();
+        buf.writeBlockPos(pos);
+        buf.writeItemStack(stack);
+        buf.writeFloat(rotation);
+        ServerPlayNetworking.send(player, PedestalPacket, buf);
     }
     public static void sendDekuStunOverlayPacket(ServerPlayerEntity player, int entityId, boolean hasEffect, StunStatusEffect.OverlayType overlay) {
         PacketByteBuf buf = PacketByteBufs.create();

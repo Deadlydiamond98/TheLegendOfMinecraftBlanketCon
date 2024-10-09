@@ -1,7 +1,7 @@
 package net.deadlydiamond98.mixin;
 
 import net.deadlydiamond98.items.custom.EmeraldItem;
-import net.deadlydiamond98.items.custom.manaItems.restoring.StarFragment;
+import net.deadlydiamond98.items.custom.manaitems.restoring.StarFragment;
 import net.deadlydiamond98.sounds.ZeldaSounds;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.ItemEntity;

@@ -14,17 +14,19 @@ import net.minecraft.server.network.ServerPlayNetworkHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
+import net.minecraft.text.Text;
 import net.minecraft.util.math.Vec3d;
 
 public class ShootBeamC2SPacket {
     public static void receive(MinecraftServer server, ServerPlayerEntity player, ServerPlayNetworkHandler handler,
                                PacketByteBuf buf, PacketSender responseSender) {
         server.execute(() -> {
+            // THIS CODE IS SHIT, I don't feel like reworking it right now though
             ServerWorld world = (ServerWorld) player.getWorld();
             Item item = player.getMainHandStack().getItem();
             if (((player.getHealth() == player.getMaxHealth()) || player.canRemoveMana(3) || player.isCreative())
                     && !(player.getItemCooldownManager().isCoolingDown(item))
-                    && player.handSwinging) {
+                    ) {
                 if (item instanceof MagicSword) {
                     SwordBeamEntity projectile = new SwordBeamEntity(ZeldaEntities.Sword_Beam, world);
                     projectile.setOwner(player);
@@ -58,10 +60,6 @@ public class ShootBeamC2SPacket {
                         player.removeMana(3);
                     }
                 }
-            }
-            else if ((item instanceof MasterSword || item instanceof MagicSword) && !(player.getItemCooldownManager().isCoolingDown(item))
-                    && player.handSwinging && player.handSwingTicks == 0) {
-                player.getWorld().playSound(null, player.getBlockPos(), ZeldaSounds.NotEnoughMana, SoundCategory.PLAYERS, 1.0f, 1.0f);
             }
         });
     }

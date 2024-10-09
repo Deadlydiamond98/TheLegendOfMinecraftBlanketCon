@@ -1,9 +1,9 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "CCA",
-    "CLC",
-    "CCC"
+    "ttA",
+    "CCt",
+    "CCt"
   ],
   "key": {
     "C": {
@@ -12,8 +12,8 @@
     "A": {
       "item": "minecraft:arrow"
     },
-    "L": {
-      "item": "minecraft:lapis_block"
+    "t": {
+      "item": "zeldacraft:blue_tektite_chitin"
     }
   },
   "result": {

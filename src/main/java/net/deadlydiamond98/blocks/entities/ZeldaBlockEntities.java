@@ -18,6 +18,7 @@ public class ZeldaBlockEntities {
     public static BlockEntityType<RedOpeningDungeonDoorEntity> RED_OPENING_DUNGEON_DOOR;
     public static BlockEntityType<BlueDungeonDoorEntity> BLUE_DUNGEON_DOOR;
     public static BlockEntityType<BlueOpeningDungeonDoorEntity> BLUE_OPENING_DUNGEON_DOOR;
+    public static BlockEntityType<PedestalBlockEntity> PEDESTAL;
 
     public static void registerBlockEntities() {
         Block[] lootPotBlocks = new Block[]{
@@ -71,5 +72,10 @@ public class ZeldaBlockEntities {
                 new Identifier(ZeldaCraft.MOD_ID, "blue_opening_dungeon_door"),
                 FabricBlockEntityTypeBuilder.create(BlueOpeningDungeonDoorEntity::new,
                         ZeldaBlocks.Blue_Opening_Dungeon_Door).build(null));
+
+        PEDESTAL = Registry.register(Registries.BLOCK_ENTITY_TYPE,
+                new Identifier(ZeldaCraft.MOD_ID, "pedestal"),
+                FabricBlockEntityTypeBuilder.create(PedestalBlockEntity::new,
+                        ZeldaBlocks.Stone_Pedestal).build(null));
     }
 }

@@ -34,7 +34,7 @@ public class TektiteModel<T extends TektiteEntity> extends EntityModel<T> {
 
 	public TektiteModel(ModelPart root) {
         this.main = root.getChild("main");
-		this.mainPivotY = this.main.pivotY + 2.5f;
+		this.mainPivotY = main.pivotY + 2.5f;
 		this.eye = main.getChild("eye");
 
 		this.backrightlega = main.getChild("backrightlega");
@@ -98,8 +98,7 @@ public class TektiteModel<T extends TektiteEntity> extends EntityModel<T> {
 			this.eye.pivotX = MathHelper.sqrt((float)Math.abs(e)) * 2.0F * (float)Math.signum(e);
 		}
 
-		if (entity.getTektiteOnGround()) {
-
+		if (entity.isOnGround()) {
 			this.main.pivotY = this.mainPivotY + oscillate(-1, 0, time, 2);
 
 			// back right leg
@@ -134,19 +133,20 @@ public class TektiteModel<T extends TektiteEntity> extends EntityModel<T> {
 			);
 			this.leftlegb.roll = MathHelper.lerp(0.1f, this.leftlegb.roll, -this.rightlegb.roll);
 		}
-		else {
+		else if (!entity.isOnGround() && entity.getVelocity().length() > 0.1f) {
+			float clampRadMin =  toRad(0);
+			float clampRadMax =  toRad(80);
+
 			this.main.pivotY = this.mainPivotY;
 
 			// back right leg
 			this.backrightlega.setAngles(
 					oscillate(toRad(18.2273f), toRad(21.3938f), time, 2),
 					oscillate(toRad(-17.133f), toRad(-12.8784f), time, 2),
-					this.backrightlega.roll += toRad(1.0f)
+					this.backrightlega.roll = MathHelper.clamp(this.backrightlega.roll + toRad(1.0f), clampRadMin, clampRadMax)
 			);
-			this.backrightlega.roll = MathHelper.clamp(this.backrightlega.roll, 0, 80);
 
-			this.backrightlegb.roll += toRad(-1.0f);
-			this.backrightlegb.roll = MathHelper.clamp(this.backrightlegb.roll, 0, 80);
+			this.backrightlegb.roll = MathHelper.clamp(this.backrightlegb.roll + toRad(-1.0f), clampRadMin, clampRadMax);
 
 			// back left leg
 			this.backleftlega.setAngles(
@@ -161,12 +161,10 @@ public class TektiteModel<T extends TektiteEntity> extends EntityModel<T> {
 			this.rightlega.setAngles(
 					oscillate(toRad(-15.6263f), toRad(-20.2103f), time, 2),
 					oscillate(toRad(22.9193f), toRad(19.0568f), time, 2),
-					this.rightlega.roll += toRad(1.0f)
+					this.rightlega.roll = MathHelper.clamp(this.rightlega.roll + toRad(1.0f), clampRadMin, clampRadMax)
 			);
-			this.rightlega.roll = MathHelper.clamp(this.rightlega.roll, 0, 80);
 
-			this.rightlegb.roll += toRad(-1.0f);
-			this.rightlegb.roll = MathHelper.clamp(this.rightlegb.roll, 0, 80);
+			this.rightlegb.roll = MathHelper.clamp(this.rightlegb.roll + toRad(-1.0f), clampRadMin, clampRadMax);
 
 
 			// front left leg

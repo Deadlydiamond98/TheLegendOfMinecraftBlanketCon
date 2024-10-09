@@ -11,6 +11,7 @@ import net.minecraft.util.math.BlockPos;
 public class ZeldaClientPackets {
     public static final Identifier ParticlePacket = new Identifier(ZeldaCraft.MOD_ID, "particle_packet");
     public static final Identifier DoorAnimationPacket = new Identifier(ZeldaCraft.MOD_ID, "door_animation_packet");
+    public static final Identifier PedestalPacket = new Identifier(ZeldaCraft.MOD_ID, "pedestal_packet");
     public static final Identifier ShootBeamPacket = new Identifier(ZeldaCraft.MOD_ID, "shoot_beam_packet");
     public static final Identifier SmashLootGrassPacket = new Identifier(ZeldaCraft.MOD_ID, "smash_loot_grass_packet");
     public static final Identifier DekuStunOverlayPacket = new Identifier(ZeldaCraft.MOD_ID, "deku_stun_overlay_packet");
@@ -24,6 +25,7 @@ public class ZeldaClientPackets {
     public static void registerC2SPackets() {
         ClientPlayNetworking.registerGlobalReceiver(ParticlePacket, ParticleS2CPacket::recieve);
         ClientPlayNetworking.registerGlobalReceiver(DoorAnimationPacket, DoorAnimationS2CPacket::recieve);
+        ClientPlayNetworking.registerGlobalReceiver(PedestalPacket, PedestalS2CPacket::recieve);
         ClientPlayNetworking.registerGlobalReceiver(DekuStunOverlayPacket, DekuStunOverlayS2CPacket::recieve);
         ClientPlayNetworking.registerGlobalReceiver(PlayerStatsPacket, PlayerStatsS2CPacket::recieve);
         ClientPlayNetworking.registerGlobalReceiver(EntityStatsPacket, EntityStatsS2CPacket::recieve);

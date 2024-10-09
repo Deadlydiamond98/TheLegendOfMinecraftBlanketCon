@@ -78,7 +78,7 @@ public class BombArrowEntity extends PersistentProjectileEntity {
                 this.getWorld().playSound(null, this.getBlockPos(), ZeldaSounds.SecretRoom, SoundCategory.BLOCKS, 1.0f, 1.0f);
             }
 
-            this.getWorld().createExplosion(this, this.getX(), this.getY(), this.getZ(), this.power, false, World.ExplosionSourceType.NONE);
+            this.getWorld().createExplosion(this, this.getX(), this.getY(), this.getZ(), (int) Math.ceil(this.power * 0.5), false, World.ExplosionSourceType.NONE);
             this.getWorld().getPlayers().forEach(player -> {
                 ZeldaServerPackets.sendParticlePacket((ServerPlayerEntity) player, this.getX(),
                         this.getY(), this.getZ(), 0);

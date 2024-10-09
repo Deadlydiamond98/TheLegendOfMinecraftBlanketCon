@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:smithing_transform",
+  "template": {
+    "item": "zeldacraft:master_smithing_template"
+  },
+  "base": {
+    "item": "zeldacraft:cane_of_pacci"
+  },
+  "addition": {
+    "item": "zeldacraft:master_ingot"
+  },
+  "result": {
+    "item": "zeldacraft:cane_of_somaria"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:smithing_transform",
+  "template": {
+    "item": "zeldacraft:master_smithing_template"
+  },
+  "base": {
+    "item": "zeldacraft:master_sword_lv2"
+  },
+  "addition": {
+    "item": "zeldacraft:master_ingot"
+  },
+  "result": {
+    "item": "zeldacraft:master_sword_lv3"
+  }
+}

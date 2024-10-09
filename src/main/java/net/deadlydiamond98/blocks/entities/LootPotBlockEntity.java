@@ -115,4 +115,8 @@ public class LootPotBlockEntity extends LootableContainerBlockEntity implements 
             this.markDirty();
         }
     }
+
+    public boolean hasLootTable() {
+        return this.lootTableId != null;
+    }
 }
