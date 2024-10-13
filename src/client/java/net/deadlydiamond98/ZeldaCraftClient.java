@@ -46,6 +46,7 @@ public class ZeldaCraftClient implements ClientModInitializer {
 	@Override
 	public void onInitializeClient() {
 
+		ZeldacraftMusic.registerMusic();
 		ZeldaClientPackets.registerC2SPackets();
 		ZeldaParticleFactory.registerParticleFactories();
 		ClientTickEvent.registerTickEvent();

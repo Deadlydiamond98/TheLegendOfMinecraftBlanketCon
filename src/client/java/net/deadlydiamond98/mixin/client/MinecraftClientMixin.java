@@ -1,16 +1,17 @@
 package net.deadlydiamond98.mixin.client;
 
+import net.deadlydiamond98.ZeldacraftMusic;
 import net.deadlydiamond98.events.ZeldaSeverTickEvent;
 import net.deadlydiamond98.sounds.ZeldaSounds;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.world.ClientWorld;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.registry.Registries;
-import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.sound.MusicSound;
 import net.minecraft.sound.SoundEvent;
+import net.minecraft.util.Nullables;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
@@ -21,16 +22,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(MinecraftClient.class)
-public class MinecraftMixin {
-
-    @Shadow @Nullable public ClientPlayerEntity player;
-
-    @Shadow @Nullable public ClientWorld world;
-
-    @Unique
-    private static final RegistryEntry<SoundEvent> STAR_MUSIC = Registries.SOUND_EVENT.getEntry(Registries.SOUND_EVENT.getKey(ZeldaSounds.StarMusic).get()).orElseThrow();
-    @Unique
-    private static final MusicSound starMusic = new MusicSound(STAR_MUSIC, 12000, 24000, true);
+public class MinecraftClientMixin {
 
     @Unique
     private MinecraftClient getClient() {
@@ -38,19 +30,22 @@ public class MinecraftMixin {
     }
 
     @Inject(method = "getMusicType",
-            at = @At("HEAD"),
+            at = @At("RETURN"),
             cancellable = true)
     private void getMusicForEventsZelda(CallbackInfoReturnable<MusicSound> cir) {
-        if (this.player != null && this.world != null) {
-            if (validMeteor(getClient())) {
-                cir.setReturnValue(starMusic);
+        MusicSound musicSound = (MusicSound) Nullables.map(getClient().currentScreen, Screen::getMusic);
+        if (musicSound == null && getClient().player != null) {
+            assert getClient().player != null;
+            if (getClient().player.getWorld() != null) {
+                if (validMeteor(getClient())) {
+                    cir.setReturnValue(ZeldacraftMusic.starMusic);
+                }
             }
         }
     }
 
     @Unique
     private static boolean validMeteor(MinecraftClient client) {
-        RegistryKey<World> world = client.world.getRegistryKey();
-        return ZeldaSeverTickEvent.meteorShower.isMeteorShowerActive() && world == World.OVERWORLD;
+        return client.player.getWorld().getRegistryKey() == World.OVERWORLD && ZeldaSeverTickEvent.meteorShower.isMeteorShowerActive();
     }
 }
