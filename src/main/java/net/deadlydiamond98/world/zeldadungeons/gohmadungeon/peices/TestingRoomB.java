@@ -3,6 +3,7 @@ package net.deadlydiamond98.world.zeldadungeons.gohmadungeon.peices;
 import net.deadlydiamond98.blocks.ZeldaBlocks;
 import net.deadlydiamond98.world.zeldadungeons.BaseDungeonPiece;
 import net.deadlydiamond98.world.zeldadungeons.ZeldaDungeons;
+import net.deadlydiamond98.world.zeldadungeons.base.DungeonEntrance;
 import net.deadlydiamond98.world.zeldadungeons.gohmadungeon.GohmaWallPlacer;
 import net.minecraft.block.Blocks;
 import net.minecraft.nbt.NbtCompound;
@@ -28,15 +29,13 @@ public class TestingRoomB extends BaseDungeonPiece {
 
     public TestingRoomB(StructureContext structureContext, NbtCompound nbtCompound) {
         super(ZeldaDungeons.Test_PeiceB, nbtCompound);
-        this.addEntrance(5, 0, 0, EntranceType.OPENING, Direction.NORTH);
-        this.addEntrance(5, 0, this.getSizeZ(), EntranceType.WOOD_DOOR, Direction.SOUTH);
-//        this.addEntrance(0, 0, 5, EntranceType.WOOD_DOOR, Direction.EAST);
     }
 
-    public TestingRoomB(int chainLength, BlockBox box, Direction orientation) {
-        super(ZeldaDungeons.Test_PeiceB, chainLength, box, sizeX, sizeY, sizeZ, orientation);
-        this.addEntrance(5, 0, 0, EntranceType.OPENING, Direction.NORTH);
-        this.addEntrance(5, 0, this.getSizeZ(), EntranceType.WOOD_DOOR, Direction.SOUTH);
+    public TestingRoomB(BlockBox box, Direction orientation) {
+        super(ZeldaDungeons.Test_PeiceB, box, sizeX, sizeY, sizeZ, orientation);
+        this.addEntrance(DungeonEntrance.EntranceType.OPENING, new BlockPos(5, 0, 0), Direction.NORTH);
+        this.addEntrance(DungeonEntrance.EntranceType.WOOD_DOOR, new BlockPos(5, 0, this.getSizeZ()), Direction.SOUTH);
+
 //        this.addEntrance(0, 0, 5, EntranceType.WOOD_DOOR, Direction.EAST);
     }
 
@@ -59,10 +58,6 @@ public class TestingRoomB extends BaseDungeonPiece {
                 ZeldaBlocks.Brown_Dungeoncite_Tile.getDefaultState().with(FACING, this.getFacing()),
                 AIR, false);
 
-        // Entrance
-        this.generateEntrance(world, boundingBox, EntranceType.WOOD_DOOR, 5, 0, 0, Direction.NORTH);
-        this.generateEntrance(world, boundingBox, EntranceType.WOOD_DOOR, 5, 0, this.getSizeZ(), Direction.SOUTH);
-//        this.generateEntrance(world, boundingBox, EntranceType.WOOD_DOOR, 0, 0, 5, Direction.EAST);
 
 
         //Add Random Pots

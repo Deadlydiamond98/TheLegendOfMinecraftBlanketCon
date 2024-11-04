@@ -2,6 +2,7 @@ package net.deadlydiamond98.world.zeldadungeons;
 
 import com.mojang.serialization.Codec;
 import net.deadlydiamond98.ZeldaCraft;
+import net.deadlydiamond98.world.zeldadungeons.base.DungeonEntrance;
 import net.deadlydiamond98.world.zeldadungeons.gohmadungeon.peices.EntranceRoom;
 import net.deadlydiamond98.world.zeldadungeons.gohmadungeon.peices.EntranceRoomPlaceholder;
 import net.deadlydiamond98.world.zeldadungeons.gohmadungeon.peices.TestingRoom;
@@ -45,8 +46,9 @@ public class GohmaDungeon extends Structure {
                 startPos.getX() + EntranceRoom.sizeX,
                 startPos.getY() + EntranceRoom.sizeY,
                 startPos.getZ() + EntranceRoom.sizeZ);
+
         Direction direction = getRandomDirection();
-        BaseDungeonPiece startPiece = new EntranceRoomPlaceholder(1, startBoundingBox, direction);
+        BaseDungeonPiece startPiece = new EntranceRoom(startBoundingBox, direction);
         pieces.add(startPiece);
         pieceQueue.add(startPiece);
 
@@ -62,39 +64,22 @@ public class GohmaDungeon extends Structure {
 
     private static Direction getRandomDirection() {
         Random random = new Random();
-
-        switch (random.nextInt(4)) {
-            case 0 -> {
-                return Direction.NORTH;
-            }
-            case 1 -> {
-                return Direction.SOUTH;
-            }
-            case 2 -> {
-                return Direction.EAST;
-            }
-            default -> {
-                return Direction.WEST;
-            }
-        }
+        return switch (random.nextInt(4)) {
+            case 0 -> Direction.NORTH;
+            case 1 -> Direction.SOUTH;
+            case 2 -> Direction.EAST;
+            default -> Direction.WEST;
+        };
     }
 
     private static void generateAdjacentPieces(BaseDungeonPiece currentPiece, List<BaseDungeonPiece> pieces, Queue<BaseDungeonPiece> pieceQueue) {
         ZeldaCraft.LOGGER.info("Processing piece with doors: " + (currentPiece.getDoors().size() - 1));
-        for (Map.Entry<BlockPos, BaseDungeonPiece.EntranceType> entry : currentPiece.getDoors().entrySet()) {
-            BlockPos doorPos = entry.getKey();
-            BaseDungeonPiece.EntranceType doorType = entry.getValue();
-            Direction doorDirection = currentPiece.getDoorDirection().get(doorPos);
-            Direction rotatedDirection = rotateDirection(doorDirection, currentPiece.getFacing());
+        for (DungeonEntrance entrance : currentPiece.getDoors()) {
 
-//            /ZeldaCraft.LOGGER.info("This Peice has a " + doorType.toString() + " door at: " + doorPos + "\n The door Direction is: " + rotatedDirection);
-
-            if (doorType != BaseDungeonPiece.EntranceType.OPENING && doorType != BaseDungeonPiece.EntranceType.CRACKED_DOOR) {
-
-                BaseDungeonPiece newPiece = generateRandomRoom(currentPiece, rotatedDirection);
-
+            if (entrance.doorsCanKiss()) {
+                BaseDungeonPiece newPiece = generateRandomRoom(currentPiece, entrance.getDirection());
                 if (newPiece != null) {
-                    alignDoor(newPiece, doorPos, rotatedDirection);
+                    alignDoor(newPiece, entrance.getPos(), entrance.getDirection());
                     ZeldaCraft.LOGGER.info("Generated new piece bounding box after alignment: " + newPiece.getBoundingBox());
 
                     pieces.add(newPiece);
@@ -107,34 +92,22 @@ public class GohmaDungeon extends Structure {
     }
 
     private static void alignDoor(BaseDungeonPiece newPiece, BlockPos doorPos, Direction rotatedDirection) {
-        for (Map.Entry<BlockPos, BaseDungeonPiece.EntranceType> newPieceEntry : newPiece.getDoors().entrySet()) {
-            if (newPieceEntry.getValue() == BaseDungeonPiece.EntranceType.OPENING) {
-                BlockPos offset = doorPos.subtract(newPieceEntry.getKey()).offset(rotatedDirection, 10);
+        for (DungeonEntrance entrance : newPiece.getDoors()) {
+            if (entrance.isOpening()) {
+                BlockPos newPieceDoorPos = entrance.getPos();
 
+                int dx = doorPos.getX() - newPieceDoorPos.getX();
+                int dy = doorPos.getY() - newPieceDoorPos.getY();
+                int dz = doorPos.getZ() - newPieceDoorPos.getZ();
 
-                BlockBox oldBoundingBox = newPiece.getBoundingBox();
+                BlockPos newPos = new BlockPos(dx, dy, dz).offset(rotatedDirection, 15);
 
-                BlockBox newBoundingBox = new BlockBox(
-                        oldBoundingBox.getMinX() + offset.getX(),
-                        oldBoundingBox.getMinY() + offset.getY(),
-                        oldBoundingBox.getMinZ() + offset.getZ(),
-                        oldBoundingBox.getMaxX() + offset.getX(),
-                        oldBoundingBox.getMaxY() + offset.getY(),
-                        oldBoundingBox.getMaxZ() + offset.getZ()
-                );
-                newPiece.setBoundingBox(newBoundingBox);
+                newPiece.translate(newPos.getX(), newPos.getY(), newPos.getZ());
+
+                ZeldaCraft.LOGGER.info("The doorPos is " + doorPos + " and the current peice");
+                break;
             }
         }
-    }
-
-
-    private static Direction rotateDirection(Direction doorDirection, Direction facing) {
-        return switch (facing) {
-            case WEST -> doorDirection.rotateYClockwise();
-            case NORTH -> doorDirection.getOpposite();
-            case EAST -> doorDirection.rotateYCounterclockwise();
-            default -> doorDirection;
-        };
     }
 
     @Override
@@ -165,7 +138,7 @@ public class GohmaDungeon extends Structure {
             int sizeY = sizeYField.getInt(null);
             int sizeZ = sizeZField.getInt(null);
 
-            BlockPos newPos = calculateNewPosition(currentPiece.getBoundingBox(), rotatedDirection, sizeX, sizeY, sizeZ);
+            BlockPos newPos = currentPiece.getCenter();
             BlockBox startBoundingBox = new BlockBox(
                     newPos.getX(),
                     newPos.getY(),
@@ -181,15 +154,5 @@ public class GohmaDungeon extends Structure {
             e.printStackTrace();
             return null;
         }
-    }
-
-    private static BlockPos calculateNewPosition(BlockBox currentBoundingBox, Direction direction, int sizeX, int sizeY, int sizeZ) {
-        return switch (direction) {
-            case NORTH -> new BlockPos(currentBoundingBox.getMinX(), currentBoundingBox.getMinY(), currentBoundingBox.getMinZ() - sizeZ);
-            case SOUTH -> new BlockPos(currentBoundingBox.getMinX(), currentBoundingBox.getMinY(), currentBoundingBox.getMaxZ());
-            case EAST -> new BlockPos(currentBoundingBox.getMaxX(), currentBoundingBox.getMinY(), currentBoundingBox.getMinZ());
-            case WEST -> new BlockPos(currentBoundingBox.getMinX() - sizeX, currentBoundingBox.getMinY(), currentBoundingBox.getMinZ());
-            default -> new BlockPos(currentBoundingBox.getMinX(), currentBoundingBox.getMinY(), currentBoundingBox.getMinZ());
-        };
     }
 }

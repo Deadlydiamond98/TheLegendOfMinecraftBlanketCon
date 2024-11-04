@@ -4,6 +4,7 @@ import net.deadlydiamond98.ZeldaCraft;
 import net.deadlydiamond98.blocks.ZeldaBlocks;
 import net.deadlydiamond98.world.zeldadungeons.BaseDungeonPiece;
 import net.deadlydiamond98.world.zeldadungeons.ZeldaDungeons;
+import net.deadlydiamond98.world.zeldadungeons.base.DungeonEntrance;
 import net.deadlydiamond98.world.zeldadungeons.gohmadungeon.GohmaWallPlacer;
 import net.minecraft.block.Blocks;
 import net.minecraft.nbt.NbtCompound;
@@ -31,18 +32,14 @@ public class EntranceRoom extends BaseDungeonPiece {
 
     public EntranceRoom(StructureContext structureContext, NbtCompound nbtCompound) {
         super(ZeldaDungeons.Entrance_Peice, nbtCompound);
-        this.addEntrance(5, 0, 0, EntranceType.WOOD_DOOR, Direction.NORTH);
-        this.addEntrance(5, 0, this.getSizeZ(), EntranceType.WOOD_DOOR, Direction.SOUTH);
-        this.addEntrance(0, 0, 5, EntranceType.WOOD_DOOR, Direction.EAST);
-        this.addEntrance(this.getSizeX(), 0, 5, EntranceType.WOOD_DOOR, Direction.WEST);
     }
 
-    public EntranceRoom(int chainLength, BlockBox box, Direction orientation) {
-        super(ZeldaDungeons.Entrance_Peice, chainLength, box, sizeX, sizeY, sizeZ, orientation);
-        this.addEntrance(5, 0, 0, EntranceType.WOOD_DOOR, Direction.NORTH);
-        this.addEntrance(5, 0, this.getSizeZ(), EntranceType.WOOD_DOOR, Direction.SOUTH);
-        this.addEntrance(0, 0, 5, EntranceType.WOOD_DOOR, Direction.EAST);
-        this.addEntrance(this.getSizeX(), 0, 5, EntranceType.WOOD_DOOR, Direction.WEST);
+    public EntranceRoom(BlockBox box, Direction orientation) {
+        super(ZeldaDungeons.Entrance_Peice, box, 13, 10, 13, orientation);
+        this.addEntrance(DungeonEntrance.EntranceType.WOOD_DOOR, new BlockPos(5, 0, 0), Direction.NORTH);
+        this.addEntrance(DungeonEntrance.EntranceType.WOOD_DOOR, new BlockPos(5, 0, this.getSizeZ()), Direction.SOUTH);
+        this.addEntrance(DungeonEntrance.EntranceType.WOOD_DOOR, new BlockPos(0, 0, 5), Direction.EAST);
+        this.addEntrance(DungeonEntrance.EntranceType.WOOD_DOOR, new BlockPos(this.getSizeX(), 0, 5), Direction.WEST);
     }
 
     @Override
@@ -101,12 +98,12 @@ public class EntranceRoom extends BaseDungeonPiece {
         this.addBlock(world, ZeldaBlocks.Reinforced_Brown_Dungeoncite.getDefaultState(), this.getSizeX() - 1, 1, this.getSizeZ() - 1, chunkBox);
 
         // Entrance
-        this.generateEntrance(world, boundingBox, EntranceType.CRACKED_DOOR, 5, 0, 0, Direction.NORTH);
+        this.generateEntrance(world, boundingBox, DungeonEntrance.EntranceType.CRACKED_DOOR, 5, 0, 0, Direction.NORTH);
 
-//        Exit
-        this.generateEntrance(world, boundingBox, EntranceType.WOOD_DOOR, 5, 0, this.getSizeZ(), Direction.SOUTH);
+        // Exit
+        this.generateEntrance(world, boundingBox, DungeonEntrance.EntranceType.WOOD_DOOR, 5, 0, this.getSizeZ(), Direction.SOUTH);
 
-        this.generateEntrance(world, boundingBox, EntranceType.WOOD_DOOR, 0, 0, 5, Direction.EAST);
-        this.generateEntrance(world, boundingBox, EntranceType.WOOD_DOOR, this.getSizeX(), 0, 5, Direction.WEST);
+        this.generateEntrance(world, boundingBox, DungeonEntrance.EntranceType.WOOD_DOOR, 0, 0, 5, Direction.EAST);
+        this.generateEntrance(world, boundingBox, DungeonEntrance.EntranceType.WOOD_DOOR, this.getSizeX(), 0, 5, Direction.WEST);
     }
 }

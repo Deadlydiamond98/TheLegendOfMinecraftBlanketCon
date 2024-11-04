@@ -3,6 +3,7 @@ package net.deadlydiamond98.world.zeldadungeons.gohmadungeon.peices;
 import net.deadlydiamond98.blocks.ZeldaBlocks;
 import net.deadlydiamond98.world.zeldadungeons.BaseDungeonPiece;
 import net.deadlydiamond98.world.zeldadungeons.ZeldaDungeons;
+import net.deadlydiamond98.world.zeldadungeons.base.DungeonEntrance;
 import net.deadlydiamond98.world.zeldadungeons.gohmadungeon.GohmaWallPlacer;
 import net.minecraft.block.Blocks;
 import net.minecraft.nbt.NbtCompound;
@@ -25,12 +26,11 @@ public class TestingRoom extends BaseDungeonPiece {
 
     public TestingRoom(StructureContext structureContext, NbtCompound nbtCompound) {
         super(ZeldaDungeons.Test_Peice, nbtCompound);
-        this.addEntrance(5, 0, 0, EntranceType.OPENING, Direction.NORTH);
     }
 
     public TestingRoom(int chainLength, BlockBox box, Direction orientation) {
-        super(ZeldaDungeons.Test_Peice, chainLength, box, sizeX, sizeY, sizeZ, orientation);
-        this.addEntrance(5, 0, 0, EntranceType.OPENING, Direction.NORTH);
+        super(ZeldaDungeons.Test_Peice, box, sizeX, sizeY, sizeZ, orientation);
+        this.addEntrance(DungeonEntrance.EntranceType.OPENING, new BlockPos(5, 0, 0), Direction.NORTH);
     }
 
     @Override
@@ -47,11 +47,6 @@ public class TestingRoom extends BaseDungeonPiece {
                 ZeldaBlocks.Brown_Dungeoncite_Tile.getDefaultState().with(FACING, this.getFacing()),
                 AIR, false);
 
-        // Entrance
-        this.generateEntrance(world, boundingBox, EntranceType.WOOD_DOOR, 5, 0, 0, Direction.NORTH);
-
-//        //Exit
-//        this.createEntrance(world, boundingBox, EntranceType.WOOD_DOOR, 5, 0, sizeZ, Direction.SOUTH);
 
         //Add Random Pots
         int[] size = new int[]{this.getSizeX(), this.getSizeY(), this.getSizeZ()};
@@ -91,5 +86,7 @@ public class TestingRoom extends BaseDungeonPiece {
         this.addBlock(world, ZeldaBlocks.Reinforced_Brown_Dungeoncite.getDefaultState(), this.getSizeX() - 1, 1, 1, chunkBox);
         this.addBlock(world, ZeldaBlocks.Reinforced_Brown_Dungeoncite.getDefaultState(), 1, 1, this.getSizeZ() - 1, chunkBox);
         this.addBlock(world, ZeldaBlocks.Reinforced_Brown_Dungeoncite.getDefaultState(), this.getSizeX() - 1, 1, this.getSizeZ() - 1, chunkBox);
+
+        this.generateEntrance(world, boundingBox, DungeonEntrance.EntranceType.WOOD_DOOR, 5, 0, 0, Direction.NORTH);
     }
 }

@@ -5,6 +5,7 @@ import net.deadlydiamond98.blocks.ZeldaBlocks;
 import net.deadlydiamond98.entities.ZeldaEntities;
 import net.deadlydiamond98.world.zeldadungeons.BaseDungeonPiece;
 import net.deadlydiamond98.world.zeldadungeons.ZeldaDungeons;
+import net.deadlydiamond98.world.zeldadungeons.base.DungeonEntrance;
 import net.deadlydiamond98.world.zeldadungeons.gohmadungeon.GohmaWallPlacer;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -37,12 +38,11 @@ public class EntranceRoomPlaceholder extends BaseDungeonPiece {
 
     public EntranceRoomPlaceholder(StructureContext structureContext, NbtCompound nbtCompound) {
         super(ZeldaDungeons.Entrance_Peice_Placeholder, nbtCompound);
-        this.addEntrance(5, 0, 0, EntranceType.CRACKED_DOOR, Direction.NORTH);
     }
 
-    public EntranceRoomPlaceholder(int chainLength, BlockBox box, Direction orientation) {
-        super(ZeldaDungeons.Entrance_Peice_Placeholder, chainLength, box, sizeX, sizeY, sizeZ, orientation);
-        this.addEntrance(5, 0, 0, EntranceType.CRACKED_DOOR, Direction.NORTH);
+    public EntranceRoomPlaceholder(BlockBox box, Direction orientation) {
+        super(ZeldaDungeons.Entrance_Peice_Placeholder, box, 13, 10, 13, orientation);
+        this.addEntrance(DungeonEntrance.EntranceType.CRACKED_DOOR, new BlockPos(5, 0, 0), Direction.NORTH);
     }
 
     @Override
@@ -100,8 +100,7 @@ public class EntranceRoomPlaceholder extends BaseDungeonPiece {
         this.addBlock(world, ZeldaBlocks.Reinforced_Brown_Dungeoncite.getDefaultState(), 1, 1, this.getSizeZ() - 1, chunkBox);
         this.addBlock(world, ZeldaBlocks.Reinforced_Brown_Dungeoncite.getDefaultState(), this.getSizeX() - 1, 1, this.getSizeZ() - 1, chunkBox);
 
-        // Entrance
-        this.generateEntrance(world, boundingBox, EntranceType.CRACKED_DOOR, 5, 0, 0, Direction.NORTH);
+
 
         Identifier placeholderDungeonLoot = new Identifier(ZeldaCraft.MOD_ID, "chests/placeholder");
         this.addChest(world, chunkBox, random, 8, 1, 4, placeholderDungeonLoot);
