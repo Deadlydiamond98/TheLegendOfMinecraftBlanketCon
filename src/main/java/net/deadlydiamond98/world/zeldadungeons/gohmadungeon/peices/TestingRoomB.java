@@ -31,7 +31,7 @@ public class TestingRoomB extends BaseDungeonPiece {
         super(ZeldaDungeons.Test_PeiceB, nbtCompound);
     }
 
-    public TestingRoomB(BlockBox box, Direction orientation) {
+    public TestingRoomB(int chainLength, BlockBox box, Direction orientation) {
         super(ZeldaDungeons.Test_PeiceB, box, sizeX, sizeY, sizeZ, orientation);
         this.addEntrance(DungeonEntrance.EntranceType.OPENING, new BlockPos(5, 0, 0), Direction.NORTH);
         this.addEntrance(DungeonEntrance.EntranceType.WOOD_DOOR, new BlockPos(5, 0, this.getSizeZ()), Direction.SOUTH);
@@ -86,5 +86,10 @@ public class TestingRoomB extends BaseDungeonPiece {
         this.addBlock(world, ZeldaBlocks.Reinforced_Brown_Dungeoncite.getDefaultState(), this.getSizeX() - 1, 1, 1, chunkBox);
         this.addBlock(world, ZeldaBlocks.Reinforced_Brown_Dungeoncite.getDefaultState(), 1, 1, this.getSizeZ() - 1, chunkBox);
         this.addBlock(world, ZeldaBlocks.Reinforced_Brown_Dungeoncite.getDefaultState(), this.getSizeX() - 1, 1, this.getSizeZ() - 1, chunkBox);
+
+        // Entrance
+        this.generateEntrance(world, boundingBox, DungeonEntrance.EntranceType.CRACKED_DOOR, 5, 0, 0, Direction.NORTH);
+        // Exit
+        this.generateEntrance(world, boundingBox, DungeonEntrance.EntranceType.WOOD_DOOR, 5, 0, this.getSizeZ(), Direction.SOUTH);
     }
 }

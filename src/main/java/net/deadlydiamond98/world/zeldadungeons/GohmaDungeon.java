@@ -8,6 +8,7 @@ import net.deadlydiamond98.world.zeldadungeons.gohmadungeon.peices.EntranceRoomP
 import net.deadlydiamond98.world.zeldadungeons.gohmadungeon.peices.TestingRoom;
 import net.deadlydiamond98.world.zeldadungeons.gohmadungeon.peices.TestingRoomB;
 import net.minecraft.structure.StructurePiecesCollector;
+import net.minecraft.util.BlockRotation;
 import net.minecraft.util.math.BlockBox;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
@@ -77,9 +78,9 @@ public class GohmaDungeon extends Structure {
         for (DungeonEntrance entrance : currentPiece.getDoors()) {
 
             if (entrance.doorsCanKiss()) {
-                BaseDungeonPiece newPiece = generateRandomRoom(currentPiece, entrance.getDirection());
+                BaseDungeonPiece newPiece = generateRandomRoom(currentPiece, entrance);
                 if (newPiece != null) {
-                    alignDoor(newPiece, entrance.getPos(), entrance.getDirection());
+                    alignDoor(newPiece, entrance, currentPiece.getFacing());
                     ZeldaCraft.LOGGER.info("Generated new piece bounding box after alignment: " + newPiece.getBoundingBox());
 
                     pieces.add(newPiece);
@@ -91,18 +92,45 @@ public class GohmaDungeon extends Structure {
         }
     }
 
-    private static void alignDoor(BaseDungeonPiece newPiece, BlockPos doorPos, Direction rotatedDirection) {
+    private static void alignDoor(BaseDungeonPiece newPiece, DungeonEntrance doorEntrance, Direction rotatedDirection) {
         for (DungeonEntrance entrance : newPiece.getDoors()) {
             if (entrance.isOpening()) {
                 BlockPos newPieceDoorPos = entrance.getPos();
+
+                BlockPos doorPos = doorEntrance.getPos();
 
                 int dx = doorPos.getX() - newPieceDoorPos.getX();
                 int dy = doorPos.getY() - newPieceDoorPos.getY();
                 int dz = doorPos.getZ() - newPieceDoorPos.getZ();
 
-                BlockPos newPos = new BlockPos(dx, dy, dz).offset(rotatedDirection, 15);
+                Direction doordir = doorEntrance.getDirection();
+                switch (rotatedDirection) {
+                    case NORTH -> {
+                        if (doordir == Direction.EAST || doordir == Direction.WEST) {
+                            dz -= 3;
+                        }
+                    }
+                    case SOUTH -> {
+                        if (doordir == Direction.EAST) {
+                            dx -= newPiece.getSizeX();
+                        }
+                        else if (doordir == Direction.WEST) {
+                            dx += newPiece.getSizeX();
+                        }
+                    }
+                    case WEST -> {
+                        if (doordir == Direction.NORTH) {
+                            dx -= 3;
+                            dz += newPiece.getSizeZ();
+                        }
+                        else if (doordir == Direction.SOUTH) {
+                            dx -= 3;
+                            dz -= newPiece.getSizeZ();
+                        }
+                    }
+                }
 
-                newPiece.translate(newPos.getX(), newPos.getY(), newPos.getZ());
+                newPiece.translate(dx, dy, dz);
 
                 ZeldaCraft.LOGGER.info("The doorPos is " + doorPos + " and the current peice");
                 break;
@@ -116,16 +144,14 @@ public class GohmaDungeon extends Structure {
     }
 
 
-
-
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private static final Class<?>[] Regular_Pieces = {
-            TestingRoom.class
-//            TestingRoomB.class
+            TestingRoom.class,
+            TestingRoomB.class
     };
 
-    private static BaseDungeonPiece generateRandomRoom(BaseDungeonPiece currentPiece, Direction rotatedDirection) {
+    private static BaseDungeonPiece generateRandomRoom(BaseDungeonPiece currentPiece, DungeonEntrance entrance) {
         Random random = new Random();
         Class<?> roomClass = Regular_Pieces[random.nextInt(Regular_Pieces.length)];
 
@@ -138,21 +164,30 @@ public class GohmaDungeon extends Structure {
             int sizeY = sizeYField.getInt(null);
             int sizeZ = sizeZField.getInt(null);
 
+            Direction pieceOrientation = entrance.getDirection().getOpposite();
+
             BlockPos newPos = currentPiece.getCenter();
-            BlockBox startBoundingBox = new BlockBox(
-                    newPos.getX(),
-                    newPos.getY(),
-                    newPos.getZ(),
-                    newPos.getX() + sizeX,
-                    newPos.getY() + sizeY,
-                    newPos.getZ() + sizeZ
-            );
+
+            BlockBox startBoundingBox = getAdjustedBoundingBox(newPos, sizeX, sizeY, sizeZ, pieceOrientation);
 
             Constructor<?> constructor = roomClass.getConstructor(int.class, BlockBox.class, Direction.class);
-            return (BaseDungeonPiece) constructor.newInstance(3, startBoundingBox, rotatedDirection);
+            return (BaseDungeonPiece) constructor.newInstance(3, startBoundingBox, pieceOrientation);
         } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
+    }
+
+    private static BlockBox getAdjustedBoundingBox(BlockPos pos, int sizeX, int sizeY, int sizeZ, Direction orientation) {
+        int x = pos.getX();
+        int y = pos.getY();
+        int z = pos.getZ();
+
+        return switch (orientation) {
+            case NORTH -> new BlockBox(x, y, z - sizeZ + 1, x + sizeX - 1, y + sizeY - 1, z);
+            case SOUTH -> new BlockBox(x - sizeX + 1, y, z, x, y + sizeY - 1, z + sizeZ - 1);
+            case WEST -> new BlockBox(x - sizeZ + 1, y, z - sizeX + 1, x, y + sizeY - 1, z);
+            default -> new BlockBox(x, y, z, x + sizeZ - 1, y + sizeY - 1, z + sizeX - 1);
+        };
     }
 }

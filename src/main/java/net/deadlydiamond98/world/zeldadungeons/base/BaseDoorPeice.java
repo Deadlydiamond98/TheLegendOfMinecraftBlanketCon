@@ -1,25 +1,17 @@
 package net.deadlydiamond98.world.zeldadungeons.base;
 
 import net.deadlydiamond98.blocks.ZeldaBlocks;
-import net.deadlydiamond98.world.zeldadungeons.BaseDungeonPiece;
 import net.minecraft.block.Blocks;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.structure.StructureContext;
 import net.minecraft.structure.StructurePiece;
 import net.minecraft.structure.StructurePieceType;
 import net.minecraft.util.math.BlockBox;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.random.Random;
 import net.minecraft.world.StructureWorldAccess;
-import net.minecraft.world.gen.StructureAccessor;
-import net.minecraft.world.gen.chunk.ChunkGenerator;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public abstract class BaseDoorPeice extends StructurePiece {
 
@@ -43,7 +35,7 @@ public abstract class BaseDoorPeice extends StructurePiece {
     }
 
     protected void generateEntrance(StructureWorldAccess world, BlockBox boundingBox, DungeonEntrance.EntranceType type, int x, int y, int z, Direction direction) {
-        
+
         switch (type) {
             case OPENING -> {
                 if (direction == Direction.NORTH || direction == Direction.SOUTH) {
@@ -142,8 +134,32 @@ public abstract class BaseDoorPeice extends StructurePiece {
     }
 
     public void addEntrance(DungeonEntrance.EntranceType type, BlockPos pos, Direction direction) {
-        BlockPos offsetPos = this.offsetPos(pos.getX(), pos.getY(), pos.getZ());
-        this.doors.add(new DungeonEntrance(type, offsetPos, direction));
+        int x = pos.getX();
+        int y = pos.getY();
+        int z = pos.getZ();
+
+        int transformedX = this.applyXTransform(x, z);
+        int transformedY = this.applyYTransform(y);
+        int transformedZ = this.applyZTransform(x, z);
+        BlockPos transformedPos = new BlockPos(transformedX, transformedY, transformedZ);
+
+        Direction entranceDirection = this.transformDirection(direction);
+
+        this.doors.add(new DungeonEntrance(type, transformedPos, entranceDirection));
+    }
+
+    public Direction transformDirection(Direction localDirection) {
+        Direction orientation = this.getFacing();
+        if (orientation == null || localDirection == null) {
+            return localDirection;
+        }
+
+        return switch (orientation) {
+            case SOUTH -> localDirection.getOpposite();
+            case WEST -> localDirection.rotateYCounterclockwise();
+            case EAST -> localDirection.rotateYClockwise();
+            default -> localDirection;
+        };
     }
 
     public List<DungeonEntrance> getDoors() {
@@ -162,7 +178,11 @@ public abstract class BaseDoorPeice extends StructurePiece {
         return this.sizeZ;
     }
 
-    public void setBoundingBox(BlockBox boundingBox) {
-        this.boundingBox = boundingBox;
+    @Override
+    public void translate(int x, int y, int z) {
+        super.translate(x, y, z);
+        for (DungeonEntrance entrance : this.doors) {
+            entrance.setPos(entrance.getPos().add(x, y, z));
+        }
     }
 }

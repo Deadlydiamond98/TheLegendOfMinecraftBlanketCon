@@ -31,6 +31,10 @@ public class DungeonEntrance {
         return this.pos;
     }
 
+    public void setPos(BlockPos pos) {
+        this.pos = pos;
+    }
+
     public Direction getDirection() {
         return this.direction;
     }
