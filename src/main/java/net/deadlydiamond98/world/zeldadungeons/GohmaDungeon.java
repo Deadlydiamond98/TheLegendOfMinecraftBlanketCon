@@ -80,7 +80,7 @@ public class GohmaDungeon extends Structure {
             if (entrance.doorsCanKiss()) {
                 BaseDungeonPiece newPiece = generateRandomRoom(currentPiece, entrance);
                 if (newPiece != null) {
-                    alignDoor(newPiece, entrance, currentPiece.getFacing());
+                    alignDoor(currentPiece, newPiece, entrance);
                     ZeldaCraft.LOGGER.info("Generated new piece bounding box after alignment: " + newPiece.getBoundingBox());
 
                     pieces.add(newPiece);
@@ -92,7 +92,7 @@ public class GohmaDungeon extends Structure {
         }
     }
 
-    private static void alignDoor(BaseDungeonPiece newPiece, DungeonEntrance doorEntrance, Direction rotatedDirection) {
+    private static void alignDoor(BaseDungeonPiece currentPiece, BaseDungeonPiece newPiece, DungeonEntrance doorEntrance) {
         for (DungeonEntrance entrance : newPiece.getDoors()) {
             if (entrance.isOpening()) {
                 BlockPos newPieceDoorPos = entrance.getPos();
@@ -104,7 +104,7 @@ public class GohmaDungeon extends Structure {
                 int dz = doorPos.getZ() - newPieceDoorPos.getZ();
 
                 Direction doordir = doorEntrance.getDirection();
-                switch (rotatedDirection) {
+                switch (currentPiece.getFacing()) {
                     case NORTH -> {
                         if (doordir == Direction.EAST || doordir == Direction.WEST) {
                             dz -= 3;
@@ -112,25 +112,29 @@ public class GohmaDungeon extends Structure {
                     }
                     case SOUTH -> {
                         if (doordir == Direction.EAST) {
-                            dx -= newPiece.getSizeX();
+                            dx -= currentPiece.getSizeX();
                         }
                         else if (doordir == Direction.WEST) {
-                            dx += newPiece.getSizeX();
+                            dx += currentPiece.getSizeX();
                         }
                     }
                     case WEST -> {
                         if (doordir == Direction.NORTH) {
                             dx -= 3;
-                            dz += newPiece.getSizeZ();
+                            dz += currentPiece.getSizeZ();
                         }
                         else if (doordir == Direction.SOUTH) {
                             dx -= 3;
-                            dz -= newPiece.getSizeZ();
+                            dz -= currentPiece.getSizeZ();
                         }
                     }
                 }
 
                 newPiece.translate(dx, dy, dz);
+
+//                if (newPiece.getFacing() == Direction.SOUTH || newPiece.getFacing() == Direction.WEST) {
+//                    newPiece.
+//                }
 
                 ZeldaCraft.LOGGER.info("The doorPos is " + doorPos + " and the current peice");
                 break;

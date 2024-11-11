@@ -23,16 +23,16 @@ import static net.minecraft.block.HorizontalFacingBlock.FACING;
 
 public class TestingRoomB extends BaseDungeonPiece {
 
-    public static final int sizeX = 15; // Width of the room
-    public static final int sizeY = 10;  // Height of the room
-    public static final int sizeZ = 15; // Depth of the room
+    public static final int sizeX = 15;
+    public static final int sizeY = 10;
+    public static final int sizeZ = 15;
 
     public TestingRoomB(StructureContext structureContext, NbtCompound nbtCompound) {
         super(ZeldaDungeons.Test_PeiceB, nbtCompound);
     }
 
     public TestingRoomB(int chainLength, BlockBox box, Direction orientation) {
-        super(ZeldaDungeons.Test_PeiceB, box, sizeX, sizeY, sizeZ, orientation);
+        super(ZeldaDungeons.Test_PeiceB, box, 15, 10, 15, orientation);
         this.addEntrance(DungeonEntrance.EntranceType.OPENING, new BlockPos(5, 0, 0), Direction.NORTH);
         this.addEntrance(DungeonEntrance.EntranceType.WOOD_DOOR, new BlockPos(5, 0, this.getSizeZ()), Direction.SOUTH);
 

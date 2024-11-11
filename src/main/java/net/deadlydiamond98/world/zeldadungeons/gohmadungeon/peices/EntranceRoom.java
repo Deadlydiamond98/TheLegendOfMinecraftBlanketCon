@@ -26,9 +26,9 @@ import static net.minecraft.block.HorizontalFacingBlock.FACING;
 
 public class EntranceRoom extends BaseDungeonPiece {
 
-    public static final int sizeX = 13; // Width of the room
-    public static final int sizeY = 10;  // Height of the room
-    public static final int sizeZ = 13; // Depth of the room
+    public static final int sizeX = 13;
+    public static final int sizeY = 10;
+    public static final int sizeZ = 13;
 
     public EntranceRoom(StructureContext structureContext, NbtCompound nbtCompound) {
         super(ZeldaDungeons.Entrance_Peice, nbtCompound);
