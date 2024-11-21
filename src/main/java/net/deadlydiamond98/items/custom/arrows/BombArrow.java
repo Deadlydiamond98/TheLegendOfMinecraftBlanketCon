@@ -1,7 +1,6 @@
 package net.deadlydiamond98.items.custom.arrows;
 
-import net.deadlydiamond98.entities.projectiles.arrows.BombArrowEntity;
-import net.deadlydiamond98.entities.projectiles.arrows.SilverArrowEntity;
+import net.deadlydiamond98.entities.arrows.BombArrowEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.item.ArrowItem;

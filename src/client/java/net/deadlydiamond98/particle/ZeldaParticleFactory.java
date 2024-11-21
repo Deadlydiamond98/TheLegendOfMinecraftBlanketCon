@@ -2,6 +2,10 @@ package net.deadlydiamond98.particle;
 
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
 import net.minecraft.client.particle.EndRodParticle;
+import net.minecraft.client.particle.LavaEmberParticle;
+import net.minecraft.client.particle.ParticleFactory;
+import net.minecraft.client.particle.SpellParticle;
+import net.minecraft.particle.ItemStackParticleEffect;
 
 public class ZeldaParticleFactory {
     public static void registerParticleFactories() {

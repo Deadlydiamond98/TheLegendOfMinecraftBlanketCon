@@ -10,12 +10,14 @@ import net.minecraft.util.Identifier;
 public class ZeldaTags {
     public static class Blocks {
         public static final TagKey<Block> Bomb_Breakable = createTag("bomb_breakable");
+        public static final TagKey<Block> Hookshotable = createTag("hookshotable");
         private static TagKey<Block> createTag(String name) {
             return TagKey.of(RegistryKeys.BLOCK, new Identifier(ZeldaCraft.MOD_ID, name));
         }
     }
     public static class Items {
         public static final TagKey<Item> Bombs = createTag("bombs");
+        public static final TagKey<Item> Bombs_Bags = createTag("bomb_bags");
         public static final TagKey<Item> Slingshot_Ammo = createTag("slingshot_ammo");
 
         private static TagKey<Item> createTag(String name) {

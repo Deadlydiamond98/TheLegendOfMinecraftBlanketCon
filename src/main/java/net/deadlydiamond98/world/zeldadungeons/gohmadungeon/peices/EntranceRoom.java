@@ -1,8 +1,7 @@
 package net.deadlydiamond98.world.zeldadungeons.gohmadungeon.peices;
 
-import net.deadlydiamond98.ZeldaCraft;
 import net.deadlydiamond98.blocks.ZeldaBlocks;
-import net.deadlydiamond98.world.zeldadungeons.BaseDungeonPiece;
+import net.deadlydiamond98.world.zeldadungeons.base.BaseDungeonPiece;
 import net.deadlydiamond98.world.zeldadungeons.ZeldaDungeons;
 import net.deadlydiamond98.world.zeldadungeons.base.DungeonEntrance;
 import net.deadlydiamond98.world.zeldadungeons.gohmadungeon.GohmaWallPlacer;
@@ -17,8 +16,6 @@ import net.minecraft.util.math.random.Random;
 import net.minecraft.world.StructureWorldAccess;
 import net.minecraft.world.gen.StructureAccessor;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
-
-import java.util.Map;
 
 import static net.minecraft.block.CandleBlock.CANDLES;
 import static net.minecraft.block.CandleBlock.LIT;

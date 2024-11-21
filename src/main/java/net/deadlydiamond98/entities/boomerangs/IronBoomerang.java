@@ -1,6 +1,5 @@
-package net.deadlydiamond98.entities.projectiles.boomerangs;
+package net.deadlydiamond98.entities.boomerangs;
 
-import net.minecraft.block.BlockState;
 import net.minecraft.block.ButtonBlock;
 import net.minecraft.block.LeverBlock;
 import net.minecraft.entity.EntityType;
@@ -9,10 +8,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Hand;
-import net.minecraft.util.hit.BlockHitResult;
-import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
 public class IronBoomerang extends BaseBoomerangProjectile {

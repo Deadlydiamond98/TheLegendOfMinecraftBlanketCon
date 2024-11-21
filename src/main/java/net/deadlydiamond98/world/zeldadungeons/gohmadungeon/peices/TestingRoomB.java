@@ -1,11 +1,10 @@
 package net.deadlydiamond98.world.zeldadungeons.gohmadungeon.peices;
 
 import net.deadlydiamond98.blocks.ZeldaBlocks;
-import net.deadlydiamond98.world.zeldadungeons.BaseDungeonPiece;
+import net.deadlydiamond98.world.zeldadungeons.base.BaseDungeonPiece;
 import net.deadlydiamond98.world.zeldadungeons.ZeldaDungeons;
 import net.deadlydiamond98.world.zeldadungeons.base.DungeonEntrance;
 import net.deadlydiamond98.world.zeldadungeons.gohmadungeon.GohmaWallPlacer;
-import net.minecraft.block.Blocks;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.structure.StructureContext;
 import net.minecraft.util.math.BlockBox;
@@ -17,8 +16,6 @@ import net.minecraft.world.StructureWorldAccess;
 import net.minecraft.world.gen.StructureAccessor;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
 
-import static net.minecraft.block.CandleBlock.CANDLES;
-import static net.minecraft.block.CandleBlock.LIT;
 import static net.minecraft.block.HorizontalFacingBlock.FACING;
 
 public class TestingRoomB extends BaseDungeonPiece {

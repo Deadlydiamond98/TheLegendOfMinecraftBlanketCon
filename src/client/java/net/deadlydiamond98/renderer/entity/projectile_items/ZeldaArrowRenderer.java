@@ -1,7 +1,7 @@
 package net.deadlydiamond98.renderer.entity.projectile_items;
 
 import net.deadlydiamond98.ZeldaCraft;
-import net.deadlydiamond98.entities.projectiles.arrows.SilverArrowEntity;
+import net.deadlydiamond98.entities.arrows.SilverArrowEntity;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.ProjectileEntityRenderer;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;

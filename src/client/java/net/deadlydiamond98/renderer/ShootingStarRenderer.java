@@ -1,10 +1,7 @@
 package net.deadlydiamond98.renderer;
 
 import net.deadlydiamond98.entities.ShootingStar;
-import net.deadlydiamond98.entities.projectiles.boomerangs.BaseBoomerangProjectile;
 import net.deadlydiamond98.items.ZeldaItems;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.render.Camera;
 import net.minecraft.client.render.Frustum;
 import net.minecraft.client.render.OverlayTexture;
 import net.minecraft.client.render.VertexConsumerProvider;

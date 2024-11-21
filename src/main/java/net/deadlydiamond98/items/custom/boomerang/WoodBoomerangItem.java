@@ -1,18 +1,13 @@
 package net.deadlydiamond98.items.custom.boomerang;
 
 import net.deadlydiamond98.entities.ZeldaEntities;
-import net.deadlydiamond98.entities.projectiles.boomerangs.BaseBoomerangProjectile;
-import net.deadlydiamond98.entities.projectiles.boomerangs.IronBoomerang;
-import net.deadlydiamond98.entities.projectiles.boomerangs.WoodBoomerang;
+import net.deadlydiamond98.entities.boomerangs.WoodBoomerang;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.DyeableItem;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Hand;
-import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 

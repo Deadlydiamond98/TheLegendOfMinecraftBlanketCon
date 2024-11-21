@@ -1,19 +1,12 @@
-package net.deadlydiamond98.items.custom.Swords;
+package net.deadlydiamond98.items.custom.bats;
 
 import net.deadlydiamond98.networking.ZeldaServerPackets;
-import net.deadlydiamond98.particle.ZeldaParticles;
 import net.deadlydiamond98.sounds.ZeldaSounds;
-import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
-import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.SwordItem;
 import net.minecraft.item.ToolMaterial;
-import net.minecraft.network.PacketByteBuf;
-import net.minecraft.recipe.Ingredient;
-import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.text.Text;

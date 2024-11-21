@@ -3,7 +3,7 @@ package net.deadlydiamond98.entities.bombs;
 import net.deadlydiamond98.blocks.BombFlower;
 import net.deadlydiamond98.blocks.SecretStone;
 import net.deadlydiamond98.blocks.ZeldaBlocks;
-import net.deadlydiamond98.items.custom.Swords.CrackedBat;
+import net.deadlydiamond98.items.custom.bats.CrackedBat;
 import net.deadlydiamond98.networking.ZeldaServerPackets;
 import net.deadlydiamond98.sounds.ZeldaSounds;
 import net.deadlydiamond98.util.ZeldaTags;

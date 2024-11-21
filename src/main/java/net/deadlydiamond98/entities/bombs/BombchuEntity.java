@@ -4,7 +4,7 @@ import net.deadlydiamond98.blocks.BombFlower;
 import net.deadlydiamond98.blocks.SecretStone;
 import net.deadlydiamond98.blocks.ZeldaBlocks;
 import net.deadlydiamond98.entities.ZeldaEntities;
-import net.deadlydiamond98.items.custom.Swords.CrackedBat;
+import net.deadlydiamond98.items.custom.bats.CrackedBat;
 import net.deadlydiamond98.networking.ZeldaServerPackets;
 import net.deadlydiamond98.sounds.ZeldaSounds;
 import net.deadlydiamond98.util.RaycastUtil;
@@ -28,8 +28,6 @@ import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.*;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
-
-import java.util.List;
 
 import static net.deadlydiamond98.blocks.BombFlower.AGE;
 

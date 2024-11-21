@@ -1,7 +1,7 @@
 package net.deadlydiamond98.items.custom.boomerang;
 
 import net.deadlydiamond98.entities.ZeldaEntities;
-import net.deadlydiamond98.entities.projectiles.boomerangs.MagicalBoomerang;
+import net.deadlydiamond98.entities.boomerangs.MagicalBoomerang;
 import net.deadlydiamond98.magiclib.items.MagicItemData;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.player.PlayerEntity;

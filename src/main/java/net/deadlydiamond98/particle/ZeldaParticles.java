@@ -16,6 +16,7 @@ public class ZeldaParticles {
     public static DefaultParticleType Magic_Ice_Particle_Bullet;
     public static DefaultParticleType Beam_Particle;
     public static DefaultParticleType Meteor_Shower_Rain_Particle;
+    public static DefaultParticleType Item_Baseball;
 
 
     private static DefaultParticleType registerParticle(String name, DefaultParticleType particleType) {

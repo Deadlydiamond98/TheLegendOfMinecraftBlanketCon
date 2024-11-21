@@ -3,7 +3,7 @@ package net.deadlydiamond98.items;
 import net.deadlydiamond98.ZeldaCraft;
 import net.deadlydiamond98.entities.ZeldaEntities;
 import net.deadlydiamond98.items.custom.*;
-import net.deadlydiamond98.items.custom.Swords.CrackedBat;
+import net.deadlydiamond98.items.custom.bats.CrackedBat;
 import net.deadlydiamond98.items.custom.Swords.MagicSword;
 import net.deadlydiamond98.items.custom.Swords.MasterSword;
 import net.deadlydiamond98.items.custom.arrows.BombArrow;

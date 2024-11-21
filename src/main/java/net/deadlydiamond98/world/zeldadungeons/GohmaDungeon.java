@@ -2,13 +2,12 @@ package net.deadlydiamond98.world.zeldadungeons;
 
 import com.mojang.serialization.Codec;
 import net.deadlydiamond98.ZeldaCraft;
+import net.deadlydiamond98.world.zeldadungeons.base.BaseDungeonPiece;
 import net.deadlydiamond98.world.zeldadungeons.base.DungeonEntrance;
 import net.deadlydiamond98.world.zeldadungeons.gohmadungeon.peices.EntranceRoom;
-import net.deadlydiamond98.world.zeldadungeons.gohmadungeon.peices.EntranceRoomPlaceholder;
 import net.deadlydiamond98.world.zeldadungeons.gohmadungeon.peices.TestingRoom;
 import net.deadlydiamond98.world.zeldadungeons.gohmadungeon.peices.TestingRoomB;
 import net.minecraft.structure.StructurePiecesCollector;
-import net.minecraft.util.BlockRotation;
 import net.minecraft.util.math.BlockBox;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;

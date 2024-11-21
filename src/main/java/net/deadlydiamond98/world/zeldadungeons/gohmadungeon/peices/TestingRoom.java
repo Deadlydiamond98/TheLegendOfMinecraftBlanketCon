@@ -1,7 +1,7 @@
 package net.deadlydiamond98.world.zeldadungeons.gohmadungeon.peices;
 
 import net.deadlydiamond98.blocks.ZeldaBlocks;
-import net.deadlydiamond98.world.zeldadungeons.BaseDungeonPiece;
+import net.deadlydiamond98.world.zeldadungeons.base.BaseDungeonPiece;
 import net.deadlydiamond98.world.zeldadungeons.ZeldaDungeons;
 import net.deadlydiamond98.world.zeldadungeons.base.DungeonEntrance;
 import net.deadlydiamond98.world.zeldadungeons.gohmadungeon.GohmaWallPlacer;

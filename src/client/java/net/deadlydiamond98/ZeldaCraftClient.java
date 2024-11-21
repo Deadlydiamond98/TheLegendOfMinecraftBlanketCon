@@ -1,7 +1,6 @@
 package net.deadlydiamond98;
 
 import net.deadlydiamond98.blocks.ZeldaBlocks;
-import net.deadlydiamond98.blocks.entities.PedestalBlockEntity;
 import net.deadlydiamond98.blocks.entities.ZeldaBlockEntities;
 import net.deadlydiamond98.commands.ZeldaClientCommands;
 import net.deadlydiamond98.entities.ZeldaEntities;
@@ -11,6 +10,7 @@ import net.deadlydiamond98.model.DungeonDoorModel;
 import net.deadlydiamond98.model.entity.*;
 import net.deadlydiamond98.networking.ZeldaClientPackets;
 import net.deadlydiamond98.particle.ZeldaParticleFactory;
+import net.deadlydiamond98.renderer.GuiElements;
 import net.deadlydiamond98.renderer.blocks.SwordPedestalRenderer;
 import net.deadlydiamond98.renderer.doors.*;
 import net.deadlydiamond98.renderer.FairyCompanionRenderer;
@@ -23,9 +23,7 @@ import net.deadlydiamond98.renderer.entity.bombs.SuperBombRenderer;
 import net.deadlydiamond98.renderer.entity.magic.BeamProjectileRenderer;
 import net.deadlydiamond98.renderer.entity.magic.MagicIceProjectileRenderer;
 import net.deadlydiamond98.renderer.entity.monster.*;
-import net.deadlydiamond98.renderer.entity.projectile_items.BaseballRenderer;
 import net.deadlydiamond98.renderer.entity.projectile_items.BoomerangProjectileRenderer;
-import net.deadlydiamond98.renderer.entity.projectile_items.DekuNutRenderer;
 import net.deadlydiamond98.renderer.entity.magic.MagicFireProjectileRenderer;
 import net.deadlydiamond98.renderer.entity.projectile_items.ZeldaArrowRenderer;
 import net.fabricmc.api.ClientModInitializer;
@@ -36,6 +34,7 @@ import net.minecraft.client.color.world.GrassColors;
 import net.minecraft.client.item.ModelPredicateProviderRegistry;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactories;
+import net.minecraft.client.render.entity.FlyingItemEntityRenderer;
 import net.minecraft.client.render.entity.model.BatEntityModel;
 import net.minecraft.item.DyeableItem;
 import net.minecraft.nbt.NbtElement;
@@ -45,6 +44,8 @@ public class ZeldaCraftClient implements ClientModInitializer {
 
 	@Override
 	public void onInitializeClient() {
+
+		HudRenderCallback.EVENT.register(new GuiElements());
 
 		ZeldacraftMusic.registerMusic();
 		ZeldaClientPackets.registerC2SPackets();
@@ -153,8 +154,8 @@ public class ZeldaCraftClient implements ClientModInitializer {
 		EntityRendererRegistry.register(ZeldaEntities.Blue_Tektite_Entity, BlueTektiteRenderer::new);
 		EntityRendererRegistry.register(ZeldaEntities.Beamos_Entity, BeamosRenderer::new);
 
-		EntityRendererRegistry.register(ZeldaEntities.Baseball_Entity, BaseballRenderer::new);
-		EntityRendererRegistry.register(ZeldaEntities.Deku_Nut_Entity, DekuNutRenderer::new);
+		EntityRendererRegistry.register(ZeldaEntities.Baseball_Entity, FlyingItemEntityRenderer::new);
+		EntityRendererRegistry.register(ZeldaEntities.Deku_Nut_Entity, FlyingItemEntityRenderer::new);
 		EntityRendererRegistry.register(ZeldaEntities.Bomb_Entity, BombRenderer::new);
 		EntityRendererRegistry.register(ZeldaEntities.Super_Bomb_Entity, SuperBombRenderer::new);
 		EntityRendererRegistry.register(ZeldaEntities.Remote_Bomb_Entity, RemoteBombRenderer::new);

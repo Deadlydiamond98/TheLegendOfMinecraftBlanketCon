@@ -1,16 +1,12 @@
-package net.deadlydiamond98.entities.projectiles.boomerangs;
+package net.deadlydiamond98.entities.boomerangs;
 
-import net.deadlydiamond98.ZeldaCraft;
 import net.deadlydiamond98.enchantments.ZeldaEnchantments;
 import net.deadlydiamond98.items.ZeldaItems;
 import net.deadlydiamond98.items.custom.boomerang.MagicBoomerangItem;
 import net.deadlydiamond98.sounds.ZeldaSounds;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.ButtonBlock;
 import net.minecraft.block.PlantBlock;
 import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ItemEntity;
@@ -25,20 +21,14 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleTypes;
-import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Box;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-
-import java.util.List;
 
 public class BaseBoomerangProjectile extends ProjectileEntity {
 

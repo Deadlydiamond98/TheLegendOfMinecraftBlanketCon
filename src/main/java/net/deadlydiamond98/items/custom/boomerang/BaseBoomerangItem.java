@@ -1,7 +1,6 @@
 package net.deadlydiamond98.items.custom.boomerang;
 
-import net.deadlydiamond98.entities.projectiles.boomerangs.BaseBoomerangProjectile;
-import net.minecraft.entity.EntityType;
+import net.deadlydiamond98.entities.boomerangs.BaseBoomerangProjectile;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.DyeableItem;
 import net.minecraft.item.Item;

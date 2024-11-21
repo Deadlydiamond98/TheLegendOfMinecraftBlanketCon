@@ -1,30 +1,19 @@
-package net.deadlydiamond98.world.zeldadungeons;
+package net.deadlydiamond98.world.zeldadungeons.base;
 
 import net.deadlydiamond98.ZeldaCraft;
 import net.deadlydiamond98.blocks.ZeldaBlocks;
 import net.deadlydiamond98.blocks.entities.LootPotBlockEntity;
-import net.deadlydiamond98.world.zeldadungeons.base.BaseDoorPeice;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.block.enums.DoubleBlockHalf;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtList;
-import net.minecraft.structure.StrongholdGenerator;
 import net.minecraft.structure.StructureContext;
-import net.minecraft.structure.StructurePiece;
 import net.minecraft.structure.StructurePieceType;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockBox;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.StructureWorldAccess;
-import net.minecraft.world.gen.StructureAccessor;
-import net.minecraft.world.gen.chunk.ChunkGenerator;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public abstract class BaseDungeonPiece extends BaseDoorPeice {
 

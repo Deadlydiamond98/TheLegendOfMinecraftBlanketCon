@@ -33,7 +33,7 @@ public class MinecraftClientMixin {
             at = @At("RETURN"),
             cancellable = true)
     private void getMusicForEventsZelda(CallbackInfoReturnable<MusicSound> cir) {
-        MusicSound musicSound = (MusicSound) Nullables.map(getClient().currentScreen, Screen::getMusic);
+        MusicSound musicSound = Nullables.map(getClient().currentScreen, Screen::getMusic);
         if (musicSound == null && getClient().player != null) {
             assert getClient().player != null;
             if (getClient().player.getWorld() != null) {

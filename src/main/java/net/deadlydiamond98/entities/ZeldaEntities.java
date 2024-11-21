@@ -1,20 +1,21 @@
 package net.deadlydiamond98.entities;
 
 import net.deadlydiamond98.ZeldaCraft;
+import net.deadlydiamond98.entities.balls.AbstractBallEntity;
+import net.deadlydiamond98.entities.balls.BaseBallEntity;
 import net.deadlydiamond98.entities.bombs.BombEntity;
 import net.deadlydiamond98.entities.bombs.BombchuEntity;
 import net.deadlydiamond98.entities.bombs.RemoteBombEntity;
 import net.deadlydiamond98.entities.bombs.SuperBombEntity;
 import net.deadlydiamond98.entities.monsters.*;
 import net.deadlydiamond98.entities.projectiles.*;
-import net.deadlydiamond98.entities.projectiles.arrows.BombArrowEntity;
-import net.deadlydiamond98.entities.projectiles.arrows.SilverArrowEntity;
-import net.deadlydiamond98.entities.projectiles.boomerangs.IronBoomerang;
-import net.deadlydiamond98.entities.projectiles.boomerangs.MagicalBoomerang;
-import net.deadlydiamond98.entities.projectiles.boomerangs.WoodBoomerang;
+import net.deadlydiamond98.entities.arrows.BombArrowEntity;
+import net.deadlydiamond98.entities.arrows.SilverArrowEntity;
+import net.deadlydiamond98.entities.boomerangs.IronBoomerang;
+import net.deadlydiamond98.entities.boomerangs.MagicalBoomerang;
+import net.deadlydiamond98.entities.boomerangs.WoodBoomerang;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
-import net.fabricmc.fabric.api.biome.v1.ModificationPhase;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
 import net.minecraft.entity.EntityDimensions;
 import net.minecraft.entity.EntityType;
@@ -26,10 +27,7 @@ import net.minecraft.registry.tag.BiomeTags;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.Heightmap;
 import net.minecraft.world.World;
-import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.BiomeKeys;
-import net.minecraft.world.biome.SpawnSettings;
-import net.minecraft.world.biome.source.BiomeSource;
 
 public class ZeldaEntities {
     public static void registerEntities() {
@@ -93,7 +91,7 @@ public class ZeldaEntities {
     );
     public static final EntityType<BombEntity> Bomb_Entity = Registry.register(
             Registries.ENTITY_TYPE,
-            new Identifier(ZeldaCraft.MOD_ID, "bomb_entity"),
+            new Identifier(ZeldaCraft.MOD_ID, "bomb"),
             FabricEntityTypeBuilder.create(SpawnGroup.MISC, (EntityType<BombEntity> type, World world) ->
                             new BombEntity(type, world))
                     .dimensions(EntityDimensions.fixed(0.5f,0.5f))
@@ -101,7 +99,7 @@ public class ZeldaEntities {
     );
     public static final EntityType<SuperBombEntity> Super_Bomb_Entity = Registry.register(
             Registries.ENTITY_TYPE,
-            new Identifier(ZeldaCraft.MOD_ID, "super_bomb_entity"),
+            new Identifier(ZeldaCraft.MOD_ID, "super_bomb"),
             FabricEntityTypeBuilder.create(SpawnGroup.MISC, (EntityType<SuperBombEntity> type, World world) ->
                             new SuperBombEntity(type, world))
                     .dimensions(EntityDimensions.fixed(0.5f,0.5f))
@@ -109,7 +107,7 @@ public class ZeldaEntities {
     );
     public static final EntityType<RemoteBombEntity> Remote_Bomb_Entity = Registry.register(
             Registries.ENTITY_TYPE,
-            new Identifier(ZeldaCraft.MOD_ID, "remote_bomb_entity"),
+            new Identifier(ZeldaCraft.MOD_ID, "remote_bomb"),
             FabricEntityTypeBuilder.create(SpawnGroup.MISC, (EntityType<RemoteBombEntity> type, World world) ->
                             new RemoteBombEntity(type, world))
                     .dimensions(EntityDimensions.fixed(0.5f,0.5f))
@@ -117,7 +115,7 @@ public class ZeldaEntities {
     );
     public static final EntityType<BombchuEntity> Bombchu_Entity = Registry.register(
             Registries.ENTITY_TYPE,
-            new Identifier(ZeldaCraft.MOD_ID, "bombchu_entity"),
+            new Identifier(ZeldaCraft.MOD_ID, "bombchu"),
             FabricEntityTypeBuilder.create(SpawnGroup.MISC, (EntityType<BombchuEntity> type, World world) ->
                             new BombchuEntity(type, world))
                     .dimensions(EntityDimensions.fixed(0.4f,0.4f))
@@ -125,39 +123,42 @@ public class ZeldaEntities {
     );
     public static final EntityType<WoodBoomerang> Wood_Boomerang = Registry.register(
             Registries.ENTITY_TYPE,
-            new Identifier(ZeldaCraft.MOD_ID, "wood_boomerang_entity"),
+            new Identifier(ZeldaCraft.MOD_ID, "wood_boomerang"),
             FabricEntityTypeBuilder.create(SpawnGroup.MISC, (EntityType<WoodBoomerang> type, World world) ->
             new WoodBoomerang(type, world))
                     .dimensions(EntityDimensions.fixed(0.3f,0.3f))
+                    .disableSummon()
                     .build()
     );
     public static final EntityType<IronBoomerang> Iron_Boomerang = Registry.register(
             Registries.ENTITY_TYPE,
-            new Identifier(ZeldaCraft.MOD_ID, "iron_boomerang_entity"),
+            new Identifier(ZeldaCraft.MOD_ID, "iron_boomerang"),
             FabricEntityTypeBuilder.create(SpawnGroup.MISC, (EntityType<IronBoomerang> type, World world) ->
                             new IronBoomerang(type, world))
                     .dimensions(EntityDimensions.fixed(0.3f,0.3f))
+                    .disableSummon()
                     .build()
     );
     public static final EntityType<MagicalBoomerang> Magic_Boomerang = Registry.register(
             Registries.ENTITY_TYPE,
-            new Identifier(ZeldaCraft.MOD_ID, "magic_boomerang_entity"),
+            new Identifier(ZeldaCraft.MOD_ID, "magic_boomerang"),
             FabricEntityTypeBuilder.create(SpawnGroup.MISC, (EntityType<MagicalBoomerang> type, World world) ->
                             new MagicalBoomerang(type, world))
                     .dimensions(EntityDimensions.fixed(0.3f,0.3f))
+                    .disableSummon()
                     .build()
     );
     public static final EntityType<BaseBallEntity> Baseball_Entity = Registry.register(
             Registries.ENTITY_TYPE,
-            new Identifier(ZeldaCraft.MOD_ID, "baseball_entity"),
+            new Identifier(ZeldaCraft.MOD_ID, "baseball"),
             FabricEntityTypeBuilder.create(SpawnGroup.MISC, (EntityType<BaseBallEntity> type, World world) ->
-            new BaseBallEntity(type, world))
+                            new BaseBallEntity(type, world))
                     .dimensions(EntityDimensions.fixed(0.5f,0.5f))
                     .build()
     );
     public static final EntityType<DekuNutEntity> Deku_Nut_Entity = Registry.register(
             Registries.ENTITY_TYPE,
-            new Identifier(ZeldaCraft.MOD_ID, "deku_nut_entity"),
+            new Identifier(ZeldaCraft.MOD_ID, "deku_nut"),
             FabricEntityTypeBuilder.create(SpawnGroup.MISC, (EntityType<DekuNutEntity> type, World world) ->
                             new DekuNutEntity(type, world))
                     .dimensions(EntityDimensions.fixed(0.5f,0.5f))

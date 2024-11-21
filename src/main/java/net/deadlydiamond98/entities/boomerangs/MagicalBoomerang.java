@@ -1,11 +1,9 @@
-package net.deadlydiamond98.entities.projectiles.boomerangs;
+package net.deadlydiamond98.entities.boomerangs;
 
-import net.deadlydiamond98.ZeldaCraft;
 import net.minecraft.entity.*;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.particle.DustParticleEffect;
-import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;

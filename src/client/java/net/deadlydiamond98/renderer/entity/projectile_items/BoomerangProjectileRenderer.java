@@ -1,6 +1,6 @@
 package net.deadlydiamond98.renderer.entity.projectile_items;
 
-import net.deadlydiamond98.entities.projectiles.boomerangs.BaseBoomerangProjectile;
+import net.deadlydiamond98.entities.boomerangs.BaseBoomerangProjectile;
 import net.minecraft.client.render.Frustum;
 import net.minecraft.client.render.OverlayTexture;
 import net.minecraft.client.render.VertexConsumerProvider;
@@ -11,7 +11,6 @@ import net.minecraft.client.render.model.BakedModel;
 import net.minecraft.client.render.model.json.ModelTransformationMode;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.RotationAxis;
