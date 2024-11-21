@@ -5,7 +5,7 @@
 package net.deadlydiamond98.model.entity;
 
 import net.deadlydiamond98.ZeldaCraft;
-import net.deadlydiamond98.entities.monsters.TektiteEntity;
+import net.deadlydiamond98.entities.monsters.tektites.TektiteEntity;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.model.*;
 import net.minecraft.client.render.VertexConsumer;

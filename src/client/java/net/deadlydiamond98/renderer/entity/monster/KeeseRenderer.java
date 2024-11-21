@@ -1,7 +1,7 @@
 package net.deadlydiamond98.renderer.entity.monster;
 
 import net.deadlydiamond98.ZeldaCraft;
-import net.deadlydiamond98.entities.monsters.KeeseEntity;
+import net.deadlydiamond98.entities.monsters.keese.KeeseEntity;
 import net.deadlydiamond98.model.entity.KeeseEntityModel;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.MobEntityRenderer;
@@ -10,11 +10,11 @@ import net.minecraft.entity.Entity;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
 
-public class KeeseRenderer<T extends Entity> extends MobEntityRenderer<KeeseEntity, KeeseEntityModel<KeeseEntity>> {
+public class KeeseRenderer<T extends Entity> extends MobEntityRenderer<KeeseEntity, KeeseEntityModel> {
     private static final Identifier TEXTURE = new Identifier(ZeldaCraft.MOD_ID, "textures/entity/keese.png");
 
     public KeeseRenderer(EntityRendererFactory.Context context) {
-           super(context, new KeeseEntityModel<KeeseEntity>(context.getPart(KeeseEntityModel.LAYER_LOCATION)), 0.25F);
+           super(context, new KeeseEntityModel(context.getPart(KeeseEntityModel.LAYER_LOCATION)), 0.25F);
     }
 
     public Identifier getTexture(KeeseEntity batEntity) {

@@ -201,18 +201,16 @@ public class BeamosEntity extends HostileEntity implements Monster {
         }
 
         public boolean canStart() {
-            return this.beamos.getTarget() != null &&
+            return (this.beamos.getTarget() != null &&
                     this.beamos.getTarget().squaredDistanceTo(this.beamos) < 4096.0 &&
                     this.beamos.inFront(this.beamos.getTarget(), 30) && this.beamtime <= this.finalBeamTime
-                    && this.beamos.beamWaitTime == 0;
+                    && this.beamos.beamWaitTime == 0) || this.beamos.canSeeTarget;
         }
 
         @Override
         public boolean canStop() {
-            return !(this.beamos.getTarget() != null &&
-                    this.beamos.getTarget().squaredDistanceTo(this.beamos) < 4096.0 &&
-                    this.beamos.inFront(this.beamos.getTarget(), 30)) && this.beamtime >= this.finalBeamTime
-                    && this.beamos.beamWaitTime > 0;
+            return this.beamtime >= this.finalBeamTime
+                    && this.beamos.beamWaitTime > 0 && !this.beamos.canSeeTarget;
         }
 
         @Override
@@ -223,7 +221,6 @@ public class BeamosEntity extends HostileEntity implements Monster {
 
         @Override
         public void stop() {
-            this.beamos.canSeeTarget = false;
             this.beamos.beamWaitTime = 5;
             this.beamtime = 0;
             super.stop();
@@ -234,18 +231,22 @@ public class BeamosEntity extends HostileEntity implements Monster {
         }
 
         public void tick() {
-            if (this.beamos.getTarget() != null) {
-                if (this.beamtime == 15) {
-                    Vec3d vec3d = this.beamos.getRotationVec(1.0F);
-                    BeamEntity beam = new BeamEntity(this.beamos.getWorld(), this.beamos.getX(), this.beamos.getY() + 0.6, this.beamos.getZ(),
-                            vec3d.x * 1, vec3d.y * 1, vec3d.z * 1, this.beamos,
-                            new Vec3d(this.beamos.getX(), this.beamos.getY() + 0.6, this.beamos.getZ()), true, 10);
-                    this.beamos.getWorld().spawnEntity(beam);
-                }
-            }
-            else {
+            if (this.beamos.getTarget() == null) {
                 this.beamos.setBeamTarget(0);
             }
+
+            if (this.beamtime == 10) {
+                Vec3d rotationVec = this.beamos.getRotationVec(1.0F);
+                double offsetDistance = 0.3;
+                Vec3d offsetVec = this.beamos.getPos().subtract(rotationVec.multiply(offsetDistance));
+
+                BeamEntity beam = new BeamEntity(this.beamos.getWorld(), offsetVec.getX(), this.beamos.getY() + 0.6, offsetVec.getZ(),
+                        rotationVec.x * 0.5, rotationVec.y * 0.5, rotationVec.z * 0.5, this.beamos,
+                        new Vec3d(offsetVec.getX(), this.beamos.getY() + 0.6, offsetVec.getZ()), true, 10);
+                this.beamos.getWorld().spawnEntity(beam);
+                this.beamos.canSeeTarget = false;
+            }
+
             this.beamtime++;
         }
     }
@@ -274,13 +275,9 @@ public class BeamosEntity extends HostileEntity implements Monster {
     }
 
     private static class TargetGoal<T extends LivingEntity> extends ActiveTargetGoal<T> {
-        private final BeamosEntity beamos;
-        private Class<T> targetEntityClass;
 
         public TargetGoal(BeamosEntity beamos, Class<T> targetEntityClass) {
             super(beamos, targetEntityClass, true);
-            this.beamos = beamos;
-            this.targetEntityClass = targetEntityClass;
         }
 
         public boolean canStart() {

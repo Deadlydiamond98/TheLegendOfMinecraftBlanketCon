@@ -1,11 +1,8 @@
 package net.deadlydiamond98.renderer.entity.monster;
 
 import net.deadlydiamond98.ZeldaCraft;
-import net.deadlydiamond98.entities.monsters.BubbleEntity;
 import net.deadlydiamond98.entities.monsters.FairyEntity;
-import net.deadlydiamond98.entities.monsters.KeeseEntity;
 import net.deadlydiamond98.model.entity.FairyEntityModel;
-import net.deadlydiamond98.model.entity.KeeseEntityModel;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.*;
 import net.minecraft.client.render.entity.EntityRendererFactory;

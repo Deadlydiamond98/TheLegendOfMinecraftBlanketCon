@@ -8,6 +8,11 @@ import net.deadlydiamond98.commands.ZeldaServerCommands;
 import net.deadlydiamond98.enchantments.ZeldaEnchantments;
 import net.deadlydiamond98.entities.monsters.*;
 import net.deadlydiamond98.entities.ZeldaEntities;
+import net.deadlydiamond98.entities.monsters.keese.KeeseEntity;
+import net.deadlydiamond98.entities.monsters.octoroks.BlueOctorokEntity;
+import net.deadlydiamond98.entities.monsters.octoroks.RedOctorokEntity;
+import net.deadlydiamond98.entities.monsters.tektites.BlueTektite;
+import net.deadlydiamond98.entities.monsters.tektites.RedTektite;
 import net.deadlydiamond98.events.ZeldaEntityDeathEvent;
 import net.deadlydiamond98.events.ZeldaServerLifecycleEvents;
 import net.deadlydiamond98.events.ZeldaSeverTickEvent;
@@ -78,6 +83,8 @@ public class ZeldaCraft implements ModInitializer {
 		FabricDefaultAttributeRegistry.register(ZeldaEntities.Beamos_Entity, BeamosEntity.createCustomAttributes());
 		FabricDefaultAttributeRegistry.register(ZeldaEntities.Red_Tektite_Entity, RedTektite.createCustomAttributes());
 		FabricDefaultAttributeRegistry.register(ZeldaEntities.Blue_Tektite_Entity, BlueTektite.createCustomAttributes());
+		FabricDefaultAttributeRegistry.register(ZeldaEntities.Red_Octorok_Entity, RedOctorokEntity.createCustomAttributes());
+		FabricDefaultAttributeRegistry.register(ZeldaEntities.Blue_Octorok_Entity, BlueOctorokEntity.createCustomAttributes());
 	}
 
 	public static boolean isModLoaded(String modid) {

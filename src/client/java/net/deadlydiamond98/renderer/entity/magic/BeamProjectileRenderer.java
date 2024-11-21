@@ -26,6 +26,10 @@ public class BeamProjectileRenderer<T extends Entity> extends EntityRenderer<Bea
 
         matrices.push();
 
+        float size = Math.min(entity.age, 11) * 0.11f;
+
+        matrices.scale(size, size, size);
+
         matrices.multiply(RotationAxis.NEGATIVE_Y.rotationDegrees(entity.getYaw() + 90));
         matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees(entity.getPitch() + 90));
 

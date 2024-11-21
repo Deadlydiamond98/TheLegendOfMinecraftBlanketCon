@@ -1,6 +1,5 @@
-package net.deadlydiamond98.entities.monsters;
+package net.deadlydiamond98.entities.monsters.tektites;
 
-import net.deadlydiamond98.ZeldaCraft;
 import net.deadlydiamond98.sounds.ZeldaSounds;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;

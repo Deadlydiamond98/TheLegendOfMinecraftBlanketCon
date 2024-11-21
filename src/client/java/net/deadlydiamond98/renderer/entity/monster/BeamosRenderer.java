@@ -2,19 +2,14 @@ package net.deadlydiamond98.renderer.entity.monster;
 
 import net.deadlydiamond98.ZeldaCraft;
 import net.deadlydiamond98.entities.monsters.BeamosEntity;
-import net.deadlydiamond98.entities.monsters.KeeseEntity;
 import net.deadlydiamond98.model.entity.BeamosEntityModel;
-import net.deadlydiamond98.model.entity.KeeseEntityModel;
 import net.minecraft.client.render.*;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.MobEntityRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.math.Box;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RotationAxis;
-import net.minecraft.util.math.Vec3d;
 
 public class BeamosRenderer<T extends Entity> extends MobEntityRenderer<BeamosEntity, BeamosEntityModel<BeamosEntity>> {
     private static final Identifier TEXTURE = new Identifier(ZeldaCraft.MOD_ID, "textures/entity/beamos.png");

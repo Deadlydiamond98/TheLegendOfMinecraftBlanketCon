@@ -1,13 +1,18 @@
 package net.deadlydiamond98.entities;
 
 import net.deadlydiamond98.ZeldaCraft;
-import net.deadlydiamond98.entities.balls.AbstractBallEntity;
 import net.deadlydiamond98.entities.balls.BaseBallEntity;
 import net.deadlydiamond98.entities.bombs.BombEntity;
 import net.deadlydiamond98.entities.bombs.BombchuEntity;
 import net.deadlydiamond98.entities.bombs.RemoteBombEntity;
 import net.deadlydiamond98.entities.bombs.SuperBombEntity;
 import net.deadlydiamond98.entities.monsters.*;
+import net.deadlydiamond98.entities.monsters.keese.KeeseEntity;
+import net.deadlydiamond98.entities.monsters.octoroks.BlueOctorokEntity;
+import net.deadlydiamond98.entities.monsters.octoroks.RedOctorokEntity;
+import net.deadlydiamond98.entities.monsters.tektites.BlueTektite;
+import net.deadlydiamond98.entities.monsters.tektites.RedTektite;
+import net.deadlydiamond98.entities.monsters.tektites.TektiteEntity;
 import net.deadlydiamond98.entities.projectiles.*;
 import net.deadlydiamond98.entities.arrows.BombArrowEntity;
 import net.deadlydiamond98.entities.arrows.SilverArrowEntity;
@@ -75,7 +80,7 @@ public class ZeldaEntities {
             new Identifier(ZeldaCraft.MOD_ID, "beam"),
             FabricEntityTypeBuilder.create(SpawnGroup.MISC, (EntityType<BeamEntity> type, World world) ->
                             new BeamEntity(type, world))
-                    .dimensions(EntityDimensions.fixed(0.3f,0.3f))
+                    .dimensions(EntityDimensions.fixed(0.7f,0.7f))
                     .spawnableFarFromPlayer()
                     .trackRangeChunks(32)
                     .build()
@@ -224,7 +229,7 @@ public class ZeldaEntities {
             Registries.ENTITY_TYPE,
             new Identifier(ZeldaCraft.MOD_ID, "beamos"),
             FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, BeamosEntity::new)
-                    .dimensions(EntityDimensions.fixed(1,1))
+                    .dimensions(EntityDimensions.fixed(1.11f,1))
                     .spawnableFarFromPlayer()
                     .build()
     );
@@ -239,6 +244,22 @@ public class ZeldaEntities {
             Registries.ENTITY_TYPE,
             new Identifier(ZeldaCraft.MOD_ID, "blue_tektite"),
             FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, BlueTektite::new)
+                    .dimensions(EntityDimensions.fixed(0.75f,0.75f))
+                    .build()
+    );
+
+    public static final EntityType<RedOctorokEntity> Red_Octorok_Entity = Registry.register(
+            Registries.ENTITY_TYPE,
+            new Identifier(ZeldaCraft.MOD_ID, "red_octorok"),
+            FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, RedOctorokEntity::new)
+                    .dimensions(EntityDimensions.fixed(0.75f,0.75f))
+                    .build()
+    );
+
+    public static final EntityType<BlueOctorokEntity> Blue_Octorok_Entity = Registry.register(
+            Registries.ENTITY_TYPE,
+            new Identifier(ZeldaCraft.MOD_ID, "blue_octorok"),
+            FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, BlueOctorokEntity::new)
                     .dimensions(EntityDimensions.fixed(0.75f,0.75f))
                     .build()
     );

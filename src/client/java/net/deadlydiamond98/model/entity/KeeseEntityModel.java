@@ -1,18 +1,17 @@
 package net.deadlydiamond98.model.entity;
 
 import net.deadlydiamond98.ZeldaCraft;
-import net.deadlydiamond98.entities.monsters.KeeseEntity;
+import net.deadlydiamond98.entities.monsters.keese.KeeseEntity;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.model.*;
 import net.minecraft.client.render.entity.model.EntityModelLayer;
 import net.minecraft.client.render.entity.model.SinglePartEntityModel;
-import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
 
 @Environment(EnvType.CLIENT)
-public class KeeseEntityModel<K extends HostileEntity> extends SinglePartEntityModel<KeeseEntity> {
+public class KeeseEntityModel extends SinglePartEntityModel<KeeseEntity> {
     public static final EntityModelLayer LAYER_LOCATION = new EntityModelLayer(new Identifier(ZeldaCraft.MOD_ID, "keese_entity"), "main");
     private final ModelPart root;
     private final ModelPart head;

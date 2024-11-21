@@ -146,6 +146,8 @@ public class ZeldaCraftClient implements ClientModInitializer {
 		EntityRendererRegistry.register(ZeldaEntities.Magic_Boomerang, BoomerangProjectileRenderer::new);
 
 		EntityRendererRegistry.register(ZeldaEntities.Keese_Entity, KeeseRenderer::new);
+		EntityRendererRegistry.register(ZeldaEntities.Red_Octorok_Entity, RedOctorokRenderer::new);
+		EntityRendererRegistry.register(ZeldaEntities.Blue_Octorok_Entity, BlueOctorokRenderer::new);
 		EntityRendererRegistry.register(ZeldaEntities.Fairy_Entity, FairyRenderer::new);
 		EntityRendererRegistry.register(ZeldaEntities.Companion_Fairy_Entity, FairyCompanionRenderer::new);
 
@@ -185,6 +187,7 @@ public class ZeldaCraftClient implements ClientModInitializer {
 		EntityModelLayerRegistry.registerModelLayer(FairyEntityModel.LAYER_LOCATION, FairyEntityModel::getTexturedModelData);
 		EntityModelLayerRegistry.registerModelLayer(BeamosEntityModel.LAYER_LOCATION, BeamosEntityModel::getTexturedModelData);
 		EntityModelLayerRegistry.registerModelLayer(TektiteModel.LAYER_LOCATION, TektiteModel::getTexturedModelData);
+		EntityModelLayerRegistry.registerModelLayer(OctorokEntityModel.LAYER_LOCATION, OctorokEntityModel::getTexturedModelData);
 
 		EntityModelLayerRegistry.registerModelLayer(DungeonDoorModel.LAYER_LOCATION, DungeonDoorModel::getTexturedModelData);
 	}

@@ -227,7 +227,10 @@
   "entity.zeldacraft.red_tektite": "Red Tektite",
   "item.zeldacraft.blue_tektite_spawn_egg": "Blue Tektite Spawn Egg",
   "entity.zeldacraft.blue_tektite": "Blue Tektite",
-
+  "item.zeldacraft.octorok_spawn_egg": "Octorok Spawn Egg",
+  "entity.zeldacraft.red_octorok": "Octorok",
+  "item.zeldacraft.blue_octorok_spawn_egg": "Blue Octorok Spawn Egg",
+  "entity.zeldacraft.blue_octorok": "Blue Octorok",
 
   "sounds.zeldacraft.falling_star": "Star Falling from Sky",
   "sounds.zeldacraft.fire_magic": "Fire Rod Shot",

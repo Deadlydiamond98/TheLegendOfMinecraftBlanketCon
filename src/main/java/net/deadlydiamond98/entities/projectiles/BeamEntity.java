@@ -130,7 +130,7 @@ public class BeamEntity extends ProjectileEntity {
         }
         else {
             this.updateTrackedPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.getYaw(), this.getPitch(), 20, true);
-            if (this.age % 2 == 0 && this.getLeader()) {
+            if (this.age % 2 == 0 && this.getLeader() && this.age > 5) {
                 this.getWorld().addParticle(ZeldaParticles.Beam_Particle, this.getX(), this.getY(), this.getZ(), 0, 0, 0);
             }
         }
@@ -146,10 +146,11 @@ public class BeamEntity extends ProjectileEntity {
         if (this.age >= 60) {
             this.discard();
         }
-
-        float[] rgb = pickColor(random.nextBetween(0, 2));
-        DustParticleEffect dustParticleEffect = new DustParticleEffect(new Vec3d(rgb[0], rgb[1], rgb[2]).toVector3f(), 1.0f);
-        this.getWorld().addParticle(dustParticleEffect, this.getX(), this.getY(), this.getZ(), 0, 0 , 0);
+        if (this.age > 5) {
+            float[] rgb = pickColor(random.nextBetween(0, 2));
+            DustParticleEffect dustParticleEffect = new DustParticleEffect(new Vec3d(rgb[0], rgb[1], rgb[2]).toVector3f(), 1.0f);
+            this.getWorld().addParticle(dustParticleEffect, this.getX(), this.getY(), this.getZ(), 0, 0 , 0);
+        }
     }
 
     private static float[] pickColor(int hexCode) {

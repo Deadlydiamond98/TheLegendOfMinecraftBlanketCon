@@ -250,6 +250,10 @@ public class ZeldaItems {
             ZeldaEntities.Red_Tektite_Entity, 0x831f4b, 0xf76e24, new FabricItemSettings()));
     public static final Item Blue_Tektite_Spawn_Egg = registerItem("blue_tektite_spawn_egg", new SpawnEggItem(
             ZeldaEntities.Blue_Tektite_Entity, 0x2e55b2, 0xf76e24, new FabricItemSettings()));
+    public static final Item Octorok_Spawn_Egg = registerItem("octorok_spawn_egg", new SpawnEggItem(
+            ZeldaEntities.Red_Octorok_Entity, 0xb53120, 0xff92b9, new FabricItemSettings()));
+    public static final Item Blue_Octorok_Spawn_Egg = registerItem("blue_octorok_spawn_egg", new SpawnEggItem(
+            ZeldaEntities.Blue_Octorok_Entity, 0x1412a7, 0x60d0e0, new FabricItemSettings()));
 
 
 
@@ -265,6 +269,8 @@ public class ZeldaItems {
         entry.add(Keese_Spawn_Egg);
         entry.add(Red_Tektite_Spawn_Egg);
         entry.add(Blue_Tektite_Spawn_Egg);
+        entry.add(Octorok_Spawn_Egg);
+        entry.add(Blue_Octorok_Spawn_Egg);
     }
     public static void registerItems() {
         ZeldaCraft.LOGGER.debug("Registering Items for" + ZeldaCraft.MOD_ID);

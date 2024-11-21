@@ -1,16 +1,12 @@
 package net.deadlydiamond98.renderer.entity.monster;
 
-import net.deadlydiamond98.ZeldaCraft;
-import net.deadlydiamond98.entities.monsters.TektiteEntity;
+import net.deadlydiamond98.entities.monsters.tektites.TektiteEntity;
 import net.deadlydiamond98.model.entity.TektiteModel;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.MobEntityRenderer;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.entity.Entity;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.RotationAxis;
 
 public abstract class TektiteRenderer<T extends TektiteEntity> extends MobEntityRenderer<T, TektiteModel<T>> {
 

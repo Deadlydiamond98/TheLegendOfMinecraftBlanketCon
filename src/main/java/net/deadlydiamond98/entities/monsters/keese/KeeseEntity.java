@@ -1,4 +1,4 @@
-package net.deadlydiamond98.entities.monsters;
+package net.deadlydiamond98.entities.monsters.keese;
 
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;

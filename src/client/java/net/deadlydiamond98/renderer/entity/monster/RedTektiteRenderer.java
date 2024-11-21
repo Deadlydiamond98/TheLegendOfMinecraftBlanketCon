@@ -1,8 +1,8 @@
 package net.deadlydiamond98.renderer.entity.monster;
 
 import net.deadlydiamond98.ZeldaCraft;
-import net.deadlydiamond98.entities.monsters.RedTektite;
-import net.deadlydiamond98.entities.monsters.TektiteEntity;
+import net.deadlydiamond98.entities.monsters.tektites.RedTektite;
+import net.deadlydiamond98.entities.monsters.tektites.TektiteEntity;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.util.Identifier;
 
