@@ -23,6 +23,7 @@ import net.deadlydiamond98.items.custom.manaitems.magicpower.MagicPowder;
 import net.deadlydiamond98.items.custom.manaitems.restoring.MagicCandy;
 import net.deadlydiamond98.items.custom.manaitems.restoring.MagicJar;
 import net.deadlydiamond98.items.custom.manaitems.restoring.StarFragment;
+import net.deadlydiamond98.items.custom.manaitems.restoring.ZeldaMagicFood;
 import net.deadlydiamond98.items.custom.manaitems.wearable.*;
 import net.deadlydiamond98.items.custom.shields.HylianShieldItem;
 import net.deadlydiamond98.magiclib.items.consumables.MagicFood;
@@ -152,9 +153,9 @@ public class ZeldaItems {
             new FabricItemSettings().food(new FoodComponent.Builder().alwaysEdible().snack().build()), 10));
     public static final Item Magic_Candy = registerItem("magic_candy", new MagicCandy(
             new FabricItemSettings().maxCount(16).food(new FoodComponent.Builder().alwaysEdible().snack().build()), 0));
-    public static final Item Magic_Tart = registerItem("magic_tart", new MagicFood(
+    public static final Item Magic_Tart = registerItem("magic_tart", new ZeldaMagicFood(
             new FabricItemSettings().food(new FoodComponent.Builder().hunger(7).saturationModifier(2.0f).alwaysEdible().build()), 40));
-    public static final Item Magic_Flan = registerItem("magic_flan", new MagicFood(
+    public static final Item Magic_Flan = registerItem("magic_flan", new ZeldaMagicFood(
             new FabricItemSettings().food(new FoodComponent.Builder().hunger(8).saturationModifier(4.0f).alwaysEdible().build()), 100));
     public static final Item Magic_Upgrade = registerItem("magic_upgrade", new MagicContainer(
             new FabricItemSettings().maxCount(16), 500, 100, true, true, 20));
@@ -254,6 +255,8 @@ public class ZeldaItems {
             ZeldaEntities.Red_Octorok_Entity, 0xb53120, 0xff92b9, new FabricItemSettings()));
     public static final Item Blue_Octorok_Spawn_Egg = registerItem("blue_octorok_spawn_egg", new SpawnEggItem(
             ZeldaEntities.Blue_Octorok_Entity, 0x1412a7, 0x60d0e0, new FabricItemSettings()));
+    public static final Item Like_Like_Spawn_Egg = registerItem("like_like_spawn_egg", new SpawnEggItem(
+            ZeldaEntities.Like_Like_Entity, 0xd79c8c, 0x160407, new FabricItemSettings()));
 
 
 
@@ -271,6 +274,7 @@ public class ZeldaItems {
         entry.add(Blue_Tektite_Spawn_Egg);
         entry.add(Octorok_Spawn_Egg);
         entry.add(Blue_Octorok_Spawn_Egg);
+        entry.add(Like_Like_Spawn_Egg);
     }
     public static void registerItems() {
         ZeldaCraft.LOGGER.debug("Registering Items for" + ZeldaCraft.MOD_ID);

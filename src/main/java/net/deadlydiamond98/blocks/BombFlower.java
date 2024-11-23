@@ -1,6 +1,9 @@
 package net.deadlydiamond98.blocks;
 
+import net.deadlydiamond98.entities.bombs.BombEntity;
 import net.deadlydiamond98.items.ZeldaItems;
+import net.deadlydiamond98.util.ZeldaAdvancementCriterion;
+import net.deadlydiamond98.util.ZeldaTags;
 import net.minecraft.block.*;
 import net.minecraft.block.piston.PistonBehavior;
 import net.minecraft.entity.ai.pathing.NavigationType;
@@ -11,6 +14,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.registry.tag.FluidTags;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
@@ -137,10 +141,23 @@ public class BombFlower extends PlantBlock {
 
     @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-        if (getAge(state) == 3) {
+
+        if (player.getStackInHand(hand).isIn(ZeldaTags.Items.Primes_Bomb_Flowers) && getAge(state) == 3) {
+            world.setBlockState(pos, state.with(AGE, 0));
+            BombEntity bombEntity = new BombEntity(world, pos.getX() + 0.5, pos.getY() + 0.2,
+                    pos.getZ()  + 0.5, null);
+            bombEntity.setYaw((this.getFacing(world.getBlockState(pos))).getHorizontal() - 90);
+            world.spawnEntity(bombEntity);
+            world.playSound(null, pos, SoundEvents.ENTITY_TNT_PRIMED, SoundCategory.BLOCKS, 1.0f, 1.0f);
+            return ActionResult.success(world.isClient);
+        }
+        else if (getAge(state) == 3) {
             world.setBlockState(pos, state.with(AGE, 0));
             dropStack(world, pos, new ItemStack(ZeldaItems.Bomb, 1));
-            world.playSound((PlayerEntity) null, pos, SoundEvents.BLOCK_SWEET_BERRY_BUSH_PICK_BERRIES, SoundCategory.BLOCKS, 1.0F, 0.8F + world.random.nextFloat() * 0.4F);
+            world.playSound(null, pos, SoundEvents.BLOCK_SWEET_BERRY_BUSH_PICK_BERRIES, SoundCategory.BLOCKS, 1.0F, 0.8F + world.random.nextFloat() * 0.4F);
+            if (!world.isClient()) {
+                ZeldaAdvancementCriterion.eh.trigger((ServerPlayerEntity) player);
+            }
             return ActionResult.success(world.isClient);
         }
         else {

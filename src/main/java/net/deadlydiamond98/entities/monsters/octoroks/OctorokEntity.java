@@ -4,6 +4,8 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.RangedAttackMob;
 import net.minecraft.entity.ai.goal.*;
+import net.minecraft.entity.ai.pathing.MobNavigation;
+import net.minecraft.entity.ai.pathing.SwimNavigation;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.mob.HostileEntity;
@@ -17,9 +19,15 @@ import net.minecraft.world.World;
 
 public class OctorokEntity extends HostileEntity implements RangedAttackMob {
 
+    protected final SwimNavigation waterNavigation;
+    protected final MobNavigation landNavigation;
+
     public OctorokEntity(EntityType<? extends HostileEntity> entityType, World world) {
         super(entityType, world);
         this.experiencePoints = NORMAL_MONSTER_XP;
+
+        this.waterNavigation = new SwimNavigation(this, world);
+        this.landNavigation = new MobNavigation(this, world);
     }
 
     protected void initGoals() {
@@ -46,5 +54,23 @@ public class OctorokEntity extends HostileEntity implements RangedAttackMob {
 
     protected PersistentProjectileEntity createArrowProjectile(ItemStack arrow, float damageModifier) {
         return ProjectileUtil.createArrowProjectile(this, arrow, damageModifier);
+    }
+
+    @Override
+    public boolean canBreatheInWater() {
+        return true;
+    }
+
+    @Override
+    public void updateSwimming() {
+        if (!this.getWorld().isClient) {
+            if (this.canMoveVoluntarily() && this.isTouchingWater()) {
+                this.navigation = this.waterNavigation;
+                this.setSwimming(true);
+            } else {
+                this.navigation = this.landNavigation;
+                this.setSwimming(false);
+            }
+        }
     }
 }

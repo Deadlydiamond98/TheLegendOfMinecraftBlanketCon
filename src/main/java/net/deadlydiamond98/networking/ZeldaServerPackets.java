@@ -27,8 +27,7 @@ public class ZeldaServerPackets {
     public static final Identifier EntityStatsPacket = new Identifier(ZeldaCraft.MOD_ID, "entity_stats_packet");
     public static final Identifier NeckTrinketPacket = new Identifier(ZeldaCraft.MOD_ID, "neck_trinket_packet");
     public static final Identifier BackTrinketPacket = new Identifier(ZeldaCraft.MOD_ID, "back_trinket_packet");
-
-    public static final Identifier PlayShootingStarSound = new Identifier(ZeldaCraft.MOD_ID, "play_shooting_star_sound");
+    public static final Identifier PlaySoundPacket = new Identifier(ZeldaCraft.MOD_ID, "play_zelda_sound");
 
     public static void registerS2CPackets() {
         ServerPlayNetworking.registerGlobalReceiver(ShootBeamPacket, ShootBeamC2SPacket::receive);
@@ -80,8 +79,9 @@ public class ZeldaServerPackets {
         buf.writeBoolean(flip);
         ServerPlayNetworking.send(player, EntityStatsPacket, buf);
     }
-    public static void sendShootingStarSound(ServerPlayerEntity player) {
+    public static void sendSoundPacket(ServerPlayerEntity player, int soundType) {
         PacketByteBuf buf = PacketByteBufs.create();
-        ServerPlayNetworking.send(player, PlayShootingStarSound, buf);
+        buf.writeVarInt(soundType);
+        ServerPlayNetworking.send(player, PlaySoundPacket, buf);
     }
 }

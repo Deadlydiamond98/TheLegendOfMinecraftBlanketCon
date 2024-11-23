@@ -9,7 +9,7 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.UseAction;
 import net.minecraft.world.World;
 
-public class MagicJar extends MagicFood {
+public class MagicJar extends ZeldaMagicFood {
 
     public MagicJar(Settings settings, int amountToGive) {
         super(settings, amountToGive);

@@ -2,11 +2,14 @@ package net.deadlydiamond98.items.custom.Swords;
 
 import net.deadlydiamond98.magiclib.items.MagicItemData;
 import net.deadlydiamond98.sounds.ZeldaSounds;
+import net.deadlydiamond98.util.ZeldaAdvancementCriterion;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.*;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
 import net.minecraft.util.*;
 import net.minecraft.world.World;
@@ -25,9 +28,16 @@ public class MagicSword extends SwordItem implements MagicItemData {
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
         super.inventoryTick(stack, world, entity, slot, selected);
-        if (!((PlayerEntity) entity).getItemCooldownManager().isCoolingDown(stack.getItem()) && soundPlay) {
-            soundPlay = false;
-            ((PlayerEntity) entity).playSound(ZeldaSounds.SwordRecharge, SoundCategory.PLAYERS, 1, 1);
+
+        if (entity instanceof PlayerEntity player) {
+            if (!world.isClient()) {
+                ZeldaAdvancementCriterion.idtga.trigger((ServerPlayerEntity) entity);
+            }
+
+            if (!((PlayerEntity) entity).getItemCooldownManager().isCoolingDown(stack.getItem()) && soundPlay) {
+                soundPlay = false;
+                ((PlayerEntity) entity).playSound(ZeldaSounds.SwordRecharge, SoundCategory.PLAYERS, 1, 1);
+            }
         }
     }
 

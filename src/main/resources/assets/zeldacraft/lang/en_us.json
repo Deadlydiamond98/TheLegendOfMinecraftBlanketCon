@@ -231,6 +231,8 @@
   "entity.zeldacraft.red_octorok": "Octorok",
   "item.zeldacraft.blue_octorok_spawn_egg": "Blue Octorok Spawn Egg",
   "entity.zeldacraft.blue_octorok": "Blue Octorok",
+  "item.zeldacraft.like_like_spawn_egg": "Like Like Spawn Egg",
+  "entity.zeldacraft.like_like": "Like Like",
 
   "sounds.zeldacraft.falling_star": "Star Falling from Sky",
   "sounds.zeldacraft.fire_magic": "Fire Rod Shot",
@@ -257,5 +259,22 @@
   "zeldacraft.midnightconfig.title": "Legend of Steve Configs",
   "zeldacraft.midnightconfig.mobsDropShards": "Mobs can drop Emerald Shards",
   "zeldacraft.midnightconfig.hookShotAnything": "Make any block Hookshot-able",
-  "zeldacraft.midnightconfig.healpgoodcompat": "Allow grass to drop hearts from Healing Pretty Good"
+  "zeldacraft.midnightconfig.healpgoodcompat": "Allow grass to drop hearts from Healing Pretty Good",
+
+  "advancements.zeldacraft.root": "The Legend of Steve",
+  "advancements.zeldacraft.root.desc": "The beginning of the Legend of Steve advancement tree",
+  "advancements.zeldacraft.idtga": "It's Dangerous To Go Alone",
+  "advancements.zeldacraft.idtga.desc": "Obtain the Magic Sword",
+  "advancements.zeldacraft.miasi": "Mow It and Show It",
+  "advancements.zeldacraft.miasi.desc": "Cut some Loot Grass for some goodies",
+  "advancements.zeldacraft.eh": "Explosive Harvest",
+  "advancements.zeldacraft.eh.desc": "Harvest naturally growing bombs from a Bomb Flower",
+  "advancements.zeldacraft.inv": "Invigorating",
+  "advancements.zeldacraft.inv.desc": "Consume magic replenishing food or drink",
+  "advancements.zeldacraft.maw": "Make A Wish",
+  "advancements.zeldacraft.maw.desc": "Find a Shooting Star",
+  "advancements.zeldacraft.bicb": "But It Came Back",
+  "advancements.zeldacraft.bicb.desc": "Throw and Catch a Boomerang",
+  "advancements.zeldacraft.ps": "Pepperoni Secret",
+  "advancements.zeldacraft.ps.desc": "Use a Bomb to blow up a cracked wall"
 }

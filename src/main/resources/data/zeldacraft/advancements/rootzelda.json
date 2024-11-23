@@ -1,0 +1,22 @@
+{
+  "display": {
+    "icon": {
+      "item": "zeldacraft:master_sword"
+    },
+    "title": {
+      "translate": "advancements.zeldacraft.root"
+    },
+    "description": {
+      "translate": "advancements.zeldacraft.root.desc"
+    },
+    "background": "zeldacraft:textures/block/brown_dungeoncite_tile.png",
+    "show_toast": false,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "tick": {
+      "trigger": "minecraft:tick"
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "display": {
+    "icon": {
+      "item": "minecraft:cracked_stone_bricks"
+    },
+    "title": {
+      "translate": "advancements.zeldacraft.ps"
+    },
+    "description": {
+      "translate": "advancements.zeldacraft.ps.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "parent": "zeldacraft:eh",
+  "criteria": {
+    "requirement": {
+      "trigger": "zeldacraft:ps"
+    }
+  }
+}

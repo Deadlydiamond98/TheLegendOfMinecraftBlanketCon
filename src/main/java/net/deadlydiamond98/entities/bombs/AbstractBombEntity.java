@@ -6,6 +6,7 @@ import net.deadlydiamond98.blocks.ZeldaBlocks;
 import net.deadlydiamond98.items.custom.bats.CrackedBat;
 import net.deadlydiamond98.networking.ZeldaServerPackets;
 import net.deadlydiamond98.sounds.ZeldaSounds;
+import net.deadlydiamond98.util.ZeldaAdvancementCriterion;
 import net.deadlydiamond98.util.ZeldaTags;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
@@ -109,6 +110,9 @@ public abstract class AbstractBombEntity extends Entity implements Ownable {
 
             if (playSecret) {
                 this.getWorld().playSound(null, this.getBlockPos(), ZeldaSounds.SecretRoom, SoundCategory.BLOCKS, 1.0f, 1.0f);
+                if (this.getOwner() != null && this.getOwner() instanceof PlayerEntity player) {
+                    ZeldaAdvancementCriterion.ps.trigger((ServerPlayerEntity) player);
+                }
             }
 
             this.getWorld().createExplosion(this, this.getX(), this.getY(), this.getZ(), (int) Math.ceil(this.power * 0.5), false, World.ExplosionSourceType.NONE);

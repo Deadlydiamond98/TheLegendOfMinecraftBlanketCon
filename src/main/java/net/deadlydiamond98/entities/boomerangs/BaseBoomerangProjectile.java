@@ -4,6 +4,7 @@ import net.deadlydiamond98.enchantments.ZeldaEnchantments;
 import net.deadlydiamond98.items.ZeldaItems;
 import net.deadlydiamond98.items.custom.boomerang.MagicBoomerangItem;
 import net.deadlydiamond98.sounds.ZeldaSounds;
+import net.deadlydiamond98.util.ZeldaAdvancementCriterion;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.PlantBlock;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -21,6 +22,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
@@ -175,6 +177,7 @@ public class BaseBoomerangProjectile extends ProjectileEntity {
                                     player.getInventory().insertStack(this.getBoomerangItem());
                                 }
                             }
+                            ZeldaAdvancementCriterion.bicb.trigger((ServerPlayerEntity) player);
                         }
                         this.getWorld().playSound(null, this.getBlockPos(),
                                 ZeldaSounds.BoomerangCaught,

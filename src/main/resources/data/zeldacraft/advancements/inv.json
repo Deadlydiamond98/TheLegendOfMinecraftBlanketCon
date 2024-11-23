@@ -1,0 +1,23 @@
+{
+  "display": {
+    "icon": {
+      "item": "zeldacraft:magic_jar"
+    },
+    "title": {
+      "translate": "advancements.zeldacraft.inv"
+    },
+    "description": {
+      "translate": "advancements.zeldacraft.inv.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "parent": "zeldacraft:miasi",
+  "criteria": {
+    "requirement": {
+      "trigger": "zeldacraft:inv"
+    }
+  }
+}

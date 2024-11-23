@@ -73,6 +73,12 @@ public class ZeldaSounds {
     public static SoundEvent TektiteHurt = registerSoundEvent("tektite_hurt");
     public static SoundEvent TektiteDeath = registerSoundEvent("tektite_death");
 
+    //Advancements
+    public static SoundEvent AdvancementRegular = registerSoundEvent("zelda_advancement_reg");
+    public static SoundEvent AdvancementGoal = registerSoundEvent("zelda_advancement_goal");
+
+
+
     public static SoundEvent registerSoundEvent(String name) {
         Identifier id = new Identifier(ZeldaCraft.MOD_ID, name);
         return Registry.register(Registries.SOUND_EVENT, id, SoundEvent.of(id));

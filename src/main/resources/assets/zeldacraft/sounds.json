@@ -222,5 +222,17 @@
     "sounds": [
       "zeldacraft:dungeon_door_close"
     ]
+  },
+
+  "zelda_advancement_reg": {
+    "sounds": [
+      "zeldacraft:zeldaadvancement"
+    ]
+  },
+
+  "zelda_advancement_goal": {
+    "sounds": [
+      "zeldacraft:zeldagoal"
+    ]
   }
 }

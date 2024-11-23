@@ -1,0 +1,23 @@
+{
+  "display": {
+    "icon": {
+      "item": "zeldacraft:magic_boomerang"
+    },
+    "title": {
+      "translate": "advancements.zeldacraft.bicb"
+    },
+    "description": {
+      "translate": "advancements.zeldacraft.bicb.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "parent": "zeldacraft:rootzelda",
+  "criteria": {
+    "requirement": {
+      "trigger": "zeldacraft:bicb"
+    }
+  }
+}

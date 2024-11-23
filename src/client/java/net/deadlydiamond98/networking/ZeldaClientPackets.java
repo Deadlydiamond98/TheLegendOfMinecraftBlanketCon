@@ -19,7 +19,7 @@ public class ZeldaClientPackets {
     public static final Identifier EntityStatsPacket = new Identifier(ZeldaCraft.MOD_ID, "entity_stats_packet");
     public static final Identifier NeckTrinketPacket = new Identifier(ZeldaCraft.MOD_ID, "neck_trinket_packet");
     public static final Identifier BackTrinketPacket = new Identifier(ZeldaCraft.MOD_ID, "back_trinket_packet");
-    public static final Identifier PlayShootingStarSound = new Identifier(ZeldaCraft.MOD_ID, "play_shooting_star_sound");
+    public static final Identifier PlaySoundPacket = new Identifier(ZeldaCraft.MOD_ID, "play_zelda_sound");
 
 
     public static void registerC2SPackets() {
@@ -29,7 +29,7 @@ public class ZeldaClientPackets {
         ClientPlayNetworking.registerGlobalReceiver(DekuStunOverlayPacket, DekuStunOverlayS2CPacket::recieve);
         ClientPlayNetworking.registerGlobalReceiver(PlayerStatsPacket, PlayerStatsS2CPacket::recieve);
         ClientPlayNetworking.registerGlobalReceiver(EntityStatsPacket, EntityStatsS2CPacket::recieve);
-        ClientPlayNetworking.registerGlobalReceiver(PlayShootingStarSound, PlayShootingStarSoundS2CPacket::recieve);
+        ClientPlayNetworking.registerGlobalReceiver(PlaySoundPacket, PlaySoundS2CPacket::recieve);
     }
 
     public static void sendSwordBeamPacket() {

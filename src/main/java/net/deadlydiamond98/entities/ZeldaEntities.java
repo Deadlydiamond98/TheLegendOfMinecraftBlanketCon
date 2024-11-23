@@ -264,6 +264,14 @@ public class ZeldaEntities {
                     .build()
     );
 
+    public static final EntityType<LikeLikeEntity> Like_Like_Entity = Registry.register(
+            Registries.ENTITY_TYPE,
+            new Identifier(ZeldaCraft.MOD_ID, "like_like"),
+            FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, LikeLikeEntity::new)
+                    .dimensions(EntityDimensions.fixed(0.75f,0.75f))
+                    .build()
+    );
+
     public static void addEntitiesToWorld() {
         //Spawning
         BiomeModifications.addSpawn(

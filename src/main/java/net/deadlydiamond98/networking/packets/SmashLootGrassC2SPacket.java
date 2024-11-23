@@ -5,6 +5,7 @@ import net.deadlydiamond98.blocks.LootGrass;
 import net.deadlydiamond98.blocks.ZeldaBlocks;
 import net.deadlydiamond98.entities.ZeldaEntities;
 import net.deadlydiamond98.entities.monsters.FairyEntity;
+import net.deadlydiamond98.util.ZeldaAdvancementCriterion;
 import net.deadlydiamond98.util.ZeldaConfig;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
 import net.minecraft.block.Block;
@@ -55,6 +56,8 @@ public class SmashLootGrassC2SPacket {
 
 
                 world.setBlockState(lookingBlock, lootGrass.getDefaultState().with(AGE, 0), 2);
+
+                ZeldaAdvancementCriterion.miasi.trigger(player);
 
                 int random = (((int) (Math.random() * 50)));
                 if (random <= 20 && ZeldaCraft.isModLoaded("healpgood") && ZeldaConfig.healpgoodcompat) {

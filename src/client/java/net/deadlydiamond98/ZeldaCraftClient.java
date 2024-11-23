@@ -155,6 +155,7 @@ public class ZeldaCraftClient implements ClientModInitializer {
 		EntityRendererRegistry.register(ZeldaEntities.Red_Tektite_Entity, RedTektiteRenderer::new);
 		EntityRendererRegistry.register(ZeldaEntities.Blue_Tektite_Entity, BlueTektiteRenderer::new);
 		EntityRendererRegistry.register(ZeldaEntities.Beamos_Entity, BeamosRenderer::new);
+		EntityRendererRegistry.register(ZeldaEntities.Like_Like_Entity, LikeLikeRenderer::new);
 
 		EntityRendererRegistry.register(ZeldaEntities.Baseball_Entity, FlyingItemEntityRenderer::new);
 		EntityRendererRegistry.register(ZeldaEntities.Deku_Nut_Entity, FlyingItemEntityRenderer::new);
@@ -188,6 +189,7 @@ public class ZeldaCraftClient implements ClientModInitializer {
 		EntityModelLayerRegistry.registerModelLayer(BeamosEntityModel.LAYER_LOCATION, BeamosEntityModel::getTexturedModelData);
 		EntityModelLayerRegistry.registerModelLayer(TektiteModel.LAYER_LOCATION, TektiteModel::getTexturedModelData);
 		EntityModelLayerRegistry.registerModelLayer(OctorokEntityModel.LAYER_LOCATION, OctorokEntityModel::getTexturedModelData);
+		EntityModelLayerRegistry.registerModelLayer(LikeLikeModel.LAYER_LOCATION, LikeLikeModel::getTexturedModelData);
 
 		EntityModelLayerRegistry.registerModelLayer(DungeonDoorModel.LAYER_LOCATION, DungeonDoorModel::getTexturedModelData);
 	}

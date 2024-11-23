@@ -1,0 +1,23 @@
+{
+  "display": {
+    "icon": {
+      "item": "zeldacraft:star_fragment"
+    },
+    "title": {
+      "translate": "advancements.zeldacraft.maw"
+    },
+    "description": {
+      "translate": "advancements.zeldacraft.maw.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "parent": "zeldacraft:rootzelda",
+  "criteria": {
+    "requirement": {
+      "trigger": "zeldacraft:maw"
+    }
+  }
+}

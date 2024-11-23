@@ -23,6 +23,7 @@ import net.deadlydiamond98.networking.ZeldaServerPackets;
 import net.deadlydiamond98.particle.ZeldaParticles;
 import net.deadlydiamond98.sounds.ZeldaSounds;
 import net.deadlydiamond98.statuseffects.ZeldaStatusEffects;
+import net.deadlydiamond98.util.ZeldaAdvancementCriterion;
 import net.deadlydiamond98.util.ZeldaConfig;
 import net.deadlydiamond98.util.ZeldaLootTables;
 import net.deadlydiamond98.util.ZeldaPotionRecipes;
@@ -73,6 +74,7 @@ public class ZeldaCraft implements ModInitializer {
 		ZeldaItemsTab.registerItemGroup();
 		ZeldaBlocksTab.registerBlockItemGroup();
 		ZeldaEntities.addEntitiesToWorld();
+		ZeldaAdvancementCriterion.registerAdvancements();
 		LOGGER.info("Mod Loaded");
 	}
 
@@ -85,6 +87,7 @@ public class ZeldaCraft implements ModInitializer {
 		FabricDefaultAttributeRegistry.register(ZeldaEntities.Blue_Tektite_Entity, BlueTektite.createCustomAttributes());
 		FabricDefaultAttributeRegistry.register(ZeldaEntities.Red_Octorok_Entity, RedOctorokEntity.createCustomAttributes());
 		FabricDefaultAttributeRegistry.register(ZeldaEntities.Blue_Octorok_Entity, BlueOctorokEntity.createCustomAttributes());
+		FabricDefaultAttributeRegistry.register(ZeldaEntities.Like_Like_Entity, LikeLikeEntity.createCustomAttributes());
 	}
 
 	public static boolean isModLoaded(String modid) {

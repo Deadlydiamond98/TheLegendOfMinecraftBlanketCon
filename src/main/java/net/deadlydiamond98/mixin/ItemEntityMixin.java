@@ -3,9 +3,11 @@ package net.deadlydiamond98.mixin;
 import net.deadlydiamond98.items.custom.EmeraldItem;
 import net.deadlydiamond98.items.custom.manaitems.restoring.StarFragment;
 import net.deadlydiamond98.sounds.ZeldaSounds;
+import net.deadlydiamond98.util.ZeldaAdvancementCriterion;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundCategory;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
@@ -38,7 +40,14 @@ public abstract class ItemEntityMixin {
 					lastPickupTimeMap.put(player, currentTime);
 				}
 			}
-			if (itemEntity.getStack().getItem() instanceof StarFragment starFragment) {
+			if (itemEntity.getStack().getItem() instanceof StarFragment) {
+
+				if (itemEntity.isGlowing()) {
+					if (!itemEntity.getWorld().isClient()) {
+						ZeldaAdvancementCriterion.maw.trigger((ServerPlayerEntity) player);
+					}
+				}
+
 				long currentTime = System.currentTimeMillis();
 				long lastPickupTime = lastPickupTimeMap.getOrDefault(player, 0L);
 				if (currentTime - lastPickupTime > 500) {

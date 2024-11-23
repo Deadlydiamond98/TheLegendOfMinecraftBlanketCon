@@ -7,7 +7,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.world.World;
 
-public class MagicCandy extends MagicFood {
+public class MagicCandy extends ZeldaMagicFood {
     public MagicCandy(Settings settings, int amountToGive) {
         super(settings, amountToGive);
     }

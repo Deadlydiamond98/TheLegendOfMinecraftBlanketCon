@@ -66,7 +66,7 @@ public class ZeldaSeverTickEvent {
 
                                 if (Math.abs(xPos) < 50 && Math.abs(zPos) < 50) {
                                     if (!meteorShower.isMeteorShowerActive()) {
-                                        ZeldaServerPackets.sendShootingStarSound(playerForSound);
+                                        ZeldaServerPackets.sendSoundPacket(playerForSound, 1);
                                     }
                                 }
                             });

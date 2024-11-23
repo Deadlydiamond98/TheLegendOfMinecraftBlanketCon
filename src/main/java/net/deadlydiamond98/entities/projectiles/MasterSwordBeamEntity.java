@@ -47,7 +47,7 @@ public class MasterSwordBeamEntity extends ProjectileEntity {
     protected void onEntityHit(EntityHitResult entityHitResult) {
         super.onEntityHit(entityHitResult);
         Entity entity = entityHitResult.getEntity();
-        entity.damage(entity.getDamageSources().magic(), 3.0F);
+        entity.damage(entity.getDamageSources().indirectMagic(this.getOwner(), this.getOwner()), 3.0F);
     }
 
     @Override
