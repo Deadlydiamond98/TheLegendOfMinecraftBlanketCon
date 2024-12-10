@@ -15,18 +15,18 @@ public class ZeldaAdvancement extends AbstractCriterion<ZeldaAdvancement.Conditi
 
     private final Identifier id;
     private final int soundtype;
-    private final boolean sound;
+    private final boolean hasSound;
 
     public ZeldaAdvancement(Identifier id, int soundtype) {
         this.id = id;
         this.soundtype = soundtype;
-        this.sound = true;
+        this.hasSound = true;
     }
 
     public ZeldaAdvancement(Identifier id) {
         this.id = id;
         this.soundtype = 1;
-        this.sound = false;
+        this.hasSound = false;
     }
 
     public void trigger(ServerPlayerEntity player) {
@@ -39,7 +39,7 @@ public class ZeldaAdvancement extends AbstractCriterion<ZeldaAdvancement.Conditi
         }
         this.trigger(player, (conditions) -> true);
 
-        if (this.sound) {
+        if (this.hasSound && ZeldaConfig.advancementfanfare) {
             ZeldaServerPackets.sendSoundPacket(player, this.soundtype);
         }
     }

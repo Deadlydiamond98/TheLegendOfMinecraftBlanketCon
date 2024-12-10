@@ -2,18 +2,14 @@ package net.deadlydiamond98.world.zeldadungeons;
 
 import com.mojang.serialization.Codec;
 import net.deadlydiamond98.ZeldaCraft;
-import net.deadlydiamond98.world.zeldadungeons.gohmadungeon.peices.EntranceRoom;
-import net.deadlydiamond98.world.zeldadungeons.gohmadungeon.peices.TestingRoom;
-import net.deadlydiamond98.world.zeldadungeons.gohmadungeon.peices.TestingRoomB;
-import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
-import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
+import net.deadlydiamond98.world.zeldadungeons.gohmadungeon.peices.entrance.MainEntrance;
+import net.deadlydiamond98.world.zeldadungeons.gohmadungeon.peices.testing.EntranceRoom;
+import net.deadlydiamond98.world.zeldadungeons.gohmadungeon.peices.testing.TestingRoom;
+import net.deadlydiamond98.world.zeldadungeons.gohmadungeon.peices.testing.TestingRoomB;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.RegistryKeys;
 import net.minecraft.structure.StructurePieceType;
 import net.minecraft.util.Identifier;
-import net.minecraft.world.gen.GenerationStep;
 import net.minecraft.world.gen.structure.Structure;
 import net.minecraft.world.gen.structure.StructureType;
 
@@ -23,6 +19,9 @@ public class ZeldaDungeons {
     public static final StructurePieceType Test_PeiceB = registerPiece(TestingRoomB::new, "testb");
     public static final StructurePieceType Entrance_Peice = registerPiece(EntranceRoom::new, "entrance");
     public static final StructurePieceType Entrance_Peice_Placeholder = registerPiece(EntranceRoom::new, "entrance_placeholder");
+
+
+    public static final StructurePieceType Main_Entrance = registerPiece(MainEntrance::new, "main_entrance");
 
     // GOHMA DUNGEON
     public static final StructureType<GohmaDungeon> Gohma_Dungeon = registerType("gohma_dungeon", GohmaDungeon.CODEC);

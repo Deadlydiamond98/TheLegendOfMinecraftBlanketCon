@@ -18,6 +18,7 @@ public class ZeldaItemsTab {
             FabricItemGroup.builder().displayName(Text.translatable("itemgroup.zeldacraft_items"))
                     .icon(ZeldaItems.Master_Sword::getDefaultStack).entries((displayContext, entry) -> {
                         //Swords
+                        entry.add(ZeldaItems.Tesing_Rod);
                         entry.add(ZeldaItems.Kokiri_Sword);
                         entry.add(ZeldaItems.Magic_Sword);
                         entry.add(ZeldaItems.Master_Sword);
@@ -76,6 +77,7 @@ public class ZeldaItemsTab {
                         entry.add(ZeldaItems.Magic_Jar);
                         entry.add(ZeldaItems.Magic_Tart);
                         entry.add(ZeldaItems.Magic_Flan);
+                        entry.add(ZeldaItems.Edible_Magic_Mushroom);
                         entry.add(ZeldaItems.Magic_Candy);
                         entry.add(ZeldaItems.Magic_Upgrade);
                         entry.add(ZeldaItems.Magic_Downgrade);

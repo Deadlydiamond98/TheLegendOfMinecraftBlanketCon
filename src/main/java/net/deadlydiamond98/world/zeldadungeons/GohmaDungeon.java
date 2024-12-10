@@ -4,9 +4,10 @@ import com.mojang.serialization.Codec;
 import net.deadlydiamond98.ZeldaCraft;
 import net.deadlydiamond98.world.zeldadungeons.base.BaseDungeonPiece;
 import net.deadlydiamond98.world.zeldadungeons.base.DungeonEntrance;
-import net.deadlydiamond98.world.zeldadungeons.gohmadungeon.peices.EntranceRoom;
-import net.deadlydiamond98.world.zeldadungeons.gohmadungeon.peices.TestingRoom;
-import net.deadlydiamond98.world.zeldadungeons.gohmadungeon.peices.TestingRoomB;
+import net.deadlydiamond98.world.zeldadungeons.gohmadungeon.peices.entrance.MainEntrance;
+import net.deadlydiamond98.world.zeldadungeons.gohmadungeon.peices.testing.EntranceRoom;
+import net.deadlydiamond98.world.zeldadungeons.gohmadungeon.peices.testing.TestingRoom;
+import net.deadlydiamond98.world.zeldadungeons.gohmadungeon.peices.testing.TestingRoomB;
 import net.minecraft.structure.StructurePiecesCollector;
 import net.minecraft.util.math.BlockBox;
 import net.minecraft.util.math.BlockPos;
@@ -43,12 +44,12 @@ public class GohmaDungeon extends Structure {
                 startPos.getX(),
                 startPos.getY(),
                 startPos.getZ(),
-                startPos.getX() + EntranceRoom.sizeX,
-                startPos.getY() + EntranceRoom.sizeY,
-                startPos.getZ() + EntranceRoom.sizeZ);
+                startPos.getX() + MainEntrance.sizeX,
+                startPos.getY() + MainEntrance.sizeY,
+                startPos.getZ() + MainEntrance.sizeZ);
 
         Direction direction = getRandomDirection();
-        BaseDungeonPiece startPiece = new EntranceRoom(startBoundingBox, direction);
+        BaseDungeonPiece startPiece = new MainEntrance(startBoundingBox, direction);
         pieces.add(startPiece);
         pieceQueue.add(startPiece);
 

@@ -12,4 +12,6 @@ public class ZeldaConfig extends MidnightConfig {
     @Comment(category = "text") public static Comment spacer3;
     @Entry(category = "text") public static boolean healpgoodcompat = true;
 
+    @Comment(category = "text") public static Comment spacer4;
+    @Entry(category = "text") public static boolean advancementfanfare = true;
 }

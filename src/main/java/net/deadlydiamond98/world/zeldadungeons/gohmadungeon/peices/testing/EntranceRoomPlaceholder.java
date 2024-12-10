@@ -1,4 +1,4 @@
-package net.deadlydiamond98.world.zeldadungeons.gohmadungeon.peices;
+package net.deadlydiamond98.world.zeldadungeons.gohmadungeon.peices.testing;
 
 import net.deadlydiamond98.ZeldaCraft;
 import net.deadlydiamond98.blocks.ZeldaBlocks;

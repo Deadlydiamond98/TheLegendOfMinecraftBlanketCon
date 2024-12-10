@@ -6,22 +6,13 @@ import net.deadlydiamond98.ZeldaCraft;
 import net.deadlydiamond98.blocks.ZeldaBlocks;
 import net.deadlydiamond98.items.ZeldaItems;
 import net.deadlydiamond98.networking.ZeldaClientPackets;
-import net.deadlydiamond98.sounds.ZeldaSounds;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.option.KeyBinding;
-import net.minecraft.client.sound.MusicTracker;
 import net.minecraft.client.util.InputUtil;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.entry.RegistryEntry;
-import net.minecraft.sound.MusicSound;
-import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.HitResult;
-import net.minecraft.world.World;
 import org.lwjgl.glfw.GLFW;
 
 public class ClientTickEvent {
@@ -44,7 +35,7 @@ public class ClientTickEvent {
 
             if (client.options.attackKey.isPressed()) {
                 if (!attackKeyWasPressed) {
-                    ZeldaClientPackets.sendSwordBeamPacket(); // Magic/Master sword functionality
+                    ZeldaClientPackets.sendSwordSwingPacket(); // Magic/Master sword functionality
                     attackKeyWasPressed = true;
                 }
 

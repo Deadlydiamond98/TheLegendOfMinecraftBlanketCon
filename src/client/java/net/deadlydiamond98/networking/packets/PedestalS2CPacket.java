@@ -1,7 +1,6 @@
 package net.deadlydiamond98.networking.packets;
 
 import net.deadlydiamond98.blocks.entities.PedestalBlockEntity;
-import net.deadlydiamond98.blocks.entities.doors.AbstractDungeonDoorEntity;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.MinecraftClient;

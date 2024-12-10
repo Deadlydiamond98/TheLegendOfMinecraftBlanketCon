@@ -88,6 +88,7 @@ public class ZeldaCraft implements ModInitializer {
 		FabricDefaultAttributeRegistry.register(ZeldaEntities.Red_Octorok_Entity, RedOctorokEntity.createCustomAttributes());
 		FabricDefaultAttributeRegistry.register(ZeldaEntities.Blue_Octorok_Entity, BlueOctorokEntity.createCustomAttributes());
 		FabricDefaultAttributeRegistry.register(ZeldaEntities.Like_Like_Entity, LikeLikeEntity.createCustomAttributes());
+		FabricDefaultAttributeRegistry.register(ZeldaEntities.Ramblin_Mushroom_Entity, RamblinMushroomEntity.createCustomAttributes());
 	}
 
 	public static boolean isModLoaded(String modid) {

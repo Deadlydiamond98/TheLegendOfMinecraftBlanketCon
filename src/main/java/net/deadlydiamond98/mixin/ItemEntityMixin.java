@@ -1,6 +1,7 @@
 package net.deadlydiamond98.mixin;
 
 import net.deadlydiamond98.items.custom.EmeraldItem;
+import net.deadlydiamond98.items.custom.PickupSound;
 import net.deadlydiamond98.items.custom.manaitems.restoring.StarFragment;
 import net.deadlydiamond98.sounds.ZeldaSounds;
 import net.deadlydiamond98.util.ZeldaAdvancementCriterion;
@@ -32,27 +33,21 @@ public abstract class ItemEntityMixin {
 	private void onEmeraldItemPickup(PlayerEntity player, CallbackInfo info) {
 		ItemEntity itemEntity = (ItemEntity) (Object) this;
 		if (!player.getWorld().isClient) {
-			if (itemEntity.getStack().getItem() instanceof EmeraldItem) {
+			if (itemEntity.getStack().getItem() instanceof PickupSound item) {
 				long currentTime = System.currentTimeMillis();
 				long lastPickupTime = lastPickupTimeMap.getOrDefault(player, 0L);
 				if (currentTime - lastPickupTime > 500) {
-					player.playSound(ZeldaSounds.EmeraldShardPickedUp, SoundCategory.PLAYERS, 1, 1);
+					player.playSound(item.getSound(), SoundCategory.PLAYERS, 1, 1);
 					lastPickupTimeMap.put(player, currentTime);
 				}
 			}
+
 			if (itemEntity.getStack().getItem() instanceof StarFragment) {
 
 				if (itemEntity.isGlowing()) {
 					if (!itemEntity.getWorld().isClient()) {
 						ZeldaAdvancementCriterion.maw.trigger((ServerPlayerEntity) player);
 					}
-				}
-
-				long currentTime = System.currentTimeMillis();
-				long lastPickupTime = lastPickupTimeMap.getOrDefault(player, 0L);
-				if (currentTime - lastPickupTime > 500) {
-					player.playSound(ZeldaSounds.StarPickedUp, SoundCategory.PLAYERS, 1, 1);
-					lastPickupTimeMap.put(player, currentTime);
 				}
 			}
 		}

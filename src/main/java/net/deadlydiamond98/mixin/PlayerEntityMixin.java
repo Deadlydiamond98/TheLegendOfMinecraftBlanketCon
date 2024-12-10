@@ -262,7 +262,7 @@ public abstract class PlayerEntityMixin implements ZeldaPlayerData {
 
     @Override
     public boolean hasArrowBeenRemoved() {
-        return arrowRemoved;
+        return this.arrowRemoved;
     }
 
     @Override

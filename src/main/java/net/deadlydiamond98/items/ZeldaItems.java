@@ -24,9 +24,9 @@ import net.deadlydiamond98.items.custom.manaitems.restoring.MagicCandy;
 import net.deadlydiamond98.items.custom.manaitems.restoring.MagicJar;
 import net.deadlydiamond98.items.custom.manaitems.restoring.StarFragment;
 import net.deadlydiamond98.items.custom.manaitems.restoring.ZeldaMagicFood;
+import net.deadlydiamond98.items.custom.manaitems.rods.TestingRod;
 import net.deadlydiamond98.items.custom.manaitems.wearable.*;
 import net.deadlydiamond98.items.custom.shields.HylianShieldItem;
-import net.deadlydiamond98.magiclib.items.consumables.MagicFood;
 import net.deadlydiamond98.sounds.ZeldaSounds;
 import net.deadlydiamond98.util.ZeldaTags;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
@@ -154,9 +154,11 @@ public class ZeldaItems {
     public static final Item Magic_Candy = registerItem("magic_candy", new MagicCandy(
             new FabricItemSettings().maxCount(16).food(new FoodComponent.Builder().alwaysEdible().snack().build()), 0));
     public static final Item Magic_Tart = registerItem("magic_tart", new ZeldaMagicFood(
-            new FabricItemSettings().food(new FoodComponent.Builder().hunger(7).saturationModifier(2.0f).alwaysEdible().build()), 40));
+            new FabricItemSettings().food(new FoodComponent.Builder().hunger(6).saturationModifier(0.4F).alwaysEdible().build()), 40));
     public static final Item Magic_Flan = registerItem("magic_flan", new ZeldaMagicFood(
-            new FabricItemSettings().food(new FoodComponent.Builder().hunger(8).saturationModifier(4.0f).alwaysEdible().build()), 100));
+            new FabricItemSettings().food(new FoodComponent.Builder().hunger(8).saturationModifier(0.8F).alwaysEdible().build()), 100));
+    public static final Item Edible_Magic_Mushroom = registerItem("edible_magic_mushroom", new ZeldaMagicFood(
+            new FabricItemSettings().food(new FoodComponent.Builder().hunger(7).saturationModifier(0.4F).alwaysEdible().build()), 50));
     public static final Item Magic_Upgrade = registerItem("magic_upgrade", new MagicContainer(
             new FabricItemSettings().maxCount(16), 500, 100, true, true, 20));
     public static final Item Magic_Downgrade = registerItem("magic_downgrade", new EmptyMagicContainer(
@@ -178,6 +180,9 @@ public class ZeldaItems {
     public static final Item Cane_Of_Pacci = registerItem("cane_of_pacci", new PacciCane(
             new FabricItemSettings().maxCount(1)));
     public static final Item Cane_Of_Somaria = registerItem("cane_of_somaria", new SomariaCane(
+            new FabricItemSettings().maxCount(1)));
+
+    public static final Item Tesing_Rod = registerItem("testing_rod", new TestingRod(
             new FabricItemSettings().maxCount(1)));
 
     //Util

@@ -59,6 +59,7 @@
   "item.zeldacraft.magic_candy": "Magic Candy",
   "item.zeldacraft.magic_tart": "Magic Tart",
   "item.zeldacraft.magic_flan": "Magic Flan",
+  "item.zeldacraft.edible_magic_mushroom": "Edible Magic Mushroom",
   "item.zeldacraft.magic_upgrade": "Magic Container",
   "item.zeldacraft.magic_downgrade": "Empty Magic Container",
   "item.zeldacraft.fairy_bottle": "Fairy Bottle",
@@ -260,6 +261,7 @@
   "zeldacraft.midnightconfig.mobsDropShards": "Mobs can drop Emerald Shards",
   "zeldacraft.midnightconfig.hookShotAnything": "Make any block Hookshot-able",
   "zeldacraft.midnightconfig.healpgoodcompat": "Allow grass to drop hearts from Healing Pretty Good",
+  "zeldacraft.midnightconfig.advancementfanfare": "Enable custom sound for advancements from The Legend of Steve",
 
   "advancements.zeldacraft.root": "The Legend of Steve",
   "advancements.zeldacraft.root.desc": "The beginning of the Legend of Steve advancement tree",

@@ -29,6 +29,17 @@ public abstract class BaseDungeonPiece extends BaseDoorPeice {
 
     }
 
+    protected void fill(StructureWorldAccess world, BlockBox bounds, int minX, int minY, int minZ, int maxX, int maxY, int maxZ) {
+        for(int i = minY; i <= maxY; ++i) {
+            for(int j = minX; j <= maxX; ++j) {
+                for(int k = minZ; k <= maxZ; ++k) {
+                    this.addBlock(world, Blocks.AIR.getDefaultState(), j, i, k, bounds);
+                }
+            }
+        }
+
+    }
+
 
     protected void addPots(StructureWorldAccess world, Random random, BlockBox chunkBox, int amount, int[] size) {
         int centerX = size[0] / 2;

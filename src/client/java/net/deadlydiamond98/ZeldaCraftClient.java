@@ -4,6 +4,7 @@ import net.deadlydiamond98.blocks.ZeldaBlocks;
 import net.deadlydiamond98.blocks.entities.ZeldaBlockEntities;
 import net.deadlydiamond98.commands.ZeldaClientCommands;
 import net.deadlydiamond98.entities.ZeldaEntities;
+import net.deadlydiamond98.entities.monsters.RamblinMushroomEntity;
 import net.deadlydiamond98.events.ClientTickEvent;
 import net.deadlydiamond98.items.ZeldaItems;
 import net.deadlydiamond98.model.DungeonDoorModel;
@@ -156,6 +157,7 @@ public class ZeldaCraftClient implements ClientModInitializer {
 		EntityRendererRegistry.register(ZeldaEntities.Blue_Tektite_Entity, BlueTektiteRenderer::new);
 		EntityRendererRegistry.register(ZeldaEntities.Beamos_Entity, BeamosRenderer::new);
 		EntityRendererRegistry.register(ZeldaEntities.Like_Like_Entity, LikeLikeRenderer::new);
+		EntityRendererRegistry.register(ZeldaEntities.Ramblin_Mushroom_Entity, RamblinMushroomRenderer::new);
 
 		EntityRendererRegistry.register(ZeldaEntities.Baseball_Entity, FlyingItemEntityRenderer::new);
 		EntityRendererRegistry.register(ZeldaEntities.Deku_Nut_Entity, FlyingItemEntityRenderer::new);
@@ -190,6 +192,7 @@ public class ZeldaCraftClient implements ClientModInitializer {
 		EntityModelLayerRegistry.registerModelLayer(TektiteModel.LAYER_LOCATION, TektiteModel::getTexturedModelData);
 		EntityModelLayerRegistry.registerModelLayer(OctorokEntityModel.LAYER_LOCATION, OctorokEntityModel::getTexturedModelData);
 		EntityModelLayerRegistry.registerModelLayer(LikeLikeModel.LAYER_LOCATION, LikeLikeModel::getTexturedModelData);
+		EntityModelLayerRegistry.registerModelLayer(RamblinMushroomModel.LAYER_LOCATION, RamblinMushroomModel::getTexturedModelData);
 
 		EntityModelLayerRegistry.registerModelLayer(DungeonDoorModel.LAYER_LOCATION, DungeonDoorModel::getTexturedModelData);
 	}
