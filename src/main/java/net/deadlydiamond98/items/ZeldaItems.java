@@ -3,6 +3,8 @@ package net.deadlydiamond98.items;
 import net.deadlydiamond98.ZeldaCraft;
 import net.deadlydiamond98.entities.ZeldaEntities;
 import net.deadlydiamond98.items.custom.*;
+import net.deadlydiamond98.items.custom.balls.Baseball;
+import net.deadlydiamond98.items.custom.balls.OctoRock;
 import net.deadlydiamond98.items.custom.bats.CrackedBat;
 import net.deadlydiamond98.items.custom.Swords.MagicSword;
 import net.deadlydiamond98.items.custom.Swords.MasterSword;
@@ -58,8 +60,13 @@ public class ZeldaItems {
             ToolMaterials.IRON, 7, -1.5F, new FabricItemSettings()));
     public static final Item Cracked_Bat = registerItem("cracked_bat", new CrackedBat(
             ToolMaterials.WOOD, 3, -2.2F, new FabricItemSettings()));
+
+    //Balls
+
     public static final Item Baseball = registerItem("baseball", new Baseball(
             new FabricItemSettings().maxCount(16)));
+    public static final Item Octo_Rock = registerItem("octo_rock", new OctoRock(
+            new FabricItemSettings()));
 
     //Boomerangs
     public static final Item Wooden_Boomerang = registerItem("wooden_boomerang", new WoodBoomerangItem(

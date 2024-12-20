@@ -1,0 +1,16 @@
+{
+  "providers": [
+    {
+      "type": "bitmap",
+      "file": "zeldacraft:font/hylian.png",
+      "height": 8,
+      "ascent": 8,
+      "chars": [
+        " あいうえおかきくけこさしすせそ",
+        "たちつてとなにぬねのはひふへほま",
+        "みむめもやゆよらりるれろわをんー",
+        "。「」１２３４５６７８９０　　　"
+      ]
+    }
+  ]
+}

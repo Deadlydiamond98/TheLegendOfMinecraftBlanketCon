@@ -3,8 +3,6 @@ package net.deadlydiamond98.util;
 import net.minecraft.entity.player.PlayerEntity;
 
 public interface ZeldaPlayerData {
-    boolean hasArrowBeenRemoved();
-    void setArrowRemoved(boolean removed);
     boolean isFairy();
     void setFairyState(boolean fairyControl);
     void removeFairyEffect(PlayerEntity user);

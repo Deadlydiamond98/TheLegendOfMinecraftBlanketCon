@@ -38,6 +38,8 @@ public class MagicPowder extends TransformationItem {
     protected void initializeBlockConversions() {
         super.initializeBlockConversions();
 
+        blockConversionMap.put(Blocks.CRAFTING_TABLE, ZeldaBlocks.Magic_Workbench);
+
         blockConversionMap.put(Blocks.GRASS, ZeldaBlocks.Loot_Grass);
         blockConversionMap.put(Blocks.GRASS_BLOCK, Blocks.MYCELIUM);
 
@@ -103,9 +105,9 @@ public class MagicPowder extends TransformationItem {
     @Override
     protected void initializeItemConversions() {
         super.initializeItemConversions();
-        itemConversionMap.put(Items.ARROW, ZeldaItems.Silver_Arrow);
-        itemConversionMap.put(Items.IRON_SWORD, ZeldaItems.Magic_Sword);
-        itemConversionMap.put(ZeldaItems.Red_Ring, ZeldaItems.Blue_Ring);
+//        itemConversionMap.put(Items.ARROW, ZeldaItems.Silver_Arrow);
+//        itemConversionMap.put(Items.IRON_SWORD, ZeldaItems.Magic_Sword);
+//        itemConversionMap.put(ZeldaItems.Red_Ring, ZeldaItems.Blue_Ring);
     }
 
     @Override

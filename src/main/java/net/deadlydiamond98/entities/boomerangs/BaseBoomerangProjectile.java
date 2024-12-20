@@ -103,8 +103,8 @@ public class BaseBoomerangProjectile extends ProjectileEntity {
                         this.getOwner() instanceof PlayerEntity player &&
                         hitEntity instanceof LivingEntity livingEntity) {
                     livingEntity.damage(livingEntity.getDamageSources().playerAttack(player), damageAmount);
+                    this.returnBack();
                 }
-                this.returnBack();
             }
         }
 

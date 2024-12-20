@@ -2,6 +2,7 @@ package net.deadlydiamond98.entities;
 
 import net.deadlydiamond98.ZeldaCraft;
 import net.deadlydiamond98.entities.balls.BaseBallEntity;
+import net.deadlydiamond98.entities.balls.OctoRockEntity;
 import net.deadlydiamond98.entities.bombs.BombEntity;
 import net.deadlydiamond98.entities.bombs.BombchuEntity;
 import net.deadlydiamond98.entities.bombs.RemoteBombEntity;
@@ -159,6 +160,14 @@ public class ZeldaEntities {
             FabricEntityTypeBuilder.create(SpawnGroup.MISC, (EntityType<BaseBallEntity> type, World world) ->
                             new BaseBallEntity(type, world))
                     .dimensions(EntityDimensions.fixed(0.5f,0.5f))
+                    .build()
+    );
+    public static final EntityType<OctoRockEntity> Octo_Rock = Registry.register(
+            Registries.ENTITY_TYPE,
+            new Identifier(ZeldaCraft.MOD_ID, "octo_rock"),
+            FabricEntityTypeBuilder.create(SpawnGroup.MISC, (EntityType<OctoRockEntity> type, World world) ->
+                            new OctoRockEntity(type, world))
+                    .dimensions(EntityDimensions.fixed(0.3f,0.3f))
                     .build()
     );
     public static final EntityType<DekuNutEntity> Deku_Nut_Entity = Registry.register(

@@ -29,6 +29,9 @@ import java.util.Optional;
 import java.util.stream.Stream;
 
 public class CustomBundle extends Item {
+
+    // TODO: REWRITE PARTS OF THIS!!!!
+
     private static final String ITEMS_KEY = "Items";
     private static final int ITEM_BAR_COLOR = MathHelper.packRgb(0.4F, 0.4F, 1.0F);
     private final int maxStorage;

@@ -9,7 +9,7 @@ import net.minecraft.world.World;
 public class BlueOctorokEntity extends OctorokEntity {
 
     public BlueOctorokEntity(EntityType<? extends HostileEntity> entityType, World world) {
-        super(entityType, world);
+        super(entityType, world, 0.7f);
         this.experiencePoints = NORMAL_MONSTER_XP;
     }
 

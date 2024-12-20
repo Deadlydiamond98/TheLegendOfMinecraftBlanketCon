@@ -26,6 +26,7 @@ public class ZeldaItemsTab {
                         entry.add(ZeldaItems.Master_Sword_LV3);
                         entry.add(ZeldaItems.Cracked_Bat);
                         entry.add(ZeldaItems.Baseball); //Not Melee, but pairs w/ bat
+                        entry.add(ZeldaItems.Octo_Rock);
                         //Boomerangs
                         entry.add(ZeldaItems.Wooden_Boomerang);
                         entry.add(ZeldaItems.Iron_Boomerang);

@@ -27,14 +27,13 @@ public abstract class AbstractBombItem extends Item {
             bombEntity.setYaw(user.getHeadYaw());
             bombEntity.setOwner(user);
             world.spawnEntity(bombEntity);
+            user.playSound(SoundEvents.ENTITY_SPLASH_POTION_THROW, SoundCategory.PLAYERS, 1, 1);
         }
         if (user.getStackInHand(hand).getItem() instanceof AbstractBombItem) {
             user.getStackInHand(hand).decrement(1);
         }
         user.getItemCooldownManager().set(this, 20);
         user.getItemCooldownManager().set(ZeldaItems.Bomb_Bag, 40);
-
-        user.playSound(SoundEvents.ENTITY_SPLASH_POTION_THROW, SoundCategory.PLAYERS, 1, 1);
 
         return TypedActionResult.success(user.getStackInHand(hand));
     }

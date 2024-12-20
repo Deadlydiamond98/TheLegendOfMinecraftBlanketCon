@@ -1,5 +1,6 @@
 package net.deadlydiamond98.mixin;
 
+import dev.emi.trinkets.api.SlotReference;
 import dev.emi.trinkets.api.TrinketComponent;
 import dev.emi.trinkets.api.TrinketsApi;
 import net.deadlydiamond98.items.ZeldaItems;
@@ -9,6 +10,7 @@ import net.deadlydiamond98.items.custom.bomb.BombchuItem;
 import net.deadlydiamond98.items.custom.custombundle.BombBag;
 import net.deadlydiamond98.items.custom.custombundle.CustomBundle;
 import net.deadlydiamond98.items.custom.custombundle.Quiver;
+import net.deadlydiamond98.util.ZeldaTags;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ArrowItem;
@@ -16,6 +18,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.stat.Stats;
+import net.minecraft.util.Pair;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -51,41 +54,29 @@ public class PlayerInventoryMixin {
     @Unique
     private <T extends CustomBundle> boolean addItemToBagTrinket(PlayerEntity player, ItemStack itemStack,
                                                                  Class<T> itemClass, CallbackInfo cir) {
+
         TrinketComponent trinket = TrinketsApi.getTrinketComponent(player).get();
-        if (trinket.isEquipped(ZeldaItems.Quiver)) {
-            for (int i = 0; i < trinket.getEquipped(ZeldaItems.Quiver).size(); i++) {
-                ItemStack stack = trinket.getEquipped(ZeldaItems.Quiver).get(i).getRight();
-                if (itemClass.isInstance(stack.getItem())) {
-                    T customBundle = (T) stack.getItem();
-                    if (customBundle.getItemBarStep(customBundle.getDefaultStack()) < 13) {
-                        int added = customBundle.addToBundle(stack, itemStack);
-                        if (added > 0) {
-                            itemStack.decrement(added);
-                            if (itemStack.isEmpty()) {
-                                player.increaseStat(Stats.PICKED_UP.getOrCreateStat(itemStack.getItem()), added);
-                                player.playSound(SoundEvents.ITEM_BUNDLE_INSERT, 0.8F,
-                                        0.8F + player.getWorld().getRandom().nextFloat() * 0.4F);
-                                return true;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        if (trinket.isEquipped(ZeldaItems.Better_Quiver)) {
-            for (int i = 0; i < trinket.getEquipped(ZeldaItems.Better_Quiver).size(); i++) {
-                ItemStack stack = trinket.getEquipped(ZeldaItems.Better_Quiver).get(i).getRight();
-                if (itemClass.isInstance(stack.getItem())) {
-                    T customBundle = (T) stack.getItem();
-                    if (customBundle.getItemBarStep(customBundle.getDefaultStack()) < 13) {
-                        int added = customBundle.addToBundle(stack, itemStack);
-                        if (added > 0) {
-                            itemStack.decrement(added);
-                            if (itemStack.isEmpty()) {
-                                player.increaseStat(Stats.PICKED_UP.getOrCreateStat(itemStack.getItem()), added);
-                                player.playSound(SoundEvents.ITEM_BUNDLE_INSERT, 0.8F,
-                                        0.8F + player.getWorld().getRandom().nextFloat() * 0.4F);
-                                return true;
+
+        for (Pair<SlotReference, ItemStack> entry : trinket.getAllEquipped()) {
+            ItemStack itemstack = entry.getRight();
+            if (itemstack.isIn(ZeldaTags.Items.Quivers)) {
+                for (int i = 0; i < trinket.getEquipped(itemstack.getItem()).size(); i++) {
+                    ItemStack quiver = trinket.getEquipped(itemstack.getItem()).get(i).getRight();
+                    if (itemClass.isInstance(quiver.getItem())) {
+                        T customBundle = (T) quiver.getItem();
+                        if (customBundle.getItemBarStep(customBundle.getDefaultStack()) < 13) {
+                            int added = customBundle.addToBundle(quiver, itemStack);
+                            if (added > 0) {
+                                itemStack.decrement(added);
+                                if (itemStack.isEmpty()) {
+                                    player.increaseStat(Stats.PICKED_UP.getOrCreateStat(itemStack.getItem()), added);
+                                    player.playSound(SoundEvents.ITEM_BUNDLE_INSERT, 0.8F,
+                                            0.8F + player.getWorld().getRandom().nextFloat() * 0.4F);
+                                    if (quiver.getItem() instanceof Quiver quiverItem) {
+                                        quiverItem.updateFilledStatus(quiver);
+                                    }
+                                    return true;
+                                }
                             }
                         }
                     }

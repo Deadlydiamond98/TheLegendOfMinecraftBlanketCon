@@ -1,19 +1,21 @@
 package net.deadlydiamond98.entities.balls;
 
-import net.deadlydiamond98.entities.ZeldaEntities;
-import net.deadlydiamond98.items.custom.bats.CrackedBat;
-import net.deadlydiamond98.items.ZeldaItems;
-import net.deadlydiamond98.util.RaycastUtil;
+import net.deadlydiamond98.enchantments.ZeldaEnchantments;
+import net.deadlydiamond98.items.custom.bats.BatItem;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.EndGatewayBlockEntity;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.ItemEntity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MovementType;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.data.DataTracker;
+import net.minecraft.entity.data.TrackedData;
+import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileUtil;
 import net.minecraft.entity.projectile.thrown.ThrownItemEntity;
@@ -23,44 +25,51 @@ import net.minecraft.particle.ItemStackParticleEffect;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.registry.tag.BlockTags;
-import net.minecraft.text.Text;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.*;
 import net.minecraft.util.shape.VoxelShape;
-import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.RaycastContext;
 import net.minecraft.world.World;
-import net.minecraft.world.event.GameEvent;
 
 import java.util.Iterator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public abstract class AbstractBallEntity extends ThrownItemEntity {
 
     private final double dragAir;
-    private double drag;
     private final double bounce;
     private final float gravity;
-    private boolean leftOwner;
+    protected boolean leftOwner;
     private int life;
+
+    private static final TrackedData<Float> DRAG;
+
+    @Override
+    protected void initDataTracker() {
+        super.initDataTracker();
+        this.dataTracker.startTracking(DRAG, 1.0f);
+    }
+
+    static {
+        DRAG = DataTracker.registerData(AbstractBallEntity.class, TrackedDataHandlerRegistry.FLOAT);
+    }
 
     public AbstractBallEntity(EntityType<? extends ThrownItemEntity> entityType, World world) {
         super(entityType, world);
         this.dragAir = 0.98;
-        this.drag = 1;
+        setDrag(1.0f);
         this.bounce = 0.6;
         this.gravity = 0.03f;
         this.leftOwner = false;
         this.life = 0;
     }
 
-    public AbstractBallEntity(EntityType<? extends ThrownItemEntity> entityType, World world, PlayerEntity user, double dragAir, double bounce, float gravity) {
+    public AbstractBallEntity(EntityType<? extends ThrownItemEntity> entityType, World world, LivingEntity user, double dragAir, double bounce, float gravity) {
         super(entityType, user, world);
         this.dragAir = dragAir;
-        this.drag = 1;
+        setDrag(1.0f);
         this.bounce = bounce;
         this.gravity = gravity;
         this.leftOwner = false;
@@ -69,7 +78,6 @@ public abstract class AbstractBallEntity extends ThrownItemEntity {
 
     @Override
     public void tick() {
-
         this.baseTick();
 
         if (!this.leftOwner) {
@@ -99,17 +107,21 @@ public abstract class AbstractBallEntity extends ThrownItemEntity {
             this.onCollision(hitResult);
         }
 
-        double drag = (this.isTouchingWater() ? this.dragAir * 0.85 : this.dragAir) * this.drag;
+        double drag = (this.isTouchingWater() ? this.dragAir * 0.85 : this.dragAir) * getDrag();
 
         Vec3d adjustedVelocity = this.getVelocity().multiply(drag);
 
         if (!this.hasNoGravity()) {
-            adjustedVelocity = adjustedVelocity.add(0, -this.getGravity(), 0);
+            if (!this.isSubmergedInWater()) {
+                adjustedVelocity = adjustedVelocity.add(0, -this.getGravity(), 0);
+            } else {
+                adjustedVelocity = onTouchWater(adjustedVelocity);
+            }
         }
 
         this.setVelocity(adjustedVelocity);
 
-        this.move(MovementType.SELF, this.getVelocity());
+        this.ballMove(MovementType.SELF, this.getVelocity());
 
         this.setBoundingBox(this.calculateBoundingBox());
         this.updateRotation();
@@ -118,10 +130,10 @@ public abstract class AbstractBallEntity extends ThrownItemEntity {
         this.checkBlockCollision();
 
         if (this.isOnGround()) {
-            this.drag = this.getWorld().getBlockState(this.getBlockPos().down()).getBlock().getSlipperiness();
+            setDrag(this.getWorld().getBlockState(this.getBlockPos().down()).getBlock().getSlipperiness());
 
             if (this.getVelocity().lengthSquared() < 0.01) {
-                if (this.life >= 100) {
+                if (this.life >= 100 && !this.getWorld().isClient) {
                     this.getWorld().sendEntityStatus(this, (byte)3);
                     this.discard();
                 }
@@ -132,8 +144,24 @@ public abstract class AbstractBallEntity extends ThrownItemEntity {
             }
         }
         else {
-            this.drag = 1;
+
+            if (this.getVelocity().horizontalLength() < 0.01) {
+                if (this.life >= 100 && !this.getWorld().isClient) {
+                    this.getWorld().sendEntityStatus(this, (byte)3);
+                    this.discard();
+                }
+                this.life++;
+            }
+            else {
+                this.life = 0;
+            }
+
+            setDrag(1.0f);
         }
+    }
+
+    protected Vec3d onTouchWater(Vec3d adjustedVelocity) {
+        return adjustedVelocity.add(0, -this.getGravity(), 0);
     }
 
     private ParticleEffect getParticle() {
@@ -151,11 +179,9 @@ public abstract class AbstractBallEntity extends ThrownItemEntity {
                         0.0 + random.nextBetween(-5, 5) * 0.02);
             }
         }
-
     }
 
-    @Override
-    public void move(MovementType movementType, Vec3d movement) {
+    public void ballMove(MovementType movementType, Vec3d movement) {
         if (this.noClip) {
             this.setPosition(this.getX() + movement.x, this.getY() + movement.y, this.getZ() + movement.z);
         } else {
@@ -215,6 +241,7 @@ public abstract class AbstractBallEntity extends ThrownItemEntity {
                     if (bl2) {
                         this.setVelocity(this.getVelocity().multiply(1, 1, -this.bounce));
                     }
+                    onCollide();
                 }
 
                 Block block = blockState.getBlock();
@@ -271,6 +298,7 @@ public abstract class AbstractBallEntity extends ThrownItemEntity {
         boolean bl2 = movement.y != vec3d.y;
         boolean bl3 = movement.z != vec3d.z;
         boolean bl4 = this.isOnGround() || bl2 && movement.y < 0.0;
+
         if (this.getStepHeight() > 0.0F && bl4 && (bl || bl3)) {
             Vec3d vec3d2 = adjustMovementForCollisions(this, new Vec3d(movement.x, (double)this.getStepHeight(), movement.z), box, this.getWorld(), list);
             Vec3d vec3d3 = adjustMovementForCollisions(this, new Vec3d(0.0, (double)this.getStepHeight(), 0.0), box.stretch(movement.x, 0.0, movement.z), this.getWorld(), list);
@@ -282,11 +310,15 @@ public abstract class AbstractBallEntity extends ThrownItemEntity {
             }
 
             if (vec3d2.horizontalLengthSquared() > vec3d.horizontalLengthSquared()) {
+                onCollide();
                 return vec3d2.add(adjustMovementForCollisions(this, new Vec3d(0.0, -vec3d2.y + movement.y, 0.0), box.offset(vec3d2), this.getWorld(), list));
             }
         }
 
         return vec3d;
+    }
+
+    protected void onCollide() {
     }
 
     @Override
@@ -315,6 +347,7 @@ public abstract class AbstractBallEntity extends ThrownItemEntity {
             }
         }
         breakBlocks(blockHitResult);
+        onCollide();
     }
 
     @Override
@@ -322,11 +355,13 @@ public abstract class AbstractBallEntity extends ThrownItemEntity {
         super.onEntityHit(entityHitResult);
         Entity entity = entityHitResult.getEntity();
         if (this.getVelocity().length() > 0.3F && !this.getWorld().isClient && !(entity instanceof AbstractBallEntity)) {
-            entity.damage(this.getDamageSources().thrown(this, this.getOwner()), (float) (2.0F * getVelocity().length()));
+            entity.damage(this.getDamageSources().thrown(this, this.getOwner()), (float) (this.getDamage() * getVelocity().length()));
 
             this.setVelocity(this.getVelocity().multiply(-this.bounce, 1, -this.bounce));
         }
     }
+
+    protected abstract float getDamage();
 
     @Override
     public float getGravity() {
@@ -346,11 +381,19 @@ public abstract class AbstractBallEntity extends ThrownItemEntity {
             if (sourceEntity != null) {
                 if (sourceEntity instanceof PlayerEntity player && !this.getWorld().isClient()) {
                     ItemStack heldItem = player.getMainHandStack();
-                    if (heldItem.getItem() instanceof CrackedBat) {
+                    if (heldItem.getItem() instanceof BatItem) {
                         Vec3d lookVec = player.getRotationVector();
                         double launchPower = 0.7 * sourceEntity.distanceTo(this);
 
-                        this.setVelocity(lookVec.x * launchPower, lookVec.y * launchPower, lookVec.z * launchPower);
+                        double updraft = EnchantmentHelper.getLevel(ZeldaEnchantments.Updraft, heldItem) * 0.25;
+
+                        double velocityY = lookVec.y * launchPower;
+
+                        if (updraft > 0) {
+                            velocityY = Math.max(0.5, velocityY);
+                        }
+
+                        this.setVelocity(lookVec.x * launchPower, velocityY, lookVec.z * launchPower);
 
                         this.setOwner(player);
                     }
@@ -365,7 +408,7 @@ public abstract class AbstractBallEntity extends ThrownItemEntity {
     @Override
     protected abstract Item getDefaultItem();
 
-    private boolean shouldLeaveOwner() {
+    protected boolean shouldLeaveOwner() {
         Entity entity = this.getOwner();
         if (entity != null) {
             Iterator var2 = this.getWorld().getOtherEntities(this, this.getBoundingBox().stretch(this.getVelocity()).expand(1.0), (entityx) -> {
@@ -381,5 +424,13 @@ public abstract class AbstractBallEntity extends ThrownItemEntity {
         }
 
         return true;
+    }
+
+    public float getDrag() {
+        return (Float) this.dataTracker.get(DRAG);
+    }
+
+    private void setDrag(Float f) {
+        this.dataTracker.set(DRAG, f);
     }
 }

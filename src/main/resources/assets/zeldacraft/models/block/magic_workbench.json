@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "bottom": "minecraft:block/smithing_table_bottom",
+    "side": "zeldacraft:block/magic_workbench_side",
+    "top": "zeldacraft:block/magic_workbench_top"
+  }
+}

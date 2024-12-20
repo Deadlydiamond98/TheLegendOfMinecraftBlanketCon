@@ -27,10 +27,10 @@ public abstract class BaseBoomerangItem extends Item implements DyeableItem {
                     createBoomerangEntity(world, user, itemStack.copy(), hand);
             boomerangEntity.setPos(user.getX(), user.getEyeY() - 0.1, user.getZ());
             world.spawnEntity(boomerangEntity);
+            user.playSound(SoundEvents.ENTITY_SPLASH_POTION_THROW, SoundCategory.PLAYERS, 1, 1);
         }
         user.getItemCooldownManager().set(this, 20);
         user.getStackInHand(hand).decrement(1);
-        user.playSound(SoundEvents.ENTITY_SPLASH_POTION_THROW, SoundCategory.PLAYERS, 1, 1);
         return TypedActionResult.success(itemStack, world.isClient());
     }
 
@@ -43,7 +43,7 @@ public abstract class BaseBoomerangItem extends Item implements DyeableItem {
 
     @Override
     public int getColor(ItemStack stack) {
-        return hasColor(stack) ? DyeableItem.super.getColor(stack) : boomerangColor;
+        return hasColor(stack) ? DyeableItem.super.getColor(stack) : this.boomerangColor;
     }
 
     @Override

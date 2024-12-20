@@ -31,6 +31,7 @@
 
   "item.zeldacraft.red_tektite_chitin": "Red Tektite Chitin",
   "item.zeldacraft.blue_tektite_chitin": "Blue Tektite Chitin",
+  "item.zeldacraft.octo_rock": "Octo-Rock",
 
   "block.zeldacraft.master_block": "Block of Master Ingots",
   "block.zeldacraft.deepslate_master_ore": "Deepslate Master Ore",
@@ -95,6 +96,8 @@
   "block.zeldacraft.light_gray_pot": "Light Gray Pot",
   "block.zeldacraft.brown_pot": "Brown Pot",
 
+  "block.zeldacraft.magic_workbench": "Magic Workbench",
+
   "block.zeldacraft.secret_cracked_stone_bricks": "Secret Cracked Stone Bricks",
   "block.zeldacraft.secret_cracked_deepslate_bricks": "Secret Cracked Deepslate Bricks",
   "block.zeldacraft.secret_cracked_deepslate_tiles": "Secret Cracked Deepslate Tiles",
@@ -149,6 +152,7 @@
   "item.zeldacraft.magic_boomerang.tooltipa": "Can pick up items from afar, Always comes back",
   "item.zeldacraft.magic_boomerang.tooltipb": "Won't be damaged if you have Magic",
   "enchantment.zeldacraft.lawn_mower": "Lawn Mower",
+  "enchantment.zeldacraft.updraft": "Updraft",
 
   "item.zeldacraft.wooden_hammer": "Wooden Hammer",
   "item.zeldacraft.iron_hammer": "Iron Hammer",

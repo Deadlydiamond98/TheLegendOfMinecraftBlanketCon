@@ -34,14 +34,16 @@ import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 import net.fabricmc.loader.api.FabricLoader;
+import net.minecraft.util.Identifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class ZeldaCraft implements ModInitializer {
 	public static final String MOD_ID = "zeldacraft";
 
-	//Custom Zelda Font
-    public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
+	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
+
+	public static final Identifier HYLIAN = new Identifier(MOD_ID, "hylian");
 
 	@Override
 	public void onInitialize() {

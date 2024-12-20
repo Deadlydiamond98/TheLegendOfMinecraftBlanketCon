@@ -1,17 +1,24 @@
 package net.deadlydiamond98.items.custom.manaitems;
 
+import net.deadlydiamond98.ZeldaCraft;
 import net.deadlydiamond98.entities.ZeldaEntities;
 import net.deadlydiamond98.entities.projectiles.MagicFireProjectileEntity;
 import net.deadlydiamond98.magiclib.items.consumers.MagicItem;
 import net.deadlydiamond98.sounds.ZeldaSounds;
 import net.deadlydiamond98.spells.Spell;
 import net.deadlydiamond98.spells.fire.FireShotSpell;
+import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.sound.SoundCategory;
+import net.minecraft.text.Style;
+import net.minecraft.text.Text;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.List;
 
 public class FireRod extends MagicItem {
 

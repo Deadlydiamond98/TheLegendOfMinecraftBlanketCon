@@ -49,7 +49,7 @@ public class Quiver extends CustomBundle {
         return result;
     }
 
-    private void updateFilledStatus(ItemStack stack) {
+    public void updateFilledStatus(ItemStack stack) {
         NbtCompound nbt = stack.getOrCreateNbt();
         int filled = getBundleOccupancy(stack) > 0 ? 1 : 0;
         nbt.putInt("filled", filled);

@@ -98,6 +98,7 @@ public class TektiteModel<T extends TektiteEntity> extends EntityModel<T> {
 			this.eye.pivotX = MathHelper.sqrt((float)Math.abs(e)) * 2.0F * (float)Math.signum(e);
 		}
 
+
 		if (entity.isOnGround()) {
 			this.main.pivotY = this.mainPivotY + oscillate(-1, 0, time, 2);
 
@@ -105,37 +106,35 @@ public class TektiteModel<T extends TektiteEntity> extends EntityModel<T> {
 			this.backrightlega.setAngles(
 					oscillate(toRad(18.2273f), toRad(21.3938f), time, 2),
 					oscillate(toRad(-17.133f), toRad(-12.8784f), time, 2),
-					MathHelper.lerp(0.1f, this.backrightlega.roll, oscillate(toRad(-10.1089f), toRad(-22.2835f), time, 2))
+					lerpValueFromPrev(entity, "backrightlega_roll", oscillate(toRad(-10.1089f), toRad(-22.2835f), time, 2))
 			);
-			this.backrightlegb.roll = MathHelper.lerp(0.1f, this.backrightlegb.roll, this.backrightlega.roll + oscillate(toRad(63.0f), toRad(73.5f), time, 2));
+			this.backrightlegb.roll = lerpValueFromPrev(entity, "backrightlegb_roll", this.backrightlega.roll + oscillate(toRad(63.0f), toRad(73.5f), time, 2));
 
 			// back left leg
 			this.backleftlega.setAngles(
 					this.backrightlega.pitch,
 					-this.backrightlega.yaw,
-					MathHelper.lerp(0.1f, this.backleftlega.roll, -this.backrightlega.roll)
+					-entity.limbValues.getOrDefault("backrightlega_roll", this.backrightlega.roll)
 			);
-			this.backleftlegb.roll = MathHelper.lerp(0.1f, this.backleftlegb.roll, -this.backrightlegb.roll);
+			this.backleftlegb.roll = -entity.limbValues.getOrDefault("backrightlegb_roll", this.backrightlegb.roll);
 
 			// front right leg
 			this.rightlega.setAngles(
 					oscillate(toRad(-15.6263f), toRad(-20.2103f), time, 2),
 					oscillate(toRad(22.9193f), toRad(19.0568f), time, 2),
-					MathHelper.lerp(0.1f, this.rightlega.roll, oscillate(toRad(-10.6867f), toRad(-23.4281f), time, 2))
+					lerpValueFromPrev(entity, "rightlega_roll", oscillate(toRad(-10.6867f), toRad(-23.4281f), time, 2))
 			);
-			this.rightlegb.roll = MathHelper.lerp(0.1f, this.rightlegb.roll, this.rightlega.roll + oscillate(toRad(67.5f), toRad(80.0f), time, 2));
+			this.rightlegb.roll = lerpValueFromPrev(entity, "rightlegb_roll", this.rightlega.roll + oscillate(toRad(67.5f), toRad(80.0f), time, 2));
 
 			// front left leg
 			this.leftlega.setAngles(
 					this.rightlega.pitch,
 					-this.rightlega.yaw,
-					MathHelper.lerp(0.1f, this.leftlega.roll, -this.rightlega.roll)
+					-entity.limbValues.getOrDefault("rightlega_roll", this.rightlega.roll)
 			);
-			this.leftlegb.roll = MathHelper.lerp(0.1f, this.leftlegb.roll, -this.rightlegb.roll);
+			this.leftlegb.roll = -entity.limbValues.getOrDefault("rightlegb_roll", this.rightlegb.roll);
 		}
 		else if (!entity.isOnGround() && entity.getVelocity().length() > 0.1f) {
-			float clampRadMin =  toRad(0);
-			float clampRadMax =  toRad(80);
 
 			this.main.pivotY = this.mainPivotY;
 
@@ -143,38 +142,55 @@ public class TektiteModel<T extends TektiteEntity> extends EntityModel<T> {
 			this.backrightlega.setAngles(
 					oscillate(toRad(18.2273f), toRad(21.3938f), time, 2),
 					oscillate(toRad(-17.133f), toRad(-12.8784f), time, 2),
-					this.backrightlega.roll = MathHelper.clamp(this.backrightlega.roll + toRad(1.0f), clampRadMin, clampRadMax)
+					clampValueFromPrev(entity,"backrightlega_roll", 1.0f)
 			);
 
-			this.backrightlegb.roll = MathHelper.clamp(this.backrightlegb.roll + toRad(-1.0f), clampRadMin, clampRadMax);
+			this.backrightlegb.roll = clampValueFromPrev(entity,"backrightlegb_roll", -1.0f);
 
 			// back left leg
 			this.backleftlega.setAngles(
 					this.backrightlega.pitch,
 					-this.backrightlega.yaw,
-					-this.backrightlega.roll
+					-entity.limbValues.getOrDefault("backrightlega_roll", this.backrightlega.roll)
 			);
-			this.backleftlegb.roll = -this.backrightlegb.roll;
+			this.backleftlegb.roll = -entity.limbValues.getOrDefault("backrightlegb_roll", this.backrightlegb.roll);
 
 
 			// front right leg
 			this.rightlega.setAngles(
 					oscillate(toRad(-15.6263f), toRad(-20.2103f), time, 2),
 					oscillate(toRad(22.9193f), toRad(19.0568f), time, 2),
-					this.rightlega.roll = MathHelper.clamp(this.rightlega.roll + toRad(1.0f), clampRadMin, clampRadMax)
+					this.rightlega.roll = clampValueFromPrev(entity,"rightlega_roll", 1.0f)
 			);
 
-			this.rightlegb.roll = MathHelper.clamp(this.rightlegb.roll + toRad(-1.0f), clampRadMin, clampRadMax);
+			this.rightlegb.roll = clampValueFromPrev(entity,"rightlegb_roll", -1.0f);
 
 
 			// front left leg
 			this.leftlega.setAngles(
 					this.rightlega.pitch,
 					-this.rightlega.yaw,
-					-this.rightlega.roll
+					-entity.limbValues.getOrDefault("rightlega_roll", this.rightlega.roll)
 			);
-			this.leftlegb.roll = -this.rightlegb.roll;
+			this.leftlegb.roll = -entity.limbValues.getOrDefault("rightlegb_roll", this.rightlegb.roll);
 		}
+	}
+
+	private float clampValueFromPrev(T entity, String key, float increment) {
+		float clampRadMin = toRad(0);
+		float clampRadMax = toRad(80);
+
+		float value = entity.limbValues.getOrDefault(key, 0.0f);
+		value = MathHelper.clamp(value + toRad(increment), clampRadMin, clampRadMax);
+		entity.limbValues.put(key, value);
+		return value;
+	}
+
+	public float lerpValueFromPrev(T entity, String key, float newValue) {
+		float currentValue = entity.limbValues.getOrDefault(key, newValue);
+		float lerpedValue = MathHelper.lerp(0.1f, currentValue, newValue);
+		entity.limbValues.put(key, lerpedValue);
+		return lerpedValue;
 	}
 
 	public static float toRad(float degrees) {

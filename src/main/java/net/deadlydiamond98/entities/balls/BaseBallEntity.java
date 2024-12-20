@@ -2,11 +2,11 @@ package net.deadlydiamond98.entities.balls;
 
 import net.deadlydiamond98.entities.ZeldaEntities;
 import net.deadlydiamond98.items.ZeldaItems;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.projectile.thrown.ThrownItemEntity;
 import net.minecraft.item.Item;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
 public class BaseBallEntity extends AbstractBallEntity {
@@ -15,7 +15,17 @@ public class BaseBallEntity extends AbstractBallEntity {
         super(entityType, world);
     }
 
-    public BaseBallEntity(World world, PlayerEntity user) {
+    @Override
+    protected float getDamage() {
+        return 2.0f;
+    }
+
+    @Override
+    protected Vec3d onTouchWater(Vec3d adjustedVelocity) {
+        return adjustedVelocity.add(0, 0.05, 0);
+    }
+
+    public BaseBallEntity(World world, LivingEntity user) {
         super(ZeldaEntities.Baseball_Entity, world, user, 0.98, 0.7, 0.03f);
     }
 

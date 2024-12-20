@@ -3,12 +3,15 @@ package net.deadlydiamond98.entities.bombs;
 import net.deadlydiamond98.blocks.BombFlower;
 import net.deadlydiamond98.blocks.SecretStone;
 import net.deadlydiamond98.blocks.ZeldaBlocks;
+import net.deadlydiamond98.enchantments.ZeldaEnchantments;
+import net.deadlydiamond98.items.custom.bats.BatItem;
 import net.deadlydiamond98.items.custom.bats.CrackedBat;
 import net.deadlydiamond98.networking.ZeldaServerPackets;
 import net.deadlydiamond98.sounds.ZeldaSounds;
 import net.deadlydiamond98.util.ZeldaAdvancementCriterion;
 import net.deadlydiamond98.util.ZeldaTags;
 import net.minecraft.block.Block;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.MovementType;
@@ -149,12 +152,17 @@ public abstract class AbstractBombEntity extends Entity implements Ownable {
         if (sourceEntity instanceof PlayerEntity) {
             PlayerEntity player = (PlayerEntity) sourceEntity;
             ItemStack heldItem = player.getMainHandStack();
-            if (heldItem.getItem() instanceof CrackedBat) {
+            if (heldItem.getItem() instanceof BatItem) {
                 Vec3d lookVec = player.getRotationVec(1.0f);
                 this.setYaw(player.getHeadYaw());
                 double launchPower = 1.0;
-                double upwardBoost = 0.5;
-                this.setVelocity(lookVec.x * launchPower, lookVec.y * launchPower + upwardBoost, lookVec.z * launchPower);
+                double updraft = EnchantmentHelper.getLevel(ZeldaEnchantments.Updraft, heldItem) * 0.25;
+                double velocityY = lookVec.y * launchPower;
+                if (updraft > 0) {
+                    velocityY = Math.max(0.5, velocityY);
+                }
+
+                this.setVelocity(lookVec.x * launchPower, velocityY, lookVec.z * launchPower);
                 return true;
             }
         }

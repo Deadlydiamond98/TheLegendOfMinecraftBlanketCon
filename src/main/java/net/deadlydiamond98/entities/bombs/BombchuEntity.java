@@ -4,6 +4,7 @@ import net.deadlydiamond98.blocks.BombFlower;
 import net.deadlydiamond98.blocks.SecretStone;
 import net.deadlydiamond98.blocks.ZeldaBlocks;
 import net.deadlydiamond98.entities.ZeldaEntities;
+import net.deadlydiamond98.items.custom.bats.BatItem;
 import net.deadlydiamond98.items.custom.bats.CrackedBat;
 import net.deadlydiamond98.networking.ZeldaServerPackets;
 import net.deadlydiamond98.sounds.ZeldaSounds;
@@ -221,7 +222,7 @@ public class BombchuEntity extends Entity implements Ownable {
         Entity sourceEntity = source.getAttacker();
         if (sourceEntity instanceof PlayerEntity player) {
             ItemStack heldItem = player.getMainHandStack();
-            if (heldItem.getItem() instanceof CrackedBat) {
+            if (heldItem.getItem() instanceof BatItem) {
                 this.setYaw(player.getYaw());
                 this.setVelocity(this.getVelocity().add(0, 1, 0));
                 this.applyGravity(true);

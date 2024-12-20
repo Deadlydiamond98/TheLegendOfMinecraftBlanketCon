@@ -18,6 +18,7 @@ public class ZeldaTags {
     public static class Items {
         public static final TagKey<Item> Bombs = createTag("bombs");
         public static final TagKey<Item> Bombs_Bags = createTag("bomb_bags");
+        public static final TagKey<Item> Quivers = createTag("quivers");
         public static final TagKey<Item> Primes_Bomb_Flowers = createTag("primes_bomb_flowers");
         public static final TagKey<Item> Slingshot_Ammo = createTag("slingshot_ammo");
 

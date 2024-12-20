@@ -19,15 +19,17 @@ public class DekuNutItem extends Item {
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
 
-        DekuNutEntity dekuNut = new DekuNutEntity(world, user);
-        Vec3d vec3d = user.getRotationVec(1.0F);
-        dekuNut.setVelocity(vec3d.x, vec3d.y, vec3d.z);
-        dekuNut.setYaw(user.getHeadYaw());
-        world.spawnEntity(dekuNut);
+        if (!world.isClient) {
+            DekuNutEntity dekuNut = new DekuNutEntity(world, user);
+            Vec3d vec3d = user.getRotationVec(1.0F);
+            dekuNut.setVelocity(vec3d.x, vec3d.y, vec3d.z);
+            dekuNut.setYaw(user.getHeadYaw());
+            world.spawnEntity(dekuNut);
+
+            user.playSound(SoundEvents.ENTITY_SNOWBALL_THROW, SoundCategory.PLAYERS, 1, 1);
+        }
         user.getStackInHand(hand).decrement(1);
         user.getItemCooldownManager().set(this, 200);
-
-        user.playSound(SoundEvents.ENTITY_SNOWBALL_THROW, SoundCategory.PLAYERS, 1, 1);
 
         return TypedActionResult.success(user.getStackInHand(hand));
     }

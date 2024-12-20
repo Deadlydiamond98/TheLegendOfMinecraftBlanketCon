@@ -1,5 +1,6 @@
 package net.deadlydiamond98.items.custom.bomb;
 
+import net.deadlydiamond98.entities.bombs.AbstractBombEntity;
 import net.deadlydiamond98.entities.bombs.BombchuEntity;
 import net.deadlydiamond98.items.ZeldaItems;
 import net.deadlydiamond98.items.custom.bomb.regular_bombs.AbstractBombItem;
@@ -28,20 +29,23 @@ public class BombchuItem extends Item {
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
 
-        BombchuEntity bombEntity = new BombchuEntity(world, user.getX(), user.getY() + user.getEyeHeight(user.getPose()), user.getZ(),
-                power, fuse, speed, true);
-        Vec3d vec3d = user.getRotationVec(1.0F);
-        bombEntity.setYaw(user.headYaw);
-        bombEntity.setVelocity(vec3d.x * speed, 0.1, vec3d.z * speed);
-        bombEntity.setOwner(user);
-        world.spawnEntity(bombEntity);
+        if (!world.isClient) {
+            BombchuEntity bombEntity = new BombchuEntity(world, user.getX(), user.getY() + user.getEyeHeight(user.getPose()), user.getZ(),
+                    this.power, this.fuse, this.speed, true);
+            Vec3d vec3d = user.getRotationVec(1.0F);
+            bombEntity.setYaw(user.headYaw);
+            bombEntity.setVelocity(vec3d.x * speed, 0.1, vec3d.z * speed);
+            bombEntity.setOwner(user);
+            world.spawnEntity(bombEntity);
+            user.playSound(SoundEvents.ENTITY_SPLASH_POTION_THROW, SoundCategory.PLAYERS, 1, 1);
+        }
+
         if (user.getStackInHand(hand).getItem() instanceof BombchuItem) {
             user.getStackInHand(hand).decrement(1);
         }
         user.getItemCooldownManager().set(this, 20);
         user.getItemCooldownManager().set(ZeldaItems.Bomb_Bag, 40);
 
-        user.playSound(SoundEvents.ENTITY_SPLASH_POTION_THROW, SoundCategory.PLAYERS, 1, 1);
 
         return TypedActionResult.success(user.getStackInHand(hand));
     }

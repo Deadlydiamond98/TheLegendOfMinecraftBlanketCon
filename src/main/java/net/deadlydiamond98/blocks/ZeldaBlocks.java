@@ -200,6 +200,11 @@ public class ZeldaBlocks {
                             30, 1200.0F)
                     .sounds(BlockSoundGroup.DEEPSLATE).requiresTool(), UniformIntProvider.create(3, 7)));
 
+    public static final Block Magic_Workbench = registerBlock("magic_workbench",
+            new Block(FabricBlockSettings.copyOf(Blocks.SMITHING_TABLE).strength(
+                            2.0F, 3.0F)
+                    .sounds(BlockSoundGroup.WOOD).requiresTool()));
+
 
 
 
