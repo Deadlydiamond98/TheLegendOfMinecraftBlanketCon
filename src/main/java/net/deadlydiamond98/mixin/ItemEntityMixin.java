@@ -1,9 +1,8 @@
 package net.deadlydiamond98.mixin;
 
-import net.deadlydiamond98.items.custom.EmeraldItem;
-import net.deadlydiamond98.items.custom.PickupSound;
+import net.deadlydiamond98.items.PickupSound;
+import net.deadlydiamond98.items.PickupEffect;
 import net.deadlydiamond98.items.custom.manaitems.restoring.StarFragment;
-import net.deadlydiamond98.sounds.ZeldaSounds;
 import net.deadlydiamond98.util.ZeldaAdvancementCriterion;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.ItemEntity;
@@ -27,10 +26,12 @@ public abstract class ItemEntityMixin {
 
 	@Unique
 	private static final Map<PlayerEntity, Long> lastPickupTimeMap = new ConcurrentHashMap<>();
-	@Inject(method = "onPlayerCollision(Lnet/minecraft/entity/player/PlayerEntity;)V", at = @At(value = "INVOKE",
+	@Inject(
+			method = "onPlayerCollision(Lnet/minecraft/entity/player/PlayerEntity;)V", at = @At(value = "INVOKE",
 			target = "Lnet/minecraft/entity/player/PlayerEntity;triggerItemPickedUpByEntityCriteria(Lnet/minecraft/entity/ItemEntity;)V",
-			shift = At.Shift.AFTER))
-	private void onEmeraldItemPickup(PlayerEntity player, CallbackInfo info) {
+			shift = At.Shift.AFTER)
+	)
+	private void onItemPickup(PlayerEntity player, CallbackInfo info) {
 		ItemEntity itemEntity = (ItemEntity) (Object) this;
 		if (!player.getWorld().isClient) {
 			if (itemEntity.getStack().getItem() instanceof PickupSound item) {
@@ -43,7 +44,6 @@ public abstract class ItemEntityMixin {
 			}
 
 			if (itemEntity.getStack().getItem() instanceof StarFragment) {
-
 				if (itemEntity.isGlowing()) {
 					if (!itemEntity.getWorld().isClient()) {
 						ZeldaAdvancementCriterion.maw.trigger((ServerPlayerEntity) player);

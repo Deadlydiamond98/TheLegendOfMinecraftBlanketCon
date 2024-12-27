@@ -34,6 +34,8 @@ import net.deadlydiamond98.util.ZeldaTags;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroupEntries;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
+import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.item.*;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
@@ -246,6 +248,21 @@ public class ZeldaItems {
             new FabricItemSettings()));
     public static final Item Blue_Tektite_Chitin = registerItem("blue_tektite_chitin", new Item(
             new FabricItemSettings()));
+
+    public static final Item Piece_Of_Power = registerItem("piece_of_power", new EffectItem(
+            new FabricItemSettings(), 10,
+            List.of(
+                    StatusEffects.STRENGTH,
+                    StatusEffects.SPEED
+            )
+    ));
+
+    public static final Item Gaurdian_Acorn = registerItem("guardian_acorn", new EffectItem(
+            new FabricItemSettings(), 10,
+            List.of(
+                    StatusEffects.RESISTANCE
+            )
+    ));
 
 
 

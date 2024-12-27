@@ -16,6 +16,7 @@ public class ZeldaSounds {
     //pickup
     public static SoundEvent EmeraldShardPickedUp = registerSoundEvent("emeraldshardpickedup");
     public static SoundEvent StarPickedUp = registerSoundEvent("starpickedup");
+    public static SoundEvent PowerUp = registerSoundEvent("powerup");
 
     //Magic
     public static SoundEvent StarUsed = registerSoundEvent("star_used");
@@ -27,6 +28,7 @@ public class ZeldaSounds {
     //Magic Item
     public static SoundEvent FireMagic = registerSoundEvent("fire_magic");
     public static SoundEvent IceMagic = registerSoundEvent("ice_magic");
+    public static SoundEvent BeamMagic = registerSoundEvent("beam_magic");
 
     public static SoundEvent Transform = registerSoundEvent("transform");
 

@@ -2,8 +2,8 @@ package net.deadlydiamond98.items.custom.Swords;
 
 import net.deadlydiamond98.entities.ZeldaEntities;
 import net.deadlydiamond98.entities.projectiles.MasterSwordBeamEntity;
+import net.deadlydiamond98.items.SwingActionItem;
 import net.deadlydiamond98.magiclib.items.MagicItemData;
-import net.deadlydiamond98.magiclib.items.consumers.MagicItem;
 import net.deadlydiamond98.sounds.ZeldaSounds;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.Entity;

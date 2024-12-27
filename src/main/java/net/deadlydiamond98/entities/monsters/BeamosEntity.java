@@ -1,6 +1,7 @@
 package net.deadlydiamond98.entities.monsters;
 
 import net.deadlydiamond98.entities.projectiles.BeamEntity;
+import net.deadlydiamond98.sounds.ZeldaSounds;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -243,6 +244,8 @@ public class BeamosEntity extends HostileEntity implements Monster {
                 BeamEntity beam = new BeamEntity(this.beamos.getWorld(), offsetVec.getX(), this.beamos.getY() + 0.6, offsetVec.getZ(),
                         rotationVec.x * 0.5, rotationVec.y * 0.5, rotationVec.z * 0.5, this.beamos,
                         new Vec3d(offsetVec.getX(), this.beamos.getY() + 0.6, offsetVec.getZ()), true, 10);
+                this.beamos.getWorld().playSound(null, this.beamos.getBlockPos(), ZeldaSounds.BeamMagic,
+                        SoundCategory.PLAYERS, 3.0f, 1.0f);
                 this.beamos.getWorld().spawnEntity(beam);
                 this.beamos.canSeeTarget = false;
             }

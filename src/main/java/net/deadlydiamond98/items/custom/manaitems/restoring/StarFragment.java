@@ -1,6 +1,6 @@
 package net.deadlydiamond98.items.custom.manaitems.restoring;
 
-import net.deadlydiamond98.items.custom.PickupSound;
+import net.deadlydiamond98.items.PickupSound;
 import net.deadlydiamond98.magiclib.items.consumables.MagicConsumable;
 import net.deadlydiamond98.sounds.ZeldaSounds;
 import net.minecraft.entity.player.PlayerEntity;

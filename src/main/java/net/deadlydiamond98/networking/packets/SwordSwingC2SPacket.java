@@ -1,6 +1,6 @@
 package net.deadlydiamond98.networking.packets;
 
-import net.deadlydiamond98.items.custom.Swords.SwingActionItem;
+import net.deadlydiamond98.items.SwingActionItem;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
 import net.minecraft.item.Item;
 import net.minecraft.network.PacketByteBuf;

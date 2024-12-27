@@ -211,7 +211,7 @@ public abstract class PlayerEntityMixin implements ZeldaPlayerData {
     }
 
     @Inject(method = "damage", at = @At("HEAD"))
-    private void test(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
+    private void getSheildDamageSource(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
         this.shieldSource = source;
     }
 
@@ -255,10 +255,6 @@ public abstract class PlayerEntityMixin implements ZeldaPlayerData {
             }
         }
     }
-
-
-
-
 
     @Override
     public boolean isFairy() {
@@ -321,7 +317,6 @@ public abstract class PlayerEntityMixin implements ZeldaPlayerData {
     public void setOnGround(boolean wasOnGround) {
         this.wasOnGround = wasOnGround;
     }
-
 
     @Override
     public boolean canUseHook() {

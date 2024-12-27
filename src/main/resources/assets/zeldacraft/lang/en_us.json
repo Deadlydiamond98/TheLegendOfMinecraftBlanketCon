@@ -5,6 +5,9 @@
   "item.zeldacraft.emerald_shard": "Emerald Shard",
   "item.zeldacraft.emerald_chunk": "Emerald Chunk",
 
+  "item.zeldacraft.piece_of_power": "Piece of Power",
+  "item.zeldacraft.guardian_acorn": "Guardian Acorn",
+
   "item.zeldacraft.bomb": "Bomb",
   "item.zeldacraft.super_bomb": "Super Bomb",
   "item.zeldacraft.remote_bomb": "Remote Bomb",
@@ -33,7 +36,7 @@
   "item.zeldacraft.blue_tektite_chitin": "Blue Tektite Chitin",
   "item.zeldacraft.octo_rock": "Octo-Rock",
 
-  "block.zeldacraft.master_block": "Block of Master Ingots",
+  "block.zeldacraft.master_block": "Block of Master Ingot",
   "block.zeldacraft.deepslate_master_ore": "Deepslate Master Ore",
   "item.zeldacraft.raw_master_ore": "Raw Master Ore",
   "item.zeldacraft.master_scrap": "Master Scrap",
@@ -242,6 +245,7 @@
   "sounds.zeldacraft.falling_star": "Star Falling from Sky",
   "sounds.zeldacraft.fire_magic": "Fire Rod Shot",
   "sounds.zeldacraft.ice_magic": "Ice Rod Shot",
+  "sounds.zeldacraft.beam_magic": "Beam Shot",
   "sounds.zeldacraft.sword_shoot": "Sword Beam Shot",
   "sounds.zeldacraft.fairy_ambient": "Fairy Ambience",
   "sounds.zeldacraft.fairy_hurt": "Fairy hurts",

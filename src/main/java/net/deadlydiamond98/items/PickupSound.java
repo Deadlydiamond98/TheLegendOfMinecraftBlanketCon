@@ -1,4 +1,4 @@
-package net.deadlydiamond98.items.custom;
+package net.deadlydiamond98.items;
 
 import net.minecraft.sound.SoundEvent;
 

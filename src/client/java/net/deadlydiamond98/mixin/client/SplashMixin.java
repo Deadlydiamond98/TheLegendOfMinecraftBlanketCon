@@ -41,7 +41,8 @@ public abstract class SplashMixin {
             "Shoutout to SOSSALMON for composing some music!",
             "Big Dungeons coming soon",
             "Also check out Healing Pretty Good",
-            "Also check out Vinyl Frontier"
+            "Also check out Vinyl Frontier",
+            "Also check out Familiar Friends"
     );
 
 

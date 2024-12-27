@@ -63,11 +63,23 @@
       "zeldacraft:ice_magic"
     ]
   },
+  "beam_magic": {
+    "subtitle": "sounds.zeldacraft.beam_magic",
+    "sounds": [
+      "zeldacraft:beam_magic"
+    ]
+  },
 
 
   "musicdisclegend": {
     "sounds": [
       "zeldacraft:music_disc_legend"
+    ]
+  },
+
+  "powerup": {
+    "sounds": [
+      "zeldacraft:powerup"
     ]
   },
 

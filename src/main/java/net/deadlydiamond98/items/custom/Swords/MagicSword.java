@@ -1,8 +1,8 @@
 package net.deadlydiamond98.items.custom.Swords;
 
 import net.deadlydiamond98.entities.ZeldaEntities;
-import net.deadlydiamond98.entities.projectiles.MasterSwordBeamEntity;
 import net.deadlydiamond98.entities.projectiles.SwordBeamEntity;
+import net.deadlydiamond98.items.SwingActionItem;
 import net.deadlydiamond98.magiclib.items.MagicItemData;
 import net.deadlydiamond98.sounds.ZeldaSounds;
 import net.deadlydiamond98.util.ZeldaAdvancementCriterion;
@@ -12,7 +12,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.*;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
 import net.minecraft.util.*;
 import net.minecraft.util.math.Vec3d;

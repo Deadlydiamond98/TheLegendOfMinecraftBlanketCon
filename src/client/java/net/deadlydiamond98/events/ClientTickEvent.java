@@ -6,8 +6,10 @@ import net.deadlydiamond98.ZeldaCraft;
 import net.deadlydiamond98.blocks.ZeldaBlocks;
 import net.deadlydiamond98.items.ZeldaItems;
 import net.deadlydiamond98.networking.ZeldaClientPackets;
+import net.deadlydiamond98.statuseffects.ZeldaStatusEffects;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
+import net.minecraft.client.input.Input;
 import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.util.InputUtil;
 import net.minecraft.sound.SoundEvents;
@@ -27,6 +29,11 @@ public class ClientTickEvent {
 
     public static void endTickEvent() {
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
+
+            if (client.player == null) {
+                return;
+            }
+
             // This checks for left clicks/attacking
 
             if (ZeldaCraft.isModLoaded("bettercombat")) {
@@ -61,6 +68,12 @@ public class ClientTickEvent {
                 if (trinket.isEquipped(ZeldaItems.Quiver) || trinket.isEquipped(ZeldaItems.Better_Quiver)) {
                     client.player.playSound(SoundEvents.ITEM_BUNDLE_INSERT, 0.8F, 0.8F + client.player.getWorld().getRandom().nextFloat() * 0.4F);
                 }
+            }
+
+            if (client.player.hasStatusEffect(ZeldaStatusEffects.Mushroomized_Status_Effect)) {
+
+                client.player.input.movementForward *= -1;
+                client.player.input.movementSideways *= -1;
             }
         });
     }

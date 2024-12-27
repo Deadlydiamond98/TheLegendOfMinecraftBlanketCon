@@ -8,6 +8,7 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.network.ServerPlayerEntity;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -16,6 +17,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin implements ZeldaEntityData {
+
+    @Shadow protected abstract void tickStatusEffects();
 
     @Unique
     private LivingEntity getEntity() {
@@ -30,20 +33,17 @@ public abstract class LivingEntityMixin implements ZeldaEntityData {
         this.flip = false;
     }
 
-    @Inject(method = "tick", at = @At("HEAD"))
+    @Inject(method = "tick", at = @At("HEAD"), cancellable = true)
     public void tick(CallbackInfo ci) {
+        if (getEntity().hasStatusEffect(ZeldaStatusEffects.Stun_Status_Effect)) {
+            this.tickStatusEffects();
+            ci.cancel();
+        }
         if (!getEntity().getWorld().isClient()) {
             getEntity().getWorld().getPlayers().forEach(player -> {
                 ZeldaServerPackets.sendEntityStatsPacket((ServerPlayerEntity) player,
                         this.flip, getEntity().getId());
             });
-        }
-    }
-
-    @Inject(method = "tickMovement", at = @At("HEAD"), cancellable = true)
-    private void onTickMovement(CallbackInfo ci) {
-        if (getEntity().hasStatusEffect(ZeldaStatusEffects.Stun_Status_Effect)) {
-            ci.cancel();
         }
     }
 

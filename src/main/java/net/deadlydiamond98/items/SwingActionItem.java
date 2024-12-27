@@ -1,4 +1,4 @@
-package net.deadlydiamond98.items.custom.Swords;
+package net.deadlydiamond98.items;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.world.World;

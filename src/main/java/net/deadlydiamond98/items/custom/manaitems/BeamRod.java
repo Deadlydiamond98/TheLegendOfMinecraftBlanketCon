@@ -22,7 +22,7 @@ public class BeamRod extends MagicItem {
                 vec3d.x * 1, vec3d.y * 1, vec3d.z * 1, user, new Vec3d(user.getX(), user.getEyeY(), user.getZ()), true, 5);
         world.spawnEntity(beam);
 
-        world.playSound(null, user.getBlockPos(), ZeldaSounds.FireMagic,
+        world.playSound(null, user.getBlockPos(), ZeldaSounds.BeamMagic,
                 SoundCategory.PLAYERS, 3.0f, 1.0f);
         user.getItemCooldownManager().set(this, 20);
     }

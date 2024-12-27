@@ -93,6 +93,8 @@ public class ZeldaItemsTab {
                         entry.add(ZeldaItems.Blue_Tektite_Chitin);
                         entry.add(ZeldaItems.Emerald_Shard);
                         entry.add(ZeldaItems.Emerald_Chunk);
+                        entry.add(ZeldaItems.Piece_Of_Power);
+                        entry.add(ZeldaItems.Gaurdian_Acorn);
                         entry.add(ZeldaItems.Star_Fragment);
                         entry.add(ZeldaItems.Stardust);
                         entry.add(ZeldaItems.Raw_Master_Ore);
