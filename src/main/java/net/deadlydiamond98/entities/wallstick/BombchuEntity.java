@@ -1,11 +1,11 @@
-package net.deadlydiamond98.entities.bombs;
+package net.deadlydiamond98.entities.wallstick;
 
 import net.deadlydiamond98.blocks.BombFlower;
 import net.deadlydiamond98.blocks.SecretStone;
 import net.deadlydiamond98.blocks.ZeldaBlocks;
 import net.deadlydiamond98.entities.ZeldaEntities;
+import net.deadlydiamond98.entities.bombs.BombEntity;
 import net.deadlydiamond98.items.custom.bats.BatItem;
-import net.deadlydiamond98.items.custom.bats.CrackedBat;
 import net.deadlydiamond98.networking.ZeldaServerPackets;
 import net.deadlydiamond98.sounds.ZeldaSounds;
 import net.deadlydiamond98.util.RaycastUtil;
@@ -95,7 +95,7 @@ public class BombchuEntity extends Entity implements Ownable {
             this.rotateOnEdges();
         }
         this.manageFuse();
-        super.tick();
+        this.baseTick();
 
         this.prevYaw = this.getYaw();
         this.prevPitch = this.getPitch();

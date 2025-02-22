@@ -5,7 +5,7 @@
 package net.deadlydiamond98.model.entity;
 
 import net.deadlydiamond98.ZeldaCraft;
-import net.deadlydiamond98.entities.bombs.BombchuEntity;
+import net.deadlydiamond98.entities.wallstick.BombchuEntity;
 import net.minecraft.client.model.*;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.entity.model.EntityModel;

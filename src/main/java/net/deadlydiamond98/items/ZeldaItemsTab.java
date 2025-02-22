@@ -71,7 +71,7 @@ public class ZeldaItemsTab {
                         entry.add(ZeldaItems.Blue_Ring);
                         entry.add(ZeldaItems.Fairy_Bell);
                         entry.add(ZeldaItems.Shield_Pendant);
-//                        entry.add(ZeldaItems.Jump_Pendant);
+                        entry.add(ZeldaItems.Jump_Pendant);
                         entry.add(ZeldaItems.Heart_Pendant);
                         entry.add(ZeldaItems.Fairy_Pendant);
                         //Consumables

@@ -1,7 +1,7 @@
 package net.deadlydiamond98.renderer.entity.bombs;
 
 import net.deadlydiamond98.ZeldaCraft;
-import net.deadlydiamond98.entities.bombs.BombchuEntity;
+import net.deadlydiamond98.entities.wallstick.BombchuEntity;
 import net.deadlydiamond98.model.entity.BombchuEntityModel;
 import net.minecraft.client.render.OverlayTexture;
 import net.minecraft.client.render.RenderLayer;

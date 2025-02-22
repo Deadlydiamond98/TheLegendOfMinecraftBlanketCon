@@ -1,9 +1,6 @@
 package net.deadlydiamond98.networking;
 
-import net.deadlydiamond98.networking.packets.SwordSwingC2SPacket;
-import net.deadlydiamond98.networking.packets.SmashLootGrassC2SPacket;
-import net.deadlydiamond98.networking.packets.UseBackTrinketC2SPacket;
-import net.deadlydiamond98.networking.packets.UseNeckTrinketC2SPacket;
+import net.deadlydiamond98.networking.packets.*;
 import net.deadlydiamond98.statuseffects.StunStatusEffect;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;

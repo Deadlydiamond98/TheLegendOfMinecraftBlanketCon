@@ -1,9 +1,7 @@
 package net.deadlydiamond98.items.custom.bomb;
 
-import net.deadlydiamond98.entities.bombs.AbstractBombEntity;
-import net.deadlydiamond98.entities.bombs.BombchuEntity;
+import net.deadlydiamond98.entities.wallstick.BombchuEntity;
 import net.deadlydiamond98.items.ZeldaItems;
-import net.deadlydiamond98.items.custom.bomb.regular_bombs.AbstractBombItem;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;

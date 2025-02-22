@@ -17,7 +17,7 @@ public interface ZeldaPlayerData {
     boolean hasntDoubleJumpped();
     void canDoubleJump(boolean doubleJumpped);
     boolean wasOnGround();
-    void setOnGround(boolean wasOnGround);
+    void setPrevGroundState(boolean wasOnGround);
 
     boolean canUseHook();
     void setHookUsability(boolean hookusable);

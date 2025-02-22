@@ -38,7 +38,7 @@ public class MagicPowder extends TransformationItem {
     protected void initializeBlockConversions() {
         super.initializeBlockConversions();
 
-        blockConversionMap.put(Blocks.CRAFTING_TABLE, ZeldaBlocks.Magic_Workbench);
+//        blockConversionMap.put(Blocks.CRAFTING_TABLE, ZeldaBlocks.Magic_Workbench);
 
         blockConversionMap.put(Blocks.GRASS, ZeldaBlocks.Loot_Grass);
         blockConversionMap.put(Blocks.GRASS_BLOCK, Blocks.MYCELIUM);

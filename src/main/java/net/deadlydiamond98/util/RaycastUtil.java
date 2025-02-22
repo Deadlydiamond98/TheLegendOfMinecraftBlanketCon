@@ -1,10 +1,7 @@
 package net.deadlydiamond98.util;
 
-import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
-import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.HitResult;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.RaycastContext;
 import net.minecraft.world.World;

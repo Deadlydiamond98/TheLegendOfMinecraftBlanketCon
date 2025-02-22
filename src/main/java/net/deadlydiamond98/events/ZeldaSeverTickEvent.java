@@ -50,7 +50,7 @@ public class ZeldaSeverTickEvent {
             if (world.getRegistryKey() == World.OVERWORLD) {
                 if (world.getTimeOfDay() >= 13000 && world.getTimeOfDay() <= 23000) {
                     world.getPlayers().forEach(player -> {
-                        if (player.getRandom().nextDouble() < meteorShower.getStarChance() && ((ZeldaPlayerData)player).canSpawnStar()
+                        if (player.getRandom().nextDouble() < meteorShower.getStarChance() && ((ZeldaPlayerData) player).canSpawnStar()
                                 && world.getTimeOfDay() % 30 == 0) {
                             double x = player.getX() + player.getRandom().nextBetween(-50, 50);
                             double z = player.getZ() + player.getRandom().nextBetween(-50, 50);

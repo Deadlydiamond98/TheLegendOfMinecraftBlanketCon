@@ -4,7 +4,7 @@ import net.deadlydiamond98.ZeldaCraft;
 import net.deadlydiamond98.entities.balls.BaseBallEntity;
 import net.deadlydiamond98.entities.balls.OctoRockEntity;
 import net.deadlydiamond98.entities.bombs.BombEntity;
-import net.deadlydiamond98.entities.bombs.BombchuEntity;
+import net.deadlydiamond98.entities.wallstick.BombchuEntity;
 import net.deadlydiamond98.entities.bombs.RemoteBombEntity;
 import net.deadlydiamond98.entities.bombs.SuperBombEntity;
 import net.deadlydiamond98.entities.monsters.*;

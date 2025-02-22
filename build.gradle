@@ -33,6 +33,9 @@ repositories {
 	maven {
 		url "<https://maven.shedaniel.me/>"
 	}
+	maven {
+		url "<https://maven.architectury.dev/>"
+	}
 }
 loom {
 	splitEnvironmentSourceSets()
@@ -56,7 +59,8 @@ dependencies {
 	modImplementation "dev.emi:trinkets:${trinkets_version}"
 	modImplementation "curse.maven:magicbarlib-1075641:${magic_bar_lib_version}"
 	modImplementation "maven.modrinth:midnightlib:${project.midnightlib_version}"
-	// Uncomment the following line to enable the deprecated Fabric API modules. 
+
+	// Uncomment the following line to enable the deprecated Fabric API modules.
 	// These are included in the Fabric API production distribution and allow you to update your mod to the latest modules at a later more convenient time.
 
 	// modImplementation "net.fabricmc.fabric-api:fabric-api-deprecated:${project.fabric_version}"

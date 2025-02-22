@@ -1,7 +1,6 @@
 package net.deadlydiamond98.blocks.entities;
 
 import net.deadlydiamond98.ZeldaCraft;
-import net.deadlydiamond98.blocks.MagicWorkbench;
 import net.deadlydiamond98.blocks.ZeldaBlocks;
 import net.deadlydiamond98.blocks.entities.doors.*;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;

@@ -67,7 +67,6 @@ public abstract class PlayerEntityMixin implements ZeldaPlayerData {
     private boolean doubleJumpped;
     @Unique
     private boolean wasOnGround;
-
     @Unique
     private boolean canUseHook;
 
@@ -108,9 +107,9 @@ public abstract class PlayerEntityMixin implements ZeldaPlayerData {
             this.setFairyFriend(false);
             getPlayer().enableManaRegen(false, 40, 2);
         }
-        if (!trinket.isEquipped(ZeldaItems.Jump_Pendant)) {
-            this.enableddoubleJump(false);
-        }
+
+        this.enableddoubleJump(trinket.isEquipped(ZeldaItems.Jump_Pendant));
+
         if (!trinket.isEquipped(ZeldaItems.Fairy_Pendant)) {
             this.setFairyState(false);
         }
@@ -140,19 +139,18 @@ public abstract class PlayerEntityMixin implements ZeldaPlayerData {
 
     private void doubleJumpAction() {
         if (this.doubleJumpEnabled() && getPlayer().canRemoveMana(10)
-                && livingEntityAccessor.getJumping() && this.hasntDoubleJumpped()
+                && this.hasntDoubleJumpped()
                 && livingEntityAccessor.getJumpingCooldown() == 0) {
-
             getPlayer().jump();
             this.canDoubleJump(false);
+            getPlayer().removeMana(10);
         }
 
         if (getPlayer().isOnGround() && !this.wasOnGround() && !this.hasntDoubleJumpped()) {
             this.canDoubleJump(true);
-            getPlayer().removeMana(10);
         }
 
-        this.setOnGround(getPlayer().isOnGround());
+        this.setPrevGroundState(getPlayer().isOnGround());
     }
 
     @Inject(method = "writeCustomDataToNbt", at = @At("HEAD"))
@@ -314,7 +312,7 @@ public abstract class PlayerEntityMixin implements ZeldaPlayerData {
         return this.wasOnGround;
     }
     @Override
-    public void setOnGround(boolean wasOnGround) {
+    public void setPrevGroundState(boolean wasOnGround) {
         this.wasOnGround = wasOnGround;
     }
 

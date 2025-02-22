@@ -34,7 +34,7 @@ public class CustomBundle extends Item {
 
     private static final String ITEMS_KEY = "Items";
     private static final int ITEM_BAR_COLOR = MathHelper.packRgb(0.4F, 0.4F, 1.0F);
-    private final int maxStorage;
+    public final int maxStorage;
     private final List<TagKey> itemTags;
 
     public CustomBundle(Item.Settings settings, int maxStorage, List<TagKey> itemTags) {

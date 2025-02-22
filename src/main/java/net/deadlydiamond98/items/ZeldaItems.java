@@ -286,6 +286,8 @@ public class ZeldaItems {
             ZeldaEntities.Blue_Octorok_Entity, 0x1412a7, 0x60d0e0, new FabricItemSettings()));
     public static final Item Like_Like_Spawn_Egg = registerItem("like_like_spawn_egg", new SpawnEggItem(
             ZeldaEntities.Like_Like_Entity, 0xd79c8c, 0x160407, new FabricItemSettings()));
+    public static final Item Ramblin_Mushroom_Spawn_Egg = registerItem("ramblin_mushroom_spawn_egg", new SpawnEggItem(
+            ZeldaEntities.Ramblin_Mushroom_Entity, 0xa00f10, 0xffffff, new FabricItemSettings()));
 
 
 
@@ -304,6 +306,7 @@ public class ZeldaItems {
         entry.add(Octorok_Spawn_Egg);
         entry.add(Blue_Octorok_Spawn_Egg);
         entry.add(Like_Like_Spawn_Egg);
+        entry.add(Ramblin_Mushroom_Spawn_Egg);
     }
     public static void registerItems() {
         ZeldaCraft.LOGGER.debug("Registering Items for" + ZeldaCraft.MOD_ID);

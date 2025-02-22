@@ -69,12 +69,6 @@ public class ClientTickEvent {
                     client.player.playSound(SoundEvents.ITEM_BUNDLE_INSERT, 0.8F, 0.8F + client.player.getWorld().getRandom().nextFloat() * 0.4F);
                 }
             }
-
-            if (client.player.hasStatusEffect(ZeldaStatusEffects.Mushroomized_Status_Effect)) {
-
-                client.player.input.movementForward *= -1;
-                client.player.input.movementSideways *= -1;
-            }
         });
     }
 
