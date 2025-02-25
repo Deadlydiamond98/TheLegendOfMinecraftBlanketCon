@@ -16,6 +16,31 @@ public interface IRaycast {
         Vec3d direction = getDirectionVector(yaw, pitch);
         Vec3d end = start.add(direction.multiply(length));
 
+
+        return this.getWorld().raycast(new RaycastContext(
+                start,
+                end,
+                RaycastContext.ShapeType.COLLIDER,
+                RaycastContext.FluidHandling.NONE,
+                (Entity) this
+        ));
+    }
+
+    default HitResult doRaycast(Vec3d start, Vec3d velocity, double length) {
+        if (velocity.lengthSquared() < 1.0e-8) {
+            return this.getWorld().raycast(new RaycastContext(
+                    start,
+                    start,
+                    RaycastContext.ShapeType.COLLIDER,
+                    RaycastContext.FluidHandling.NONE,
+                    (Entity) this
+            ));
+        }
+
+
+        Vec3d direction = velocity.normalize();
+        Vec3d end = start.add(direction.multiply(length));
+
         return this.getWorld().raycast(new RaycastContext(
                 start,
                 end,
@@ -47,5 +72,9 @@ public interface IRaycast {
 
     default Vec3d getCenterPos() {
         return this.getPos().add(0, this.getHeight() / 2.0, 0);
+    }
+
+    private static Vec3d up() {
+        return new Vec3d(0, 1, 0);
     }
 }

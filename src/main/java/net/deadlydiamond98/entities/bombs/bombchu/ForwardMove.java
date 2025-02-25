@@ -13,7 +13,7 @@ public enum ForwardMove {
 
     public float getRotation(float frontDist) {
         if (frontDist == 0) {
-            frontDist = 1;
+            return 10 * this.direction;
         }
 
         return (6 * (1 / frontDist)) * this.direction;

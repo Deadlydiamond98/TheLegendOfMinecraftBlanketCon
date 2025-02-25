@@ -1,7 +1,6 @@
 package net.deadlydiamond98.entities.bombs.bombchu;
 
 import net.deadlydiamond98.util.interfaces.entities.IRaycast;
-import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 import org.jetbrains.annotations.Nullable;
@@ -14,8 +13,8 @@ public interface ISurfaceSticker extends IRaycast {
         FLOOR("Floor", Direction.DOWN),
         CEILING("Ceiling", Direction.UP),
         NORTH("North", Direction.NORTH),
-        SOUTH("South", Direction.SOUTH),
         EAST("East", Direction.EAST),
+        SOUTH("South", Direction.SOUTH),
         WEST("West", Direction.WEST),
         DETACHED("Detached", Direction.DOWN),
         THROWN("Thrown", Direction.DOWN);
@@ -29,11 +28,15 @@ public interface ISurfaceSticker extends IRaycast {
         }
 
         public boolean canApplyGravity() {
-            return this == DETACHED || this == THROWN;
+            return is(DETACHED) || is(THROWN);
         }
 
         public boolean ceiling() {
-            return this == CEILING;
+            return is(CEILING);
+        }
+
+        public boolean isWall() {
+            return is(NORTH) || is(SOUTH) || is(EAST) || is(WEST);
         }
 
         public FloorAttachState getByName(String name) {
@@ -52,10 +55,13 @@ public interface ISurfaceSticker extends IRaycast {
         public Direction getDirection() {
             return this.direction;
         }
+
+        private boolean is(FloorAttachState state) {
+            return this == state;
+        }
     }
 
-    default FloorAttachState changeSide(BlockHitResult frontHit) {
-        Direction direction = frontHit.getSide().getOpposite();
+    default FloorAttachState changeSide(Direction direction) {
         return switch (direction) {
             case DOWN -> FloorAttachState.FLOOR;
             case UP -> FloorAttachState.CEILING;
@@ -101,4 +107,32 @@ public interface ISurfaceSticker extends IRaycast {
         }
         return velocity.multiply(speed);
     }
+
+    default int rotateWallToWall(FloorAttachState oldFace, FloorAttachState newFace) {
+        FloorAttachState[] directions = {
+                FloorAttachState.NORTH,
+                FloorAttachState.EAST,
+                FloorAttachState.SOUTH,
+                FloorAttachState.WEST
+        };
+
+        int oldIndex = -1;
+        int newIndex = -1;
+
+        for (int i = 0; i < directions.length; i++) {
+            if (directions[i] == oldFace) oldIndex = i;
+            if (directions[i] == newFace) newIndex = i;
+        }
+
+        if (oldIndex == -1 || newIndex == -1) return 0;
+
+        int diff = (newIndex - oldIndex + 4) % 4;
+
+        return switch (diff) {
+            case 1 -> -90;
+            case 3 -> 90;
+            default -> 0;
+        };
+    }
 }
+

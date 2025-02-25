@@ -16,10 +16,10 @@ import net.minecraft.world.World;
 
 public class BombchuEntity extends AbstractBombEntity implements ISurfaceSticker {
 
-    // Variables here are to help prevent Clientside de-sync
     protected static final TrackedData<Direction> ATTACHED_FACE_CLIENT = DataTracker.registerData(BombchuEntity.class, TrackedDataHandlerRegistry.FACING);
-    protected static final TrackedData<Direction> PREV_ATTACHED_FACE_CLIENT = DataTracker.registerData(BombchuEntity.class, TrackedDataHandlerRegistry.FACING);
     protected static final TrackedData<Boolean> GRAVITY_CLIENT = DataTracker.registerData(BombchuEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+
+    protected static final TrackedData<Direction> PREV_ATTACHED_FACE = DataTracker.registerData(BombchuEntity.class, TrackedDataHandlerRegistry.FACING);
 
     private static final double SPEED = 0.25;
 
@@ -53,6 +53,7 @@ public class BombchuEntity extends AbstractBombEntity implements ISurfaceSticker
         
         if (!this.attachedFace.canApplyGravity()) {
             updateFrontState(4);
+            avoidEdge();
             updateAttachedFaceWithFloor();
         }
 
@@ -62,13 +63,12 @@ public class BombchuEntity extends AbstractBombEntity implements ISurfaceSticker
     }
 
     private void updateAttachedFaceWithFloor() {
-        avoidEdge();
         this.setVelocity(updateVelocityDirection(this.attachedFace, this.getYaw(), this.getPitch(), SPEED));
 
         double length = 0.51;
 
-        HitResult centerCast = doRaycast(this.getCenterPos(), this.getYaw(), this.getPitch(), length);
-        HitResult downCast = doRaycast(this.getCenterPos(), this.getYaw(), this.getPitch(), length);
+        HitResult centerCast = doRaycast(this.getCenterPos(), this.getVelocity(), length);
+        HitResult downCast = doRaycast(this.getCenterPos(), this.getYaw(), this.getPitch() + 90, length);
 
         boolean front = centerCast.getType() == HitResult.Type.BLOCK;
         boolean down = downCast.getType() == HitResult.Type.BLOCK;
@@ -83,12 +83,11 @@ public class BombchuEntity extends AbstractBombEntity implements ISurfaceSticker
     private void avoidEdge() {
         float rotAmount = this.frontState.getRotation(this.frontDistance);
 
-        switch (this.attachedFace) {
-            case FLOOR, WEST -> this.setYaw(this.getYaw() + rotAmount);
-            case CEILING, EAST -> this.setYaw(this.getYaw() - rotAmount);
-            case SOUTH -> this.setPitch(this.getPitch() + rotAmount);
-            case NORTH -> this.setPitch(this.getPitch() - rotAmount);
+        if (this.getPitch() > 90) {
+            rotAmount *= -1;
         }
+
+        this.setYaw(this.getYaw() + rotAmount);
     }
 
     private void rotateOnEdge(BlockHitResult frontHit, BlockHitResult downHit) {
@@ -96,9 +95,33 @@ public class BombchuEntity extends AbstractBombEntity implements ISurfaceSticker
         BlockState frontBlock = this.getWorld().getBlockState(frontHit.getBlockPos());
 
         if (downBlock.isSolid() && frontBlock.isSolid()) {
+
+            Direction direction = frontHit.getSide().getOpposite();
+
+            FloorAttachState prevOldState = changeSide(getPrevAttachedFaceClient());
             setPrevAttachedFaceClient(this.attachedFace.getDirection());
-            this.attachedFace = changeSide(frontHit);
-            this.setRotation(this.getYaw(), this.getPitch() - 90);
+
+            FloorAttachState newState = changeSide(direction);
+
+            boolean wallToWall = this.attachedFace.isWall() && newState.isWall();
+
+            int pitch = 0;
+            int yaw = 0;
+
+            if (!wallToWall) {
+                pitch = 90;
+
+                if (newState.ceiling() && prevOldState.isWall()) {
+                    yaw = -rotateWallToWall(prevOldState, this.attachedFace);
+                }
+            }
+            else {
+                yaw = rotateWallToWall(this.attachedFace, newState);
+            }
+
+            this.setRotation(this.getYaw() - yaw, this.getPitch() - pitch);
+            this.attachedFace = newState;
+            this.setVelocity(updateVelocityDirection(this.attachedFace, this.getYaw(), this.getPitch(), SPEED));
         }
     }
 
@@ -164,7 +187,7 @@ public class BombchuEntity extends AbstractBombEntity implements ISurfaceSticker
     protected void initDataTracker() {
         super.initDataTracker();
         this.dataTracker.startTracking(ATTACHED_FACE_CLIENT, Direction.DOWN);
-        this.dataTracker.startTracking(PREV_ATTACHED_FACE_CLIENT, Direction.DOWN);
+        this.dataTracker.startTracking(PREV_ATTACHED_FACE, Direction.DOWN);
         this.dataTracker.startTracking(GRAVITY_CLIENT, true);
     }
 
@@ -177,11 +200,11 @@ public class BombchuEntity extends AbstractBombEntity implements ISurfaceSticker
     }
 
     public Direction getPrevAttachedFaceClient() {
-        return this.dataTracker.get(PREV_ATTACHED_FACE_CLIENT);
+        return this.dataTracker.get(PREV_ATTACHED_FACE);
     }
 
     private void setPrevAttachedFaceClient(Direction face) {
-        this.dataTracker.set(PREV_ATTACHED_FACE_CLIENT, face);
+        this.dataTracker.set(PREV_ATTACHED_FACE, face);
     }
 
     public boolean getGravityClient() {

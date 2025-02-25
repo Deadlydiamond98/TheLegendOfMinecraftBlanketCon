@@ -30,34 +30,58 @@ public class BombchuEntityRenderer extends EntityRenderer<BombchuEntity> {
     public void render(BombchuEntity entity, float yaw, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light) {
         matrices.push();
         Direction floor = entity.getAttachedFaceClient();
-        Direction prevFloor = entity.getPrevAttachedFaceClient();
 
-        matrices.multiply(RotationAxis.NEGATIVE_X.rotationDegrees(entity.getPitch()));
+//        matrices.multiply(RotationAxis.NEGATIVE_X.rotationDegrees(entity.getPitch()));
 
-        // Pitch
+//        // Pitch
+//        switch (floor) {
+//            case NORTH, SOUTH -> matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(entity.getPitch() + 90));
+//            case EAST -> matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(entity.getPitch() + 180));
+//            case WEST -> matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(entity.getPitch()));
+//        }
+//
+//        // Yaw
+//        switch (floor) {
+//            case DOWN -> matrices.multiply(RotationAxis.NEGATIVE_Y.rotationDegrees(entity.getYaw() + 180));
+//            case UP -> matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(entity.getYaw() + 180));
+//            case EAST, WEST -> matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(entity.getYaw() + 90));
+//            case NORTH, SOUTH -> matrices.multiply(RotationAxis.NEGATIVE_Y.rotationDegrees(entity.getYaw() + 180));
+//        }
+
         switch (floor) {
-            case NORTH -> matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(entity.getPitch() + 90));
-            case EAST -> matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(entity.getPitch() + 180));
-            case SOUTH -> matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(entity.getPitch() + 270));
-            case WEST -> matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(entity.getPitch()));
-        }
-
-        // Yaw
-        switch (floor) {
-            case DOWN, NORTH, SOUTH -> matrices.multiply(RotationAxis.NEGATIVE_Y.rotationDegrees(entity.getYaw() + 180));
-            case UP, EAST, WEST -> matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(entity.getYaw() + 180));
+            case DOWN -> matrices.multiply(RotationAxis.NEGATIVE_Y.rotationDegrees(entity.getYaw() + 180));
+            case UP -> {
+                matrices.multiply(RotationAxis.NEGATIVE_X.rotationDegrees(entity.getPitch()));
+                matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(entity.getYaw() + 180));
+            }
+            case NORTH -> {
+                matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees(90));
+                matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(entity.getYaw() + 180));
+            }
+            case SOUTH -> {
+                matrices.multiply(RotationAxis.NEGATIVE_X.rotationDegrees(90));
+                matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(entity.getYaw() + 180));
+            }
+            case EAST -> {
+                matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(90));
+                matrices.multiply(RotationAxis.NEGATIVE_Y.rotationDegrees(entity.getYaw() + 180));
+            }
+            case WEST -> {
+                matrices.multiply(RotationAxis.NEGATIVE_Z.rotationDegrees(90));
+                matrices.multiply(RotationAxis.NEGATIVE_Y.rotationDegrees(entity.getYaw() + 180));
+            }
         }
 
         VertexConsumer vertexConsumer = vertexConsumers.getBuffer(this.entityModel.getLayer(getTexture(entity)));
         this.entityModel.render(matrices, vertexConsumer, light, OverlayTexture.DEFAULT_UV, 1.0F, 1.0F, 1.0F, 1.0F);
-//
-//        if (entity.getFuse() <= 15) {
-//            VertexConsumer vertexCon = vertexConsumers.getBuffer(Low_Fuse_Layer);
-//            if (vertexCon != null) {
-//                this.entityModel.render(matrices, vertexCon, light, OverlayTexture.DEFAULT_UV, 1.0F, 1.0F, 1.0F,
-//                        (float) Math.abs(Math.sin(entity.getFuse() * 0.4) * 0.75));
-//            }
-//        }
+
+        if (entity.getFuse() <= 15) {
+            VertexConsumer vertexCon = vertexConsumers.getBuffer(Low_Fuse_Layer);
+            if (vertexCon != null) {
+                this.entityModel.render(matrices, vertexCon, light, OverlayTexture.DEFAULT_UV, 1.0F, 1.0F, 1.0F,
+                        (float) Math.abs(Math.sin(entity.getFuse() * 0.4) * 0.75));
+            }
+        }
         matrices.pop();
         super.render(entity, yaw, tickDelta, matrices, vertexConsumers, light);
     }
