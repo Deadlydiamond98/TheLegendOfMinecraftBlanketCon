@@ -4,8 +4,7 @@ import net.deadlydiamond98.blocks.BombFlower;
 import net.deadlydiamond98.blocks.SecretStone;
 import net.deadlydiamond98.blocks.ZeldaBlocks;
 import net.deadlydiamond98.enchantments.ZeldaEnchantments;
-import net.deadlydiamond98.items.custom.bats.BatItem;
-import net.deadlydiamond98.items.custom.bats.CrackedBat;
+import net.deadlydiamond98.items.items.bats.BatItem;
 import net.deadlydiamond98.networking.ZeldaServerPackets;
 import net.deadlydiamond98.sounds.ZeldaSounds;
 import net.deadlydiamond98.util.ZeldaAdvancementCriterion;
@@ -50,6 +49,7 @@ public abstract class AbstractBombEntity extends Entity implements Ownable {
         this.setPosition(x, y, z);
         this.power = power;
         this.setFuse(fuse);
+        this.setOwner(player);
     }
 
     @Override
@@ -58,9 +58,7 @@ public abstract class AbstractBombEntity extends Entity implements Ownable {
     }
 
     public void tick() {
-        if (!this.hasNoGravity()) {
-            this.setVelocity(this.getVelocity().add(0.0, -0.04, 0.0));
-        }
+        applyGravity();
 
         this.tickMovement();
 
@@ -72,16 +70,21 @@ public abstract class AbstractBombEntity extends Entity implements Ownable {
         this.getWorld().getProfiler().pop();
     }
 
-    protected void tickMovement() {
-        this.move(MovementType.SELF, this.getVelocity());
+    protected void applyGravity() {
+        if (!this.hasNoGravity()) {
+            this.setVelocity(this.getVelocity().add(0.0, -0.04, 0.0));
+        }
+    }
 
+    protected void tickMovement() {
         this.setVelocity(this.getVelocity().multiply(0.98));
         if (this.isOnGround()) {
             this.setVelocity(this.getVelocity().multiply(0.5, -0.5, 0.5));
         }
+        this.move(MovementType.SELF, this.getVelocity());
     }
 
-    private void manageFuse() {
+    protected void manageFuse() {
         int i = this.getFuse() - 1;
         this.setFuse(i);
         if (i <= 0) {

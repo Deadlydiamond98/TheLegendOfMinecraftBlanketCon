@@ -4,7 +4,7 @@ import dev.emi.trinkets.api.TrinketComponent;
 import dev.emi.trinkets.api.TrinketsApi;
 import net.deadlydiamond98.items.ZeldaItems;
 import net.deadlydiamond98.sounds.ZeldaSounds;
-import net.deadlydiamond98.util.ZeldaPlayerData;
+import net.deadlydiamond98.util.interfaces.ZeldaPlayerData;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;

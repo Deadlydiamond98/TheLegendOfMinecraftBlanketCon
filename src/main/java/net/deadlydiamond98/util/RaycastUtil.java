@@ -7,6 +7,7 @@ import net.minecraft.world.RaycastContext;
 import net.minecraft.world.World;
 
 public final class RaycastUtil {
+
     public static HitResult getCollisionFromEntityFront(Entity entity, double range) {
         Vec3d startPos = entity.getPos();
         Vec3d direction = getDirection(entity);

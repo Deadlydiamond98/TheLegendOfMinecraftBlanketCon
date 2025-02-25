@@ -15,6 +15,10 @@ public class BaseBallEntity extends AbstractBallEntity {
         super(entityType, world);
     }
 
+    public BaseBallEntity(World world, LivingEntity user) {
+        super(ZeldaEntities.Baseball_Entity, world, user, 0.98f, 0.7f, 0.03f);
+    }
+
     @Override
     protected float getDamage() {
         return 2.0f;
@@ -25,9 +29,6 @@ public class BaseBallEntity extends AbstractBallEntity {
         return adjustedVelocity.add(0, 0.05, 0);
     }
 
-    public BaseBallEntity(World world, LivingEntity user) {
-        super(ZeldaEntities.Baseball_Entity, world, user, 0.98, 0.7, 0.03f);
-    }
 
     @Override
     protected Item getDefaultItem() {

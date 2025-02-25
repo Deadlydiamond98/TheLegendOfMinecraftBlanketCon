@@ -3,8 +3,7 @@ package net.deadlydiamond98.mixin;
 import dev.emi.trinkets.api.SlotReference;
 import dev.emi.trinkets.api.TrinketComponent;
 import dev.emi.trinkets.api.TrinketsApi;
-import net.deadlydiamond98.items.ZeldaItems;
-import net.deadlydiamond98.items.custom.custombundle.Quiver;
+import net.deadlydiamond98.items.items.custombundle.Quiver;
 import net.deadlydiamond98.util.ZeldaTags;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -19,9 +18,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
-import java.util.Map;
 import java.util.Optional;
-import java.util.Stack;
 
 @Mixin(BowItem.class)
 public abstract class BowItemMixin {

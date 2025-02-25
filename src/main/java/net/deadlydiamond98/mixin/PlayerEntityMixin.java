@@ -5,7 +5,7 @@ import dev.emi.trinkets.api.TrinketsApi;
 import net.deadlydiamond98.items.ZeldaItems;
 import net.deadlydiamond98.networking.ZeldaServerPackets;
 import net.deadlydiamond98.sounds.ZeldaSounds;
-import net.deadlydiamond98.util.ZeldaPlayerData;
+import net.deadlydiamond98.util.interfaces.ZeldaPlayerData;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityDimensions;
 import net.minecraft.entity.EquipmentSlot;

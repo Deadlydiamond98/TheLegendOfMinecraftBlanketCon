@@ -2,9 +2,10 @@ package net.deadlydiamond98.entities;
 
 import net.deadlydiamond98.ZeldaCraft;
 import net.deadlydiamond98.entities.balls.BaseBallEntity;
+import net.deadlydiamond98.entities.balls.BouncyBallEntity;
 import net.deadlydiamond98.entities.balls.OctoRockEntity;
 import net.deadlydiamond98.entities.bombs.BombEntity;
-import net.deadlydiamond98.entities.wallstick.BombchuEntity;
+import net.deadlydiamond98.entities.bombs.bombchu.BombchuEntity;
 import net.deadlydiamond98.entities.bombs.RemoteBombEntity;
 import net.deadlydiamond98.entities.bombs.SuperBombEntity;
 import net.deadlydiamond98.entities.monsters.*;
@@ -159,6 +160,14 @@ public class ZeldaEntities {
             new Identifier(ZeldaCraft.MOD_ID, "baseball"),
             FabricEntityTypeBuilder.create(SpawnGroup.MISC, (EntityType<BaseBallEntity> type, World world) ->
                             new BaseBallEntity(type, world))
+                    .dimensions(EntityDimensions.fixed(0.5f,0.5f))
+                    .build()
+    );
+    public static final EntityType<BouncyBallEntity> Bouncy_Ball_Entity = Registry.register(
+            Registries.ENTITY_TYPE,
+            new Identifier(ZeldaCraft.MOD_ID, "bouncy_ball"),
+            FabricEntityTypeBuilder.create(SpawnGroup.MISC, (EntityType<BouncyBallEntity> type, World world) ->
+                            new BouncyBallEntity(type, world))
                     .dimensions(EntityDimensions.fixed(0.5f,0.5f))
                     .build()
     );

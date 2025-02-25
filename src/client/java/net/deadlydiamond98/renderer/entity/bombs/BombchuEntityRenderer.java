@@ -1,7 +1,7 @@
 package net.deadlydiamond98.renderer.entity.bombs;
 
 import net.deadlydiamond98.ZeldaCraft;
-import net.deadlydiamond98.entities.wallstick.BombchuEntity;
+import net.deadlydiamond98.entities.bombs.bombchu.BombchuEntity;
 import net.deadlydiamond98.model.entity.BombchuEntityModel;
 import net.minecraft.client.render.OverlayTexture;
 import net.minecraft.client.render.RenderLayer;
@@ -29,45 +29,35 @@ public class BombchuEntityRenderer extends EntityRenderer<BombchuEntity> {
     @Override
     public void render(BombchuEntity entity, float yaw, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light) {
         matrices.push();
+        Direction floor = entity.getAttachedFaceClient();
+        Direction prevFloor = entity.getPrevAttachedFaceClient();
+
         matrices.multiply(RotationAxis.NEGATIVE_X.rotationDegrees(entity.getPitch()));
-        Direction floorDirection = entity.getAttachedFace();
-        switch (floorDirection) {
-            case NORTH -> {
-                matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(entity.getPitch() + 90));
-                matrices.translate(0, -0.2, 0);
-            }
-            case SOUTH -> {
-                matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(entity.getPitch() + 270));
-                matrices.translate(0, -0.2, 0);
-            }
-            case WEST -> {
-                matrices.multiply(RotationAxis.NEGATIVE_Z.rotationDegrees(90));
-                matrices.translate(0, -0.2, 0);
-            }
-            case EAST -> {
-                matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(90));
-                matrices.translate(0, -0.2, 0);
-            }
-            case UP -> {
-                matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(entity.getYaw() + 180));
-                matrices.translate(0, -0.35, 0);
-            }
-            case DOWN -> {
-                matrices.multiply(RotationAxis.NEGATIVE_Y.rotationDegrees(entity.getYaw() + 180));
-                matrices.translate(0, 0, 0);
-            }
+
+        // Pitch
+        switch (floor) {
+            case NORTH -> matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(entity.getPitch() + 90));
+            case EAST -> matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(entity.getPitch() + 180));
+            case SOUTH -> matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(entity.getPitch() + 270));
+            case WEST -> matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(entity.getPitch()));
+        }
+
+        // Yaw
+        switch (floor) {
+            case DOWN, NORTH, SOUTH -> matrices.multiply(RotationAxis.NEGATIVE_Y.rotationDegrees(entity.getYaw() + 180));
+            case UP, EAST, WEST -> matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(entity.getYaw() + 180));
         }
 
         VertexConsumer vertexConsumer = vertexConsumers.getBuffer(this.entityModel.getLayer(getTexture(entity)));
         this.entityModel.render(matrices, vertexConsumer, light, OverlayTexture.DEFAULT_UV, 1.0F, 1.0F, 1.0F, 1.0F);
-
-        if (entity.getFuse() <= 15) {
-            VertexConsumer vertexCon = vertexConsumers.getBuffer(Low_Fuse_Layer);
-            if (vertexCon != null) {
-                this.entityModel.render(matrices, vertexCon, light, OverlayTexture.DEFAULT_UV, 1.0F, 1.0F, 1.0F,
-                        (float) Math.abs(Math.sin(entity.getFuse() * 0.4) * 0.75));
-            }
-        }
+//
+//        if (entity.getFuse() <= 15) {
+//            VertexConsumer vertexCon = vertexConsumers.getBuffer(Low_Fuse_Layer);
+//            if (vertexCon != null) {
+//                this.entityModel.render(matrices, vertexCon, light, OverlayTexture.DEFAULT_UV, 1.0F, 1.0F, 1.0F,
+//                        (float) Math.abs(Math.sin(entity.getFuse() * 0.4) * 0.75));
+//            }
+//        }
         matrices.pop();
         super.render(entity, yaw, tickDelta, matrices, vertexConsumers, light);
     }

@@ -1,12 +1,8 @@
 package net.deadlydiamond98.entities.balls;
 
 import net.deadlydiamond98.entities.ZeldaEntities;
-import net.deadlydiamond98.entities.monsters.tektites.TektiteEntity;
-import net.deadlydiamond98.entities.projectiles.BeamEntity;
 import net.deadlydiamond98.items.ZeldaItems;
-import net.deadlydiamond98.items.custom.bats.CrackedBat;
-import net.deadlydiamond98.particle.ZeldaParticles;
-import net.minecraft.block.Block;
+import net.deadlydiamond98.items.items.bats.CrackedBat;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.entity.BlockEntity;
@@ -24,16 +20,10 @@ import net.minecraft.entity.projectile.ProjectileUtil;
 import net.minecraft.entity.projectile.thrown.ThrownItemEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.particle.ParticleTypes;
-import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.RaycastContext;
 import net.minecraft.world.World;
-import net.minecraft.world.event.GameEvent;
 
 public class OctoRockEntity extends AbstractBallEntity {
 
@@ -54,7 +44,7 @@ public class OctoRockEntity extends AbstractBallEntity {
     }
 
     public OctoRockEntity(World world, LivingEntity user, boolean octorokOrigin) {
-        super(ZeldaEntities.Octo_Rock, world, user, 0.95, 0.4, 0.04f);
+        super(ZeldaEntities.Octo_Rock, world, user, 0.95f, 0.4f, 0.04f);
         setOctorokOrigin(octorokOrigin);
     }
 
@@ -98,14 +88,12 @@ public class OctoRockEntity extends AbstractBallEntity {
             this.onCollision(hitResult);
         }
 
-
-        this.ballMove(MovementType.SELF, this.getVelocity());
-
         this.setBoundingBox(this.calculateBoundingBox());
         this.updateRotation();
 
 
         this.checkBlockCollision();
+        this.ballMove(MovementType.SELF, this.getVelocity());
     }
 
     @Override

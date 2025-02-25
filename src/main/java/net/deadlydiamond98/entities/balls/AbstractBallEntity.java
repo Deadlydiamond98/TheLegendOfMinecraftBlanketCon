@@ -1,7 +1,7 @@
 package net.deadlydiamond98.entities.balls;
 
 import net.deadlydiamond98.enchantments.ZeldaEnchantments;
-import net.deadlydiamond98.items.custom.bats.BatItem;
+import net.deadlydiamond98.items.items.bats.BatItem;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -21,6 +21,7 @@ import net.minecraft.entity.projectile.ProjectileUtil;
 import net.minecraft.entity.projectile.thrown.ThrownItemEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.ItemStackParticleEffect;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleTypes;
@@ -38,40 +39,46 @@ import java.util.List;
 
 public abstract class AbstractBallEntity extends ThrownItemEntity {
 
-    private final double dragAir;
-    private final double bounce;
-    private final float gravity;
     protected boolean leftOwner;
     private int life;
 
+    private static final TrackedData<Float> AIR_DRAG;
+    private static final TrackedData<Float> BOUNCE;
+    private static final TrackedData<Float> GRAVITY;
     private static final TrackedData<Float> DRAG;
 
     @Override
     protected void initDataTracker() {
         super.initDataTracker();
         this.dataTracker.startTracking(DRAG, 1.0f);
+        this.dataTracker.startTracking(GRAVITY, 1.0f);
+        this.dataTracker.startTracking(BOUNCE, 1.0f);
+        this.dataTracker.startTracking(AIR_DRAG, 1.0f);
     }
 
     static {
         DRAG = DataTracker.registerData(AbstractBallEntity.class, TrackedDataHandlerRegistry.FLOAT);
+        GRAVITY = DataTracker.registerData(AbstractBallEntity.class, TrackedDataHandlerRegistry.FLOAT);
+        BOUNCE = DataTracker.registerData(AbstractBallEntity.class, TrackedDataHandlerRegistry.FLOAT);
+        AIR_DRAG = DataTracker.registerData(AbstractBallEntity.class, TrackedDataHandlerRegistry.FLOAT);
     }
 
     public AbstractBallEntity(EntityType<? extends ThrownItemEntity> entityType, World world) {
         super(entityType, world);
-        this.dragAir = 0.98;
+        this.setAirDrag(0.98f);
         setDrag(1.0f);
-        this.bounce = 0.6;
-        this.gravity = 0.03f;
+        this.setBounce(0.6f);
+        this.setGravity(0.03f);
         this.leftOwner = false;
         this.life = 0;
     }
 
-    public AbstractBallEntity(EntityType<? extends ThrownItemEntity> entityType, World world, LivingEntity user, double dragAir, double bounce, float gravity) {
+    public AbstractBallEntity(EntityType<? extends ThrownItemEntity> entityType, World world, LivingEntity user, float dragAir, float bounce, float gravity) {
         super(entityType, user, world);
-        this.dragAir = dragAir;
+        this.setAirDrag(dragAir);
         setDrag(1.0f);
-        this.bounce = bounce;
-        this.gravity = gravity;
+        this.setBounce(bounce);
+        this.setGravity(gravity);
         this.leftOwner = false;
         this.life = 0;
     }
@@ -107,7 +114,7 @@ public abstract class AbstractBallEntity extends ThrownItemEntity {
             this.onCollision(hitResult);
         }
 
-        double drag = (this.isTouchingWater() ? this.dragAir * 0.85 : this.dragAir) * getDrag();
+        double drag = (this.isTouchingWater() ? this.getAirDrag() * 0.85 : this.getAirDrag()) * getDrag();
 
         Vec3d adjustedVelocity = this.getVelocity().multiply(drag);
 
@@ -120,8 +127,6 @@ public abstract class AbstractBallEntity extends ThrownItemEntity {
         }
 
         this.setVelocity(adjustedVelocity);
-
-        this.ballMove(MovementType.SELF, this.getVelocity());
 
         this.setBoundingBox(this.calculateBoundingBox());
         this.updateRotation();
@@ -158,6 +163,7 @@ public abstract class AbstractBallEntity extends ThrownItemEntity {
 
             setDrag(1.0f);
         }
+        this.ballMove(MovementType.SELF, this.getVelocity());
     }
 
     protected Vec3d onTouchWater(Vec3d adjustedVelocity) {
@@ -236,18 +242,18 @@ public abstract class AbstractBallEntity extends ThrownItemEntity {
             } else {
                 if (this.horizontalCollision) {
                     if (bl) {
-                        this.setVelocity(this.getVelocity().multiply(-this.bounce, 1, 1));
+                        this.setVelocity(this.getVelocity().multiply(-this.getBounce(), 1, 1));
                     }
                     if (bl2) {
-                        this.setVelocity(this.getVelocity().multiply(1, 1, -this.bounce));
+                        this.setVelocity(this.getVelocity().multiply(1, 1, -this.getBounce()));
                     }
                     onCollide();
                 }
 
                 Block block = blockState.getBlock();
                 if (movement.y != vec3d.y) {
-                    if (this.getVelocity().y * -this.bounce > this.gravity + 0.001) {
-                        this.setVelocity(this.getVelocity().multiply(1, -this.bounce, 1));
+                    if (this.getVelocity().y * -this.getBounce() > this.getGravity() + 0.001) {
+                        this.setVelocity(this.getVelocity().multiply(1, -this.getBounce(), 1));
                     }
                     else {
                         this.setVelocity(this.getVelocity().multiply(1, 0, 1));
@@ -338,8 +344,8 @@ public abstract class AbstractBallEntity extends ThrownItemEntity {
         switch (direction) {
             case DOWN -> this.setVelocity(this.getVelocity().multiply(1, -1, 1));
             case UP -> {
-                if (this.getVelocity().y * -this.bounce > this.gravity + 0.001) {
-                    this.setVelocity(this.getVelocity().multiply(1, -this.bounce, 1));
+                if (this.getVelocity().y * -this.getBounce() > this.getGravity() + 0.001) {
+                    this.setVelocity(this.getVelocity().multiply(1, -this.getBounce(), 1));
                 }
                 else {
                     this.setVelocity(this.getVelocity().multiply(1, 0, 1));
@@ -357,16 +363,11 @@ public abstract class AbstractBallEntity extends ThrownItemEntity {
         if (this.getVelocity().length() > 0.3F && !this.getWorld().isClient && !(entity instanceof AbstractBallEntity)) {
             entity.damage(this.getDamageSources().thrown(this, this.getOwner()), (float) (this.getDamage() * getVelocity().length()));
 
-            this.setVelocity(this.getVelocity().multiply(-this.bounce, 1, -this.bounce));
+            this.setVelocity(this.getVelocity().multiply(-this.getBounce(), 1, -this.getBounce()));
         }
     }
 
     protected abstract float getDamage();
-
-    @Override
-    public float getGravity() {
-        return this.gravity;
-    }
 
     @Override
     public boolean canHit() {
@@ -432,5 +433,48 @@ public abstract class AbstractBallEntity extends ThrownItemEntity {
 
     private void setDrag(Float f) {
         this.dataTracker.set(DRAG, f);
+    }
+
+    public float getAirDrag() {
+        return (Float) this.dataTracker.get(AIR_DRAG);
+    }
+
+    private void setAirDrag(Float f) {
+        this.dataTracker.set(AIR_DRAG, f);
+    }
+
+    @Override
+    public float getGravity() {
+        return (Float) this.dataTracker.get(GRAVITY);
+    }
+
+    private void setGravity(Float f) {
+        this.dataTracker.set(GRAVITY, f);
+    }
+
+    public float getBounce() {
+        return (Float) this.dataTracker.get(BOUNCE);
+    }
+
+    private void setBounce(Float f) {
+        this.dataTracker.set(BOUNCE, f);
+    }
+
+    @Override
+    public void writeCustomDataToNbt(NbtCompound nbt) {
+        super.writeCustomDataToNbt(nbt);
+        nbt.putFloat("ballGravity", this.getGravity());
+        nbt.putFloat("airDrag", this.getAirDrag());
+        nbt.putFloat("drag", this.getDrag());
+        nbt.putFloat("bounce", this.getBounce());
+    }
+
+    @Override
+    public void readCustomDataFromNbt(NbtCompound nbt) {
+        super.readCustomDataFromNbt(nbt);
+        this.setGravity(nbt.getFloat("ballGravity"));
+        this.setAirDrag(nbt.getFloat("airDrag"));
+        this.setDrag(nbt.getFloat("drag"));
+        this.setBounce(nbt.getFloat("bounce"));
     }
 }

@@ -1,7 +1,6 @@
 package net.deadlydiamond98.enchantments;
 
-import net.deadlydiamond98.items.custom.bats.CrackedBat;
-import net.deadlydiamond98.items.custom.boomerang.BaseBoomerangItem;
+import net.deadlydiamond98.items.items.bats.CrackedBat;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentTarget;
 import net.minecraft.entity.EquipmentSlot;

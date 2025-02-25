@@ -1,6 +1,6 @@
 package net.deadlydiamond98.networking.packets;
 
-import net.deadlydiamond98.items.SwingActionItem;
+import net.deadlydiamond98.util.interfaces.items.ISwingActionItem;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
 import net.minecraft.item.Item;
 import net.minecraft.network.PacketByteBuf;
@@ -16,7 +16,7 @@ public class SwordSwingC2SPacket {
             World world = player.getWorld();
             Item item = player.getMainHandStack().getItem();
 
-            if (item instanceof SwingActionItem actionItem) {
+            if (item instanceof ISwingActionItem actionItem) {
                 actionItem.swingSword(world, player);
             }
         });

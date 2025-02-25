@@ -1,8 +1,7 @@
 package net.deadlydiamond98.mixin;
 
-import net.deadlydiamond98.items.PickupSound;
-import net.deadlydiamond98.items.PickupEffect;
-import net.deadlydiamond98.items.custom.manaitems.restoring.StarFragment;
+import net.deadlydiamond98.util.interfaces.items.IPickupSound;
+import net.deadlydiamond98.items.items.manaitems.restoring.StarFragment;
 import net.deadlydiamond98.util.ZeldaAdvancementCriterion;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.ItemEntity;
@@ -34,7 +33,7 @@ public abstract class ItemEntityMixin {
 	private void onItemPickup(PlayerEntity player, CallbackInfo info) {
 		ItemEntity itemEntity = (ItemEntity) (Object) this;
 		if (!player.getWorld().isClient) {
-			if (itemEntity.getStack().getItem() instanceof PickupSound item) {
+			if (itemEntity.getStack().getItem() instanceof IPickupSound item) {
 				long currentTime = System.currentTimeMillis();
 				long lastPickupTime = lastPickupTimeMap.getOrDefault(player, 0L);
 				if (currentTime - lastPickupTime > 500) {

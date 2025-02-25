@@ -2,39 +2,39 @@ package net.deadlydiamond98.items;
 
 import net.deadlydiamond98.ZeldaCraft;
 import net.deadlydiamond98.entities.ZeldaEntities;
-import net.deadlydiamond98.items.custom.*;
-import net.deadlydiamond98.items.custom.balls.Baseball;
-import net.deadlydiamond98.items.custom.balls.OctoRock;
-import net.deadlydiamond98.items.custom.bats.CrackedBat;
-import net.deadlydiamond98.items.custom.Swords.MagicSword;
-import net.deadlydiamond98.items.custom.Swords.MasterSword;
-import net.deadlydiamond98.items.custom.arrows.BombArrow;
-import net.deadlydiamond98.items.custom.arrows.SilverArrow;
-import net.deadlydiamond98.items.custom.bomb.regular_bombs.BombItem;
-import net.deadlydiamond98.items.custom.bomb.BombchuItem;
-import net.deadlydiamond98.items.custom.bomb.DekuNutItem;
-import net.deadlydiamond98.items.custom.bomb.regular_bombs.RemoteBombItem;
-import net.deadlydiamond98.items.custom.bomb.regular_bombs.SuperBombItem;
-import net.deadlydiamond98.items.custom.boomerang.IronBoomerangItem;
-import net.deadlydiamond98.items.custom.boomerang.MagicBoomerangItem;
-import net.deadlydiamond98.items.custom.boomerang.WoodBoomerangItem;
-import net.deadlydiamond98.items.custom.custombundle.BombBag;
-import net.deadlydiamond98.items.custom.custombundle.Quiver;
-import net.deadlydiamond98.items.custom.manaitems.*;
-import net.deadlydiamond98.items.custom.manaitems.magicpower.MagicPowder;
-import net.deadlydiamond98.items.custom.manaitems.restoring.MagicCandy;
-import net.deadlydiamond98.items.custom.manaitems.restoring.MagicJar;
-import net.deadlydiamond98.items.custom.manaitems.restoring.StarFragment;
-import net.deadlydiamond98.items.custom.manaitems.restoring.ZeldaMagicFood;
-import net.deadlydiamond98.items.custom.manaitems.rods.TestingRod;
-import net.deadlydiamond98.items.custom.manaitems.wearable.*;
-import net.deadlydiamond98.items.custom.shields.HylianShieldItem;
+import net.deadlydiamond98.items.items.*;
+import net.deadlydiamond98.items.items.balls.Baseball;
+import net.deadlydiamond98.items.items.balls.BouncyBall;
+import net.deadlydiamond98.items.items.balls.OctoRock;
+import net.deadlydiamond98.items.items.bats.CrackedBat;
+import net.deadlydiamond98.items.items.Swords.MagicSword;
+import net.deadlydiamond98.items.items.Swords.MasterSword;
+import net.deadlydiamond98.items.items.arrows.BombArrow;
+import net.deadlydiamond98.items.items.arrows.SilverArrow;
+import net.deadlydiamond98.items.items.bomb.regular_bombs.BombItem;
+import net.deadlydiamond98.items.items.bomb.BombchuItem;
+import net.deadlydiamond98.items.items.bomb.DekuNutItem;
+import net.deadlydiamond98.items.items.bomb.regular_bombs.RemoteBombItem;
+import net.deadlydiamond98.items.items.bomb.regular_bombs.SuperBombItem;
+import net.deadlydiamond98.items.items.boomerang.IronBoomerangItem;
+import net.deadlydiamond98.items.items.boomerang.MagicBoomerangItem;
+import net.deadlydiamond98.items.items.boomerang.WoodBoomerangItem;
+import net.deadlydiamond98.items.items.custombundle.BombBag;
+import net.deadlydiamond98.items.items.custombundle.Quiver;
+import net.deadlydiamond98.items.items.manaitems.*;
+import net.deadlydiamond98.items.items.manaitems.magicpower.MagicPowder;
+import net.deadlydiamond98.items.items.manaitems.restoring.MagicCandy;
+import net.deadlydiamond98.items.items.manaitems.restoring.MagicJar;
+import net.deadlydiamond98.items.items.manaitems.restoring.StarFragment;
+import net.deadlydiamond98.items.items.manaitems.restoring.ZeldaMagicFood;
+import net.deadlydiamond98.items.items.manaitems.rods.TestingRod;
+import net.deadlydiamond98.items.items.manaitems.wearable.*;
+import net.deadlydiamond98.items.items.shields.HylianShieldItem;
 import net.deadlydiamond98.sounds.ZeldaSounds;
 import net.deadlydiamond98.util.ZeldaTags;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroupEntries;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
-import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.item.*;
 import net.minecraft.registry.Registries;
@@ -69,6 +69,8 @@ public class ZeldaItems {
             new FabricItemSettings().maxCount(16)));
     public static final Item Octo_Rock = registerItem("octo_rock", new OctoRock(
             new FabricItemSettings()));
+    public static final Item Bouncy_Ball = registerItem("bouncy_ball", new BouncyBall(
+            new FabricItemSettings()));
 
     //Boomerangs
     public static final Item Wooden_Boomerang = registerItem("wooden_boomerang", new WoodBoomerangItem(
@@ -97,7 +99,7 @@ public class ZeldaItems {
     public static final Item Remote_Bomb = registerItem("remote_bomb", new RemoteBombItem(
             new FabricItemSettings().maxCount(16)));
     public static final Item Bombchu = registerItem("bombchu", new BombchuItem(
-            new FabricItemSettings().maxCount(16), 3, 100, 0.25F));
+            new FabricItemSettings().maxCount(16)));
 
     //Bags
     public static final Item Bomb_Bag = registerItem("bomb_bag", new BombBag(

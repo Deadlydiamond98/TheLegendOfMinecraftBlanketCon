@@ -159,6 +159,7 @@ public class ZeldaCraftClient implements ClientModInitializer {
 		EntityRendererRegistry.register(ZeldaEntities.Like_Like_Entity, LikeLikeRenderer::new);
 		EntityRendererRegistry.register(ZeldaEntities.Ramblin_Mushroom_Entity, RamblinMushroomRenderer::new);
 
+		EntityRendererRegistry.register(ZeldaEntities.Bouncy_Ball_Entity, FlyingItemEntityRenderer::new);
 		EntityRendererRegistry.register(ZeldaEntities.Baseball_Entity, FlyingItemEntityRenderer::new);
 		EntityRendererRegistry.register(ZeldaEntities.Octo_Rock, FlyingItemEntityRenderer::new);
 		EntityRendererRegistry.register(ZeldaEntities.Deku_Nut_Entity, FlyingItemEntityRenderer::new);

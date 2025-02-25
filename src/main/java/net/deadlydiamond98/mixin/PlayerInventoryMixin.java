@@ -3,14 +3,12 @@ package net.deadlydiamond98.mixin;
 import dev.emi.trinkets.api.SlotReference;
 import dev.emi.trinkets.api.TrinketComponent;
 import dev.emi.trinkets.api.TrinketsApi;
-import net.deadlydiamond98.items.PickupEffect;
-import net.deadlydiamond98.items.ZeldaItems;
-import net.deadlydiamond98.items.custom.bomb.regular_bombs.AbstractBombItem;
-import net.deadlydiamond98.items.custom.bomb.regular_bombs.BombItem;
-import net.deadlydiamond98.items.custom.bomb.BombchuItem;
-import net.deadlydiamond98.items.custom.custombundle.BombBag;
-import net.deadlydiamond98.items.custom.custombundle.CustomBundle;
-import net.deadlydiamond98.items.custom.custombundle.Quiver;
+import net.deadlydiamond98.util.interfaces.items.IPickupEffect;
+import net.deadlydiamond98.items.items.bomb.regular_bombs.AbstractBombItem;
+import net.deadlydiamond98.items.items.bomb.BombchuItem;
+import net.deadlydiamond98.items.items.custombundle.BombBag;
+import net.deadlydiamond98.items.items.custombundle.CustomBundle;
+import net.deadlydiamond98.items.items.custombundle.Quiver;
 import net.deadlydiamond98.util.ZeldaTags;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
@@ -52,7 +50,7 @@ public class PlayerInventoryMixin {
             }
         }
 
-        if (item instanceof PickupEffect effectItem && player.getHealth() < player.getMaxHealth()) {
+        if (item instanceof IPickupEffect effectItem && player.getHealth() < player.getMaxHealth()) {
             effectItem.getEffects().forEach(statusEffect ->
                     player.addStatusEffect(new StatusEffectInstance(statusEffect, 200)));
             cir.setReturnValue(true);
