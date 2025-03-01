@@ -1,5 +1,6 @@
 package net.deadlydiamond98.mixin.client;
 
+import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import net.deadlydiamond98.renderer.StunOverlay;
 import net.deadlydiamond98.statuseffects.ZeldaStatusEffects;
 import net.deadlydiamond98.util.interfaces.ZeldaEntityData;
@@ -18,6 +19,8 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyArg;
+import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
@@ -35,6 +38,8 @@ public abstract class LivingEntityRendererMixin<T extends LivingEntity, M extend
 	private float lastNetHeadYaw;
 	@Unique
 	private float lastHeadPitch;
+	@Unique
+	private boolean freezeAnimations;
 
 
 	@Shadow
@@ -50,6 +55,7 @@ public abstract class LivingEntityRendererMixin<T extends LivingEntity, M extend
 		this.lastAgeInTicks = 0;
 		this.lastNetHeadYaw = 0;
 		this.lastHeadPitch = 0;
+		this.freezeAnimations = false;
 	}
 
 	@Inject(method = "shouldFlipUpsideDown", at = @At(value = "HEAD"), cancellable = true)
@@ -66,17 +72,18 @@ public abstract class LivingEntityRendererMixin<T extends LivingEntity, M extend
 			method = "render(Lnet/minecraft/entity/LivingEntity;FFLnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;I)V",
 			at = @At(
 					value = "INVOKE",
-					target = "Lnet/minecraft/client/render/entity/model/EntityModel;animateModel(Lnet/minecraft/entity/Entity;FFF)V",
-					shift = At.Shift.AFTER
+					target = "Lnet/minecraft/client/MinecraftClient;getInstance()Lnet/minecraft/client/MinecraftClient;",
+					shift = At.Shift.BEFORE
 			),
 			locals = LocalCapture.CAPTURE_FAILEXCEPTION
 	)
-	private void redirectSetupAnim(T livingEntity, float f, float g, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i, CallbackInfo ci, float h, float j, float k, float m, float l, float n, float o) {
+	private void setupAnimations(T livingEntity, float f, float g, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i, CallbackInfo ci, float h, float j, float k, float m, float l, float n, float o) {
 		if (livingEntity.hasStatusEffect(ZeldaStatusEffects.Stun_Status_Effect)) {
 			this.model.setAngles(livingEntity, this.lastLimbSwing, this.lastLimbSwingAmount, this.lastAgeInTicks, this.lastNetHeadYaw, this.lastHeadPitch);
 			this.model.animateModel(livingEntity, this.lastLimbSwing, this.lastLimbSwingAmount, this.lastAgeInTicks);
+			this.freezeAnimations = true;
 		}
-		else {
+		if (!livingEntity.hasStatusEffect(ZeldaStatusEffects.Stun_Status_Effect)) {
 			this.lastLimbSwing = o;
 			this.lastLimbSwingAmount = n;
 			this.lastAgeInTicks = l;
@@ -84,5 +91,4 @@ public abstract class LivingEntityRendererMixin<T extends LivingEntity, M extend
 			this.lastHeadPitch = m;
 		}
 	}
-
 }

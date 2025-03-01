@@ -7,6 +7,7 @@ import net.deadlydiamond98.entities.ZeldaEntities;
 import net.deadlydiamond98.entities.monsters.RamblinMushroomEntity;
 import net.deadlydiamond98.events.ClientTickEvent;
 import net.deadlydiamond98.items.ZeldaItems;
+import net.deadlydiamond98.items.items.other.StarCompass;
 import net.deadlydiamond98.model.DungeonDoorModel;
 import net.deadlydiamond98.model.entity.*;
 import net.deadlydiamond98.networking.ZeldaClientPackets;
@@ -127,6 +128,9 @@ public class ZeldaCraftClient implements ClientModInitializer {
 			else {
 				return 0;
 			}
+		}));
+		ModelPredicateProviderRegistry.register(ZeldaItems.Star_Compass, new Identifier("angle"), ((stack, world, entity, seed) -> {
+			return 0.328125f;
 		}));
 	}
 

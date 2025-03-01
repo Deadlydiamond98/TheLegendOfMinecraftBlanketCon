@@ -11,7 +11,9 @@ import net.minecraft.item.AxeItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.SwordItem;
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -19,6 +21,14 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(Mouse.class)
 public abstract class MouseMixin {
+
+    @Shadow protected abstract void onCursorPos(long window, double x, double y);
+
+    @Shadow @Final private MinecraftClient client;
+
+    @Shadow private double cursorDeltaX;
+
+    @Shadow private double cursorDeltaY;
 
     // disables mouse input when stunned
     @Inject(method = "onMouseButton", at = @At("HEAD"), cancellable = true)
@@ -36,7 +46,7 @@ public abstract class MouseMixin {
         }
     }
 
-    // checks if an item qualifies as a sword, for when the sword sick debuf is applied
+    // checks if an item qualifies as a sword, for when the sword sick debuff is applied
 
     @Unique
     private boolean isSword(Item item) {
@@ -55,11 +65,13 @@ public abstract class MouseMixin {
 
     // disables camera movement
 
-    @Inject(method = "onCursorPos", at = @At("HEAD"), cancellable = true)
-    private void onCursorPos(long window, double xpos, double ypos, CallbackInfo callbackInfo) {
+    @Inject(method = "updateMouse", at = @At("HEAD"), cancellable = true)
+    private void onCursorPos(CallbackInfo ci) {
         if (MinecraftClient.getInstance().player != null && !MinecraftClient.getInstance().isPaused() && MinecraftClient.getInstance().player.isAlive()) {
             if (MinecraftClient.getInstance().player.hasStatusEffect(ZeldaStatusEffects.Stun_Status_Effect)) {
-                callbackInfo.cancel();
+                this.cursorDeltaX = 0;
+                this.cursorDeltaY = 0;
+                ci.cancel();
             }
         }
     }

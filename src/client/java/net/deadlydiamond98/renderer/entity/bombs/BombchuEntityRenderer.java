@@ -31,23 +31,6 @@ public class BombchuEntityRenderer extends EntityRenderer<BombchuEntity> {
         matrices.push();
         Direction floor = entity.getAttachedFaceClient();
 
-//        matrices.multiply(RotationAxis.NEGATIVE_X.rotationDegrees(entity.getPitch()));
-
-//        // Pitch
-//        switch (floor) {
-//            case NORTH, SOUTH -> matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(entity.getPitch() + 90));
-//            case EAST -> matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(entity.getPitch() + 180));
-//            case WEST -> matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(entity.getPitch()));
-//        }
-//
-//        // Yaw
-//        switch (floor) {
-//            case DOWN -> matrices.multiply(RotationAxis.NEGATIVE_Y.rotationDegrees(entity.getYaw() + 180));
-//            case UP -> matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(entity.getYaw() + 180));
-//            case EAST, WEST -> matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(entity.getYaw() + 90));
-//            case NORTH, SOUTH -> matrices.multiply(RotationAxis.NEGATIVE_Y.rotationDegrees(entity.getYaw() + 180));
-//        }
-
         switch (floor) {
             case DOWN -> matrices.multiply(RotationAxis.NEGATIVE_Y.rotationDegrees(entity.getYaw() + 180));
             case UP -> {
@@ -56,11 +39,11 @@ public class BombchuEntityRenderer extends EntityRenderer<BombchuEntity> {
             }
             case NORTH -> {
                 matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees(90));
-                matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(entity.getYaw() + 180));
+                matrices.multiply(RotationAxis.NEGATIVE_Y.rotationDegrees(entity.getYaw() + 180));
             }
             case SOUTH -> {
                 matrices.multiply(RotationAxis.NEGATIVE_X.rotationDegrees(90));
-                matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(entity.getYaw() + 180));
+                matrices.multiply(RotationAxis.NEGATIVE_Y.rotationDegrees(entity.getYaw() + 180));
             }
             case EAST -> {
                 matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(90));

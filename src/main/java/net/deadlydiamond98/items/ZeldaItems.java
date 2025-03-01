@@ -2,7 +2,6 @@ package net.deadlydiamond98.items;
 
 import net.deadlydiamond98.ZeldaCraft;
 import net.deadlydiamond98.entities.ZeldaEntities;
-import net.deadlydiamond98.items.items.*;
 import net.deadlydiamond98.items.items.balls.Baseball;
 import net.deadlydiamond98.items.items.balls.BouncyBall;
 import net.deadlydiamond98.items.items.balls.OctoRock;
@@ -29,6 +28,7 @@ import net.deadlydiamond98.items.items.manaitems.restoring.StarFragment;
 import net.deadlydiamond98.items.items.manaitems.restoring.ZeldaMagicFood;
 import net.deadlydiamond98.items.items.manaitems.rods.TestingRod;
 import net.deadlydiamond98.items.items.manaitems.wearable.*;
+import net.deadlydiamond98.items.items.other.*;
 import net.deadlydiamond98.items.items.shields.HylianShieldItem;
 import net.deadlydiamond98.sounds.ZeldaSounds;
 import net.deadlydiamond98.util.ZeldaTags;
@@ -205,6 +205,9 @@ public class ZeldaItems {
     public static final Item Dungeon_Lock = registerItem("dungeon_lock", new Item(
             new FabricItemSettings()));
 
+    public static final Item Star_Compass = registerItem("star_compass", new Item(
+            new FabricItemSettings()));
+
     //Misc / Materials
     public static final Item Emerald_Shard = registerItem("emerald_shard", new EmeraldItem(
             new FabricItemSettings()));
@@ -245,6 +248,7 @@ public class ZeldaItems {
             .maxCount(1), 86));
     public static final Item Music_Disc_Legend_Fragment = registerItem("music_disc_legend_fragment", new ToolTipItem(
             new FabricItemSettings()));
+
 
     public static final Item Red_Tektite_Chitin = registerItem("red_tektite_chitin", new Item(
             new FabricItemSettings()));

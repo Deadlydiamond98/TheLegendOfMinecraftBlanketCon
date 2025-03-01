@@ -1,7 +1,7 @@
 package net.deadlydiamond98.entities.monsters;
 
 import net.deadlydiamond98.statuseffects.ZeldaStatusEffects;
-import net.deadlydiamond98.util.RaycastUtil;
+import net.deadlydiamond98.util.interfaces.entities.IRaycast;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -42,7 +42,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.EnumSet;
 
-public class BubbleEntity extends HostileEntity implements Monster {
+public class BubbleEntity extends HostileEntity implements Monster, IRaycast {
 
     private static final TrackedData<Boolean> attackableState;
     private final BirdNavigation flyNavigation;
@@ -442,7 +442,7 @@ public class BubbleEntity extends HostileEntity implements Monster {
             if (closestLavaPos != null) {
                 this.targetBlock = closestLavaPos;
 
-                HitResult hitResult = RaycastUtil.getCollisionFromEntityFront(this.bubble, searchRadius);
+                HitResult hitResult = this.bubble.doRaycast(this.bubble.getCenterPos(), this.bubble.getYaw(), this.bubble.getPitch(), this.searchRadius);
 
                 if (hitResult.getType() == HitResult.Type.BLOCK) {
                     BlockState block = this.bubble.getWorld().getBlockState(((BlockHitResult) hitResult).getBlockPos());

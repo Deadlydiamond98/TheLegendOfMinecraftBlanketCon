@@ -5,6 +5,7 @@ import net.deadlydiamond98.blocks.LootGrass;
 import net.deadlydiamond98.blocks.ZeldaBlocks;
 import net.deadlydiamond98.entities.ZeldaEntities;
 import net.deadlydiamond98.entities.monsters.FairyEntity;
+import net.deadlydiamond98.items.items.bats.BatItem;
 import net.deadlydiamond98.util.ZeldaAdvancementCriterion;
 import net.deadlydiamond98.util.ZeldaConfig;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
@@ -43,7 +44,7 @@ public class SmashLootGrassC2SPacket {
             BlockState block = world.getBlockState(lookingBlock);
 
             if (block.isOf(ZeldaBlocks.Loot_Grass) && block.get(AGE) == 1 &&
-            player.getMainHandStack().getItem() instanceof SwordItem) {
+            player.getMainHandStack().getItem() instanceof SwordItem sword && !(sword instanceof BatItem)) {
                 LootGrass lootGrass = (LootGrass) block.getBlock();
 
                 ((ServerWorld) world).spawnParticles(new BlockStateParticleEffect(ParticleTypes.BLOCK, block),

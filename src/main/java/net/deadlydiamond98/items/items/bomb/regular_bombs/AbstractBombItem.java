@@ -20,13 +20,14 @@ public abstract class AbstractBombItem extends Item {
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         if (!world.isClient) {
+
             AbstractBombEntity bombEntity =
                     createBombEntity(world, user, hand);
             Vec3d vec3d = user.getRotationVec(1.0F);
-//            bombEntity.setVelocity(vec3d.x, vec3d.y, vec3d.z);
+            bombEntity.setVelocity(vec3d.x, vec3d.y, vec3d.z);
             bombEntity.setYaw(user.getHeadYaw());
-            bombEntity.setOwner(user);
             world.spawnEntity(bombEntity);
+
             user.playSound(SoundEvents.ENTITY_SPLASH_POTION_THROW, SoundCategory.PLAYERS, 1, 1);
         }
         if (user.getStackInHand(hand).getItem() instanceof AbstractBombItem) {

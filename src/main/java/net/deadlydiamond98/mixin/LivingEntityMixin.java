@@ -3,10 +3,12 @@ package net.deadlydiamond98.mixin;
 import net.deadlydiamond98.networking.ZeldaServerPackets;
 import net.deadlydiamond98.statuseffects.ZeldaStatusEffects;
 import net.deadlydiamond98.util.interfaces.ZeldaEntityData;
+import net.minecraft.entity.LimbAnimator;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.network.ServerPlayerEntity;
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -24,11 +26,15 @@ public abstract class LivingEntityMixin implements ZeldaEntityData {
 
     @Shadow private int jumpingCooldown;
 
-    @Unique
-    private LivingEntity getEntity() {
-        return (LivingEntity) (Object) this;
-    }
+    @Shadow public float bodyYaw;
 
+    @Shadow public float prevBodyYaw;
+
+    @Shadow public float headYaw;
+
+    @Shadow public float prevHeadYaw;
+
+    @Shadow @Final public LimbAnimator limbAnimator;
     @Unique
     private boolean flip;
 
@@ -39,22 +45,25 @@ public abstract class LivingEntityMixin implements ZeldaEntityData {
 
     @Inject(method = "tick", at = @At("HEAD"), cancellable = true)
     public void tick(CallbackInfo ci) {
-        if (getEntity().hasStatusEffect(ZeldaStatusEffects.Stun_Status_Effect)) {
+        LivingEntity entity = (LivingEntity) (Object) this;
+
+        if (entity.hasStatusEffect(ZeldaStatusEffects.Stun_Status_Effect)) {
             this.tickStatusEffects();
             ci.cancel();
         }
-        if (!getEntity().getWorld().isClient()) {
-            getEntity().getWorld().getPlayers().forEach(player -> {
+        if (!entity.getWorld().isClient()) {
+            entity.getWorld().getPlayers().forEach(player -> {
                 ZeldaServerPackets.sendEntityStatsPacket((ServerPlayerEntity) player,
-                        this.flip, getEntity().getId());
+                        this.flip, entity.getId());
             });
         }
     }
 
     @Inject(method = "damage", at = @At("HEAD"))
     private void onDamage(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
-        if (getEntity().hasStatusEffect(ZeldaStatusEffects.Stun_Status_Effect)) {
-            getEntity().removeStatusEffect(ZeldaStatusEffects.Stun_Status_Effect);
+        LivingEntity entity = (LivingEntity) (Object) this;
+        if (entity.hasStatusEffect(ZeldaStatusEffects.Stun_Status_Effect)) {
+            entity.removeStatusEffect(ZeldaStatusEffects.Stun_Status_Effect);
         }
     }
 

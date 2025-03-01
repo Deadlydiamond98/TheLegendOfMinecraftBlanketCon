@@ -8,17 +8,12 @@ import net.minecraft.sound.SoundEvent;
 
 public class ZeldacraftMusic {
     public static RegistryEntry<SoundEvent> STAR_MUSIC;
-    public static final MusicSound starMusic;
+    public static MusicSound starMusic;
 
     public static void registerMusic() {
-        STAR_MUSIC = Registries.SOUND_EVENT.getEntry(Registries.SOUND_EVENT.getKey(ZeldaSounds.StarMusic).get()).orElseThrow();
-    }
+        STAR_MUSIC = Registries.SOUND_EVENT.getEntry(Registries.SOUND_EVENT.getKey(ZeldaSounds.StarMusic).get())
+                .orElseThrow(() -> new IllegalStateException("Star Music SoundEvent not found"));
 
-    public static MusicSound createIngameMusic(RegistryEntry<SoundEvent> sound) {
-        return new MusicSound(sound, 12000, 24000, false);
-    }
-
-    static {
         starMusic = new MusicSound(STAR_MUSIC, 12000, 24000, true);
     }
 }

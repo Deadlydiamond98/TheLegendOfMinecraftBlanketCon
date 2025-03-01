@@ -1,4 +1,4 @@
-package net.deadlydiamond98.items.items;
+package net.deadlydiamond98.items.items.other;
 
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.item.Item;

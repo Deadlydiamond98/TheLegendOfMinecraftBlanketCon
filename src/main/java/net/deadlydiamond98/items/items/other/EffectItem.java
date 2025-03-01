@@ -1,4 +1,4 @@
-package net.deadlydiamond98.items.items;
+package net.deadlydiamond98.items.items.other;
 
 import net.deadlydiamond98.util.interfaces.items.IPickupEffect;
 import net.minecraft.entity.effect.StatusEffect;

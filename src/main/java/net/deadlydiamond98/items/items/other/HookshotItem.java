@@ -1,4 +1,4 @@
-package net.deadlydiamond98.items.items;
+package net.deadlydiamond98.items.items.other;
 
 import net.deadlydiamond98.entities.ZeldaEntities;
 import net.deadlydiamond98.entities.projectiles.HookshotEntity;

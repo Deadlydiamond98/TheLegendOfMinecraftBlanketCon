@@ -13,6 +13,9 @@ public class BouncyBallEntity extends AbstractBallEntity {
 
     public BouncyBallEntity(EntityType<? extends ThrownItemEntity> entityType, World world) {
         super(entityType, world);
+        this.setAirDrag(1);
+        this.setBounce(1);
+        this.setGravity(0.025f);
     }
 
     public BouncyBallEntity(World world, LivingEntity user) {

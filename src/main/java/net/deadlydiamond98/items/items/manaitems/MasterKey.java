@@ -1,6 +1,6 @@
 package net.deadlydiamond98.items.items.manaitems;
 
-import net.deadlydiamond98.items.items.ToolTipItem;
+import net.deadlydiamond98.items.items.other.ToolTipItem;
 import net.deadlydiamond98.magiclib.items.MagicItemData;
 
 public class MasterKey extends ToolTipItem implements MagicItemData {

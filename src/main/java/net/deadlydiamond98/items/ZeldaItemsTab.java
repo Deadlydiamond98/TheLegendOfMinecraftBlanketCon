@@ -87,6 +87,7 @@ public class ZeldaItemsTab {
                         entry.add(ZeldaItems.Dungeon_Key);
                         entry.add(ZeldaItems.Master_Key);
                         entry.add(ZeldaItems.Dungeon_Lock);
+                        entry.add(ZeldaItems.Star_Compass);
                         //Misc / Materials
                         entry.add(ZeldaItems.Music_Disc_Legend);
                         entry.add(ZeldaItems.Music_Disc_Legend_Fragment);

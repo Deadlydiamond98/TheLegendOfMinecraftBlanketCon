@@ -2,6 +2,7 @@ package net.deadlydiamond98.entities.bombs.bombchu;
 
 import net.deadlydiamond98.entities.ZeldaEntities;
 import net.deadlydiamond98.entities.bombs.AbstractBombEntity;
+import net.deadlydiamond98.util.interfaces.entities.ISurfaceSticker;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.*;
 import net.minecraft.entity.data.DataTracker;

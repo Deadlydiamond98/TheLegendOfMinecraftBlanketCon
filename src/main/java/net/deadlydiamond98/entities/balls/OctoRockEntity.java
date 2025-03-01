@@ -41,6 +41,9 @@ public class OctoRockEntity extends AbstractBallEntity {
 
     public OctoRockEntity(EntityType<? extends ThrownItemEntity> entityType, World world) {
         super(entityType, world);
+        this.setAirDrag(0.95f);
+        this.setBounce(0.4f);
+        this.setGravity(0.04f);
     }
 
     public OctoRockEntity(World world, LivingEntity user, boolean octorokOrigin) {

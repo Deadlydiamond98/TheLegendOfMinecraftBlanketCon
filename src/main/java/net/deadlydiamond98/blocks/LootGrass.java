@@ -72,19 +72,24 @@ public class LootGrass extends PlantBlock {
     public BlockRenderType getRenderType(BlockState state) {
         return BlockRenderType.MODEL;
     }
+
     private IntProperty getAgeProperty() {
         return AGE;
     }
+
     public int getAge(BlockState state) {
         return (Integer) state.get(this.getAgeProperty());
     }
+
     public final boolean isMature(BlockState blockState) {
         return this.getAge(blockState) == 1;
     }
+
     @Override
     public boolean hasRandomTicks(BlockState state) {
         return !isMature(state);
     }
+
     @Override
     public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
         return VoxelShapes.union(Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 8.0, 16.0));

@@ -1,6 +1,5 @@
-package net.deadlydiamond98.entities.bombs.bombchu;
+package net.deadlydiamond98.util.interfaces.entities;
 
-import net.deadlydiamond98.util.interfaces.entities.IRaycast;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 import org.jetbrains.annotations.Nullable;

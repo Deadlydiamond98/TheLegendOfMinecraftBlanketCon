@@ -65,10 +65,7 @@ public abstract class AbstractBallEntity extends ThrownItemEntity {
 
     public AbstractBallEntity(EntityType<? extends ThrownItemEntity> entityType, World world) {
         super(entityType, world);
-        this.setAirDrag(0.98f);
-        setDrag(1.0f);
-        this.setBounce(0.6f);
-        this.setGravity(0.03f);
+        this.setDrag(1.0f);
         this.leftOwner = false;
         this.life = 0;
     }
@@ -76,7 +73,7 @@ public abstract class AbstractBallEntity extends ThrownItemEntity {
     public AbstractBallEntity(EntityType<? extends ThrownItemEntity> entityType, World world, LivingEntity user, float dragAir, float bounce, float gravity) {
         super(entityType, user, world);
         this.setAirDrag(dragAir);
-        setDrag(1.0f);
+        this.setDrag(1.0f);
         this.setBounce(bounce);
         this.setGravity(gravity);
         this.leftOwner = false;
@@ -431,7 +428,7 @@ public abstract class AbstractBallEntity extends ThrownItemEntity {
         return (Float) this.dataTracker.get(DRAG);
     }
 
-    private void setDrag(Float f) {
+    protected void setDrag(Float f) {
         this.dataTracker.set(DRAG, f);
     }
 
@@ -439,7 +436,7 @@ public abstract class AbstractBallEntity extends ThrownItemEntity {
         return (Float) this.dataTracker.get(AIR_DRAG);
     }
 
-    private void setAirDrag(Float f) {
+    protected void setAirDrag(float f) {
         this.dataTracker.set(AIR_DRAG, f);
     }
 
@@ -448,7 +445,7 @@ public abstract class AbstractBallEntity extends ThrownItemEntity {
         return (Float) this.dataTracker.get(GRAVITY);
     }
 
-    private void setGravity(Float f) {
+    protected void setGravity(float f) {
         this.dataTracker.set(GRAVITY, f);
     }
 
@@ -456,7 +453,7 @@ public abstract class AbstractBallEntity extends ThrownItemEntity {
         return (Float) this.dataTracker.get(BOUNCE);
     }
 
-    private void setBounce(Float f) {
+    protected void setBounce(float f) {
         this.dataTracker.set(BOUNCE, f);
     }
 
