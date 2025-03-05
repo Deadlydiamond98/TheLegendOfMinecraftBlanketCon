@@ -11,7 +11,7 @@
 		"homepage": "https://legacy.curseforge.com/minecraft/mc-mods/the-legend-of-steve",
 		"sources": "https://github.com/Deadlydiamond98/Legend-Of-Steve-Wiki/wiki"
 	},
-	"license": "All Rights Reserved",
+	"license": "Custom",
 	"icon": "assets/zeldacraft/icon.png",
 	"environment": "*",
 	"entrypoints": {

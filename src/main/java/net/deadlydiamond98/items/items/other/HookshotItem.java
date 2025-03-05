@@ -2,7 +2,7 @@ package net.deadlydiamond98.items.items.other;
 
 import net.deadlydiamond98.entities.ZeldaEntities;
 import net.deadlydiamond98.entities.projectiles.HookshotEntity;
-import net.deadlydiamond98.util.interfaces.ZeldaPlayerData;
+import net.deadlydiamond98.util.interfaces.mixin.ZeldaPlayerData;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;

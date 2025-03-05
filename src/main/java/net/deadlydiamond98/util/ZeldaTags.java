@@ -21,6 +21,7 @@ public class ZeldaTags {
         public static final TagKey<Item> Quivers = createTag("quivers");
         public static final TagKey<Item> Primes_Bomb_Flowers = createTag("primes_bomb_flowers");
         public static final TagKey<Item> Slingshot_Ammo = createTag("slingshot_ammo");
+        public static final TagKey<Item> Switch = createTag("switch");
 
         private static TagKey<Item> createTag(String name) {
             return TagKey.of(RegistryKeys.ITEM, new Identifier(ZeldaCraft.MOD_ID, name));

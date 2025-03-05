@@ -2,7 +2,7 @@ package net.deadlydiamond98.mixin;
 
 import net.deadlydiamond98.networking.ZeldaServerPackets;
 import net.deadlydiamond98.statuseffects.ZeldaStatusEffects;
-import net.deadlydiamond98.util.interfaces.ZeldaEntityData;
+import net.deadlydiamond98.util.interfaces.mixin.ZeldaEntityData;
 import net.minecraft.entity.LimbAnimator;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;

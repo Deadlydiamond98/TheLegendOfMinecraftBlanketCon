@@ -1,5 +1,6 @@
 package net.deadlydiamond98.entities.boomerangs;
 
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.*;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -32,6 +33,20 @@ public class MagicalBoomerang extends BaseBoomerangProjectile {
                 if (entity.getBoundingBox().intersects(expandedBox)) {
                     entity.startRiding(this, true);
                 }
+            }
+
+            if (this.ticksInAir > this.airtime && !this.hasLoyalty) {
+                Vec3d ownerPos = new Vec3d(this.getOwner().getX() + this.getOwner().getHandPosOffset(this.getBoomerangItem().getItem()).x * 0.5,
+                        this.getOwner().getY() + this.getOwner().getEyeHeight(this.getOwner().getPose()) - 0.5,
+                        this.getOwner().getZ() + this.getOwner().getHandPosOffset(this.getBoomerangItem().getItem()).z * 0.5);
+                Vec3d directionToOwner = ownerPos.subtract(this.getPos()).normalize();
+
+                Vec3d currentVelocity = this.getVelocity();
+                float loyatyLevel = (EnchantmentHelper.getLoyalty(this.getBoomerangItem()) * 0.5f) + 1;
+                Vec3d newVelocity = directionToOwner.multiply(this.speed * loyatyLevel);
+                Vec3d interpolatedVelocity = currentVelocity.lerp(newVelocity, 0.3);
+
+                this.setVelocity(interpolatedVelocity);
             }
         }
         float[] rgb = pickColor(random.nextBetween(0, 3));

@@ -4,15 +4,15 @@ import net.deadlydiamond98.blocks.ZeldaBlocks;
 import net.deadlydiamond98.blocks.entities.ZeldaBlockEntities;
 import net.deadlydiamond98.commands.ZeldaClientCommands;
 import net.deadlydiamond98.entities.ZeldaEntities;
-import net.deadlydiamond98.entities.monsters.RamblinMushroomEntity;
 import net.deadlydiamond98.events.ClientTickEvent;
 import net.deadlydiamond98.items.ZeldaItems;
-import net.deadlydiamond98.items.items.other.StarCompass;
+import net.deadlydiamond98.model.CrystalSwitchModel;
 import net.deadlydiamond98.model.DungeonDoorModel;
 import net.deadlydiamond98.model.entity.*;
 import net.deadlydiamond98.networking.ZeldaClientPackets;
 import net.deadlydiamond98.particle.ZeldaParticleFactory;
 import net.deadlydiamond98.renderer.GuiElements;
+import net.deadlydiamond98.renderer.blocks.CrystalSwitchRenderer;
 import net.deadlydiamond98.renderer.blocks.SwordPedestalRenderer;
 import net.deadlydiamond98.renderer.doors.*;
 import net.deadlydiamond98.renderer.FairyCompanionRenderer;
@@ -28,11 +28,13 @@ import net.deadlydiamond98.renderer.entity.monster.*;
 import net.deadlydiamond98.renderer.entity.projectile_items.BoomerangProjectileRenderer;
 import net.deadlydiamond98.renderer.entity.magic.MagicFireProjectileRenderer;
 import net.deadlydiamond98.renderer.entity.projectile_items.ZeldaArrowRenderer;
+import net.deadlydiamond98.util.interfaces.mixin.ZeldaPlayerData;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.rendering.v1.*;
 import net.minecraft.client.color.world.BiomeColors;
 import net.minecraft.client.color.world.GrassColors;
+import net.minecraft.client.item.CompassAnglePredicateProvider;
 import net.minecraft.client.item.ModelPredicateProviderRegistry;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactories;
@@ -41,6 +43,7 @@ import net.minecraft.client.render.entity.model.BatEntityModel;
 import net.minecraft.item.DyeableItem;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.GlobalPos;
 
 public class ZeldaCraftClient implements ClientModInitializer {
 
@@ -60,6 +63,7 @@ public class ZeldaCraftClient implements ClientModInitializer {
 		BlockRenderLayerMap.INSTANCE.putBlock(ZeldaBlocks.Red_Dungeon_Door, RenderLayer.getCutout());
 		BlockRenderLayerMap.INSTANCE.putBlock(ZeldaBlocks.Blue_Dungeon_Door, RenderLayer.getCutout());
 		BlockRenderLayerMap.INSTANCE.putBlock(ZeldaBlocks.Somaria_Block, RenderLayer.getTranslucent());
+		BlockRenderLayerMap.INSTANCE.putBlock(ZeldaBlocks.Crystal_Switch, RenderLayer.getCutout());
 
 		registerModelPredicatees();
 
@@ -129,8 +133,12 @@ public class ZeldaCraftClient implements ClientModInitializer {
 				return 0;
 			}
 		}));
-		ModelPredicateProviderRegistry.register(ZeldaItems.Star_Compass, new Identifier("angle"), ((stack, world, entity, seed) -> {
-			return 0.328125f;
+		ModelPredicateProviderRegistry.register(ZeldaItems.Star_Compass, new Identifier("angle"), new CompassAnglePredicateProvider((world, stack, entity) -> {
+			if (entity.isPlayer()) {
+				ZeldaPlayerData player = (ZeldaPlayerData) entity;
+				return player.shouldSearchStar() ? player.getLastStarPos() : null;
+			}
+			return null;
 		}));
 	}
 
@@ -176,6 +184,8 @@ public class ZeldaCraftClient implements ClientModInitializer {
 		EntityRendererRegistry.register(ZeldaEntities.Silver_Arrow, ZeldaArrowRenderer::new);
 		EntityRendererRegistry.register(ZeldaEntities.Bomb_Arrow, ZeldaArrowRenderer::new);
 
+		// Block Entity
+
 		BlockEntityRendererFactories.register(ZeldaBlockEntities.DUNGEON_DOOR, DungeonDoorRenderer::new);
 		BlockEntityRendererFactories.register(ZeldaBlockEntities.OPENING_DUNGEON_DOOR, OpeningDungeonDoorRenderer::new);
 		BlockEntityRendererFactories.register(ZeldaBlockEntities.RED_DUNGEON_DOOR, RedDungeonDoorRenderer::new);
@@ -183,6 +193,7 @@ public class ZeldaCraftClient implements ClientModInitializer {
 		BlockEntityRendererFactories.register(ZeldaBlockEntities.BLUE_DUNGEON_DOOR, BlueDungeonDoorRenderer::new);
 		BlockEntityRendererFactories.register(ZeldaBlockEntities.BLUE_OPENING_DUNGEON_DOOR, BlueOpeningDungeonDoorRenderer::new);
 		BlockEntityRendererFactories.register(ZeldaBlockEntities.PEDESTAL, SwordPedestalRenderer::new);
+		BlockEntityRendererFactories.register(ZeldaBlockEntities.CRYSTAL_SWITCH, CrystalSwitchRenderer::new);
 	}
 
 	public void registerModelLayers() {
@@ -201,6 +212,7 @@ public class ZeldaCraftClient implements ClientModInitializer {
 		EntityModelLayerRegistry.registerModelLayer(RamblinMushroomModel.LAYER_LOCATION, RamblinMushroomModel::getTexturedModelData);
 
 		EntityModelLayerRegistry.registerModelLayer(DungeonDoorModel.LAYER_LOCATION, DungeonDoorModel::getTexturedModelData);
+		EntityModelLayerRegistry.registerModelLayer(CrystalSwitchModel.LAYER_LOCATION, CrystalSwitchModel::getTexturedModelData);
 	}
 
 	public void registerTintables() {

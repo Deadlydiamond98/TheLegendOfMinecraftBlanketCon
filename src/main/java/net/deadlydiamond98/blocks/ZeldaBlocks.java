@@ -27,6 +27,10 @@ public class ZeldaBlocks {
             new LootGrass(FabricBlockSettings.copyOf(Blocks.MOSS_BLOCK).strength(0.3F, 0.0F)
                     .sounds(BlockSoundGroup.GRASS).nonOpaque().noCollision()));
 
+    public static final Block Crystal_Switch = registerBlock("crystal_switch",
+            new CrystalSwitch(FabricBlockSettings.copyOf(Blocks.STONE).strength(1.5F, 6.0F)
+                    .sounds(BlockSoundGroup.TUFF).nonOpaque().notSolid().luminance(5)));
+
     // Pots
     public static final Block Plain_Pot = registerBlock("plain_pot",
             new LootPot(FabricBlockSettings.copyOf(Blocks.DECORATED_POT).strength(0.3F, 0.0F)

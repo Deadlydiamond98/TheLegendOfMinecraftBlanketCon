@@ -32,6 +32,8 @@ public class ZeldaBlocksTab {
                         entry.add(ZeldaBlocks.Purple_Pot);
                         entry.add(ZeldaBlocks.Magenta_Pot);
                         entry.add(ZeldaBlocks.Pink_Pot);
+                        //Switch
+                        entry.add(ZeldaBlocks.Crystal_Switch);
                         //Secret Cracked Bricks
                         entry.add(ZeldaBlocks.Secret_Cracked_Stone_Brick);
                         entry.add(ZeldaBlocks.Secret_Cracked_Deepslate_Brick);

@@ -12,6 +12,7 @@ public class ZeldaPacketIDS {
     public static final Identifier PedestalPacket = new Identifier(ZeldaCraft.MOD_ID, "pedestal_packet");
     public static final Identifier DekuStunOverlayPacket = new Identifier(ZeldaCraft.MOD_ID, "deku_stun_overlay_packet");
     public static final Identifier PlayerStatsPacket = new Identifier(ZeldaCraft.MOD_ID, "player_stats_packet");
+    public static final Identifier StarCompassPacket = new Identifier(ZeldaCraft.MOD_ID, "star_compass_packet");
     public static final Identifier EntityStatsPacket = new Identifier(ZeldaCraft.MOD_ID, "entity_stats_packet");
     public static final Identifier PlaySoundPacket = new Identifier(ZeldaCraft.MOD_ID, "play_zelda_sound");
 

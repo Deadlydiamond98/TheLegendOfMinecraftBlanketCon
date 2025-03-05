@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "zeldacraft:item/magic_compass/magic_compass_17"
+  }
+}

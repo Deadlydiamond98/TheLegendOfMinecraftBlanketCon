@@ -1,7 +1,7 @@
 package net.deadlydiamond98.mixin.client;
 
 import net.deadlydiamond98.renderer.transformations.FairyPlayerRenderer;
-import net.deadlydiamond98.util.interfaces.ZeldaPlayerData;
+import net.deadlydiamond98.util.interfaces.mixin.ZeldaPlayerData;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.EntityRendererFactory;

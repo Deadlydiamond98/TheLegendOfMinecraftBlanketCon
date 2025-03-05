@@ -14,6 +14,7 @@ public class ZeldaClientPackets {
         ClientPlayNetworking.registerGlobalReceiver(ZeldaPacketIDS.PedestalPacket, PedestalS2CPacket::recieve);
         ClientPlayNetworking.registerGlobalReceiver(ZeldaPacketIDS.DekuStunOverlayPacket, DekuStunOverlayS2CPacket::recieve);
         ClientPlayNetworking.registerGlobalReceiver(ZeldaPacketIDS.PlayerStatsPacket, PlayerStatsS2CPacket::recieve);
+        ClientPlayNetworking.registerGlobalReceiver(ZeldaPacketIDS.StarCompassPacket, PlayerStatsS2CPacket::recieveCompass);
         ClientPlayNetworking.registerGlobalReceiver(ZeldaPacketIDS.EntityStatsPacket, EntityStatsS2CPacket::recieve);
         ClientPlayNetworking.registerGlobalReceiver(ZeldaPacketIDS.PlaySoundPacket, PlaySoundS2CPacket::recieve);
     }

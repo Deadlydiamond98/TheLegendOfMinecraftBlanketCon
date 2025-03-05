@@ -2,7 +2,7 @@ package net.deadlydiamond98.items.items.manaitems;
 
 import net.deadlydiamond98.magiclib.items.MagicItemData;
 import net.deadlydiamond98.sounds.ZeldaSounds;
-import net.deadlydiamond98.util.interfaces.ZeldaEntityData;
+import net.deadlydiamond98.util.interfaces.mixin.ZeldaEntityData;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;

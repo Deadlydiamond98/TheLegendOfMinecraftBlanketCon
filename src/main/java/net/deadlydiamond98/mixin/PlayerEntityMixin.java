@@ -5,7 +5,7 @@ import dev.emi.trinkets.api.TrinketsApi;
 import net.deadlydiamond98.items.ZeldaItems;
 import net.deadlydiamond98.networking.ZeldaServerPackets;
 import net.deadlydiamond98.sounds.ZeldaSounds;
-import net.deadlydiamond98.util.interfaces.ZeldaPlayerData;
+import net.deadlydiamond98.util.interfaces.mixin.ZeldaPlayerData;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityDimensions;
 import net.minecraft.entity.EquipmentSlot;
@@ -21,7 +21,9 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.stat.Stat;
 import net.minecraft.stat.Stats;
 import net.minecraft.util.Hand;
+import net.minecraft.util.math.GlobalPos;
 import net.minecraft.util.math.MathHelper;
+import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -30,12 +32,14 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import java.util.Optional;
+
 @Mixin(PlayerEntity.class)
 public abstract class PlayerEntityMixin implements ZeldaPlayerData {
 
 
     @Unique
-    private final LivingEntityAccessor livingEntityAccessor = (LivingEntityAccessor) getPlayer();
+    private final LivingEntityAccessor livingEntityAccessor = (LivingEntityAccessor) zeldacraf$self();
 
     @Shadow public abstract void tick();
 
@@ -69,6 +73,13 @@ public abstract class PlayerEntityMixin implements ZeldaPlayerData {
     private boolean wasOnGround;
     @Unique
     private boolean canUseHook;
+    @Unique
+    @Nullable
+    private GlobalPos starPos;
+    @Unique
+    private int starPosTimer;
+    @Unique
+    private boolean searchStar;
 
     @Inject(method = "<init>", at = @At("TAIL"))
     private void onInit(CallbackInfo ci) {
@@ -83,29 +94,37 @@ public abstract class PlayerEntityMixin implements ZeldaPlayerData {
         this.doubleJumpped = false;
         this.wasOnGround = true;
         this.canUseHook = true;
+        this.starPos = null;
+        this.starPosTimer = 0;
+        this.searchStar = false;
     }
 
     @Unique
-    private PlayerEntity getPlayer() {
+    private PlayerEntity zeldacraf$self() {
         return (PlayerEntity)(Object)this;
     }
 
     @Inject(method = "tick", at = @At("HEAD"))
     public void tick(CallbackInfo ci) {
 
-        if ((!this.isFairy() && this.transitionFairy) || (this.isFairy() && (getPlayer().isSubmergedInWater() || getPlayer().isOnFire()))) {
-            this.removeFairyEffect(getPlayer());
+        PlayerEntity player = zeldacraf$self();
+
+        if ((!this.isFairy() && this.transitionFairy) || (this.isFairy() && (player.isSubmergedInWater() || player.isOnFire()))) {
+            this.removeFairyEffect(player);
         }
 
-        if (!getPlayer().getWorld().isClient()) {
-            ZeldaServerPackets.sendPlayerStatsPacket((ServerPlayerEntity) getPlayer(),
-                    this.fairyControl, this.fairyfriend);
+        if (!player.getWorld().isClient()) {
+            ZeldaServerPackets.sendPlayerStatsPacket((ServerPlayerEntity) player,
+                    this.fairyControl, this.fairyfriend, this.searchStar);
+
+            if (this.getLastStarPos() != null) {
+                ZeldaServerPackets.sendStarCompassPacket((ServerPlayerEntity) player, this.getLastStarPos());
+            }
         }
 
-        TrinketComponent trinket = TrinketsApi.getTrinketComponent(getPlayer()).get();
+        TrinketComponent trinket = TrinketsApi.getTrinketComponent(player).get();
         if (!trinket.isEquipped(ZeldaItems.Fairy_Bell)) {
             this.setFairyFriend(false);
-            getPlayer().enableManaRegen(false, 40, 2);
         }
 
         this.enableddoubleJump(trinket.isEquipped(ZeldaItems.Jump_Pendant));
@@ -114,43 +133,54 @@ public abstract class PlayerEntityMixin implements ZeldaPlayerData {
             this.setFairyState(false);
         }
 
+        if (this.starPosTimer > 0) {
+            this.starPosTimer--;
+        }
+        else if (this.getLastStarPos() != null) {
+            this.setLastStarPos(null);
+        }
+
         fairyAction();
         doubleJumpAction();
     }
 
     private void fairyAction() {
-        getPlayer().setNoGravity(this.isFairy());
+        PlayerEntity player = zeldacraf$self();
+
+        player.setNoGravity(this.isFairy());
 
         if (this.isFairy()) {
-            if (getPlayer().canRemoveMana(2)) {
-                getPlayer().removeMana(2);
-                getPlayer().getAbilities().allowFlying = true;
-                getPlayer().getAbilities().flying = true;
+            if (player.canRemoveMana(2)) {
+                player.removeMana(2);
+                player.getAbilities().allowFlying = true;
+                player.getAbilities().flying = true;
                 this.transitionFairy = true;
-                getPlayer().getAbilities().setFlySpeed(0.02f);
-                getPlayer().calculateDimensions();
+                player.getAbilities().setFlySpeed(0.02f);
+                player.calculateDimensions();
             }
             else {
-                this.removeFairyEffect(getPlayer());
-                getPlayer().getWorld().playSound(null, getPlayer().getBlockPos(), ZeldaSounds.NotEnoughMana, SoundCategory.PLAYERS, 1.0f, 1.0f);
+                this.removeFairyEffect(player);
+                player.getWorld().playSound(null, player.getBlockPos(), ZeldaSounds.NotEnoughMana, SoundCategory.PLAYERS, 1.0f, 1.0f);
             }
         }
     }
 
     private void doubleJumpAction() {
-        if (this.doubleJumpEnabled() && getPlayer().canRemoveMana(10)
+        PlayerEntity player = zeldacraf$self();
+
+        if (this.doubleJumpEnabled() && player.canRemoveMana(10)
                 && this.hasntDoubleJumpped()
                 && livingEntityAccessor.getJumpingCooldown() == 0) {
-            getPlayer().jump();
+            player.jump();
             this.canDoubleJump(false);
-            getPlayer().removeMana(10);
+            player.removeMana(10);
         }
 
-        if (getPlayer().isOnGround() && !this.wasOnGround() && !this.hasntDoubleJumpped()) {
+        if (player.isOnGround() && !this.wasOnGround() && !this.hasntDoubleJumpped()) {
             this.canDoubleJump(true);
         }
 
-        this.setPrevGroundState(getPlayer().isOnGround());
+        this.setPrevGroundState(player.isOnGround());
     }
 
     @Inject(method = "writeCustomDataToNbt", at = @At("HEAD"))
@@ -232,24 +262,24 @@ public abstract class PlayerEntityMixin implements ZeldaPlayerData {
 
     @Unique
     private void damageShieldItem(float amount) {
-        if (!getPlayer().getWorld().isClient) {
+        if (!zeldacraf$self().getWorld().isClient) {
             this.incrementStat(Stats.USED.getOrCreateStat(livingEntityAccessor.getActiveItemStack().getItem()));
         }
 
         if (amount >= 3.0F) {
             int i = 1 + MathHelper.floor(amount);
-            Hand hand = getPlayer().getActiveHand();
-            livingEntityAccessor.getActiveItemStack().damage(i, getPlayer(), (player) -> {
+            Hand hand = zeldacraf$self().getActiveHand();
+            livingEntityAccessor.getActiveItemStack().damage(i, zeldacraf$self(), (player) -> {
                 player.sendToolBreakStatus(hand);
             });
             if (livingEntityAccessor.getActiveItemStack().isEmpty()) {
                 if (hand == Hand.MAIN_HAND) {
-                    getPlayer().equipStack(EquipmentSlot.MAINHAND, ItemStack.EMPTY);
+                    zeldacraf$self().equipStack(EquipmentSlot.MAINHAND, ItemStack.EMPTY);
                 } else {
-                    getPlayer().equipStack(EquipmentSlot.OFFHAND, ItemStack.EMPTY);
+                    zeldacraf$self().equipStack(EquipmentSlot.OFFHAND, ItemStack.EMPTY);
                 }
                 livingEntityAccessor.setActiveItemStack(ItemStack.EMPTY);
-                getPlayer().playSound(SoundEvents.ITEM_SHIELD_BREAK, 0.8F, 0.8F + getPlayer().getWorld().random.nextFloat() * 0.4F);
+                zeldacraf$self().playSound(SoundEvents.ITEM_SHIELD_BREAK, 0.8F, 0.8F + zeldacraf$self().getWorld().random.nextFloat() * 0.4F);
             }
         }
     }
@@ -324,5 +354,30 @@ public abstract class PlayerEntityMixin implements ZeldaPlayerData {
     @Override
     public void setHookUsability(boolean hookusable) {
         this.canUseHook = hookusable;
+    }
+
+    @Override
+    public @Nullable GlobalPos getLastStarPos() {
+        return this.starPos;
+    }
+
+    @Override
+    public void setLastStarPos(@Nullable GlobalPos pos) {
+        this.starPos = pos;
+        this.setSearchStar(pos != null);
+
+        if (pos != null) {
+            this.starPosTimer = 6000;
+        }
+    }
+
+    @Override
+    public boolean shouldSearchStar() {
+        return this.searchStar;
+    }
+
+    @Override
+    public void setSearchStar(boolean searchStar) {
+        this.searchStar = searchStar;
     }
 }

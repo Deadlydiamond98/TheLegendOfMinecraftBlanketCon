@@ -1,6 +1,10 @@
-package net.deadlydiamond98.util.interfaces;
+package net.deadlydiamond98.util.interfaces.mixin;
 
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.util.math.GlobalPos;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.Optional;
 
 public interface ZeldaPlayerData {
     boolean isFairy();
@@ -9,8 +13,13 @@ public interface ZeldaPlayerData {
     boolean getFairyFriend();
     void setFairyFriend(boolean fairyfriend);
 
+    boolean shouldSearchStar();
+    void setSearchStar(boolean searchStar);
     boolean canSpawnStar();
     void setTriedStarSpawn(boolean starSpawn);
+
+    @Nullable GlobalPos getLastStarPos();
+    void setLastStarPos(@Nullable GlobalPos pos);
 
     boolean doubleJumpEnabled();
     void enableddoubleJump(boolean doubleJump);

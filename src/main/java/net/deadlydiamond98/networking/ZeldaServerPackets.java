@@ -8,6 +8,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.GlobalPos;
 
 public class ZeldaServerPackets {
 
@@ -49,11 +50,17 @@ public class ZeldaServerPackets {
         ServerPlayNetworking.send(player, ZeldaPacketIDS.DekuStunOverlayPacket, buf);
     }
     public static void sendPlayerStatsPacket(ServerPlayerEntity player, boolean fairyControl,
-                                             boolean fairyfriend) {
+                                             boolean fairyfriend, boolean searchStar) {
         PacketByteBuf buf = PacketByteBufs.create();
         buf.writeBoolean(fairyControl);
         buf.writeBoolean(fairyfriend);
+        buf.writeBoolean(searchStar);
         ServerPlayNetworking.send(player, ZeldaPacketIDS.PlayerStatsPacket, buf);
+    }
+    public static void sendStarCompassPacket(ServerPlayerEntity player, GlobalPos starPos) {
+        PacketByteBuf buf = PacketByteBufs.create();
+        buf.writeGlobalPos(starPos);
+        ServerPlayNetworking.send(player, ZeldaPacketIDS.StarCompassPacket, buf);
     }
     public static void sendEntityStatsPacket(ServerPlayerEntity player, boolean flip, int entityId) {
         PacketByteBuf buf = PacketByteBufs.create();

@@ -2,7 +2,7 @@ package net.deadlydiamond98.entities.projectiles;
 
 import net.deadlydiamond98.items.ZeldaItems;
 import net.deadlydiamond98.sounds.ZeldaSounds;
-import net.deadlydiamond98.util.interfaces.ZeldaPlayerData;
+import net.deadlydiamond98.util.interfaces.mixin.ZeldaPlayerData;
 import net.deadlydiamond98.util.ZeldaConfig;
 import net.deadlydiamond98.util.ZeldaTags;
 import net.minecraft.block.BlockState;

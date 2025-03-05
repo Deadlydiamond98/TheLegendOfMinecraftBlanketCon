@@ -1,5 +1,6 @@
 package net.deadlydiamond98.entities.boomerangs;
 
+import net.deadlydiamond98.blocks.LootGrass;
 import net.deadlydiamond98.enchantments.ZeldaEnchantments;
 import net.deadlydiamond98.items.ZeldaItems;
 import net.deadlydiamond98.items.items.boomerang.MagicBoomerangItem;
@@ -35,12 +36,12 @@ import net.minecraft.world.World;
 public class BaseBoomerangProjectile extends ProjectileEntity {
 
     private static final TrackedData<ItemStack> itemstack;
-    private int ticksInAir;
-    private int airtime;
+    protected int ticksInAir;
+    protected int airtime;
     private int damageAmount;
-    private float speed;
+    protected float speed;
     private Hand hand;
-    private boolean hasLoyalty;
+    protected boolean hasLoyalty;
     private boolean hasLawnMower;
     private int lawnMowerLevel;
 
@@ -66,7 +67,7 @@ public class BaseBoomerangProjectile extends ProjectileEntity {
         this.setBoomerangItem(boomerangItem);
         this.speed = speed;
         this.hand = hand;
-        this.hasLoyalty = this.getBoomerangItem().getItem() instanceof MagicBoomerangItem;
+        this.hasLoyalty = EnchantmentHelper.getLoyalty(this.getBoomerangItem()) > 0;
         this.hasLawnMower = EnchantmentHelper.getLevel(ZeldaEnchantments.Lawn_Mower, this.getBoomerangItem()) > 0;
         this.lawnMowerLevel = EnchantmentHelper.getLevel(ZeldaEnchantments.Lawn_Mower, this.getBoomerangItem());
         this.setVelocity(player, player.getPitch(), player.getYaw(), 0.0f, speed, 1.0f);
@@ -123,8 +124,10 @@ public class BaseBoomerangProjectile extends ProjectileEntity {
             for (BlockPos blockPos : BlockPos.iterate(pos.add(-this.lawnMowerLevel, -this.lawnMowerLevel, -this.lawnMowerLevel),
                     pos.add(this.lawnMowerLevel, this.lawnMowerLevel, this.lawnMowerLevel))) {
                 BlockState state = this.getWorld().getBlockState(blockPos);
-                if (this.hasLawnMower && state.getHardness(this.getWorld(), blockPos) <= 0 && state.getBlock() instanceof PlantBlock) {
-                    this.getWorld().breakBlock(blockPos, true);
+                if (this.hasLawnMower) {
+                    if (state.getHardness(this.getWorld(), blockPos) <= 0 && state.getBlock() instanceof PlantBlock) {
+                        this.getWorld().breakBlock(blockPos, true);
+                    }
                 }
             }
 
@@ -151,7 +154,6 @@ public class BaseBoomerangProjectile extends ProjectileEntity {
                 }
 
                 if (this.ticksInAir > this.airtime) {
-
                     if (this.ticksInAir < this.airtime + 5 || this.hasLoyalty) {
                         Vec3d ownerPos = new Vec3d(this.getOwner().getX() + this.getOwner().getHandPosOffset(this.getBoomerangItem().getItem()).x * 0.5,
                                 this.getOwner().getY() + this.getOwner().getEyeHeight(this.getOwner().getPose()) - 0.5,
@@ -159,7 +161,8 @@ public class BaseBoomerangProjectile extends ProjectileEntity {
                         Vec3d directionToOwner = ownerPos.subtract(this.getPos()).normalize();
 
                         Vec3d currentVelocity = this.getVelocity();
-                        Vec3d newVelocity = directionToOwner.multiply(this.speed);
+                        float loyatyLevel = (EnchantmentHelper.getLoyalty(this.getBoomerangItem()) * 0.5f) + 1;
+                        Vec3d newVelocity = directionToOwner.multiply(this.speed * loyatyLevel);
                         Vec3d interpolatedVelocity = currentVelocity.lerp(newVelocity, 0.3);
 
                         this.setVelocity(interpolatedVelocity);
@@ -173,8 +176,9 @@ public class BaseBoomerangProjectile extends ProjectileEntity {
                                 if (player.getStackInHand(hand).isEmpty()) {
                                     player.setStackInHand(hand, this.getBoomerangItem());
                                 }
-                                else {
-                                    player.getInventory().insertStack(this.getBoomerangItem());
+                                else if (!player.getInventory().insertStack(this.getBoomerangItem())) {
+                                    ItemEntity item = new ItemEntity(this.getWorld(), this.getX(), this.getY(), this.getZ(), this.getBoomerangItem());
+                                    this.getWorld().spawnEntity(item);
                                 }
                             }
                             ZeldaAdvancementCriterion.bicb.trigger((ServerPlayerEntity) player);

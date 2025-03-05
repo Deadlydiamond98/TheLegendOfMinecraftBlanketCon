@@ -6,11 +6,13 @@
   "mixins": [
     "BowItemMixin",
     "CrossBowItemMixin",
+    "EnchantmentMixin",
     "EntityNavigationMixin",
     "ItemEntityMixin",
     "LivingEntityAccessor",
     "LivingEntityMixin",
     "LookControlMixin",
+    "LoyaltyEnchantmentMixin",
     "MobEntityMixin",
     "PlayerEntityMixin",
     "PlayerInventoryMixin",

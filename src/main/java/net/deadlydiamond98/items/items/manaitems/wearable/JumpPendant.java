@@ -2,7 +2,7 @@ package net.deadlydiamond98.items.items.manaitems.wearable;
 
 import dev.emi.trinkets.api.SlotReference;
 import dev.emi.trinkets.api.TrinketItem;
-import net.deadlydiamond98.util.interfaces.ZeldaPlayerData;
+import net.deadlydiamond98.util.interfaces.mixin.ZeldaPlayerData;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;

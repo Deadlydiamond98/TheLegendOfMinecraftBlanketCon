@@ -14,7 +14,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class MagicBoomerangItem extends BaseBoomerangItem implements MagicItemData {
+public class MagicBoomerangItem extends BaseBoomerangItem {
     private static final int DEFAULT_COLOR = 0xff4444;
 
     public MagicBoomerangItem(Settings settings) {
@@ -27,23 +27,8 @@ public class MagicBoomerangItem extends BaseBoomerangItem implements MagicItemDa
     }
 
     @Override
-    protected void damageItem(ItemStack itemStack, PlayerEntity user, Hand hand) {
-        if (user.canRemoveMana(3)) {
-            user.removeMana(3);
-        }
-        else {
-            super.damageItem(itemStack, user, hand);
-        }
-    }
-
-    @Override
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
         tooltip.add(Text.translatable("item.zeldacraft.magic_boomerang.tooltipa").formatted(Formatting.GREEN));
         tooltip.add(Text.translatable("item.zeldacraft.magic_boomerang.tooltipb").formatted(Formatting.DARK_GREEN));
-    }
-
-    @Override
-    public int getManaCost() {
-        return 3;
     }
 }

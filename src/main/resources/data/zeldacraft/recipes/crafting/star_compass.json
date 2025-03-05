@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "d",
+    "c",
+    "s"
+  ],
+  "key": {
+    "s": {
+      "item": "zeldacraft:stardust"
+    },
+    "c": {
+      "item": "minecraft:compass"
+    },
+    "d": {
+      "item": "minecraft:diamond"
+    }
+  },
+  "result": {
+    "item": "zeldacraft:star_compass",
+    "count": 1
+  }
+}
