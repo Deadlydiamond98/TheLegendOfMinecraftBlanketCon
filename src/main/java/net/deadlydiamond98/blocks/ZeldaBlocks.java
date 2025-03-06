@@ -2,11 +2,10 @@ package net.deadlydiamond98.blocks;
 
 import net.deadlydiamond98.ZeldaCraft;
 import net.deadlydiamond98.blocks.doors.*;
-import net.deadlydiamond98.blocks.redstoneish.pushblock.PushBlock;
-import net.deadlydiamond98.blocks.redstoneish.CrystalSwitch;
+import net.deadlydiamond98.blocks.redstoneish.onoff.ColorSwitchBlock;
+import net.deadlydiamond98.blocks.redstoneish.onoff.CrystalSwitch;
 import net.deadlydiamond98.blocks.dungeon.DungeonciteBlockPallet;
 import net.deadlydiamond98.blocks.dungeon.SecretStone;
-import net.deadlydiamond98.blocks.redstoneish.pushblock.UnJumpablePushBlock;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.*;
@@ -31,10 +30,6 @@ public class ZeldaBlocks {
     public static final Block Loot_Grass = registerBlock("loot_grass",
             new LootGrass(FabricBlockSettings.copyOf(Blocks.MOSS_BLOCK).strength(0.3F, 0.0F)
                     .sounds(BlockSoundGroup.GRASS).nonOpaque().noCollision()));
-
-    public static final Block Crystal_Switch = registerBlock("crystal_switch",
-            new CrystalSwitch(FabricBlockSettings.copyOf(Blocks.STONE).strength(1.5F, 6.0F)
-                    .sounds(BlockSoundGroup.TUFF).nonOpaque().notSolid().luminance(5)));
 
     // Pots
     public static final Block Plain_Pot = registerBlock("plain_pot",
@@ -109,6 +104,19 @@ public class ZeldaBlocks {
             new SecretStone(FabricBlockSettings.copyOf(Blocks.CRACKED_STONE_BRICKS).strength(1.5F, 6.0F)
                     .sounds(BlockSoundGroup.DEEPSLATE_BRICKS)));
 
+    // On / Off
+
+    public static final Block Crystal_Switch = registerBlock("crystal_switch",
+            new CrystalSwitch(FabricBlockSettings.copyOf(Blocks.STONE).strength(1.5F, 6.0F)
+                    .sounds(BlockSoundGroup.TUFF).nonOpaque().notSolid().luminance(5)));
+
+    public static final Block On_Block = registerBlock("on_block",
+            new ColorSwitchBlock.OnBlock(FabricBlockSettings.copyOf(Blocks.STONE).strength(1.5F, 6.0F)
+                    .sounds(BlockSoundGroup.STONE).nonOpaque().notSolid()));
+    public static final Block Off_Block = registerBlock("off_block",
+            new ColorSwitchBlock.OffBlock(FabricBlockSettings.copyOf(Blocks.STONE).strength(1.5F, 6.0F)
+                    .sounds(BlockSoundGroup.STONE).nonOpaque().notSolid()));
+
     // Doors
 
     public static final Block Dungeon_Door = registerBlock("dungeon_door",
@@ -140,11 +148,6 @@ public class ZeldaBlocks {
     // Dungeoncite
 
     public static final DungeonciteBlockPallet Brown_Dungeoncite = new DungeonciteBlockPallet("brown", "zeldacraft:miasi");
-
-    public static final Block TEST = registerBlock("brown_dungeoncite_push_block",
-            new UnJumpablePushBlock(FabricBlockSettings.copyOf(Blocks.DIAMOND_BLOCK).strength(
-                            5, 6.0F)
-                    .sounds(BlockSoundGroup.CALCITE).requiresTool()));
 
     // Other
 

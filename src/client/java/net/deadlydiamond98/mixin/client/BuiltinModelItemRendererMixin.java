@@ -1,12 +1,15 @@
 package net.deadlydiamond98.mixin.client;
 
+import net.deadlydiamond98.ZeldaCraft;
 import net.deadlydiamond98.blocks.ZeldaBlocks;
+import net.deadlydiamond98.blocks.dungeon.SecretStone;
 import net.deadlydiamond98.blocks.entities.CrystalSwitchBlockEntity;
+import net.deadlydiamond98.blocks.redstoneish.pushblock.PushBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.render.VertexConsumerProvider;
+import net.minecraft.client.render.*;
 import net.minecraft.client.render.item.ItemRenderer;
 import net.minecraft.client.render.model.BakedModel;
 import net.minecraft.client.render.model.json.ModelTransformationMode;
@@ -15,8 +18,11 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RotationAxis;
+import org.joml.Matrix3f;
+import org.joml.Matrix4f;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -45,11 +51,11 @@ public class BuiltinModelItemRendererMixin {
             Block block = ((BlockItem) item).getBlock();
             BlockState blockState = block.getDefaultState();
 
+            matrices.push();
             if (blockState.isOf(ZeldaBlocks.Crystal_Switch)) {
 
                 PlayerEntity player = MinecraftClient.getInstance().player;
 
-                matrices.push();
                 if (player != null) {
                     matrices.translate(0.5, 0.5, 0.5);
                     matrices.translate(0, (Math.sin(player.age * 0.05) * 0.05), 0);
@@ -59,9 +65,47 @@ public class BuiltinModelItemRendererMixin {
 
                 MinecraftClient.getInstance().getBlockEntityRenderDispatcher().renderEntity((BlockEntity) RENDER_CRYSTAL_SWITCH,
                         matrices, vertexConsumers, light, overlay);
-                matrices.pop();
             }
+
+            if (renderMode == ModelTransformationMode.GUI) {
+                if (block instanceof SecretStone) {
+                    renderSpecialZeldaBlockIcon(matrices, vertexConsumers, "secret");
+                }
+                else if (block instanceof PushBlock) {
+                    renderSpecialZeldaBlockIcon(matrices, vertexConsumers, "push");
+                }
+            }
+
+            matrices.pop();
         }
+    }
+
+    @Unique
+    private void renderSpecialZeldaBlockIcon(MatrixStack matrices, VertexConsumerProvider vertexConsumers, String icon) {
+
+        matrices.translate(0.5, 0.5, 0.5);
+
+        matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(-45));
+        matrices.translate(-0.5, -0.5, -0.5);
+
+        matrices.scale(0.4f, 0.4f, 1);
+
+        matrices.translate(2.1, 1.35, -0.5);
+
+        MatrixStack.Entry entry = matrices.peek();
+        Matrix4f modelMatrix = entry.getPositionMatrix();
+        Matrix3f normalMatrix = entry.getNormalMatrix();
+
+        VertexConsumer vertexConsumer;
+        vertexConsumer = vertexConsumers.getBuffer(RenderLayer.getEntityTranslucent(
+                new Identifier(ZeldaCraft.MOD_ID, "textures/item/icon/" + icon + "_icon.png")
+        ));
+
+        int light = LightmapTextureManager.MAX_BLOCK_LIGHT_COORDINATE;
+        vertexConsumer.vertex(modelMatrix, -1,  1, 0.0F).color(255, 255, 255, 255).texture(1, 0).overlay(OverlayTexture.DEFAULT_UV).light(light).normal(normalMatrix, 0, 1, 0).next();
+        vertexConsumer.vertex(modelMatrix,  1,  1, 0.0F).color(255, 255, 255, 255).texture(0, 0).overlay(OverlayTexture.DEFAULT_UV).light(light).normal(normalMatrix, 0, 1, 0).next();
+        vertexConsumer.vertex(modelMatrix,  1, -1, 0.0F).color(255, 255, 255, 255).texture(0, 1).overlay(OverlayTexture.DEFAULT_UV).light(light).normal(normalMatrix, 0, 1, 0).next();
+        vertexConsumer.vertex(modelMatrix, -1, -1, 0.0F).color(255, 255, 255, 255).texture(1, 1).overlay(OverlayTexture.DEFAULT_UV).light(light).normal(normalMatrix, 0, 1, 0).next();
     }
 }
 

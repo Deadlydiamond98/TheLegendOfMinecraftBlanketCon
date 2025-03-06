@@ -1,6 +1,7 @@
 package net.deadlydiamond98.blocks.dungeon;
 
 import net.deadlydiamond98.blocks.ZeldaBlocks;
+import net.deadlydiamond98.blocks.redstoneish.pushblock.UnJumpablePushBlock;
 import net.deadlydiamond98.util.interfaces.mixin.ZeldaPlayerData;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.*;
@@ -27,6 +28,7 @@ public class DungeonciteBlockPallet {
     public final Block tileBomb;
 
     public final Block reinforced;
+    public final Block pushable;
 
     public final Block pedestal;
     public final Block pillar;
@@ -60,6 +62,8 @@ public class DungeonciteBlockPallet {
         // Reinforced Dungeoncite
         this.reinforced = registerDungeonciteBlock("reinforced_" + color + "_dungeoncite",
                 settings -> new UnjumpableDungeoncite(settings, advancementID));
+        this.pushable = registerDungeonciteBlock(color + "_dungeoncite_push_block",
+                settings -> new UnJumpableDungeoncitePushBlock(settings, advancementID));
 
         // Pillar
         this.pedestal = registerDungeonciteBlock(color + "_dungeoncite_pedestal",
@@ -83,6 +87,7 @@ public class DungeonciteBlockPallet {
         entry.add(this.tileBomb);
 
         entry.add(this.reinforced);
+        entry.add(this.pushable);
 
         entry.add(this.pedestal);
         entry.add(this.pillar);
@@ -172,6 +177,24 @@ public class DungeonciteBlockPallet {
         private final String advancementID;
 
         public UnjumpableDungeoncite(Settings settings, String advancementID) {
+            super(settings);
+            this.advancementID = advancementID;
+        }
+
+        @Override
+        public float calcBlockBreakingDelta(BlockState state, PlayerEntity player, BlockView world, BlockPos pos) {
+            if (!((ZeldaPlayerData) player).hasAdvancement(this.advancementID)) {
+                return -1;
+            }
+            return super.calcBlockBreakingDelta(state, player, world, pos);
+        }
+    }
+
+    public class UnJumpableDungeoncitePushBlock extends UnJumpablePushBlock {
+
+        private final String advancementID;
+
+        public UnJumpableDungeoncitePushBlock(Settings settings, String advancementID) {
             super(settings);
             this.advancementID = advancementID;
         }

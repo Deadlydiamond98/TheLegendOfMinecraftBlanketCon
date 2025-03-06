@@ -66,6 +66,8 @@ public class ZeldaCraftClient implements ClientModInitializer {
 		BlockRenderLayerMap.INSTANCE.putBlock(ZeldaBlocks.Blue_Dungeon_Door, RenderLayer.getCutout());
 		BlockRenderLayerMap.INSTANCE.putBlock(ZeldaBlocks.Somaria_Block, RenderLayer.getTranslucent());
 		BlockRenderLayerMap.INSTANCE.putBlock(ZeldaBlocks.Crystal_Switch, RenderLayer.getCutout());
+		BlockRenderLayerMap.INSTANCE.putBlock(ZeldaBlocks.On_Block, RenderLayer.getCutout());
+		BlockRenderLayerMap.INSTANCE.putBlock(ZeldaBlocks.Off_Block, RenderLayer.getCutout());
 
 		registerModelPredicatees();
 

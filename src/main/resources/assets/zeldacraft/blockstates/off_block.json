@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "triggered=true": {
+      "model": "zeldacraft:block/off_block_enabled"
+    },
+    "triggered=false": {
+      "model": "zeldacraft:block/off_block_disabled"
+    }
+  }
+}

@@ -193,7 +193,7 @@ public class ZeldaItems {
     public static final Item Cane_Of_Somaria = registerItem("cane_of_somaria", new SomariaCane(
             new FabricItemSettings().maxCount(1)));
 
-    public static final Item Tesing_Rod = registerItem("testing_rod", new TestingRod(
+    public static final Item Tesing_Rod = registerItem("testing_rod", new BindingRod(
             new FabricItemSettings().maxCount(1)));
 
     //Util

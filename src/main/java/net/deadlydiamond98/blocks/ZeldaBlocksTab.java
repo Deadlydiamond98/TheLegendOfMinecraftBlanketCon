@@ -34,6 +34,8 @@ public class ZeldaBlocksTab {
                         entry.add(ZeldaBlocks.Pink_Pot);
                         //Switch
                         entry.add(ZeldaBlocks.Crystal_Switch);
+                        entry.add(ZeldaBlocks.On_Block);
+                        entry.add(ZeldaBlocks.Off_Block);
                         //Secret Cracked Bricks
                         entry.add(ZeldaBlocks.Secret_Cracked_Stone_Brick);
                         entry.add(ZeldaBlocks.Secret_Cracked_Deepslate_Brick);
@@ -42,19 +44,6 @@ public class ZeldaBlocksTab {
                         entry.add(ZeldaBlocks.Secret_Cracked_Polished_Blackstone_Brick);
                         //Dungeon 1 Build Palette
                         ZeldaBlocks.Brown_Dungeoncite.addDungeonciteToCreative(entry);
-//                        entry.add(ZeldaBlocks.Brown_Dungeoncite_Brick);
-//                        entry.add(ZeldaBlocks.Cracked_Brown_Dungeoncite_Brick);
-//                        entry.add(ZeldaBlocks.Mossy_Brown_Dungeoncite_Brick);
-//                        entry.add(ZeldaBlocks.Secret_Cracked_Brown_Dungeoncite_Brick);
-//                        entry.add(ZeldaBlocks.Brown_Dungeoncite_Tile);
-//                        entry.add(ZeldaBlocks.Brown_Dungeoncite_Tile_TTL);
-//                        entry.add(ZeldaBlocks.Brown_Dungeoncite_Tile_TTR);
-//                        entry.add(ZeldaBlocks.Brown_Dungeoncite_Tile_TBL);
-//                        entry.add(ZeldaBlocks.Brown_Dungeoncite_Tile_TBR);
-//                        entry.add(ZeldaBlocks.Brown_Dungeoncite_Tile_Bomb);
-//                        entry.add(ZeldaBlocks.Reinforced_Brown_Dungeoncite);
-//                        entry.add(ZeldaBlocks.Brown_Dungeoncite_Pedestal);
-//                        entry.add(ZeldaBlocks.Brown_Dungeoncite_Pillar);
                         //Dungeon Doors
                         entry.add(ZeldaBlocks.Dungeon_Door);
                         entry.add(ZeldaBlocks.Red_Dungeon_Door);
@@ -68,6 +57,7 @@ public class ZeldaBlocksTab {
                         entry.add(ZeldaBlocks.Master_Ore);
                         entry.add(ZeldaBlocks.Master_Block);
                         entry.add(ZeldaBlocks.Star_Block);
+                        entry.add(ZeldaBlocks.Somaria_Block);
                     }).build());
 
     public static void registerBlockItemGroup() {

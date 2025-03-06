@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "zeldacraft:block/disabled_red_block"
+  }
+}

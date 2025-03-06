@@ -19,6 +19,8 @@
   "item.zeldacraft.deku_nut": "Deku Nut",
 
   "block.zeldacraft.crystal_switch": "Crystal Switch",
+  "block.zeldacraft.on_block": "On Block",
+  "block.zeldacraft.off_block": "Off Block",
 
   "block.zeldacraft.stone_pedestal": "Stone Sword Pedestal",
 
@@ -116,6 +118,7 @@
   "block.zeldacraft.mossy_brown_dungeoncite_bricks": "Mossy Brown Dungeoncite Bricks",
   "block.zeldacraft.brown_dungeoncite_bricks": "Brown Dungeoncite Bricks",
   "block.zeldacraft.reinforced_brown_dungeoncite": "Reinforced Brown Dungeoncite",
+  "block.zeldacraft.brown_dungeoncite_push_block": "Pushable Brown Dungeoncite",
   "block.zeldacraft.brown_dungeoncite_tile": "Brown Dungeoncite Tile",
   "block.zeldacraft.brown_dungeoncite_tile_ttl": "Brown Dungeoncite Triforce A",
   "block.zeldacraft.brown_dungeoncite_tile_ttr": "Brown Dungeoncite Triforce B",
