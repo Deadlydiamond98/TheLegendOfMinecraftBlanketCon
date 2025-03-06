@@ -1,33 +1,22 @@
 package net.deadlydiamond98.util.interfaces.mixin;
 
+import net.deadlydiamond98.util.interfaces.mixin.player.DoubleJumpData;
+import net.deadlydiamond98.util.interfaces.mixin.player.StarCompassData;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.math.GlobalPos;
-import org.jetbrains.annotations.Nullable;
 
-import java.util.Optional;
-
-public interface ZeldaPlayerData {
+public interface ZeldaPlayerData extends StarCompassData, DoubleJumpData {
     boolean isFairy();
     void setFairyState(boolean fairyControl);
     void removeFairyEffect(PlayerEntity user);
     boolean getFairyFriend();
     void setFairyFriend(boolean fairyfriend);
 
-    boolean shouldSearchStar();
-    void setSearchStar(boolean searchStar);
     boolean canSpawnStar();
     void setTriedStarSpawn(boolean starSpawn);
 
-    @Nullable GlobalPos getLastStarPos();
-    void setLastStarPos(@Nullable GlobalPos pos);
-
-    boolean doubleJumpEnabled();
-    void enableddoubleJump(boolean doubleJump);
-    boolean hasntDoubleJumpped();
-    void canDoubleJump(boolean doubleJumpped);
-    boolean wasOnGround();
-    void setPrevGroundState(boolean wasOnGround);
-
     boolean canUseHook();
     void setHookUsability(boolean hookusable);
+
+    void updateAdvancementClient(boolean hasAdvancement);
+    boolean hasAdvancement(String advancementID);
 }

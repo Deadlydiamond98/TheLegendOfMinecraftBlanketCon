@@ -6,7 +6,7 @@ import net.deadlydiamond98.items.ZeldaItems;
 import net.deadlydiamond98.networking.ZeldaServerPackets;
 import net.deadlydiamond98.sounds.ZeldaSounds;
 import net.deadlydiamond98.util.interfaces.mixin.ZeldaPlayerData;
-import net.minecraft.entity.Entity;
+import net.minecraft.advancement.Advancement;
 import net.minecraft.entity.EntityDimensions;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.damage.DamageSource;
@@ -15,12 +15,14 @@ import net.minecraft.entity.player.ItemCooldownManager;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.stat.Stat;
 import net.minecraft.stat.Stats;
 import net.minecraft.util.Hand;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.math.GlobalPos;
 import net.minecraft.util.math.MathHelper;
 import org.jetbrains.annotations.Nullable;
@@ -31,8 +33,6 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-
-import java.util.Optional;
 
 @Mixin(PlayerEntity.class)
 public abstract class PlayerEntityMixin implements ZeldaPlayerData {
@@ -46,13 +46,8 @@ public abstract class PlayerEntityMixin implements ZeldaPlayerData {
     @Shadow public abstract void incrementStat(Stat<?> stat);
 
     @Shadow public abstract ItemCooldownManager getItemCooldownManager();
-
-    @Shadow public abstract void remove(Entity.RemovalReason reason);
-
     @Unique
     private DamageSource shieldSource;
-    @Unique
-    private boolean arrowRemoved;
     @Unique
     private boolean fairyControl;
     @Unique
@@ -60,15 +55,11 @@ public abstract class PlayerEntityMixin implements ZeldaPlayerData {
     @Unique
     private boolean transitionFairy;
     @Unique
-    private int manaLevelZelda;
-    @Unique
-    private int manaMaxLevelZelda;
-    @Unique
     private boolean spawnStar;
     @Unique
     private boolean doubleJump;
     @Unique
-    private boolean doubleJumpped;
+    private boolean doubleJumped;
     @Unique
     private boolean wasOnGround;
     @Unique
@@ -80,23 +71,24 @@ public abstract class PlayerEntityMixin implements ZeldaPlayerData {
     private int starPosTimer;
     @Unique
     private boolean searchStar;
+    @Unique
+    private boolean hasAdvancement;
 
     @Inject(method = "<init>", at = @At("TAIL"))
     private void onInit(CallbackInfo ci) {
         this.spawnStar = true;
-        this.manaMaxLevelZelda = 100;
-        this.manaLevelZelda = 0;
         this.transitionFairy = false;
         this.fairyfriend = false;
         this.fairyControl = false;
         this.shieldSource = null;
         this.doubleJump = false;
-        this.doubleJumpped = false;
+        this.doubleJumped = false;
         this.wasOnGround = true;
         this.canUseHook = true;
         this.starPos = null;
         this.starPosTimer = 0;
         this.searchStar = false;
+        this.hasAdvancement = false;
     }
 
     @Unique
@@ -127,7 +119,7 @@ public abstract class PlayerEntityMixin implements ZeldaPlayerData {
             this.setFairyFriend(false);
         }
 
-        this.enableddoubleJump(trinket.isEquipped(ZeldaItems.Jump_Pendant));
+        this.enableddDoubleJump(trinket.isEquipped(ZeldaItems.Jump_Pendant));
 
         if (!trinket.isEquipped(ZeldaItems.Fairy_Pendant)) {
             this.setFairyState(false);
@@ -185,24 +177,16 @@ public abstract class PlayerEntityMixin implements ZeldaPlayerData {
 
     @Inject(method = "writeCustomDataToNbt", at = @At("HEAD"))
     public void onSave(NbtCompound nbt, CallbackInfo info) {
-        nbt.putInt("manaLevelZelda", manaLevelZelda);
-        nbt.putInt("manaMaxLevelZelda", manaMaxLevelZelda);
         nbt.putBoolean("fairyControl", fairyControl);
         nbt.putBoolean("transitionFairy", transitionFairy);
         nbt.putBoolean("fairyfriend", fairyfriend);
         nbt.putBoolean("spawnStar", spawnStar);
         nbt.putBoolean("doubleJump", doubleJump);
-        nbt.putBoolean("doubleJumpped", doubleJumpped);
+        nbt.putBoolean("doubleJumpped", doubleJumped);
     }
 
     @Inject(method = "readCustomDataFromNbt", at = @At("HEAD"))
     public void onLoad(NbtCompound nbt, CallbackInfo info) {
-        if (nbt.contains("manaLevelZelda")) {
-            this.manaLevelZelda = nbt.getInt("manaLevelZelda");
-        }
-        if (nbt.contains("manaMaxLevelZelda")) {
-            this.manaMaxLevelZelda = nbt.getInt("manaMaxLevelZelda");
-        }
         if (nbt.contains("fairyControl")) {
             this.fairyControl = nbt.getBoolean("fairyControl");
         }
@@ -219,7 +203,7 @@ public abstract class PlayerEntityMixin implements ZeldaPlayerData {
             this.doubleJump = nbt.getBoolean("doubleJump");
         }
         if (nbt.contains("doubleJumpped")) {
-            this.doubleJumpped = nbt.getBoolean("doubleJumpped");
+            this.doubleJumped = nbt.getBoolean("doubleJumpped");
         }
     }
 
@@ -286,7 +270,7 @@ public abstract class PlayerEntityMixin implements ZeldaPlayerData {
 
     @Override
     public boolean isFairy() {
-        return fairyControl;
+        return this.fairyControl;
     }
     @Override
     public void setFairyState(boolean fairyControl) {
@@ -326,16 +310,16 @@ public abstract class PlayerEntityMixin implements ZeldaPlayerData {
         return this.doubleJump;
     }
     @Override
-    public void enableddoubleJump(boolean doubleJump) {
+    public void enableddDoubleJump(boolean doubleJump) {
         this.doubleJump = doubleJump;
     }
     @Override
     public boolean hasntDoubleJumpped() {
-        return this.doubleJumpped;
+        return this.doubleJumped;
     }
     @Override
     public void canDoubleJump(boolean doubleJumpped) {
-        this.doubleJumpped = doubleJumpped;
+        this.doubleJumped = doubleJumpped;
     }
     @Override
     public boolean wasOnGround() {
@@ -379,5 +363,34 @@ public abstract class PlayerEntityMixin implements ZeldaPlayerData {
     @Override
     public void setSearchStar(boolean searchStar) {
         this.searchStar = searchStar;
+    }
+
+    @Override
+    public boolean hasAdvancement(String advancementID) {
+        PlayerEntity player = zeldacraf$self();
+
+        if (!player.getWorld().isClient()) {
+            if (zeldacraf$self() instanceof ServerPlayerEntity serverPlayer) {
+                MinecraftServer server = zeldacraf$self().getServer();
+
+                if (server != null) {
+                    Advancement advancement = server.getAdvancementLoader().get(new Identifier(advancementID));
+
+                    if (advancement != null) {
+                        boolean bl = serverPlayer.getAdvancementTracker().getProgress(advancement).isDone();
+
+                        ZeldaServerPackets.updateAdvancmentStatus(serverPlayer, bl);
+
+                        return bl;
+                    }
+                }
+            }
+        }
+        return this.hasAdvancement;
+    }
+
+    @Override
+    public void updateAdvancementClient(boolean hasAdvancement) {
+        this.hasAdvancement = hasAdvancement;
     }
 }

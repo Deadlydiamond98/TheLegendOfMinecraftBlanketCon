@@ -2,7 +2,7 @@ package net.deadlydiamond98.mixin.client;
 
 import net.deadlydiamond98.renderer.StunOverlay;
 import net.deadlydiamond98.statuseffects.ZeldaStatusEffects;
-import net.deadlydiamond98.util.interfaces.mixin.ZeldaEntityData;
+import net.deadlydiamond98.util.interfaces.mixin.ZeldaLivingEntityData;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.LivingEntityRenderer;
 import net.minecraft.client.render.entity.PlayerModelPart;
@@ -62,7 +62,7 @@ public abstract class LivingEntityRendererMixin<T extends LivingEntity, M extend
 				("Dinnerbone".equals(string) || "Grumm".equals(string)) &&
 				(!(entity instanceof PlayerEntity) || ((PlayerEntity) entity).isPartVisible(PlayerModelPart.CAPE));
 
-		cir.setReturnValue(dinnerbone ^ ((ZeldaEntityData) entity).flipped());
+		cir.setReturnValue(dinnerbone ^ ((ZeldaLivingEntityData) entity).flipped());
 	}
 
 	@Inject(

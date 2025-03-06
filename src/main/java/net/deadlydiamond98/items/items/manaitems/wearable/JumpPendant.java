@@ -23,7 +23,7 @@ public class JumpPendant extends TrinketItem {
     public void onEquip(ItemStack stack, SlotReference slot, LivingEntity entity) {
         super.onEquip(stack, slot, entity);
         if (entity instanceof PlayerEntity user) {
-            ((ZeldaPlayerData) user).enableddoubleJump(true);
+            ((ZeldaPlayerData) user).enableddDoubleJump(true);
         }
     }
 
@@ -31,7 +31,7 @@ public class JumpPendant extends TrinketItem {
     public void onUnequip(ItemStack stack, SlotReference slot, LivingEntity entity) {
         super.onUnequip(stack, slot, entity);
         if (entity instanceof PlayerEntity user) {
-            ((ZeldaPlayerData) user).enableddoubleJump(false);
+            ((ZeldaPlayerData) user).enableddDoubleJump(false);
         }
     }
 

@@ -1,7 +1,6 @@
-package net.deadlydiamond98.blocks;
+package net.deadlydiamond98.blocks.redstoneish;
 
 import net.deadlydiamond98.blocks.entities.CrystalSwitchBlockEntity;
-import net.deadlydiamond98.blocks.entities.PedestalBlockEntity;
 import net.deadlydiamond98.blocks.entities.ZeldaBlockEntities;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
@@ -38,6 +37,6 @@ public class CrystalSwitch extends BlockWithEntity {
 
     @Override
     public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-        return Block.createCuboidShape(1.5, 0.0, 1.5, 14.5, 9.0, 14.5 );
+        return Block.createCuboidShape(1.5, 0.0, 1.5, 14.5, 10.0, 14.5 );
     }
 }

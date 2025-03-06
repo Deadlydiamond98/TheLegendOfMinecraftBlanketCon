@@ -2,7 +2,7 @@ package net.deadlydiamond98.mixin;
 
 import net.deadlydiamond98.networking.ZeldaServerPackets;
 import net.deadlydiamond98.statuseffects.ZeldaStatusEffects;
-import net.deadlydiamond98.util.interfaces.mixin.ZeldaEntityData;
+import net.deadlydiamond98.util.interfaces.mixin.ZeldaLivingEntityData;
 import net.minecraft.entity.LimbAnimator;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
@@ -18,7 +18,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(LivingEntity.class)
-public abstract class LivingEntityMixin implements ZeldaEntityData {
+public abstract class LivingEntityMixin implements ZeldaLivingEntityData {
 
     @Shadow protected abstract void tickStatusEffects();
 

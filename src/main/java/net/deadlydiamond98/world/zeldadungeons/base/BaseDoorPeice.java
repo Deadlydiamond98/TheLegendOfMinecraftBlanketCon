@@ -49,14 +49,14 @@ public abstract class BaseDoorPeice extends StructurePiece {
             case WOOD_DOOR -> {
                 if (direction == Direction.NORTH || direction == Direction.SOUTH) {
                     this.fillWithOutline(world, boundingBox, x, y, z, x + 3, y + 4, z,
-                            ZeldaBlocks.Reinforced_Brown_Dungeoncite.getDefaultState(),
+                            ZeldaBlocks.Brown_Dungeoncite.reinforced.getDefaultState(),
                             AIR, false);
                     this.fillWithOutline(world, boundingBox, x + 1, y + 1, z, x + 2, y + 3, z,
                             Blocks.SPRUCE_PLANKS.getDefaultState(),
                             AIR, false);
                 } else {
                     this.fillWithOutline(world, boundingBox, x, y, z, x, y + 4, z + 3,
-                            ZeldaBlocks.Reinforced_Brown_Dungeoncite.getDefaultState(),
+                            ZeldaBlocks.Brown_Dungeoncite.reinforced.getDefaultState(),
                             AIR, false);
                     this.fillWithOutline(world, boundingBox, x, y + 1, z + 1, x, y + 3, z + 2,
                             Blocks.SPRUCE_PLANKS.getDefaultState(),
@@ -66,14 +66,14 @@ public abstract class BaseDoorPeice extends StructurePiece {
             case LOCKED_DOOR -> {
                 if (direction == Direction.NORTH || direction == Direction.SOUTH) {
                     this.fillWithOutline(world, boundingBox, x, y, z, x + 3, y + 4, z,
-                            ZeldaBlocks.Reinforced_Brown_Dungeoncite.getDefaultState(),
+                            ZeldaBlocks.Brown_Dungeoncite.reinforced.getDefaultState(),
                             AIR, false);
                     this.fillWithOutline(world, boundingBox, x + 1, y + 1, z, x + 2, y + 3, z,
                             Blocks.RED_WOOL.getDefaultState(),
                             AIR, false);
                 } else {
                     this.fillWithOutline(world, boundingBox, x, y, z, x, y + 4, z + 3,
-                            ZeldaBlocks.Reinforced_Brown_Dungeoncite.getDefaultState(),
+                            ZeldaBlocks.Brown_Dungeoncite.reinforced.getDefaultState(),
                             AIR, false);
                     this.fillWithOutline(world, boundingBox, x, y + 1, z + 1, x, y + 3, z + 2,
                             Blocks.RED_WOOL.getDefaultState(),
@@ -83,47 +83,47 @@ public abstract class BaseDoorPeice extends StructurePiece {
             case CRACKED_DOOR -> {
                 if (direction == Direction.NORTH || direction == Direction.SOUTH) {
                     this.fillWithOutline(world, boundingBox, x, y, z, x + 3, y + 4, z,
-                            ZeldaBlocks.Reinforced_Brown_Dungeoncite.getDefaultState(),
+                            ZeldaBlocks.Brown_Dungeoncite.reinforced.getDefaultState(),
                             AIR, false);
                     this.fillWithOutline(world, boundingBox, x + 1, y + 1, z, x + 2, y + 3, z,
-                            ZeldaBlocks.Secret_Cracked_Brown_Dungeoncite_Brick.getDefaultState(),
+                            ZeldaBlocks.Brown_Dungeoncite.secretBrick.getDefaultState(),
                             AIR, false);
-                    this.addBlock(world, ZeldaBlocks.Brown_Dungeoncite_Tile_Bomb.getDefaultState(), x, y + 2, z, boundingBox);
-                    this.addBlock(world, ZeldaBlocks.Brown_Dungeoncite_Tile_Bomb.getDefaultState(), x + 3, y + 2, z, boundingBox);
+                    this.addBlock(world, ZeldaBlocks.Brown_Dungeoncite.tileBomb.getDefaultState(), x, y + 2, z, boundingBox);
+                    this.addBlock(world, ZeldaBlocks.Brown_Dungeoncite.tileBomb.getDefaultState(), x + 3, y + 2, z, boundingBox);
                 } else {
                     this.fillWithOutline(world, boundingBox, x, y, z, x, y + 4, z + 3,
-                            ZeldaBlocks.Reinforced_Brown_Dungeoncite.getDefaultState(),
+                            ZeldaBlocks.Brown_Dungeoncite.reinforced.getDefaultState(),
                             AIR, false);
                     this.fillWithOutline(world, boundingBox, x, y + 1, z + 1, x, y + 3, z + 2,
-                            ZeldaBlocks.Secret_Cracked_Brown_Dungeoncite_Brick.getDefaultState(),
+                            ZeldaBlocks.Brown_Dungeoncite.secretBrick.getDefaultState(),
                             AIR, false);
 
-                    this.addBlock(world, ZeldaBlocks.Brown_Dungeoncite_Tile_Bomb.getDefaultState(), x, y + 2, z, boundingBox);
-                    this.addBlock(world, ZeldaBlocks.Brown_Dungeoncite_Tile_Bomb.getDefaultState(), x, y + 2, z + 3, boundingBox);
+                    this.addBlock(world, ZeldaBlocks.Brown_Dungeoncite.tileBomb.getDefaultState(), x, y + 2, z, boundingBox);
+                    this.addBlock(world, ZeldaBlocks.Brown_Dungeoncite.tileBomb.getDefaultState(), x, y + 2, z + 3, boundingBox);
                 }
             }
             case CRACKED_WALL -> {
                 if (direction == Direction.NORTH || direction == Direction.SOUTH) {
                     this.fillWithOutline(world, boundingBox, x + 1, y + 1, z, x + 2, y + 3, z,
-                            ZeldaBlocks.Secret_Cracked_Brown_Dungeoncite_Brick.getDefaultState(),
+                            ZeldaBlocks.Brown_Dungeoncite.secretBrick.getDefaultState(),
                             AIR, false);
                 } else {
                     this.fillWithOutline(world, boundingBox, x, y + 1, z + 1, x, y + 3, z + 2,
-                            ZeldaBlocks.Secret_Cracked_Brown_Dungeoncite_Brick.getDefaultState(),
+                            ZeldaBlocks.Brown_Dungeoncite.secretBrick.getDefaultState(),
                             AIR, false);
                 }
             }
             case BOSS_DOOR -> {
                 if (direction == Direction.NORTH || direction == Direction.SOUTH) {
                     this.fillWithOutline(world, boundingBox, x, y, z, x + 3, y + 4, z,
-                            ZeldaBlocks.Reinforced_Brown_Dungeoncite.getDefaultState(),
+                            ZeldaBlocks.Brown_Dungeoncite.reinforced.getDefaultState(),
                             AIR, false);
                     this.fillWithOutline(world, boundingBox, x + 1, y + 1, z, x + 2, y + 3, z,
                             Blocks.NETHERRACK.getDefaultState(),
                             AIR, false);
                 } else {
                     this.fillWithOutline(world, boundingBox, x, y, z, x, y + 4, z + 3,
-                            ZeldaBlocks.Reinforced_Brown_Dungeoncite.getDefaultState(),
+                            ZeldaBlocks.Brown_Dungeoncite.reinforced.getDefaultState(),
                             AIR, false);
                     this.fillWithOutline(world, boundingBox, x, y + 1, z + 1, x, y + 3, z + 2,
                             Blocks.NETHERRACK.getDefaultState(),

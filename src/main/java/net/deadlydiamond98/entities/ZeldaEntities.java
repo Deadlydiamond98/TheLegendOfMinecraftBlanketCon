@@ -40,6 +40,14 @@ public class ZeldaEntities {
     public static void registerEntities() {
     }
 
+    public static final EntityType<PushBlockEntity> Push_Block = Registry.register(
+            Registries.ENTITY_TYPE,
+            new Identifier(ZeldaCraft.MOD_ID, "push_block"),
+            FabricEntityTypeBuilder.create(SpawnGroup.MISC, PushBlockEntity::new)
+                    .dimensions(EntityDimensions.fixed(0.98f, 0.98f))
+                    .trackRangeBlocks(10).disableSummon()
+                    .build()
+    );
     public static final EntityType<SwordBeamEntity> Sword_Beam = Registry.register(
             Registries.ENTITY_TYPE,
             new Identifier(ZeldaCraft.MOD_ID, "sword_beam"),

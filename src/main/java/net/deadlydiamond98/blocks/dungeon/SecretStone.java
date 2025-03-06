@@ -1,4 +1,4 @@
-package net.deadlydiamond98.blocks;
+package net.deadlydiamond98.blocks.dungeon;
 
 import net.deadlydiamond98.sounds.ZeldaSounds;
 import net.minecraft.block.Block;

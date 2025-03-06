@@ -12,6 +12,7 @@ import net.deadlydiamond98.model.entity.*;
 import net.deadlydiamond98.networking.ZeldaClientPackets;
 import net.deadlydiamond98.particle.ZeldaParticleFactory;
 import net.deadlydiamond98.renderer.GuiElements;
+import net.deadlydiamond98.renderer.PushBlockEntityRenderer;
 import net.deadlydiamond98.renderer.blocks.CrystalSwitchRenderer;
 import net.deadlydiamond98.renderer.blocks.SwordPedestalRenderer;
 import net.deadlydiamond98.renderer.doors.*;
@@ -38,6 +39,7 @@ import net.minecraft.client.item.CompassAnglePredicateProvider;
 import net.minecraft.client.item.ModelPredicateProviderRegistry;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactories;
+import net.minecraft.client.render.entity.FallingBlockEntityRenderer;
 import net.minecraft.client.render.entity.FlyingItemEntityRenderer;
 import net.minecraft.client.render.entity.model.BatEntityModel;
 import net.minecraft.item.DyeableItem;
@@ -183,6 +185,8 @@ public class ZeldaCraftClient implements ClientModInitializer {
 
 		EntityRendererRegistry.register(ZeldaEntities.Silver_Arrow, ZeldaArrowRenderer::new);
 		EntityRendererRegistry.register(ZeldaEntities.Bomb_Arrow, ZeldaArrowRenderer::new);
+
+		EntityRendererRegistry.register(ZeldaEntities.Push_Block, PushBlockEntityRenderer::new);
 
 		// Block Entity
 

@@ -17,6 +17,7 @@ public class ZeldaClientPackets {
         ClientPlayNetworking.registerGlobalReceiver(ZeldaPacketIDS.StarCompassPacket, PlayerStatsS2CPacket::recieveCompass);
         ClientPlayNetworking.registerGlobalReceiver(ZeldaPacketIDS.EntityStatsPacket, EntityStatsS2CPacket::recieve);
         ClientPlayNetworking.registerGlobalReceiver(ZeldaPacketIDS.PlaySoundPacket, PlaySoundS2CPacket::recieve);
+        ClientPlayNetworking.registerGlobalReceiver(ZeldaPacketIDS.UpdateAdvancmentStatus, UpdateAdvancementStatus::recieve);
     }
 
     public static void sendSwordSwingPacket() {

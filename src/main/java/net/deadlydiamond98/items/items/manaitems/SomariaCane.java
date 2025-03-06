@@ -1,9 +1,12 @@
 package net.deadlydiamond98.items.items.manaitems;
 
 import net.deadlydiamond98.blocks.ZeldaBlocks;
+import net.deadlydiamond98.blocks.redstoneish.pushblock.PushBlock;
+import net.deadlydiamond98.entities.PushBlockEntity;
 import net.deadlydiamond98.magiclib.items.consumers.MagicItem;
 import net.deadlydiamond98.sounds.ZeldaSounds;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.FallingBlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.particle.ParticleTypes;
@@ -41,7 +44,7 @@ public class SomariaCane extends MagicItem {
         if (world.getBlockState(pos).isAir()) {
             user.getWorld().playSound(null, user.getBlockPos(), ZeldaSounds.StarUsed,
                     SoundCategory.PLAYERS, 1.0f, 2.0f);
-            world.setBlockState(pos, ZeldaBlocks.Somaria_Block.getDefaultState());
+            FallingBlockEntity.spawnFromBlock(world, pos, ZeldaBlocks.Somaria_Block.getDefaultState());
             super.doManaAction(user, world);
         }
     }

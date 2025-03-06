@@ -2,7 +2,7 @@ package net.deadlydiamond98.items.items.manaitems;
 
 import net.deadlydiamond98.magiclib.items.MagicItemData;
 import net.deadlydiamond98.sounds.ZeldaSounds;
-import net.deadlydiamond98.util.interfaces.mixin.ZeldaEntityData;
+import net.deadlydiamond98.util.interfaces.mixin.ZeldaLivingEntityData;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
@@ -24,7 +24,7 @@ public class PacciCane extends Item implements MagicItemData {
         if (user.canRemoveMana(this.magicCost)) {
             user.getWorld().playSound(null, user.getBlockPos(), ZeldaSounds.StarPickedUp,
                     SoundCategory.PLAYERS, 1.0f, 2.0f);
-            ((ZeldaEntityData) entity).setflipped(!((ZeldaEntityData) entity).flipped());
+            ((ZeldaLivingEntityData) entity).setflipped(!((ZeldaLivingEntityData) entity).flipped());
             user.removeMana(this.magicCost);
             return ActionResult.SUCCESS;
         }

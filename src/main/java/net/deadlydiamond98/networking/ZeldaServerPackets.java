@@ -73,4 +73,9 @@ public class ZeldaServerPackets {
         buf.writeVarInt(soundType);
         ServerPlayNetworking.send(player, ZeldaPacketIDS.PlaySoundPacket, buf);
     }
+    public static void updateAdvancmentStatus(ServerPlayerEntity player, boolean bl) {
+        PacketByteBuf buf = PacketByteBufs.create();
+        buf.writeBoolean(bl);
+        ServerPlayNetworking.send(player, ZeldaPacketIDS.UpdateAdvancmentStatus, buf);
+    }
 }

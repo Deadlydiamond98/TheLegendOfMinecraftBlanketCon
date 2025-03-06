@@ -15,6 +15,7 @@ public class ZeldaPacketIDS {
     public static final Identifier StarCompassPacket = new Identifier(ZeldaCraft.MOD_ID, "star_compass_packet");
     public static final Identifier EntityStatsPacket = new Identifier(ZeldaCraft.MOD_ID, "entity_stats_packet");
     public static final Identifier PlaySoundPacket = new Identifier(ZeldaCraft.MOD_ID, "play_zelda_sound");
+    public static final Identifier UpdateAdvancmentStatus = new Identifier(ZeldaCraft.MOD_ID, "has_advancement");
 
     //C2S
 

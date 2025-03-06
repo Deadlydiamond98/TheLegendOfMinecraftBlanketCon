@@ -307,6 +307,4 @@ public abstract class AbstractDungeonDoor extends BlockWithEntity {
     protected abstract BlockEntityTicker<? super AbstractDungeonDoorEntity> doorTickMethod();
 
     protected abstract BlockEntityType<? extends AbstractDungeonDoorEntity> getDungeonDoorEntity();
-
-
 }

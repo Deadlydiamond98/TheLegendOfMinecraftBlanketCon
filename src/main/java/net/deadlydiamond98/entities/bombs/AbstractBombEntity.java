@@ -1,7 +1,7 @@
 package net.deadlydiamond98.entities.bombs;
 
 import net.deadlydiamond98.blocks.BombFlower;
-import net.deadlydiamond98.blocks.SecretStone;
+import net.deadlydiamond98.blocks.dungeon.SecretStone;
 import net.deadlydiamond98.blocks.ZeldaBlocks;
 import net.deadlydiamond98.enchantments.ZeldaEnchantments;
 import net.deadlydiamond98.items.items.bats.BatItem;

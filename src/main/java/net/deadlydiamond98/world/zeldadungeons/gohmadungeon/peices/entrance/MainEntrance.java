@@ -1,6 +1,5 @@
 package net.deadlydiamond98.world.zeldadungeons.gohmadungeon.peices.entrance;
 
-import net.deadlydiamond98.ZeldaCraft;
 import net.deadlydiamond98.blocks.ZeldaBlocks;
 import net.deadlydiamond98.world.zeldadungeons.ZeldaDungeons;
 import net.deadlydiamond98.world.zeldadungeons.base.BaseDungeonPiece;
@@ -9,12 +8,6 @@ import net.deadlydiamond98.world.zeldadungeons.gohmadungeon.GohmaWallPlacer;
 import net.minecraft.block.Blocks;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.structure.StructureContext;
-import net.minecraft.structure.StructurePlacementData;
-import net.minecraft.structure.StructureTemplate;
-import net.minecraft.structure.StructureTemplateManager;
-import net.minecraft.util.BlockMirror;
-import net.minecraft.util.BlockRotation;
-import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockBox;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
@@ -23,8 +16,6 @@ import net.minecraft.util.math.random.Random;
 import net.minecraft.world.StructureWorldAccess;
 import net.minecraft.world.gen.StructureAccessor;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
-
-import java.util.Optional;
 
 import static net.minecraft.block.CandleBlock.CANDLES;
 import static net.minecraft.block.CandleBlock.LIT;
@@ -55,12 +46,12 @@ public class MainEntrance extends BaseDungeonPiece {
 
         // Floor
         this.fillWithOutline(world, chunkBox, 1, 0, 1, this.getSizeX() - 1, 0, this.getSizeZ() - 1,
-                ZeldaBlocks.Brown_Dungeoncite_Tile.getDefaultState().with(FACING, this.getFacing()),
+                ZeldaBlocks.Brown_Dungeoncite.tile.getDefaultState().with(FACING, this.getFacing()),
                 AIR, false);
 
         // Ceiling
         this.fillWithOutline(world, chunkBox, 1, this.getSizeY(), 1, this.getSizeX() - 1, this.getSizeY(), this.getSizeZ() - 1,
-                ZeldaBlocks.Brown_Dungeoncite_Tile.getDefaultState().with(FACING, this.getFacing()),
+                ZeldaBlocks.Brown_Dungeoncite.tile.getDefaultState().with(FACING, this.getFacing()),
                 AIR, false);
 
         //Add Random Pots
@@ -82,7 +73,7 @@ public class MainEntrance extends BaseDungeonPiece {
 
         // Pillar Horizontal
         this.fillWithOutline(world, chunkBox, 7, 5, 1, 7, 5, this.getSizeZ() - 1,
-                ZeldaBlocks.Brown_Dungeoncite_Pillar.getDefaultState().with(AXIS, this.getFacing().rotateYClockwise().getAxis()),
+                ZeldaBlocks.Brown_Dungeoncite.pillar.getDefaultState().with(AXIS, this.getFacing().rotateYClockwise().getAxis()),
                 AIR, false);
 
         //Fence
@@ -92,10 +83,10 @@ public class MainEntrance extends BaseDungeonPiece {
         // Pillars Vertical
         for (int i = 0; i < 5; i++) {
             this.fillWithOutline(world, chunkBox, 7, 1, 3 + (4 * i), 7, 5, 3 + (4 * i),
-                    ZeldaBlocks.Brown_Dungeoncite_Pillar.getDefaultState().with(AXIS, Direction.Axis.Y),
+                    ZeldaBlocks.Brown_Dungeoncite.pillar.getDefaultState().with(AXIS, Direction.Axis.Y),
                     AIR, false);
-            this.addBlock(world, ZeldaBlocks.Reinforced_Brown_Dungeoncite.getDefaultState(), 7, 5, 3 + (4 * i), chunkBox);
-            this.addBlock(world, ZeldaBlocks.Brown_Dungeoncite_Pedestal.getDefaultState(), 7, 6, 3 + (4 * i), chunkBox);
+            this.addBlock(world, ZeldaBlocks.Brown_Dungeoncite.reinforced.getDefaultState(), 7, 5, 3 + (4 * i), chunkBox);
+            this.addBlock(world, ZeldaBlocks.Brown_Dungeoncite.pedestal.getDefaultState(), 7, 6, 3 + (4 * i), chunkBox);
             this.addBlock(world, Blocks.YELLOW_CANDLE.getDefaultState().with(CANDLES, random.nextBetween(1, 4)).with(LIT, true),
                     7, 7, 3 + (4 * i), chunkBox);
         }

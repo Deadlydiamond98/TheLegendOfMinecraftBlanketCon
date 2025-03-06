@@ -1,6 +1,6 @@
 package net.deadlydiamond98.networking.packets;
 
-import net.deadlydiamond98.util.interfaces.mixin.ZeldaEntityData;
+import net.deadlydiamond98.util.interfaces.mixin.ZeldaLivingEntityData;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
@@ -18,7 +18,7 @@ public class EntityStatsS2CPacket {
 
         if (entity instanceof LivingEntity livingEntity) {
             client.execute(() -> {
-                ((ZeldaEntityData) livingEntity).setflipped(flip);
+                ((ZeldaLivingEntityData) livingEntity).setflipped(flip);
             });
         }
     }

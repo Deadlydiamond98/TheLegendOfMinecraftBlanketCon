@@ -2,6 +2,11 @@ package net.deadlydiamond98.blocks;
 
 import net.deadlydiamond98.ZeldaCraft;
 import net.deadlydiamond98.blocks.doors.*;
+import net.deadlydiamond98.blocks.redstoneish.pushblock.PushBlock;
+import net.deadlydiamond98.blocks.redstoneish.CrystalSwitch;
+import net.deadlydiamond98.blocks.dungeon.DungeonciteBlockPallet;
+import net.deadlydiamond98.blocks.dungeon.SecretStone;
+import net.deadlydiamond98.blocks.redstoneish.pushblock.UnJumpablePushBlock;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.*;
@@ -16,8 +21,8 @@ import net.minecraft.util.math.intprovider.UniformIntProvider;
 public class ZeldaBlocks {
 
     public static final Block Somaria_Block = registerBlock("somaria_block",
-            new GlassBlock(FabricBlockSettings.copyOf(Blocks.GLASS).breakInstantly().dropsNothing()
-                    .sounds(BlockSoundGroup.MUD).luminance(2).nonOpaque().notSolid()));
+            new SomariaBlock(FabricBlockSettings.copyOf(Blocks.GLASS).breakInstantly().dropsNothing()
+                    .sounds(BlockSoundGroup.CALCITE).luminance(2)));
 
     public static final Block Bomb_Flower = registerBlock("bomb_flower",
             new BombFlower(FabricBlockSettings.copyOf(Blocks.MOSS_BLOCK).strength(1.5F, 0.0F)
@@ -134,58 +139,12 @@ public class ZeldaBlocks {
 
     // Dungeoncite
 
-    public static final Block Brown_Dungeoncite_Brick = registerBlock("brown_dungeoncite_bricks",
-            new Block(FabricBlockSettings.copyOf(Blocks.STONE_BRICKS).strength(
-                            50, 6.0F)
-                    .sounds(BlockSoundGroup.STONE).requiresTool()));
-    public static final Block Mossy_Brown_Dungeoncite_Brick = registerBlock("mossy_brown_dungeoncite_bricks",
-            new Block(FabricBlockSettings.copyOf(Blocks.STONE_BRICKS).strength(
-                            50, 6.0F)
-                    .sounds(BlockSoundGroup.STONE).requiresTool()));
-    public static final Block Cracked_Brown_Dungeoncite_Brick = registerBlock("cracked_brown_dungeoncite_bricks",
-            new Block(FabricBlockSettings.copyOf(Blocks.STONE_BRICKS).strength(
-                            50, 6.0F)
-                    .sounds(BlockSoundGroup.STONE).requiresTool()));
-    public static final Block Brown_Dungeoncite_Tile = registerBlock("brown_dungeoncite_tile",
-            new GlazedTerracottaBlock(FabricBlockSettings.copyOf(Blocks.STONE_BRICKS).strength(
-                            50, 6.0F)
-                    .sounds(BlockSoundGroup.STONE).requiresTool()));
-    public static final Block Brown_Dungeoncite_Tile_TTL = registerBlock("brown_dungeoncite_tile_ttl",
-            new GlazedTerracottaBlock(FabricBlockSettings.copyOf(Blocks.STONE_BRICKS).strength(
-                            50, 6.0F)
-                    .sounds(BlockSoundGroup.STONE).requiresTool()));
-    public static final Block Brown_Dungeoncite_Tile_TTR = registerBlock("brown_dungeoncite_tile_ttr",
-            new GlazedTerracottaBlock(FabricBlockSettings.copyOf(Blocks.STONE_BRICKS).strength(
-                            50, 6.0F)
-                    .sounds(BlockSoundGroup.STONE).requiresTool()));
-    public static final Block Brown_Dungeoncite_Tile_TBL = registerBlock("brown_dungeoncite_tile_tbl",
-            new GlazedTerracottaBlock(FabricBlockSettings.copyOf(Blocks.STONE_BRICKS).strength(
-                            50, 6.0F)
-                    .sounds(BlockSoundGroup.STONE).requiresTool()));
-    public static final Block Brown_Dungeoncite_Tile_TBR = registerBlock("brown_dungeoncite_tile_tbr",
-            new GlazedTerracottaBlock(FabricBlockSettings.copyOf(Blocks.STONE_BRICKS).strength(
-                            50, 6.0F)
-                    .sounds(BlockSoundGroup.STONE).requiresTool()));
-    public static final Block Brown_Dungeoncite_Tile_Bomb = registerBlock("brown_dungeoncite_tile_bomb",
-            new GlazedTerracottaBlock(FabricBlockSettings.copyOf(Blocks.STONE_BRICKS).strength(
-                            50, 6.0F)
-                    .sounds(BlockSoundGroup.STONE).requiresTool()));
-    public static final Block Secret_Cracked_Brown_Dungeoncite_Brick = registerBlock("secret_cracked_brown_dungeoncite_bricks",
-            new SecretStone(FabricBlockSettings.copyOf(Blocks.CRACKED_STONE_BRICKS).strength(
-                            50, 6.0F)
-                    .sounds(BlockSoundGroup.STONE).requiresTool()));
-    public static final Block Reinforced_Brown_Dungeoncite = registerBlock("reinforced_brown_dungeoncite",
-            new Block(FabricBlockSettings.copyOf(Blocks.STONE_BRICKS).strength(
-                            50, 6.0F)
-                    .sounds(BlockSoundGroup.STONE).requiresTool()));
-    public static final Block Brown_Dungeoncite_Pedestal = registerBlock("brown_dungeoncite_pedestal",
-            new Block(FabricBlockSettings.copyOf(Blocks.SANDSTONE).strength(
-                            50, 6.0F)
-                    .sounds(BlockSoundGroup.STONE).requiresTool()));
-    public static final Block Brown_Dungeoncite_Pillar = registerBlock("brown_dungeoncite_pillar",
-            new PillarBlock(FabricBlockSettings.copyOf(Blocks.QUARTZ_PILLAR).strength(
-                            50, 6.0F)
-                    .sounds(BlockSoundGroup.STONE).requiresTool()));
+    public static final DungeonciteBlockPallet Brown_Dungeoncite = new DungeonciteBlockPallet("brown", "zeldacraft:miasi");
+
+    public static final Block TEST = registerBlock("brown_dungeoncite_push_block",
+            new UnJumpablePushBlock(FabricBlockSettings.copyOf(Blocks.DIAMOND_BLOCK).strength(
+                            5, 6.0F)
+                    .sounds(BlockSoundGroup.CALCITE).requiresTool()));
 
     // Other
 
@@ -217,7 +176,7 @@ public class ZeldaBlocks {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private static Block registerBlock(String blockName, Block block) {
+    public static Block registerBlock(String blockName, Block block) {
         registerBlockItem(blockName, block);
         return Registry.register(Registries.BLOCK, new Identifier(ZeldaCraft.MOD_ID, blockName), block);
     }

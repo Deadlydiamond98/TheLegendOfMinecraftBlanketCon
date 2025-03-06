@@ -41,19 +41,20 @@ public class ZeldaBlocksTab {
                         entry.add(ZeldaBlocks.Secret_Cracked_Nether_Brick);
                         entry.add(ZeldaBlocks.Secret_Cracked_Polished_Blackstone_Brick);
                         //Dungeon 1 Build Palette
-                        entry.add(ZeldaBlocks.Brown_Dungeoncite_Brick);
-                        entry.add(ZeldaBlocks.Cracked_Brown_Dungeoncite_Brick);
-                        entry.add(ZeldaBlocks.Mossy_Brown_Dungeoncite_Brick);
-                        entry.add(ZeldaBlocks.Secret_Cracked_Brown_Dungeoncite_Brick);
-                        entry.add(ZeldaBlocks.Brown_Dungeoncite_Tile);
-                        entry.add(ZeldaBlocks.Brown_Dungeoncite_Tile_TTL);
-                        entry.add(ZeldaBlocks.Brown_Dungeoncite_Tile_TTR);
-                        entry.add(ZeldaBlocks.Brown_Dungeoncite_Tile_TBL);
-                        entry.add(ZeldaBlocks.Brown_Dungeoncite_Tile_TBR);
-                        entry.add(ZeldaBlocks.Brown_Dungeoncite_Tile_Bomb);
-                        entry.add(ZeldaBlocks.Reinforced_Brown_Dungeoncite);
-                        entry.add(ZeldaBlocks.Brown_Dungeoncite_Pedestal);
-                        entry.add(ZeldaBlocks.Brown_Dungeoncite_Pillar);
+                        ZeldaBlocks.Brown_Dungeoncite.addDungeonciteToCreative(entry);
+//                        entry.add(ZeldaBlocks.Brown_Dungeoncite_Brick);
+//                        entry.add(ZeldaBlocks.Cracked_Brown_Dungeoncite_Brick);
+//                        entry.add(ZeldaBlocks.Mossy_Brown_Dungeoncite_Brick);
+//                        entry.add(ZeldaBlocks.Secret_Cracked_Brown_Dungeoncite_Brick);
+//                        entry.add(ZeldaBlocks.Brown_Dungeoncite_Tile);
+//                        entry.add(ZeldaBlocks.Brown_Dungeoncite_Tile_TTL);
+//                        entry.add(ZeldaBlocks.Brown_Dungeoncite_Tile_TTR);
+//                        entry.add(ZeldaBlocks.Brown_Dungeoncite_Tile_TBL);
+//                        entry.add(ZeldaBlocks.Brown_Dungeoncite_Tile_TBR);
+//                        entry.add(ZeldaBlocks.Brown_Dungeoncite_Tile_Bomb);
+//                        entry.add(ZeldaBlocks.Reinforced_Brown_Dungeoncite);
+//                        entry.add(ZeldaBlocks.Brown_Dungeoncite_Pedestal);
+//                        entry.add(ZeldaBlocks.Brown_Dungeoncite_Pillar);
                         //Dungeon Doors
                         entry.add(ZeldaBlocks.Dungeon_Door);
                         entry.add(ZeldaBlocks.Red_Dungeon_Door);

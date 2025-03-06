@@ -1,7 +1,7 @@
 package net.deadlydiamond98.entities.arrows;
 
 import net.deadlydiamond98.blocks.BombFlower;
-import net.deadlydiamond98.blocks.SecretStone;
+import net.deadlydiamond98.blocks.dungeon.SecretStone;
 import net.deadlydiamond98.blocks.ZeldaBlocks;
 import net.deadlydiamond98.entities.ZeldaEntities;
 import net.deadlydiamond98.entities.bombs.BombEntity;
