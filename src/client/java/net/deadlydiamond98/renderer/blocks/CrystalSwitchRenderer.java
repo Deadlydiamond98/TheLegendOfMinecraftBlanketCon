@@ -35,17 +35,18 @@ public class CrystalSwitchRenderer<T extends BlockEntity> implements BlockEntity
 
         matrices.push();
 
-        matrices.scale(1.05f, 1.05f, 1.05f);
-        matrices.translate(0, -0.0625, 0);
+        matrices.translate(0.0, 2.53, 0.0);
 
-        VertexConsumer vertexConsumerOutline = vertexConsumers.getBuffer(RenderLayer.getEntityTranslucentEmissive(this.getOutlineTexture()));
+        matrices.scale(-1.025f, -1.025f, -1.025f);
 
-        outline.render(matrices, vertexConsumerOutline, 15728880, overlay, 1.0f, 1.0f, 1.0f, 1.0f);
+        VertexConsumer vertexConsumerOutline = vertexConsumers.getBuffer(RenderLayer.getBeaconBeam(this.getOutlineTexture(), false));
+
+        outline.render(matrices, vertexConsumerOutline, LightmapTextureManager.MAX_BLOCK_LIGHT_COORDINATE, overlay, 1.0f, 1.0f, 1.0f, 1.0f);
 
         matrices.pop();
 
         VertexConsumer vertexConsumer = vertexConsumers.getBuffer(RenderLayer.getEntitySolid(this.getOrbTexture()));
-        model.render(matrices, vertexConsumer, light, overlay, 1.0f, 1.0f, 1.0f, 1.0f);
+        model.render(matrices, vertexConsumer, 200, overlay, 1.0f, 1.0f, 1.0f, 1.0f);
 
         matrices.pop();
     }
