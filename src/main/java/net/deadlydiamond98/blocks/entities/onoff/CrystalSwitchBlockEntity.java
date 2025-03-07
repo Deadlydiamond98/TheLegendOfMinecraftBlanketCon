@@ -1,0 +1,72 @@
+package net.deadlydiamond98.blocks.entities.onoff;
+
+import net.deadlydiamond98.blocks.entities.ZeldaBlockEntities;
+import net.deadlydiamond98.blocks.redstoneish.onoff.CrystalSwitch;
+import net.deadlydiamond98.blocks.redstoneish.onoff.OnOffBlock;
+import net.deadlydiamond98.networking.ZeldaServerPackets;
+import net.deadlydiamond98.world.ZeldaWorldDataManager;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.server.world.ServerWorld;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
+
+public class CrystalSwitchBlockEntity extends BlockEntity {
+
+    private boolean on;
+    private String id;
+
+    private int ticks;
+
+    public CrystalSwitchBlockEntity(BlockPos pos, BlockState state) {
+        super(ZeldaBlockEntities.CRYSTAL_SWITCH, pos, state);
+        this.ticks = 0;
+        this.on = true;
+        this.id = "unassigned";
+    }
+
+    public static void tick(World world, BlockPos pos, BlockState blockState, CrystalSwitchBlockEntity entity) {
+        if (!world.isClient()) {
+            if (entity.on != ZeldaWorldDataManager.getOnOff((ServerWorld) world, entity.id)) {
+                entity.on = ZeldaWorldDataManager.getOnOff((ServerWorld) world, entity.id);
+
+                CrystalSwitch onOffBlock = ((CrystalSwitch) blockState.getBlock());
+                onOffBlock.setOnOffState(world, pos, blockState, entity.on);
+            }
+        }
+        entity.ticks++;
+    }
+
+    public int getTicks() {
+        return this.ticks;
+    }
+
+    public boolean getTriggerState() {
+        return this.on;
+    }
+
+    public String getID() {
+        return this.id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    @Override
+    protected void writeNbt(NbtCompound nbt) {
+        super.writeNbt(nbt);
+        nbt.putString("switchId", this.id);
+    }
+
+    @Override
+    public void readNbt(NbtCompound nbt) {
+        super.readNbt(nbt);
+        if (nbt.contains("switchId")) {
+            setId(nbt.getString("switchId"));
+        }
+    }
+
+}

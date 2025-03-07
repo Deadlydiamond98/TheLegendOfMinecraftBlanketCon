@@ -3,7 +3,7 @@ package net.deadlydiamond98.mixin.client;
 import net.deadlydiamond98.ZeldaCraft;
 import net.deadlydiamond98.blocks.ZeldaBlocks;
 import net.deadlydiamond98.blocks.dungeon.SecretStone;
-import net.deadlydiamond98.blocks.entities.CrystalSwitchBlockEntity;
+import net.deadlydiamond98.blocks.entities.onoff.CrystalSwitchBlockEntity;
 import net.deadlydiamond98.blocks.redstoneish.pushblock.PushBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -30,7 +30,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(ItemRenderer.class)
-public class BuiltinModelItemRendererMixin {
+public class ItemRendererMixin {
 
 
     @Unique

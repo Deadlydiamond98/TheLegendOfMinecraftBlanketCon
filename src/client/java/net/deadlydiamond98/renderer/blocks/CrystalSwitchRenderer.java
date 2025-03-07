@@ -1,22 +1,19 @@
 package net.deadlydiamond98.renderer.blocks;
 
 import net.deadlydiamond98.ZeldaCraft;
-import net.deadlydiamond98.blocks.entities.CrystalSwitchBlockEntity;
-import net.deadlydiamond98.items.items.other.BindingRod;
-import net.deadlydiamond98.items.items.other.EmeraldItem;
+import net.deadlydiamond98.blocks.ZeldaBlocks;
+import net.deadlydiamond98.blocks.entities.onoff.AbstractOnOffBlock;
+import net.deadlydiamond98.blocks.entities.onoff.CrystalSwitchBlockEntity;
 import net.deadlydiamond98.model.CrystalSwitchModel;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.*;
 import net.minecraft.client.render.block.entity.BlockEntityRenderer;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactory;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RotationAxis;
-import net.minecraft.util.math.Vec3d;
-import org.joml.Matrix4f;
+import net.minecraft.world.World;
 
 public class CrystalSwitchRenderer<T extends BlockEntity> implements BlockEntityRenderer<CrystalSwitchBlockEntity> {
 
@@ -52,35 +49,26 @@ public class CrystalSwitchRenderer<T extends BlockEntity> implements BlockEntity
 
         matrices.pop();
 
-        VertexConsumer vertexConsumer = vertexConsumers.getBuffer(RenderLayer.getEntitySolid(this.getOrbTexture()));
+        VertexConsumer vertexConsumer = vertexConsumers.getBuffer(RenderLayer.getEntitySolid(this.getOrbTexture(entity)));
         model.render(matrices, vertexConsumer, 200, overlay, 1.0f, 1.0f, 1.0f, 1.0f);
 
-        PlayerEntity player = MinecraftClient.getInstance().player;
-        if (player != null && player.getMainHandStack().getItem() instanceof BindingRod) {
-            for (BlockPos pos : entity.getConnectedBlocks()) {
-                drawLine(entity.getPos(), pos, matrices, vertexConsumers);
+        matrices.pop();
+    }
+
+    public Identifier getOrbTexture(CrystalSwitchBlockEntity entity) {
+
+        String color = "red";
+
+        World world = entity.getWorld();
+        if (world != null) {
+            BlockState blockState = world.getBlockState(entity.getPos());
+
+            if (blockState.isOf(ZeldaBlocks.Crystal_Switch)) {
+                color = blockState.get(AbstractOnOffBlock.TRIGGERED) ? "red" : "blue";
             }
         }
 
-        matrices.pop();
-    }
-
-    private void drawLine(BlockPos start, BlockPos end, MatrixStack matrices, VertexConsumerProvider vertexConsumers) {
-        VertexConsumer buffer = vertexConsumers.getBuffer(RenderLayer.getLines());
-        matrices.push();
-
-        Vec3d startVec = Vec3d.ofCenter(start);
-        Vec3d endVec = Vec3d.ofCenter(end);
-
-        Matrix4f positionMatrix = matrices.peek().getPositionMatrix();
-        buffer.vertex(positionMatrix, (float) startVec.x, (float) startVec.y, (float) startVec.z).color(255, 0, 0, 255).next();
-        buffer.vertex(positionMatrix, (float) endVec.x, (float) endVec.y, (float) endVec.z).color(255, 0, 0, 255).next();
-
-        matrices.pop();
-    }
-
-    public Identifier getOrbTexture() {
-        return new Identifier(ZeldaCraft.MOD_ID, "textures/entity/crystal_switch/red_crystal_switch_orb.png");
+        return new Identifier(ZeldaCraft.MOD_ID, "textures/entity/crystal_switch/" + color + "_crystal_switch_orb.png");
     }
 
     public Identifier getOutlineTexture() {

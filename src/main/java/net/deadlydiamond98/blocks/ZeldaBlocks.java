@@ -2,7 +2,11 @@ package net.deadlydiamond98.blocks;
 
 import net.deadlydiamond98.ZeldaCraft;
 import net.deadlydiamond98.blocks.doors.*;
-import net.deadlydiamond98.blocks.redstoneish.onoff.ColorSwitchBlock;
+import net.deadlydiamond98.blocks.loot.LootGrass;
+import net.deadlydiamond98.blocks.loot.LootPot;
+import net.deadlydiamond98.blocks.loot.LootSkullBlock;
+import net.deadlydiamond98.blocks.loot.WitheredLootSkullBlock;
+import net.deadlydiamond98.blocks.redstoneish.onoff.OnOffBlock;
 import net.deadlydiamond98.blocks.redstoneish.onoff.CrystalSwitch;
 import net.deadlydiamond98.blocks.dungeon.DungeonciteBlockPallet;
 import net.deadlydiamond98.blocks.dungeon.SecretStone;
@@ -84,6 +88,13 @@ public class ZeldaBlocks {
             new LootPot(FabricBlockSettings.copyOf(Blocks.DECORATED_POT).strength(0.3F, 0.0F)
                     .sounds(BlockSoundGroup.DECORATED_POT_SHATTER).nonOpaque().breakInstantly()));
 
+    public static final Block Loot_Skull = registerBlock("loot_skull",
+            new LootSkullBlock(FabricBlockSettings.copyOf(Blocks.BONE_BLOCK).strength(0.3F, 0.0F)
+                    .sounds(BlockSoundGroup.BONE).nonOpaque().breakInstantly()));
+    public static final Block Withered_Loot_Skull = registerBlock("withered_loot_skull",
+            new WitheredLootSkullBlock(FabricBlockSettings.copyOf(Blocks.BONE_BLOCK).strength(0.3F, 0.0F)
+                    .sounds(BlockSoundGroup.BONE).nonOpaque().breakInstantly()));
+
     public static final Block Secret_Cracked_Stone_Brick = registerBlock("secret_cracked_stone_bricks",
             new SecretStone(FabricBlockSettings.copyOf(Blocks.CRACKED_STONE_BRICKS).strength(1.5F, 6.0F)
                     .sounds(BlockSoundGroup.STONE)));
@@ -111,11 +122,11 @@ public class ZeldaBlocks {
                     .sounds(BlockSoundGroup.TUFF).nonOpaque().notSolid().luminance(5)));
 
     public static final Block On_Block = registerBlock("on_block",
-            new ColorSwitchBlock.OnBlock(FabricBlockSettings.copyOf(Blocks.STONE).strength(1.5F, 6.0F)
-                    .sounds(BlockSoundGroup.STONE).nonOpaque().notSolid()));
+            new OnOffBlock(FabricBlockSettings.copyOf(Blocks.STONE).strength(1.5F, 6.0F)
+                    .sounds(BlockSoundGroup.STONE).nonOpaque().notSolid(), true));
     public static final Block Off_Block = registerBlock("off_block",
-            new ColorSwitchBlock.OffBlock(FabricBlockSettings.copyOf(Blocks.STONE).strength(1.5F, 6.0F)
-                    .sounds(BlockSoundGroup.STONE).nonOpaque().notSolid()));
+            new OnOffBlock(FabricBlockSettings.copyOf(Blocks.STONE).strength(1.5F, 6.0F)
+                    .sounds(BlockSoundGroup.STONE).nonOpaque().notSolid(), false));
 
     // Doors
 

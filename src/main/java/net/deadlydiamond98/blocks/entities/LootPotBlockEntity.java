@@ -2,6 +2,7 @@ package net.deadlydiamond98.blocks.entities;
 
 import net.minecraft.advancement.criterion.Criteria;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.block.entity.LootableContainerBlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -29,9 +30,13 @@ public class LootPotBlockEntity extends LootableContainerBlockEntity implements 
 
     private DefaultedList<ItemStack> inventory;
 
-    public LootPotBlockEntity(BlockPos pos, BlockState state) {
-        super(ZeldaBlockEntities.LOOT_POT, pos, state);
+    public LootPotBlockEntity(BlockEntityType<?> blockEntityType, BlockPos pos, BlockState state) {
+        super(blockEntityType, pos, state);
         this.inventory = DefaultedList.ofSize(this.size(), ItemStack.EMPTY);
+    }
+
+    public LootPotBlockEntity(BlockPos pos, BlockState state) {
+        this(ZeldaBlockEntities.LOOT_POT, pos, state);
     }
 
     @Override

@@ -1,0 +1,7 @@
+{
+	"parent": "zeldacraft:block/base_loot_skull",
+	"textures": {
+		"skull": "zeldacraft:block/loot_skull/withered_stalfos_base",
+		"particle": "zeldacraft:block/loot_skull/withered_loot_skull_particles"
+	}
+}

@@ -1,9 +1,7 @@
 package net.deadlydiamond98.entities.boomerangs;
 
-import net.deadlydiamond98.blocks.LootGrass;
 import net.deadlydiamond98.enchantments.ZeldaEnchantments;
 import net.deadlydiamond98.items.ZeldaItems;
-import net.deadlydiamond98.items.items.boomerang.MagicBoomerangItem;
 import net.deadlydiamond98.sounds.ZeldaSounds;
 import net.deadlydiamond98.util.ZeldaAdvancementCriterion;
 import net.minecraft.block.BlockState;

@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " c ",
+    "gBg",
+    " c "
+  ],
+  "key": {
+    "B": {
+      "item": "zeldacraft:emerald_shard"
+    },
+    "c": {
+      "item": "minecraft:bone"
+    },
+    "g": {
+      "item": "minecraft:coal"
+    }
+  },
+  "result": {
+    "item": "zeldacraft:withered_loot_skull",
+    "count": 4
+  }
+}

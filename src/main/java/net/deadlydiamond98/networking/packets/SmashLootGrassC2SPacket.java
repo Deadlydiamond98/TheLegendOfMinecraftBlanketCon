@@ -1,7 +1,7 @@
 package net.deadlydiamond98.networking.packets;
 
 import net.deadlydiamond98.ZeldaCraft;
-import net.deadlydiamond98.blocks.LootGrass;
+import net.deadlydiamond98.blocks.loot.LootGrass;
 import net.deadlydiamond98.blocks.ZeldaBlocks;
 import net.deadlydiamond98.entities.ZeldaEntities;
 import net.deadlydiamond98.entities.monsters.FairyEntity;
@@ -23,14 +23,13 @@ import net.minecraft.server.network.ServerPlayNetworkHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 import java.util.List;
 
-import static net.deadlydiamond98.blocks.LootGrass.AGE;
+import static net.deadlydiamond98.blocks.loot.LootGrass.AGE;
 
 public class SmashLootGrassC2SPacket {
     public static void receive(MinecraftServer server, ServerPlayerEntity player, ServerPlayNetworkHandler handler,

@@ -8,12 +8,14 @@ import net.deadlydiamond98.events.ClientTickEvent;
 import net.deadlydiamond98.items.ZeldaItems;
 import net.deadlydiamond98.model.CrystalSwitchModel;
 import net.deadlydiamond98.model.DungeonDoorModel;
+import net.deadlydiamond98.model.LootSkullModel;
 import net.deadlydiamond98.model.entity.*;
 import net.deadlydiamond98.networking.ZeldaClientPackets;
 import net.deadlydiamond98.particle.ZeldaParticleFactory;
 import net.deadlydiamond98.renderer.GuiElements;
 import net.deadlydiamond98.renderer.PushBlockEntityRenderer;
 import net.deadlydiamond98.renderer.blocks.CrystalSwitchRenderer;
+import net.deadlydiamond98.renderer.blocks.LootSkullRenderer;
 import net.deadlydiamond98.renderer.blocks.SwordPedestalRenderer;
 import net.deadlydiamond98.renderer.doors.*;
 import net.deadlydiamond98.renderer.FairyCompanionRenderer;
@@ -39,13 +41,11 @@ import net.minecraft.client.item.CompassAnglePredicateProvider;
 import net.minecraft.client.item.ModelPredicateProviderRegistry;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactories;
-import net.minecraft.client.render.entity.FallingBlockEntityRenderer;
 import net.minecraft.client.render.entity.FlyingItemEntityRenderer;
 import net.minecraft.client.render.entity.model.BatEntityModel;
 import net.minecraft.item.DyeableItem;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.math.GlobalPos;
 
 public class ZeldaCraftClient implements ClientModInitializer {
 
@@ -200,6 +200,7 @@ public class ZeldaCraftClient implements ClientModInitializer {
 		BlockEntityRendererFactories.register(ZeldaBlockEntities.BLUE_OPENING_DUNGEON_DOOR, BlueOpeningDungeonDoorRenderer::new);
 		BlockEntityRendererFactories.register(ZeldaBlockEntities.PEDESTAL, SwordPedestalRenderer::new);
 		BlockEntityRendererFactories.register(ZeldaBlockEntities.CRYSTAL_SWITCH, CrystalSwitchRenderer::new);
+		BlockEntityRendererFactories.register(ZeldaBlockEntities.LOOT_SKULL, LootSkullRenderer::new);
 	}
 
 	public void registerModelLayers() {
@@ -219,6 +220,7 @@ public class ZeldaCraftClient implements ClientModInitializer {
 
 		EntityModelLayerRegistry.registerModelLayer(DungeonDoorModel.LAYER_LOCATION, DungeonDoorModel::getTexturedModelData);
 		EntityModelLayerRegistry.registerModelLayer(CrystalSwitchModel.LAYER_LOCATION, CrystalSwitchModel::getTexturedModelData);
+		EntityModelLayerRegistry.registerModelLayer(LootSkullModel.LAYER_LOCATION, LootSkullModel::getTexturedModelData);
 	}
 
 	public void registerTintables() {

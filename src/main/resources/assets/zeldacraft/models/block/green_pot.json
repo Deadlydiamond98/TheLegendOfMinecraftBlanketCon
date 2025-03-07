@@ -1,7 +1,7 @@
 {
 	"parent": "zeldacraft:block/base_pot",
 	"textures": {
-		"pot": "zeldacraft:block/green_pot",
+		"pot": "zeldacraft:block/pot/green_pot",
 		"particle": "minecraft:block/green_terracotta"
 	}
 }

@@ -3,8 +3,8 @@
   "package": "net.deadlydiamond98.mixin.client",
   "compatibilityLevel": "JAVA_17",
   "client": [
-    "BuiltinModelItemRendererMixin",
     "ClientPlayerEntityMixin",
+    "ItemRendererMixin",
     "KeyboardMixin",
     "LivingEntityRendererMixin",
     "MinecraftClientMixin",
@@ -14,5 +14,8 @@
   ],
   "injectors": {
     "defaultRequire": 1
-	}
+  },
+  "mixins": [
+    "HeadFeatureRendererMixin"
+  ]
 }

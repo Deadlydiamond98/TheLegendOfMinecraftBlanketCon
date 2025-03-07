@@ -32,6 +32,8 @@ public class ZeldaBlocksTab {
                         entry.add(ZeldaBlocks.Purple_Pot);
                         entry.add(ZeldaBlocks.Magenta_Pot);
                         entry.add(ZeldaBlocks.Pink_Pot);
+                        entry.add(ZeldaBlocks.Loot_Skull);
+                        entry.add(ZeldaBlocks.Withered_Loot_Skull);
                         //Switch
                         entry.add(ZeldaBlocks.Crystal_Switch);
                         entry.add(ZeldaBlocks.On_Block);

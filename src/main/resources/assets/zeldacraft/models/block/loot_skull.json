@@ -1,0 +1,7 @@
+{
+	"parent": "zeldacraft:block/base_loot_skull",
+	"textures": {
+		"skull": "zeldacraft:block/loot_skull/stalfos_base",
+		"particle": "minecraft:block/bone_block_side"
+	}
+}

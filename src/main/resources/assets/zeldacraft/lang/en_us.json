@@ -86,6 +86,8 @@
   "item.zeldacraft.frozen_clock.tooltipb": "a short duration near you",
 
   "block.zeldacraft.loot_grass": "Loot Grass",
+  "block.zeldacraft.loot_skull": "Loot Skull",
+  "block.zeldacraft.withered_loot_skull": "Withered Loot Skull",
   "block.zeldacraft.plain_pot": "Pot",
   "block.zeldacraft.red_pot": "Red Pot",
   "block.zeldacraft.orange_pot": "Orange Pot",
