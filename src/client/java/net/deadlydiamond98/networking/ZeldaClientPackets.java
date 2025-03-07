@@ -10,7 +10,6 @@ public class ZeldaClientPackets {
 
     public static void registerC2SPackets() {
         ClientPlayNetworking.registerGlobalReceiver(ZeldaPacketIDS.ParticlePacket, ParticleS2CPacket::recieve);
-        ClientPlayNetworking.registerGlobalReceiver(ZeldaPacketIDS.DoorAnimationPacket, DoorAnimationS2CPacket::recieve);
         ClientPlayNetworking.registerGlobalReceiver(ZeldaPacketIDS.PedestalPacket, PedestalS2CPacket::recieve);
         ClientPlayNetworking.registerGlobalReceiver(ZeldaPacketIDS.DekuStunOverlayPacket, DekuStunOverlayS2CPacket::recieve);
         ClientPlayNetworking.registerGlobalReceiver(ZeldaPacketIDS.PlayerStatsPacket, PlayerStatsS2CPacket::recieve);

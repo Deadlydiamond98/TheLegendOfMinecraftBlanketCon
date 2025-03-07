@@ -3,7 +3,7 @@ package net.deadlydiamond98.mixin;
 import dev.emi.trinkets.api.SlotReference;
 import dev.emi.trinkets.api.TrinketComponent;
 import dev.emi.trinkets.api.TrinketsApi;
-import net.deadlydiamond98.util.interfaces.items.IPickupEffect;
+import net.deadlydiamond98.util.interfaces.item.IPickupEffect;
 import net.deadlydiamond98.items.items.bomb.regular_bombs.AbstractBombItem;
 import net.deadlydiamond98.items.items.bomb.BombchuItem;
 import net.deadlydiamond98.items.items.custombundle.BombBag;

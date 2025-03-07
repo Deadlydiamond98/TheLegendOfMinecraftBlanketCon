@@ -27,14 +27,6 @@ public class ZeldaServerPackets {
         buf.writeDouble(z);
         ServerPlayNetworking.send(player, ZeldaPacketIDS.ParticlePacket, buf);
     }
-    public static void sendDoorOpeningAnimationPacket(ServerPlayerEntity player, BlockPos pos, int openingTicks, int rotation, boolean locked) {
-        PacketByteBuf buf = PacketByteBufs.create();
-        buf.writeBlockPos(pos);
-        buf.writeInt(openingTicks);
-        buf.writeInt(rotation);
-        buf.writeBoolean(locked);
-        ServerPlayNetworking.send(player, ZeldaPacketIDS.DoorAnimationPacket, buf);
-    }
     public static void sendPedestalPacket(ServerPlayerEntity player, BlockPos pos, ItemStack stack, float rotation) {
         PacketByteBuf buf = PacketByteBufs.create();
         buf.writeBlockPos(pos);

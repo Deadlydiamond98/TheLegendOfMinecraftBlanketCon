@@ -3,10 +3,11 @@ package net.deadlydiamond98.blocks.entities;
 import net.deadlydiamond98.ZeldaCraft;
 import net.deadlydiamond98.blocks.ZeldaBlocks;
 import net.deadlydiamond98.blocks.entities.doors.*;
+import net.deadlydiamond98.blocks.entities.loot.LootPotBlockEntity;
+import net.deadlydiamond98.blocks.entities.loot.LootSkullBlockEntity;
 import net.deadlydiamond98.blocks.entities.onoff.CrystalSwitchBlockEntity;
 import net.deadlydiamond98.blocks.entities.onoff.OnOffBlockEntity;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
-import net.minecraft.block.Block;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
@@ -17,10 +18,6 @@ public class ZeldaBlockEntities {
     public static BlockEntityType<LootSkullBlockEntity> LOOT_SKULL;
     public static BlockEntityType<DungeonDoorEntity> DUNGEON_DOOR;
     public static BlockEntityType<OpeningDungeonDoorEntity> OPENING_DUNGEON_DOOR;
-    public static BlockEntityType<RedDungeonDoorEntity> RED_DUNGEON_DOOR;
-    public static BlockEntityType<RedOpeningDungeonDoorEntity> RED_OPENING_DUNGEON_DOOR;
-    public static BlockEntityType<BlueDungeonDoorEntity> BLUE_DUNGEON_DOOR;
-    public static BlockEntityType<BlueOpeningDungeonDoorEntity> BLUE_OPENING_DUNGEON_DOOR;
     public static BlockEntityType<PedestalBlockEntity> PEDESTAL;
     public static BlockEntityType<CrystalSwitchBlockEntity> CRYSTAL_SWITCH;
     public static BlockEntityType<OnOffBlockEntity> ON_OFF_BLOCK;
@@ -62,29 +59,18 @@ public class ZeldaBlockEntities {
         DUNGEON_DOOR = Registry.register(Registries.BLOCK_ENTITY_TYPE,
                 new Identifier(ZeldaCraft.MOD_ID, "dungeon_door"),
                 FabricBlockEntityTypeBuilder.create(DungeonDoorEntity::new,
-                        ZeldaBlocks.Dungeon_Door).build(null));
+                        ZeldaBlocks.Dungeon_Door,
+                        ZeldaBlocks.Red_Dungeon_Door,
+                        ZeldaBlocks.Blue_Dungeon_Door
+                ).build(null));
+
         OPENING_DUNGEON_DOOR = Registry.register(Registries.BLOCK_ENTITY_TYPE,
                 new Identifier(ZeldaCraft.MOD_ID, "opening_dungeon_door"),
                 FabricBlockEntityTypeBuilder.create(OpeningDungeonDoorEntity::new,
-                        ZeldaBlocks.Opening_Dungeon_Door).build(null));
-
-        RED_DUNGEON_DOOR = Registry.register(Registries.BLOCK_ENTITY_TYPE,
-                new Identifier(ZeldaCraft.MOD_ID, "red_dungeon_door"),
-                FabricBlockEntityTypeBuilder.create(RedDungeonDoorEntity::new,
-                        ZeldaBlocks.Red_Dungeon_Door).build(null));
-        RED_OPENING_DUNGEON_DOOR = Registry.register(Registries.BLOCK_ENTITY_TYPE,
-                new Identifier(ZeldaCraft.MOD_ID, "red_opening_dungeon_door"),
-                FabricBlockEntityTypeBuilder.create(RedOpeningDungeonDoorEntity::new,
-                        ZeldaBlocks.Red_Opening_Dungeon_Door).build(null));
-
-        BLUE_DUNGEON_DOOR = Registry.register(Registries.BLOCK_ENTITY_TYPE,
-                new Identifier(ZeldaCraft.MOD_ID, "blue_dungeon_door"),
-                FabricBlockEntityTypeBuilder.create(BlueDungeonDoorEntity::new,
-                        ZeldaBlocks.Blue_Dungeon_Door).build(null));
-        BLUE_OPENING_DUNGEON_DOOR = Registry.register(Registries.BLOCK_ENTITY_TYPE,
-                new Identifier(ZeldaCraft.MOD_ID, "blue_opening_dungeon_door"),
-                FabricBlockEntityTypeBuilder.create(BlueOpeningDungeonDoorEntity::new,
-                        ZeldaBlocks.Blue_Opening_Dungeon_Door).build(null));
+                        ZeldaBlocks.Opening_Dungeon_Door,
+                        ZeldaBlocks.Red_Opening_Dungeon_Door,
+                        ZeldaBlocks.Blue_Opening_Dungeon_Door
+                ).build(null));
 
         // Sword Pedestal
 

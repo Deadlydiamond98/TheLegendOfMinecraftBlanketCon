@@ -1,6 +1,6 @@
 package net.deadlydiamond98.mixin;
 
-import net.deadlydiamond98.util.interfaces.items.IPickupSound;
+import net.deadlydiamond98.util.interfaces.item.IPickupSound;
 import net.deadlydiamond98.items.items.manaitems.restoring.StarFragment;
 import net.deadlydiamond98.util.ZeldaAdvancementCriterion;
 import net.deadlydiamond98.util.interfaces.mixin.ZeldaPlayerData;
@@ -9,7 +9,6 @@ import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvents;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;

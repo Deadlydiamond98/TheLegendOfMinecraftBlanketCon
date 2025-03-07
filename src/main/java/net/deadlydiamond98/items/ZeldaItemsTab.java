@@ -84,9 +84,17 @@ public class ZeldaItemsTab {
                         entry.add(ZeldaItems.Magic_Upgrade);
                         entry.add(ZeldaItems.Magic_Downgrade);
                         //Util
-                        entry.add(ZeldaItems.Dungeon_Key);
+                        entry.add(ZeldaItems.Copper_Key);
+                        entry.add(ZeldaItems.Iron_Key);
+                        entry.add(ZeldaItems.Gold_Key);
+                        entry.add(ZeldaItems.Boss_Key);
+
+                        entry.add(ZeldaItems.Copper_Lock);
+                        entry.add(ZeldaItems.Iron_Lock);
+                        entry.add(ZeldaItems.Gold_Lock);
+                        entry.add(ZeldaItems.Boss_Lock);
+
                         entry.add(ZeldaItems.Master_Key);
-                        entry.add(ZeldaItems.Dungeon_Lock);
                         entry.add(ZeldaItems.Star_Compass);
                         //Misc / Materials
                         entry.add(ZeldaItems.Music_Disc_Legend);

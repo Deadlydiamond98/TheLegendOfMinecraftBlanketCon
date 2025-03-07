@@ -1,6 +1,6 @@
 package net.deadlydiamond98.entities.bombs;
 
-import net.deadlydiamond98.blocks.BombFlower;
+import net.deadlydiamond98.blocks.other.BombFlower;
 import net.deadlydiamond98.blocks.dungeon.SecretStone;
 import net.deadlydiamond98.blocks.ZeldaBlocks;
 import net.deadlydiamond98.enchantments.ZeldaEnchantments;
@@ -30,7 +30,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
-import static net.deadlydiamond98.blocks.BombFlower.AGE;
+import static net.deadlydiamond98.blocks.other.BombFlower.AGE;
 
 public abstract class AbstractBombEntity extends Entity implements Ownable {
 

@@ -8,7 +8,6 @@ public class ZeldaPacketIDS {
     //S2C
 
     public static final Identifier ParticlePacket = new Identifier(ZeldaCraft.MOD_ID, "particle_packet");
-    public static final Identifier DoorAnimationPacket = new Identifier(ZeldaCraft.MOD_ID, "door_animation_packet");
     public static final Identifier PedestalPacket = new Identifier(ZeldaCraft.MOD_ID, "pedestal_packet");
     public static final Identifier DekuStunOverlayPacket = new Identifier(ZeldaCraft.MOD_ID, "deku_stun_overlay_packet");
     public static final Identifier PlayerStatsPacket = new Identifier(ZeldaCraft.MOD_ID, "player_stats_packet");

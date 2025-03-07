@@ -1,7 +1,7 @@
 package net.deadlydiamond98.entities.monsters;
 
 import net.deadlydiamond98.statuseffects.ZeldaStatusEffects;
-import net.deadlydiamond98.util.interfaces.entities.IRaycast;
+import net.deadlydiamond98.util.interfaces.entity.IRaycast;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;

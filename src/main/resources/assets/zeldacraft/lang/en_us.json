@@ -24,10 +24,17 @@
 
   "block.zeldacraft.stone_pedestal": "Stone Sword Pedestal",
 
-  "item.zeldacraft.dungeon_key": "Key",
+  "item.zeldacraft.copper_key": "Copper Key",
+  "item.zeldacraft.copper_lock": "Copper Lock",
+  "item.zeldacraft.iron_key": "Iron Key",
+  "item.zeldacraft.iron_lock": "Iron Lock",
+  "item.zeldacraft.gold_key": "Gold Key",
+  "item.zeldacraft.gold_lock": "Gold Lock",
+  "item.zeldacraft.boss_key": "Boss Key",
+  "item.zeldacraft.boss_lock": "Boss Lock",
+
   "item.zeldacraft.master_key": "Master Key",
   "item.zeldacraft.master_key.tooltip": "Unlock any door at the cost of mana",
-  "item.zeldacraft.dungeon_lock": "Lock",
   "block.zeldacraft.dungeon_door": "Dungeon Door",
   "block.zeldacraft.red_dungeon_door": "Red Dungeon Door",
   "block.zeldacraft.blue_dungeon_door": "Blue Dungeon Door",

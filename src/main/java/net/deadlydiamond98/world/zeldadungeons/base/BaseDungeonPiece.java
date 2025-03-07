@@ -2,7 +2,7 @@ package net.deadlydiamond98.world.zeldadungeons.base;
 
 import net.deadlydiamond98.ZeldaCraft;
 import net.deadlydiamond98.blocks.ZeldaBlocks;
-import net.deadlydiamond98.blocks.entities.LootPotBlockEntity;
+import net.deadlydiamond98.blocks.entities.loot.LootPotBlockEntity;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.nbt.NbtCompound;

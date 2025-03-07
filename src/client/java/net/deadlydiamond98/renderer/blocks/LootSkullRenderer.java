@@ -1,10 +1,9 @@
 package net.deadlydiamond98.renderer.blocks;
 
 import net.deadlydiamond98.ZeldaCraft;
-import net.deadlydiamond98.blocks.entities.LootSkullBlockEntity;
+import net.deadlydiamond98.blocks.entities.loot.LootSkullBlockEntity;
 import net.deadlydiamond98.blocks.loot.LootSkullBlock;
 import net.deadlydiamond98.model.LootSkullModel;
-import net.minecraft.block.AbstractSkullBlock;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SkullBlock;
 import net.minecraft.block.entity.BlockEntity;
@@ -33,9 +32,11 @@ public class LootSkullRenderer<T extends BlockEntity> implements BlockEntityRend
         matrices.scale(-1.0F, -1.0F, 1.0F);
         matrices.translate(0, -1.5, 0);
 
-        VertexConsumer vertexConsumer = vertexConsumers.getBuffer(RenderLayer.getEntitySolid(this.getSkullTexture(entity)));
-
         BlockState blockState = entity.getCachedState();
+        String skullType = ((LootSkullBlock) blockState.getBlock()).getLootSkullType().id;
+
+        VertexConsumer vertexConsumer = vertexConsumers.getBuffer(RenderLayer.getEntitySolid(this.getSkullTexture(skullType)));
+
         int k = blockState.get(SkullBlock.ROTATION);
         float yaw = RotationPropertyHelper.toDegrees(k);
 
@@ -45,13 +46,7 @@ public class LootSkullRenderer<T extends BlockEntity> implements BlockEntityRend
         matrices.pop();
     }
 
-    public Identifier getSkullTexture(LootSkullBlockEntity entity) {
-
-        BlockState blockState = entity.getCachedState();
-        String skullType = ((LootSkullBlock) blockState.getBlock()).getLootSkullType().id;
-
-//        ZeldaCraft.LOGGER.info();
-
+    public Identifier getSkullTexture(String skullType) {
         return new Identifier(ZeldaCraft.MOD_ID, "textures/block/loot_skull/" + skullType + ".png");
     }
 

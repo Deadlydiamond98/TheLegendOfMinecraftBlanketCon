@@ -1,14 +1,9 @@
 package net.deadlydiamond98.blocks.loot;
 
-import net.deadlydiamond98.blocks.entities.LootPotBlockEntity;
-import net.deadlydiamond98.blocks.entities.LootSkullBlockEntity;
-import net.deadlydiamond98.blocks.entities.ZeldaBlockEntities;
-import net.minecraft.block.BlockRenderType;
+import net.deadlydiamond98.blocks.entities.loot.LootSkullBlockEntity;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SkullBlock;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.block.entity.BlockEntityTicker;
-import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;

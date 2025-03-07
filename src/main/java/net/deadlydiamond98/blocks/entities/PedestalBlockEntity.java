@@ -1,8 +1,10 @@
 package net.deadlydiamond98.blocks.entities;
 
+import net.deadlydiamond98.blocks.other.PedestalBlock;
 import net.deadlydiamond98.networking.ZeldaServerPackets;
 import net.minecraft.advancement.criterion.Criteria;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.FacingBlock;
 import net.minecraft.block.entity.LootableContainerBlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -27,9 +29,6 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
 
-import static net.deadlydiamond98.blocks.doors.AbstractDungeonDoor.FACING;
-import static net.deadlydiamond98.blocks.doors.AbstractDungeonDoor.LOCKED;
-
 public class PedestalBlockEntity extends LootableContainerBlockEntity implements SingleStackInventory {
 
     private DefaultedList<ItemStack> inventory;
@@ -45,7 +44,7 @@ public class PedestalBlockEntity extends LootableContainerBlockEntity implements
         if (!world.isClient()) {
             world.getPlayers().forEach(player -> {
                 ZeldaServerPackets.sendPedestalPacket((ServerPlayerEntity) player, pos,
-                        pedestalBlockEntity.getStack(0), world.getBlockState(pos).get(FACING).asRotation());
+                        pedestalBlockEntity.getStack(0), world.getBlockState(pos).get(PedestalBlock.FACING).asRotation());
             });
         }
     }

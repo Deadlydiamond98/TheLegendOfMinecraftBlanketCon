@@ -2,7 +2,7 @@ package net.deadlydiamond98.items.items.Swords;
 
 import net.deadlydiamond98.entities.ZeldaEntities;
 import net.deadlydiamond98.entities.projectiles.SwordBeamEntity;
-import net.deadlydiamond98.util.interfaces.items.ISwingActionItem;
+import net.deadlydiamond98.util.interfaces.item.ISwingActionItem;
 import net.deadlydiamond98.magiclib.items.MagicItemData;
 import net.deadlydiamond98.sounds.ZeldaSounds;
 import net.deadlydiamond98.util.ZeldaAdvancementCriterion;

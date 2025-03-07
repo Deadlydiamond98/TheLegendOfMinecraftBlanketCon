@@ -26,7 +26,6 @@ import net.deadlydiamond98.items.items.manaitems.restoring.MagicCandy;
 import net.deadlydiamond98.items.items.manaitems.restoring.MagicJar;
 import net.deadlydiamond98.items.items.manaitems.restoring.StarFragment;
 import net.deadlydiamond98.items.items.manaitems.restoring.ZeldaMagicFood;
-import net.deadlydiamond98.items.items.manaitems.rods.TestingRod;
 import net.deadlydiamond98.items.items.manaitems.wearable.*;
 import net.deadlydiamond98.items.items.other.*;
 import net.deadlydiamond98.items.items.shields.HylianShieldItem;
@@ -197,13 +196,27 @@ public class ZeldaItems {
             new FabricItemSettings().maxCount(1)));
 
     //Util
-    public static final Item Dungeon_Key = registerItem("dungeon_key", new Item(
+
+    public static final Item Copper_Key = registerItem("copper_key", new Item(
             new FabricItemSettings()));
+    public static final Item Iron_Key = registerItem("iron_key", new Item(
+            new FabricItemSettings()));
+    public static final Item Gold_Key = registerItem("gold_key", new Item(
+            new FabricItemSettings()));
+    public static final Item Boss_Key = registerItem("boss_key", new Item(
+            new FabricItemSettings()));
+
+    public static final Item Copper_Lock = registerItem("copper_lock", new LockItem(
+            new FabricItemSettings()));
+    public static final Item Iron_Lock = registerItem("iron_lock", new LockItem(
+            new FabricItemSettings()));
+    public static final Item Gold_Lock = registerItem("gold_lock", new LockItem(
+            new FabricItemSettings()));
+    public static final Item Boss_Lock = registerItem("boss_lock", new LockItem(
+            new FabricItemSettings()));
+
     public static final Item Master_Key = registerItem("master_key", new MasterKey(
             new FabricItemSettings().maxCount(1)));
-
-    public static final Item Dungeon_Lock = registerItem("dungeon_lock", new Item(
-            new FabricItemSettings()));
 
     public static final Item Star_Compass = registerItem("star_compass", new Item(
             new FabricItemSettings()));
@@ -299,7 +312,7 @@ public class ZeldaItems {
 
 
     //Registration stuff
-    private static Item registerItem(String itemName, Item item) {
+    public static Item registerItem(String itemName, Item item) {
         return Registry.register(Registries.ITEM, new Identifier(ZeldaCraft.MOD_ID, itemName), item);
     }
     public static void addEggs(FabricItemGroupEntries entry) {

@@ -193,11 +193,8 @@ public class ZeldaCraftClient implements ClientModInitializer {
 		// Block Entity
 
 		BlockEntityRendererFactories.register(ZeldaBlockEntities.DUNGEON_DOOR, DungeonDoorRenderer::new);
-		BlockEntityRendererFactories.register(ZeldaBlockEntities.OPENING_DUNGEON_DOOR, OpeningDungeonDoorRenderer::new);
-		BlockEntityRendererFactories.register(ZeldaBlockEntities.RED_DUNGEON_DOOR, RedDungeonDoorRenderer::new);
-		BlockEntityRendererFactories.register(ZeldaBlockEntities.RED_OPENING_DUNGEON_DOOR, RedOpeningDungeonDoorRenderer::new);
-		BlockEntityRendererFactories.register(ZeldaBlockEntities.BLUE_DUNGEON_DOOR, BlueDungeonDoorRenderer::new);
-		BlockEntityRendererFactories.register(ZeldaBlockEntities.BLUE_OPENING_DUNGEON_DOOR, BlueOpeningDungeonDoorRenderer::new);
+		BlockEntityRendererFactories.register(ZeldaBlockEntities.OPENING_DUNGEON_DOOR, AutoDungeonDoorRenderer::new);
+
 		BlockEntityRendererFactories.register(ZeldaBlockEntities.PEDESTAL, SwordPedestalRenderer::new);
 		BlockEntityRendererFactories.register(ZeldaBlockEntities.CRYSTAL_SWITCH, CrystalSwitchRenderer::new);
 		BlockEntityRendererFactories.register(ZeldaBlockEntities.LOOT_SKULL, LootSkullRenderer::new);

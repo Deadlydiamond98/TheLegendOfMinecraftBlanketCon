@@ -1,0 +1,6 @@
+{
+  "parent": "zeldacraft:item/gold_key",
+  "textures": {
+    "layer0": "zeldacraft:item/boss_key"
+  }
+}

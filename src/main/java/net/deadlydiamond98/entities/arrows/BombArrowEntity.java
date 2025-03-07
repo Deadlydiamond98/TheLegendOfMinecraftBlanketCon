@@ -1,6 +1,6 @@
 package net.deadlydiamond98.entities.arrows;
 
-import net.deadlydiamond98.blocks.BombFlower;
+import net.deadlydiamond98.blocks.other.BombFlower;
 import net.deadlydiamond98.blocks.dungeon.SecretStone;
 import net.deadlydiamond98.blocks.ZeldaBlocks;
 import net.deadlydiamond98.entities.ZeldaEntities;
@@ -20,7 +20,7 @@ import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-import static net.deadlydiamond98.blocks.BombFlower.AGE;
+import static net.deadlydiamond98.blocks.other.BombFlower.AGE;
 
 public class BombArrowEntity extends PersistentProjectileEntity {
     private final int power = 2;

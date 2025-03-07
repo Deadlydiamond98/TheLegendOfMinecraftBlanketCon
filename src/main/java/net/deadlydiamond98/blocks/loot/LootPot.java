@@ -1,6 +1,6 @@
 package net.deadlydiamond98.blocks.loot;
 
-import net.deadlydiamond98.blocks.entities.LootPotBlockEntity;
+import net.deadlydiamond98.blocks.entities.loot.LootPotBlockEntity;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;

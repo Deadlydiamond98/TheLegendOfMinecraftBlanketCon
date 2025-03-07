@@ -6,6 +6,9 @@ import net.deadlydiamond98.blocks.loot.LootGrass;
 import net.deadlydiamond98.blocks.loot.LootPot;
 import net.deadlydiamond98.blocks.loot.LootSkullBlock;
 import net.deadlydiamond98.blocks.loot.WitheredLootSkullBlock;
+import net.deadlydiamond98.blocks.other.BombFlower;
+import net.deadlydiamond98.blocks.other.PedestalBlock;
+import net.deadlydiamond98.blocks.other.SomariaBlock;
 import net.deadlydiamond98.blocks.redstoneish.onoff.OnOffBlock;
 import net.deadlydiamond98.blocks.redstoneish.onoff.CrystalSwitch;
 import net.deadlydiamond98.blocks.dungeon.DungeonciteBlockPallet;
@@ -128,27 +131,28 @@ public class ZeldaBlocks {
             new OnOffBlock(FabricBlockSettings.copyOf(Blocks.STONE).strength(1.5F, 6.0F)
                     .sounds(BlockSoundGroup.STONE).nonOpaque().notSolid(), false));
 
+
     // Doors
 
     public static final Block Dungeon_Door = registerBlock("dungeon_door",
             new DungeonDoor(FabricBlockSettings.copyOf(Blocks.SPRUCE_PLANKS).strength(1.5F, 1200.0F)
-                    .sounds(BlockSoundGroup.HANGING_SIGN).nonOpaque().notSolid()));
+                    .sounds(BlockSoundGroup.HANGING_SIGN).nonOpaque().notSolid(), DoorColor.DEFAULT));
     public static final Block Red_Dungeon_Door = registerBlock("red_dungeon_door",
-            new RedDungeonDoor(FabricBlockSettings.copyOf(Blocks.SPRUCE_PLANKS).strength(1.5F, 1200.0F)
-                    .sounds(BlockSoundGroup.HANGING_SIGN).nonOpaque().notSolid()));
+            new DungeonDoor(FabricBlockSettings.copyOf(Blocks.SPRUCE_PLANKS).strength(1.5F, 1200.0F)
+                    .sounds(BlockSoundGroup.HANGING_SIGN).nonOpaque().notSolid(), DoorColor.RED));
     public static final Block Blue_Dungeon_Door = registerBlock("blue_dungeon_door",
-            new BlueDungeonDoor(FabricBlockSettings.copyOf(Blocks.SPRUCE_PLANKS).strength(1.5F, 1200.0F)
-                    .sounds(BlockSoundGroup.HANGING_SIGN).nonOpaque().notSolid()));
+            new DungeonDoor(FabricBlockSettings.copyOf(Blocks.SPRUCE_PLANKS).strength(1.5F, 1200.0F)
+                    .sounds(BlockSoundGroup.HANGING_SIGN).nonOpaque().notSolid(), DoorColor.BLUE));
 
     public static final Block Opening_Dungeon_Door = registerBlock("auto_dungeon_door",
-            new OpeningDungeonDoor(FabricBlockSettings.copyOf(Blocks.SPRUCE_PLANKS).strength(1.5F, 1200.0F)
-                    .sounds(BlockSoundGroup.HANGING_SIGN).nonOpaque().notSolid()));
+            new AutoDungeonDoor(FabricBlockSettings.copyOf(Blocks.SPRUCE_PLANKS).strength(1.5F, 1200.0F)
+                    .sounds(BlockSoundGroup.HANGING_SIGN).nonOpaque().notSolid(), DoorColor.DEFAULT));
     public static final Block Red_Opening_Dungeon_Door = registerBlock("red_auto_dungeon_door",
-            new RedOpeningDungeonDoor(FabricBlockSettings.copyOf(Blocks.SPRUCE_PLANKS).strength(1.5F, 1200.0F)
-                    .sounds(BlockSoundGroup.HANGING_SIGN).nonOpaque().notSolid()));
+            new AutoDungeonDoor(FabricBlockSettings.copyOf(Blocks.SPRUCE_PLANKS).strength(1.5F, 1200.0F)
+                    .sounds(BlockSoundGroup.HANGING_SIGN).nonOpaque().notSolid(), DoorColor.RED));
     public static final Block Blue_Opening_Dungeon_Door = registerBlock("blue_auto_dungeon_door",
-            new BlueOpeningDungeonDoor(FabricBlockSettings.copyOf(Blocks.SPRUCE_PLANKS).strength(1.5F, 1200.0F)
-                    .sounds(BlockSoundGroup.HANGING_SIGN).nonOpaque().notSolid()));
+            new AutoDungeonDoor(FabricBlockSettings.copyOf(Blocks.SPRUCE_PLANKS).strength(1.5F, 1200.0F)
+                    .sounds(BlockSoundGroup.HANGING_SIGN).nonOpaque().notSolid(), DoorColor.BLUE));
 
     // Pedestals
 

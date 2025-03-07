@@ -1,6 +1,6 @@
 package net.deadlydiamond98.items.items.other;
 
-import net.deadlydiamond98.util.interfaces.items.IPickupSound;
+import net.deadlydiamond98.util.interfaces.item.IPickupSound;
 import net.deadlydiamond98.sounds.ZeldaSounds;
 import net.minecraft.item.Item;
 import net.minecraft.sound.SoundEvent;

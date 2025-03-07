@@ -1,5 +1,5 @@
 {
-  "parent": "zeldacraft:item/dungeon_key",
+  "parent": "zeldacraft:item/gold_key",
   "textures": {
     "layer0": "zeldacraft:item/master_key"
   }

@@ -7,14 +7,14 @@
   ],
   "key": {
     "G": {
-      "item": "minecraft:gold_ingot"
+      "item": "minecraft:copper_ingot"
     },
     "g": {
-      "item": "minecraft:gold_nugget"
+      "item": "minecraft:iron_nugget"
     }
   },
   "result": {
-    "item": "zeldacraft:dungeon_key",
+    "item": "zeldacraft:copper_key",
     "count": 1
   }
 }
