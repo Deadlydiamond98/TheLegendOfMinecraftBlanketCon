@@ -16,7 +16,7 @@ public class ZeldaServerPackets {
         ServerPlayNetworking.registerGlobalReceiver(ZeldaPacketIDS.SwordSwingPacket, SwordSwingC2SPacket::receive);
         ServerPlayNetworking.registerGlobalReceiver(ZeldaPacketIDS.SmashLootGrassPacket, SmashLootGrassC2SPacket::receive);
         ServerPlayNetworking.registerGlobalReceiver(ZeldaPacketIDS.NeckTrinketPacket, UseNeckTrinketC2SPacket::receive);
-        ServerPlayNetworking.registerGlobalReceiver(ZeldaPacketIDS.BackTrinketPacket, UseBackTrinketC2SPacket::receive);
+        ServerPlayNetworking.registerGlobalReceiver(ZeldaPacketIDS.UpdateMagicWorkbenchServer, MagicWorkbenchC2SPacket::receive);
     }
 
     public static void sendParticlePacket(ServerPlayerEntity player, double x, double y, double z, int particle) {
@@ -69,5 +69,10 @@ public class ZeldaServerPackets {
         PacketByteBuf buf = PacketByteBufs.create();
         buf.writeBoolean(bl);
         ServerPlayNetworking.send(player, ZeldaPacketIDS.UpdateAdvancmentStatus, buf);
+    }
+    public static void updateMagicWorkbench(ServerPlayerEntity player, boolean bl) {
+        PacketByteBuf buf = PacketByteBufs.create();
+        buf.writeBoolean(bl);
+        ServerPlayNetworking.send(player, ZeldaPacketIDS.UpdateMagicWorkbenchClient, buf);
     }
 }

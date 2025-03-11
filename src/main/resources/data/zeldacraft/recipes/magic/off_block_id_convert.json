@@ -1,0 +1,17 @@
+{
+  "type": "zeldacraft:magic_workbench",
+  "pattern": [
+    "G"
+  ],
+  "key": {
+    "G": {
+      "item": "zeldacraft:off_block"
+    }
+  },
+  "result": {
+    "item": "zeldacraft:off_block",
+    "count": 1
+  },
+  "bindable_id": true,
+  "mana_cost": 0
+}

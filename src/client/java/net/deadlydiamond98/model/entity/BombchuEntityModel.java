@@ -25,23 +25,23 @@ public class BombchuEntityModel<T extends BombchuEntity> extends EntityModel<Bom
 	public static TexturedModelData getTexturedModelData() {
 		ModelData modelData = new ModelData();
 		ModelPartData modelPartData = modelData.getRoot();
-		ModelPartData bomb = modelPartData.addChild("bomb", ModelPartBuilder.create().uv(0, 0).cuboid(-3.0F, -0.01F, -4.0F, 6.0F, 4.0F, 7.0F, new Dilation(0.0F))
-				.uv(25, 10).cuboid(-1.0F, 0.0F, -5.0F, 2.0F, 1.0F, 1.0F, new Dilation(0.0F)), ModelTransform.pivot(0.0F, 0.0F, 0.0F));
+		ModelPartData bomb = modelPartData.addChild("bomb", ModelPartBuilder.create().uv(0, 0).cuboid(-3.0F, -2.01F, -3.75F, 6.0F, 4.0F, 7.0F, new Dilation(0.0F))
+				.uv(25, 10).cuboid(-1.0F, -2.0F, -4.75F, 2.0F, 1.0F, 1.0F, new Dilation(0.0F)), ModelTransform.pivot(0.0F, 0.0F, -0.0F));
 
-		ModelPartData cube_r1 = bomb.addChild("cube_r1", ModelPartBuilder.create().uv(0, 11).cuboid(-0.5F, 0.0F, -0.75F, 1.0F, 5.0F, 3.0F, new Dilation(0.0F)), ModelTransform.of(-2.0F, 0.0F, -3.0F, 0.0F, -1.0908F, 0.0F));
+		ModelPartData cube_r1 = bomb.addChild("cube_r1", ModelPartBuilder.create().uv(0, 11).cuboid(-0.5F, 0.0F, -0.75F, 1.0F, 5.0F, 3.0F, new Dilation(0.0F)), ModelTransform.of(-2.0F, -2.0F, -2.75F, 0.0F, -1.0908F, 0.0F));
 
-		ModelPartData cube_r2 = bomb.addChild("cube_r2", ModelPartBuilder.create().uv(20, 0).cuboid(-2.25F, -2.4F, 0.0F, 4.0F, 3.0F, 2.0F, new Dilation(-1.0F)), ModelTransform.of(-1.0F, 1.5F, -5.0F, -0.0411F, -0.3027F, 0.1372F));
+		ModelPartData cube_r2 = bomb.addChild("cube_r2", ModelPartBuilder.create().uv(20, 0).cuboid(-2.25F, -2.4F, 0.0F, 4.0F, 3.0F, 2.0F, new Dilation(-1.0F)), ModelTransform.of(-1.0F, -0.5F, -4.75F, -0.0411F, -0.3027F, 0.1372F));
 
-		ModelPartData cube_r3 = bomb.addChild("cube_r3", ModelPartBuilder.create().uv(20, 0).mirrored().cuboid(-1.75F, -2.4F, 0.0F, 4.0F, 3.0F, 2.0F, new Dilation(-1.0F)).mirrored(false), ModelTransform.of(1.0F, 1.5F, -5.0F, -0.0411F, 0.3027F, -0.1372F));
+		ModelPartData cube_r3 = bomb.addChild("cube_r3", ModelPartBuilder.create().uv(20, 0).mirrored().cuboid(-1.75F, -2.4F, 0.0F, 4.0F, 3.0F, 2.0F, new Dilation(-1.0F)).mirrored(false), ModelTransform.of(1.0F, -0.5F, -4.75F, -0.0411F, 0.3027F, -0.1372F));
 
-		ModelPartData cube_r4 = bomb.addChild("cube_r4", ModelPartBuilder.create().uv(8, 11).cuboid(-0.5F, 0.0F, -0.75F, 1.0F, 5.0F, 3.0F, new Dilation(0.0F)), ModelTransform.of(2.0F, 0.0F, -3.0F, 0.0F, 1.0908F, 0.0F));
+		ModelPartData cube_r4 = bomb.addChild("cube_r4", ModelPartBuilder.create().uv(8, 11).cuboid(-0.5F, 0.0F, -0.75F, 1.0F, 5.0F, 3.0F, new Dilation(0.0F)), ModelTransform.of(2.0F, -2.0F, -2.75F, 0.0F, 1.0908F, 0.0F));
 
-		ModelPartData tail = bomb.addChild("tail", ModelPartBuilder.create().uv(-2, 0).cuboid(-0.5F, 0.5F, 3.0F, 1.0F, 0.0F, 2.0F, new Dilation(0.0F)), ModelTransform.pivot(0.0F, 0.0F, 0.0F));
+		ModelPartData tail = bomb.addChild("tail", ModelPartBuilder.create().uv(-2, 0).cuboid(-0.5F, 0.5F, 3.0F, 1.0F, 0.0F, 2.0F, new Dilation(0.0F)), ModelTransform.pivot(0.0F, -2.0F, 0.25F));
 		return TexturedModelData.of(modelData, 32, 32);
 	}
 	@Override
 	public void setAngles(BombchuEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-		this.tail.yaw = (float) Math.sin(ageInTicks * 5);
+		this.tail.yaw = (float) Math.sin(ageInTicks) * 0.05f;
 	}
 	@Override
 	public void render(MatrixStack matrices, VertexConsumer vertexConsumer, int light, int overlay, float red, float green, float blue, float alpha) {

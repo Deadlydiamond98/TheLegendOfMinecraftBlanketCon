@@ -2,6 +2,7 @@ package net.deadlydiamond98.events.weather;
 
 import net.deadlydiamond98.ZeldaCraft;
 import net.deadlydiamond98.particle.ZeldaParticles;
+import net.deadlydiamond98.util.ZeldaConfig;
 import net.deadlydiamond98.world.ZeldaWorldDataManager;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Text;
@@ -61,14 +62,19 @@ public class MeteorShower {
     }
 
     public void start(ServerWorld world) {
-        isMeteorShower = true;
-        ZeldaWorldDataManager.setMeteorShower(world, true);
-        starChance = 0.1;
-        ZeldaCraft.LOGGER.info("Started Meteor Shower");
-        world.getPlayers().forEach(player -> {
-            player.sendMessage(Text.translatable(startTexts[world.getRandom().nextInt(3)])
-                    .formatted(Formatting.GOLD).formatted(Formatting.BOLD), false);
-        });
+        if (ZeldaConfig.doMeteorShowerWeatherEvent) {
+            isMeteorShower = true;
+            ZeldaWorldDataManager.setMeteorShower(world, true);
+            starChance = 0.1;
+            ZeldaCraft.LOGGER.info("Started Meteor Shower");
+            world.getPlayers().forEach(player -> {
+                player.sendMessage(Text.translatable(startTexts[world.getRandom().nextInt(3)])
+                        .formatted(Formatting.GOLD).formatted(Formatting.BOLD), false);
+            });
+        }
+        else {
+            stop(world, false);
+        }
     }
 
     public void stop(ServerWorld world, boolean text) {

@@ -1,0 +1,34 @@
+{
+  "type": "zeldacraft:magic_workbench",
+  "pattern": [
+    "GdG",
+    "rSl",
+    "PPP"
+  ],
+  "key": {
+    "S": {
+      "item": "zeldacraft:star_fragment"
+    },
+    "P": {
+      "item": "minecraft:polished_andesite"
+    },
+    "r": {
+      "item": "minecraft:redstone"
+    },
+    "l": {
+      "item": "minecraft:lapis_lazuli"
+    },
+    "d": {
+      "item": "minecraft:diamond"
+    },
+    "G": {
+      "item": "minecraft:glass"
+    }
+  },
+  "result": {
+    "item": "zeldacraft:crystal_switch",
+    "count": 1
+  },
+  "bindable_id": true,
+  "mana_cost": 0
+}

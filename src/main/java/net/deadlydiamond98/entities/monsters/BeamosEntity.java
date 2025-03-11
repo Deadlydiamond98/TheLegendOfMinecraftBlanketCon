@@ -1,7 +1,7 @@
 package net.deadlydiamond98.entities.monsters;
 
 import net.deadlydiamond98.entities.projectiles.BeamEntity;
-import net.deadlydiamond98.sounds.ZeldaSounds;
+import net.deadlydiamond98.util.sounds.ZeldaSounds;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -69,6 +69,7 @@ public class BeamosEntity extends HostileEntity implements Monster {
     public float getPathfindingFavor(BlockPos pos, WorldView world) {
         return world.getBlockState(pos).isAir() ? 10.0F : 0.0F;
     }
+
     @Override
     protected void initGoals() {
         super.initGoals();
@@ -270,7 +271,7 @@ public class BeamosEntity extends HostileEntity implements Monster {
         }
 
         public void tick() {
-            this.beamos.setYaw(this.beamos.getYaw() + 1);
+            this.beamos.setYaw(this.beamos.getYaw() + 2);
             this.beamos.bodyYaw = this.beamos.getYaw();
 
             this.beamos.setYawClient(this.beamos.getYaw());

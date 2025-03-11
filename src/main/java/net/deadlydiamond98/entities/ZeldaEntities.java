@@ -8,6 +8,8 @@ import net.deadlydiamond98.entities.bombs.BombEntity;
 import net.deadlydiamond98.entities.bombs.bombchu.BombchuEntity;
 import net.deadlydiamond98.entities.bombs.RemoteBombEntity;
 import net.deadlydiamond98.entities.bombs.SuperBombEntity;
+import net.deadlydiamond98.entities.fairy.FairyEntity;
+import net.deadlydiamond98.entities.fairy.PlayerFairyCompanion;
 import net.deadlydiamond98.entities.monsters.*;
 import net.deadlydiamond98.entities.monsters.keese.KeeseEntity;
 import net.deadlydiamond98.entities.monsters.octoroks.BlueOctorokEntity;
@@ -133,7 +135,7 @@ public class ZeldaEntities {
             new Identifier(ZeldaCraft.MOD_ID, "bombchu"),
             FabricEntityTypeBuilder.create(SpawnGroup.MISC, (EntityType<BombchuEntity> type, World world) ->
                             new BombchuEntity(type, world))
-                    .dimensions(EntityDimensions.fixed(0.4f,0.4f))
+                    .dimensions(EntityDimensions.fixed(0.4f,0.4f)).trackedUpdateRate(2)
                     .build()
     );
     public static final EntityType<WoodBoomerang> Wood_Boomerang = Registry.register(
@@ -251,6 +253,14 @@ public class ZeldaEntities {
                     .dimensions(EntityDimensions.fixed(0.6f,0.6f))
                     .build()
     );
+    public static final EntityType<ArmosEntity> Armos_Entity = Registry.register(
+            Registries.ENTITY_TYPE,
+            new Identifier(ZeldaCraft.MOD_ID, "armos"),
+            FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, ArmosEntity::new)
+                    .dimensions(EntityDimensions.fixed(0.9f,2))
+                    .spawnableFarFromPlayer()
+                    .build()
+    );
     public static final EntityType<BeamosEntity> Beamos_Entity = Registry.register(
             Registries.ENTITY_TYPE,
             new Identifier(ZeldaCraft.MOD_ID, "beamos"),
@@ -302,7 +312,7 @@ public class ZeldaEntities {
             Registries.ENTITY_TYPE,
             new Identifier(ZeldaCraft.MOD_ID, "ramblin_mushroom"),
             FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, RamblinMushroomEntity::new)
-                    .dimensions(EntityDimensions.fixed(0.75f,0.75f))
+                    .dimensions(EntityDimensions.fixed(0.5f,0.6f))
                     .build()
     );
 

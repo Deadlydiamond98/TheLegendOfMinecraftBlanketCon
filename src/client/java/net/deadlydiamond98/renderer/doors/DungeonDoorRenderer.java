@@ -4,7 +4,7 @@ import net.deadlydiamond98.ZeldaCraft;
 import net.deadlydiamond98.blocks.doors.DungeonDoor;
 import net.deadlydiamond98.blocks.entities.doors.DungeonDoorEntity;
 import net.deadlydiamond98.model.DungeonDoorModel;
-import net.deadlydiamond98.util.interfaces.block.Lockable;
+import net.deadlydiamond98.util.interfaces.block.ILockable;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumer;
@@ -53,7 +53,7 @@ public class DungeonDoorRenderer implements BlockEntityRenderer<DungeonDoorEntit
         BlockState blockState = entity.getCachedState();
         String color = ((DungeonDoor) blockState.getBlock()).getColor().id;
 
-        Lockable.LockType lockType = blockState.get(DungeonDoor.LOCKED);
+        ILockable.LockType lockType = blockState.get(DungeonDoor.LOCKED);
 
         if (!lockType.isUnlocked()) {
             return getLockedTexture(color, lockType.asString());

@@ -1,7 +1,7 @@
 package net.deadlydiamond98.renderer.entity.monster;
 
 import net.deadlydiamond98.ZeldaCraft;
-import net.deadlydiamond98.entities.monsters.FairyEntity;
+import net.deadlydiamond98.entities.fairy.FairyEntity;
 import net.deadlydiamond98.model.entity.FairyEntityModel;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.*;

@@ -11,8 +11,8 @@ public class SomariaBlock extends PushBlock {
         super(settings);
     }
 
-    @Override
-    public void onDestroyedOnLanding(World world, BlockPos pos, FallingBlockEntity fallingBlockEntity) {
-        world.createExplosion(fallingBlockEntity, pos.getX(), pos.getY(), pos.getZ(), 3, false, World.ExplosionSourceType.NONE);
-    }
+//    @Override
+//    public void onDestroyedOnLanding(World world, BlockPos pos, FallingBlockEntity fallingBlockEntity) {
+//        world.createExplosion(fallingBlockEntity, pos.getX(), pos.getY(), pos.getZ(), 3, false, World.ExplosionSourceType.NONE);
+//    }
 }

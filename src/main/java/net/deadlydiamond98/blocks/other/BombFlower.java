@@ -1,9 +1,11 @@
 package net.deadlydiamond98.blocks.other;
 
+import net.deadlydiamond98.blocks.ZeldaBlocks;
 import net.deadlydiamond98.entities.bombs.BombEntity;
 import net.deadlydiamond98.items.ZeldaItems;
-import net.deadlydiamond98.util.ZeldaAdvancementCriterion;
+import net.deadlydiamond98.util.advancment.ZeldaAdvancementCriterion;
 import net.deadlydiamond98.util.ZeldaTags;
+import net.deadlydiamond98.util.interfaces.block.IBombBreakInteraction;
 import net.minecraft.block.*;
 import net.minecraft.block.piston.PistonBehavior;
 import net.minecraft.entity.ai.pathing.NavigationType;
@@ -35,17 +37,13 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldView;
 
-public class BombFlower extends PlantBlock {
+public class BombFlower extends PlantBlock implements IBombBreakInteraction {
     public static final DirectionProperty FACING = Properties.HORIZONTAL_FACING;
     public static final IntProperty AGE = Properties.AGE_3;
 
     public BombFlower(Settings settings) {
         super(settings);
-        this.setDefaultState((BlockState) ((BlockState) this.stateManager.getDefaultState()).with(this.getAgeProperty(), 0).with(FACING, Direction.NORTH));
-    }
-
-    public BlockState getFeatureState() {
-        return this.stateManager.getDefaultState().with(this.getAgeProperty(), 3).with(FACING, Direction.NORTH);
+        this.setDefaultState(this.stateManager.getDefaultState().with(this.getAgeProperty(), 0).with(FACING, Direction.NORTH));
     }
 
     private IntProperty getAgeProperty() {
@@ -56,10 +54,10 @@ public class BombFlower extends PlantBlock {
     }
 
     public int getAge(BlockState state) {
-        return (Integer) state.get(this.getAgeProperty());
+        return state.get(this.getAgeProperty());
     }
     public Direction getFacing(BlockState state) {
-        return (Direction) state.get(this.getFacingProperty());
+        return state.get(this.getFacingProperty());
     }
 
     @Override
@@ -99,8 +97,7 @@ public class BombFlower extends PlantBlock {
 
     @Override
     public BlockState getPlacementState(ItemPlacementContext ctx) {
-        return (BlockState) this.getDefaultState().with(FACING, ctx.getHorizontalPlayerFacing().getOpposite())
-                .with(AGE, 0);
+        return this.getDefaultState().with(FACING, ctx.getHorizontalPlayerFacing().getOpposite());
     }
 
     @Override
@@ -113,23 +110,14 @@ public class BombFlower extends PlantBlock {
         return state.rotate(mirror.getRotation(state.get(FACING)));
     }
 
-    public PistonBehavior getPistonBehavior(BlockState state) {
-        return PistonBehavior.DESTROY;
-    }
-
+    @Override
     public boolean canPathfindThrough(BlockState state, BlockView world, BlockPos pos, NavigationType type) {
         return true;
     }
 
     @Override
     protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
-        builder.add(FACING);
-        builder.add(AGE);
-    }
-
-    @Override
-    public BlockRenderType getRenderType(BlockState state) {
-        return BlockRenderType.MODEL;
+        builder.add(FACING, AGE);
     }
 
     @Override
@@ -139,7 +127,6 @@ public class BombFlower extends PlantBlock {
 
     @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-
         if (player.getStackInHand(hand).isIn(ZeldaTags.Items.Primes_Bomb_Flowers) && getAge(state) == 3) {
             world.setBlockState(pos, state.with(AGE, 0));
             BombEntity bombEntity = new BombEntity(world, pos.getX() + 0.5, pos.getY() + 0.2,
@@ -160,6 +147,21 @@ public class BombFlower extends PlantBlock {
         }
         else {
             return super.onUse(state, world, pos, player, hand, hit);
+        }
+    }
+
+    @Override
+    public void explosionInteraction(World world, BlockPos blockPos) {
+        if (this.getAge(world.getBlockState(blockPos)) == 3) {
+
+            world.setBlockState(blockPos, this.getDefaultState().with(AGE, 0));
+
+            BombEntity bombEntity = new BombEntity(world, blockPos.getX() + 0.5, blockPos.getY() + 0.2,
+                    blockPos.getZ()  + 0.5, null);
+
+            bombEntity.setYaw((this.getFacing(world.getBlockState(blockPos))).getHorizontal() - 90);
+
+            world.spawnEntity(bombEntity);
         }
     }
 }

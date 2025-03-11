@@ -14,4 +14,10 @@ public class ZeldaConfig extends MidnightConfig {
 
     @Comment(category = "text") public static Comment spacer4;
     @Entry(category = "text") public static boolean advancementfanfare = true;
+
+    @Comment(category = "text") public static Comment spacer5;
+    @Entry(category = "text") public static boolean doMeteorShowerWeatherEvent = true;
+
+    @Comment(category = "text") public static Comment spacer6;
+    @Entry(category = "text") public static boolean shootingStars = true;
 }

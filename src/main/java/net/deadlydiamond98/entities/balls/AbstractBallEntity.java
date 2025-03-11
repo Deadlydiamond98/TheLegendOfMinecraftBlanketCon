@@ -1,7 +1,7 @@
 package net.deadlydiamond98.entities.balls;
 
 import net.deadlydiamond98.enchantments.ZeldaEnchantments;
-import net.deadlydiamond98.items.items.bats.BatItem;
+import net.deadlydiamond98.items.bats.BatItem;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;

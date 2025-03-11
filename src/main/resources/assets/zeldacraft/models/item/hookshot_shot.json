@@ -1,5 +1,5 @@
 {
-  "parent": "item/handheld",
+  "parent": "zeldacraft:item/grapple",
   "textures": {
     "layer0": "zeldacraft:item/hookshot_shot"
   }

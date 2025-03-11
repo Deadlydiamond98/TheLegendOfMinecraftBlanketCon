@@ -1,11 +1,8 @@
 package net.deadlydiamond98.entities.monsters.tektites;
 
-import net.deadlydiamond98.sounds.ZeldaSounds;
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
+import net.deadlydiamond98.util.sounds.ZeldaSounds;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
@@ -17,17 +14,11 @@ import net.minecraft.entity.mob.Monster;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
-import net.minecraft.registry.tag.BlockTags;
-import net.minecraft.registry.tag.FluidTags;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
-import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.math.random.Random;
-import net.minecraft.world.LightType;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldAccess;
 
 import java.util.*;
 
@@ -72,31 +63,33 @@ public class TektiteEntity extends HostileEntity implements Monster {
     public void tick() {
         super.tick();
 
-        if (isSubmergedInWater()) {
-            this.setVelocity(this.getVelocity().x, 0.5, this.getVelocity().z);
-            this.velocityDirty = true;
-        }
+        if (canWalkOnWater()) {
+            if (isSubmergedInWater()) {
+                this.setVelocity(this.getVelocity().x, 0.5, this.getVelocity().z);
+                this.velocityDirty = true;
+            }
 
-        Box waterDetectionBox = this.getBoundingBox().expand(0.1, -0.25, 0.1).offset(0, -0.25, 0);
+            Box waterDetectionBox = this.getBoundingBox().expand(0.1, -0.25, 0.1).offset(0, -0.25, 0);
 
-        OptionalDouble waterSurfaceY = BlockPos.stream(waterDetectionBox).mapToDouble(blockPos -> {
-                    FluidState fluidState = this.getWorld().getFluidState(blockPos);
-                    if (fluidState.isOf(Fluids.WATER)) {
-                        return fluidState.getHeight(this.getWorld(), blockPos) + blockPos.getY();
-                    }
-                    return Double.NaN;
-                }).filter(height -> !Double.isNaN(height))
-                .max();
+            OptionalDouble waterSurfaceY = BlockPos.stream(waterDetectionBox).mapToDouble(blockPos -> {
+                        FluidState fluidState = this.getWorld().getFluidState(blockPos);
+                        if (fluidState.isOf(Fluids.WATER)) {
+                            return fluidState.getHeight(this.getWorld(), blockPos) + blockPos.getY();
+                        }
+                        return Double.NaN;
+                    }).filter(height -> !Double.isNaN(height))
+                    .max();
 
-        if (waterSurfaceY.isPresent() && !isSubmergedInWater()) {
-            double waterY = waterSurfaceY.getAsDouble();
-            double entityY = this.getBoundingBox().minY;
+            if (waterSurfaceY.isPresent() && !isSubmergedInWater()) {
+                double waterY = waterSurfaceY.getAsDouble();
+                double entityY = this.getBoundingBox().minY;
 
-            double snapRange = 0.5;
-            if (entityY >= waterY - snapRange && entityY <= waterY && this.getVelocity().y <= 0) {
-                this.setPosition(this.getX(), waterY, this.getZ());
-                this.setVelocity(this.getVelocity().x, Math.max(0, this.getVelocity().y), this.getVelocity().z);
-                this.setOnGround(true);
+                double snapRange = 0.5;
+                if (entityY >= waterY - snapRange && entityY <= waterY && this.getVelocity().y <= 0) {
+                    this.setPosition(this.getX(), waterY, this.getZ());
+                    this.setVelocity(this.getVelocity().x, Math.max(0, this.getVelocity().y), this.getVelocity().z);
+                    this.setOnGround(true);
+                }
             }
         }
 
@@ -121,6 +114,10 @@ public class TektiteEntity extends HostileEntity implements Monster {
         }
     }
 
+    protected boolean canWalkOnWater() {
+        return true;
+    }
+
     protected void damage(LivingEntity target) {
         if (this.isAlive()) {
             if (this.canSee(target) && target.damage(this.getDamageSources().mobAttack(this),
@@ -139,7 +136,7 @@ public class TektiteEntity extends HostileEntity implements Monster {
         return (Float) this.dataTracker.get(YAW);
     }
 
-    private void setYawClient(Float f) {
+    protected void setYawClient(Float f) {
         this.dataTracker.set(YAW, f);
     }
 
@@ -153,8 +150,8 @@ public class TektiteEntity extends HostileEntity implements Monster {
         return ZeldaSounds.TektiteDeath;
     }
 
-    private class TektiteHopGoal extends Goal {
-        private final TektiteEntity entity;
+    public static class TektiteHopGoal extends Goal {
+        protected final TektiteEntity entity;
         private int hopCooldown;
         private static final double CLEAR_BLOCK_HEIGHT = 0.5;
 

@@ -1,6 +1,6 @@
 package net.deadlydiamond98.spells;
 
-import net.deadlydiamond98.sounds.ZeldaSounds;
+import net.deadlydiamond98.util.sounds.ZeldaSounds;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.world.World;

@@ -2,7 +2,7 @@ package net.deadlydiamond98.entities.balls;
 
 import net.deadlydiamond98.entities.ZeldaEntities;
 import net.deadlydiamond98.items.ZeldaItems;
-import net.deadlydiamond98.items.items.bats.CrackedBat;
+import net.deadlydiamond98.items.bats.CrackedBat;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.entity.BlockEntity;

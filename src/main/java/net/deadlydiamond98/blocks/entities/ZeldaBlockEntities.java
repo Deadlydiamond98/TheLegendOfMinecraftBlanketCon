@@ -8,10 +8,12 @@ import net.deadlydiamond98.blocks.entities.loot.LootSkullBlockEntity;
 import net.deadlydiamond98.blocks.entities.onoff.CrystalSwitchBlockEntity;
 import net.deadlydiamond98.blocks.entities.onoff.OnOffBlockEntity;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
+import net.minecraft.block.Block;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
+import org.apache.commons.lang3.ArrayUtils;
 
 public class ZeldaBlockEntities {
     public static BlockEntityType<LootPotBlockEntity> LOOT_POT;
@@ -29,23 +31,7 @@ public class ZeldaBlockEntities {
         LOOT_POT = Registry.register(Registries.BLOCK_ENTITY_TYPE,
                 new Identifier(ZeldaCraft.MOD_ID, "loot_pot"),
                 FabricBlockEntityTypeBuilder.create(LootPotBlockEntity::new,
-                        ZeldaBlocks.Plain_Pot,
-                        ZeldaBlocks.Red_Pot,
-                        ZeldaBlocks.Orange_Pot,
-                        ZeldaBlocks.Yellow_Pot,
-                        ZeldaBlocks.Lime_Pot,
-                        ZeldaBlocks.Green_Pot,
-                        ZeldaBlocks.Blue_Pot,
-                        ZeldaBlocks.Light_Blue_Pot,
-                        ZeldaBlocks.Cyan_Pot,
-                        ZeldaBlocks.Purple_Pot,
-                        ZeldaBlocks.Magenta_Pot,
-                        ZeldaBlocks.Pink_Pot,
-                        ZeldaBlocks.White_Pot,
-                        ZeldaBlocks.Black_Pot,
-                        ZeldaBlocks.Gray_Pot,
-                        ZeldaBlocks.Light_Gray_Pot,
-                        ZeldaBlocks.Brown_Pot
+                        ZeldaBlocks.Loot_Pots.getAll(ZeldaBlocks.Plain_Pot)
                 ).build(null));
 
         LOOT_SKULL = Registry.register(Registries.BLOCK_ENTITY_TYPE,
@@ -61,7 +47,8 @@ public class ZeldaBlockEntities {
                 FabricBlockEntityTypeBuilder.create(DungeonDoorEntity::new,
                         ZeldaBlocks.Dungeon_Door,
                         ZeldaBlocks.Red_Dungeon_Door,
-                        ZeldaBlocks.Blue_Dungeon_Door
+                        ZeldaBlocks.Blue_Dungeon_Door,
+                        ZeldaBlocks.Green_Dungeon_Door
                 ).build(null));
 
         OPENING_DUNGEON_DOOR = Registry.register(Registries.BLOCK_ENTITY_TYPE,
@@ -69,7 +56,8 @@ public class ZeldaBlockEntities {
                 FabricBlockEntityTypeBuilder.create(OpeningDungeonDoorEntity::new,
                         ZeldaBlocks.Opening_Dungeon_Door,
                         ZeldaBlocks.Red_Opening_Dungeon_Door,
-                        ZeldaBlocks.Blue_Opening_Dungeon_Door
+                        ZeldaBlocks.Blue_Opening_Dungeon_Door,
+                        ZeldaBlocks.Green_Opening_Dungeon_Door
                 ).build(null));
 
         // Sword Pedestal

@@ -2,6 +2,7 @@ package net.deadlydiamond98.commands;
 
 import com.mojang.brigadier.CommandDispatcher;
 import net.deadlydiamond98.events.ZeldaSeverTickEvent;
+import net.deadlydiamond98.util.ZeldaConfig;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.minecraft.command.CommandRegistryAccess;
 import net.minecraft.server.command.CommandManager;
@@ -25,8 +26,13 @@ public class ZeldaServerCommands {
                         .executes(context -> {
                             ServerCommandSource source = context.getSource();
                             source.getWorld().setWeather(6000, 0, false, false);
-                            source.sendFeedback(() -> Text.literal("Set the weather to Meteor Shower")
-                                    .formatted(Formatting.AQUA), true);
+                            if (ZeldaConfig.doMeteorShowerWeatherEvent) {
+                                source.sendFeedback(() -> Text.literal("Set the weather to Meteor Shower")
+                                        .formatted(Formatting.AQUA), true);
+                            } else {
+                                source.sendFeedback(() -> Text.literal("Weather Event is disabled")
+                                        .formatted(Formatting.RED), true);
+                            }
                             ZeldaSeverTickEvent.meteorShower.start(source.getWorld());
                             return 1;
                         })

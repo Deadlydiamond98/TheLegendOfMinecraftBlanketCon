@@ -6,6 +6,7 @@ import net.deadlydiamond98.events.weather.MeteorShower;
 import net.deadlydiamond98.networking.ZeldaServerPackets;
 import net.deadlydiamond98.statuseffects.StunStatusEffect;
 import net.deadlydiamond98.statuseffects.ZeldaStatusEffects;
+import net.deadlydiamond98.util.ZeldaConfig;
 import net.deadlydiamond98.util.interfaces.mixin.ZeldaPlayerData;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.minecraft.entity.Entity;
@@ -30,8 +31,12 @@ public class ZeldaSeverTickEvent {
 
     private static void onEndServerTick() {
         ServerTickEvents.END_SERVER_TICK.register(server -> {
-            shootingStarsAtNight(server);
-            meteorShowerEvent(server);
+            if (ZeldaConfig.shootingStars) {
+                shootingStarsAtNight(server);
+            }
+            if (ZeldaConfig.doMeteorShowerWeatherEvent) {
+                meteorShowerEvent(server);
+            }
             timeBoxSlowing(server);
         });
     }
@@ -78,10 +83,6 @@ public class ZeldaSeverTickEvent {
                 else {
                     world.getPlayers().forEach(player -> ((ZeldaPlayerData) player).setTriedStarSpawn(true));
                 }
-//
-//                    if (world.getTimeOfDay() == 23000) {
-//                        ZeldaCraft.LOGGER.info("A Night has passed");
-//                    }
             }
         }
     }

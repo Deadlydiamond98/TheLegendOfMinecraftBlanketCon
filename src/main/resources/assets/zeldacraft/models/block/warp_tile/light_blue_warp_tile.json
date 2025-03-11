@@ -1,0 +1,8 @@
+{
+  "parent": "zeldacraft:block/base_warp_tile",
+  "textures": {
+    "bottom": "zeldacraft:block/warp_tile/warp_tile_exit",
+    "top": "zeldacraft:block/warp_tile/light_blue_warp_tile",
+    "particle": "zeldacraft:block/warp_tile/light_blue_warp_tile"
+  }
+}

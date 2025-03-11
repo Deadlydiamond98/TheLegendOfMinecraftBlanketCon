@@ -3,7 +3,7 @@ package net.deadlydiamond98.blocks.entities.doors;
 import net.deadlydiamond98.blocks.doors.DungeonDoor;
 import net.deadlydiamond98.blocks.doors.DungeonDoorParts;
 import net.deadlydiamond98.blocks.entities.ZeldaBlockEntities;
-import net.deadlydiamond98.sounds.ZeldaSounds;
+import net.deadlydiamond98.util.sounds.ZeldaSounds;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.sound.SoundCategory;

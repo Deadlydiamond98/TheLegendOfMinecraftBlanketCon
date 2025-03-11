@@ -2,8 +2,8 @@ package net.deadlydiamond98.entities.boomerangs;
 
 import net.deadlydiamond98.enchantments.ZeldaEnchantments;
 import net.deadlydiamond98.items.ZeldaItems;
-import net.deadlydiamond98.sounds.ZeldaSounds;
-import net.deadlydiamond98.util.ZeldaAdvancementCriterion;
+import net.deadlydiamond98.util.sounds.ZeldaSounds;
+import net.deadlydiamond98.util.advancment.ZeldaAdvancementCriterion;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.PlantBlock;
 import net.minecraft.enchantment.EnchantmentHelper;

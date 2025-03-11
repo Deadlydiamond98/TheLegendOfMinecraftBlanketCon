@@ -7,7 +7,7 @@ import net.deadlydiamond98.entities.ZeldaEntities;
 import net.deadlydiamond98.entities.bombs.BombEntity;
 import net.deadlydiamond98.items.ZeldaItems;
 import net.deadlydiamond98.networking.ZeldaServerPackets;
-import net.deadlydiamond98.sounds.ZeldaSounds;
+import net.deadlydiamond98.util.sounds.ZeldaSounds;
 import net.deadlydiamond98.util.ZeldaTags;
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityType;

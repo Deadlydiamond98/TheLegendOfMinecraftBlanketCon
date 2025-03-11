@@ -4,10 +4,11 @@ import net.deadlydiamond98.blocks.other.BombFlower;
 import net.deadlydiamond98.blocks.dungeon.SecretStone;
 import net.deadlydiamond98.blocks.ZeldaBlocks;
 import net.deadlydiamond98.enchantments.ZeldaEnchantments;
-import net.deadlydiamond98.items.items.bats.BatItem;
+import net.deadlydiamond98.items.bats.BatItem;
 import net.deadlydiamond98.networking.ZeldaServerPackets;
-import net.deadlydiamond98.sounds.ZeldaSounds;
-import net.deadlydiamond98.util.ZeldaAdvancementCriterion;
+import net.deadlydiamond98.util.interfaces.block.IBombBreakInteraction;
+import net.deadlydiamond98.util.sounds.ZeldaSounds;
+import net.deadlydiamond98.util.advancment.ZeldaAdvancementCriterion;
 import net.deadlydiamond98.util.ZeldaTags;
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -60,14 +61,13 @@ public abstract class AbstractBombEntity extends Entity implements Ownable {
     public void tick() {
         applyGravity();
 
+        super.tick();
         this.tickMovement();
 
         this.manageFuse();
-        super.tick();
 
         this.prevYaw = this.getYaw();
         this.prevPitch = this.getPitch();
-        this.getWorld().getProfiler().pop();
     }
 
     protected void applyGravity() {
@@ -77,11 +77,11 @@ public abstract class AbstractBombEntity extends Entity implements Ownable {
     }
 
     protected void tickMovement() {
+        this.move(MovementType.SELF, this.getVelocity());
         this.setVelocity(this.getVelocity().multiply(0.98));
         if (this.isOnGround()) {
             this.setVelocity(this.getVelocity().multiply(0.5, -0.5, 0.5));
         }
-        this.move(MovementType.SELF, this.getVelocity());
     }
 
     protected void manageFuse() {
@@ -137,15 +137,11 @@ public abstract class AbstractBombEntity extends Entity implements Ownable {
                 playSecret = true;
             }
         }
-        if (block.getDefaultState().isOf(ZeldaBlocks.Bomb_Flower)) {
-            if (((BombFlower) block).getAge(getWorld().getBlockState(blockPos)) == 3) {
-                this.getWorld().setBlockState(blockPos, block.getDefaultState().with(AGE, 0));
-                BombEntity bombEntity = new BombEntity(this.getWorld(), blockPos.getX() + 0.5, blockPos.getY() + 0.2,
-                        blockPos.getZ()  + 0.5, null);
-                bombEntity.setYaw((((BombFlower) block).getFacing(getWorld().getBlockState(blockPos))).getHorizontal() - 90);
-                this.getWorld().spawnEntity(bombEntity);
-            }
+
+        if (block instanceof IBombBreakInteraction bombableBlock) {
+            bombableBlock.explosionInteraction(this.getWorld(), blockPos);
         }
+
         return playSecret;
     }
 
@@ -157,10 +153,14 @@ public abstract class AbstractBombEntity extends Entity implements Ownable {
             ItemStack heldItem = player.getMainHandStack();
             if (heldItem.getItem() instanceof BatItem) {
                 Vec3d lookVec = player.getRotationVec(1.0f);
+
                 this.setYaw(player.getHeadYaw());
+
                 double launchPower = 1.0;
+
                 double updraft = EnchantmentHelper.getLevel(ZeldaEnchantments.Updraft, heldItem) * 0.25;
                 double velocityY = lookVec.y * launchPower;
+
                 if (updraft > 0) {
                     velocityY = Math.max(0.5, velocityY);
                 }

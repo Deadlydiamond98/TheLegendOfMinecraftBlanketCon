@@ -2,6 +2,7 @@
   "replace": false,
   "values": [
     "zeldacraft:dungeon_door",
-    "zeldacraft:auto_dungeon_door"
+    "zeldacraft:auto_dungeon_door",
+    "zeldacraft:magic_workbench"
   ]
 }

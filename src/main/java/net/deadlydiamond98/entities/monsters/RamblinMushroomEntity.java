@@ -1,10 +1,13 @@
 package net.deadlydiamond98.entities.monsters;
 
+import net.deadlydiamond98.statuseffects.ZeldaStatusEffects;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
+import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -32,9 +35,17 @@ public class RamblinMushroomEntity extends HostileEntity {
 
     public static DefaultAttributeContainer.Builder createCustomAttributes() {
         return HostileEntity.createHostileAttributes()
-                .add(EntityAttributes.GENERIC_MAX_HEALTH, 10.0)
+                .add(EntityAttributes.GENERIC_MAX_HEALTH, 12.0)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 2.0)
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.25);
+    }
+
+    @Override
+    public void onAttacking(Entity target) {
+        super.onAttacking(target);
+        if (target instanceof LivingEntity living) {
+            living.addStatusEffect(new StatusEffectInstance(ZeldaStatusEffects.Mushroomized_Status_Effect, 60));
+        }
     }
 
     public class CopyWalkAttack extends Goal {
@@ -42,6 +53,7 @@ public class RamblinMushroomEntity extends HostileEntity {
         private LivingEntity target;
         private int cooldown;
         private double lastTargetX, lastTargetY, lastTargetZ;
+        private double lastTargetYaw, lastTargetPitch;
 
         public CopyWalkAttack(MobEntity mob) {
             this.mob = mob;
@@ -88,9 +100,11 @@ public class RamblinMushroomEntity extends HostileEntity {
                     this.target.getY() != this.lastTargetY ||
                     this.target.getZ() != this.lastTargetZ;
 
-            if (isTargetMoving) {
+            boolean isLookingAround = this.target.getHeadYaw() != this.lastTargetYaw || this.target.getPitch() != this.lastTargetPitch;
+
+            if (isTargetMoving || isLookingAround) {
                 this.mob.getLookControl().lookAt(this.target, 30.0f, 30.0f);
-                this.mob.getNavigation().startMovingTo(this.target, 1);
+                this.mob.getNavigation().startMovingTo(this.target, 1.25);
             } else {
                 this.mob.getNavigation().stop();
             }
@@ -98,6 +112,9 @@ public class RamblinMushroomEntity extends HostileEntity {
             this.lastTargetX = this.target.getX();
             this.lastTargetY = this.target.getY();
             this.lastTargetZ = this.target.getZ();
+
+            this.lastTargetYaw = this.target.getHeadYaw();
+            this.lastTargetPitch = this.target.getPitch();
 
             this.cooldown = Math.max(this.cooldown - 1, 0);
             if (!(e > d)) {

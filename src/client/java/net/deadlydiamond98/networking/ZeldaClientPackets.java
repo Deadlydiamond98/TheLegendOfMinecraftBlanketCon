@@ -17,6 +17,7 @@ public class ZeldaClientPackets {
         ClientPlayNetworking.registerGlobalReceiver(ZeldaPacketIDS.EntityStatsPacket, EntityStatsS2CPacket::recieve);
         ClientPlayNetworking.registerGlobalReceiver(ZeldaPacketIDS.PlaySoundPacket, PlaySoundS2CPacket::recieve);
         ClientPlayNetworking.registerGlobalReceiver(ZeldaPacketIDS.UpdateAdvancmentStatus, AdvancementStatusS2CPacket::recieve);
+        ClientPlayNetworking.registerGlobalReceiver(ZeldaPacketIDS.UpdateMagicWorkbenchClient, MagicWorkbenchS2CPacket::recieve);
     }
 
     public static void sendSwordSwingPacket() {
@@ -32,8 +33,9 @@ public class ZeldaClientPackets {
         PacketByteBuf buf = PacketByteBufs.create();
         ClientPlayNetworking.send(ZeldaPacketIDS.NeckTrinketPacket, buf);
     }
-    public static void sendBackTrinketPacket() {
+    public static void updateMagicWorkbench(String switchID) {
         PacketByteBuf buf = PacketByteBufs.create();
-        ClientPlayNetworking.send(ZeldaPacketIDS.BackTrinketPacket, buf);
+        buf.writeString(switchID);
+        ClientPlayNetworking.send(ZeldaPacketIDS.UpdateMagicWorkbenchServer, buf);
     }
 }

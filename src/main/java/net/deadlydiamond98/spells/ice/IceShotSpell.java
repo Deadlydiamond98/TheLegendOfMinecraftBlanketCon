@@ -2,7 +2,7 @@ package net.deadlydiamond98.spells.ice;
 
 import net.deadlydiamond98.entities.ZeldaEntities;
 import net.deadlydiamond98.entities.projectiles.MagicIceProjectileEntity;
-import net.deadlydiamond98.sounds.ZeldaSounds;
+import net.deadlydiamond98.util.sounds.ZeldaSounds;
 import net.deadlydiamond98.spells.Spell;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.sound.SoundCategory;

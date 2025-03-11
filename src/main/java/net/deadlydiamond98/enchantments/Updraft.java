@@ -1,6 +1,6 @@
 package net.deadlydiamond98.enchantments;
 
-import net.deadlydiamond98.items.items.bats.CrackedBat;
+import net.deadlydiamond98.items.bats.CrackedBat;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentTarget;
 import net.minecraft.entity.EquipmentSlot;

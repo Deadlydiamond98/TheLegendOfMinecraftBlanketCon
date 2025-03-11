@@ -223,6 +223,32 @@
     ]
   },
 
+  "armos_hurt": {
+    "subtitle": "sounds.zeldacraft.armos_hurt",
+    "sounds": [
+      "zeldacraft:armos_hit_1",
+      "zeldacraft:armos_hit_2",
+      "zeldacraft:armos_hit_3",
+      "zeldacraft:armos_hit_4"
+    ]
+  },
+  "armos_death": {
+    "subtitle": "sounds.zeldacraft.armos_death",
+    "sounds": [
+      "zeldacraft:armos_death_1",
+      "zeldacraft:armos_death_2"
+    ]
+  },
+  "armos_animating": {
+    "subtitle": "sounds.zeldacraft.armos_animating",
+    "sounds": [
+      "zeldacraft:armos_animating_1",
+      "zeldacraft:armos_animating_2",
+      "zeldacraft:armos_animating_3",
+      "zeldacraft:armos_animating_4"
+    ]
+  },
+
   "dungeon_door_open": {
     "subtitle": "subtitles.block.door.toggle",
     "sounds": [
@@ -233,6 +259,13 @@
     "subtitle": "subtitles.block.door.toggle",
     "sounds": [
       "zeldacraft:dungeon_door_close"
+    ]
+  },
+
+  "crystal_switch_toggle": {
+    "subtitle": "sounds.zeldacraft.switch.toggle",
+    "sounds": [
+      "zeldacraft:crystal_switch_toggle"
     ]
   },
 

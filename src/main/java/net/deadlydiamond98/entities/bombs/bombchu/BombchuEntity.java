@@ -3,6 +3,7 @@ package net.deadlydiamond98.entities.bombs.bombchu;
 import net.deadlydiamond98.entities.ZeldaEntities;
 import net.deadlydiamond98.entities.bombs.AbstractBombEntity;
 import net.deadlydiamond98.util.interfaces.entity.ISurfaceSticker;
+import net.fabricmc.loader.impl.lib.sat4j.core.Vec;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.*;
 import net.minecraft.entity.data.DataTracker;
@@ -13,6 +14,7 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.*;
+import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.World;
 
 public class BombchuEntity extends AbstractBombEntity implements ISurfaceSticker {
@@ -47,20 +49,24 @@ public class BombchuEntity extends AbstractBombEntity implements ISurfaceSticker
 
     @Override
     protected void tickMovement() {
+        if (!this.getWorld().isClient()) {
+            if (this.isOnGround() && this.attachedFace.canApplyGravity()) {
+                this.attachedFace = FloorAttachState.FLOOR;
+            }
 
-        if (this.isOnGround() && this.attachedFace.canApplyGravity()) {
-            this.attachedFace = FloorAttachState.FLOOR;
+            if (!this.attachedFace.canApplyGravity()) {
+                updateFrontState(4);
+                avoidEdge();
+                updateAttachedFaceWithFloor();
+            }
+
+            this.setAttachedFaceClient(this.attachedFace.getDirection());
         }
-        
-        if (!this.attachedFace.canApplyGravity()) {
-            updateFrontState(4);
-            avoidEdge();
-            updateAttachedFaceWithFloor();
+        else {
+            this.attachedFace = FloorAttachState.getFromDirection(this.getAttachedFaceClient());
         }
 
         this.move(MovementType.SELF, this.getVelocity());
-
-        this.setAttachedFaceClient(this.attachedFace.getDirection());
     }
 
     private void updateAttachedFaceWithFloor() {
@@ -122,7 +128,12 @@ public class BombchuEntity extends AbstractBombEntity implements ISurfaceSticker
 
             this.setRotation(this.getYaw() - yaw, this.getPitch() - pitch);
             this.attachedFace = newState;
-            this.setVelocity(updateVelocityDirection(this.attachedFace, this.getYaw(), this.getPitch(), SPEED));
+
+            Vec3d newVelocity = updateVelocityDirection(this.attachedFace, this.getYaw(), this.getPitch(), SPEED);
+
+            this.move(MovementType.SELF, new Vec3d(this.attachedFace.getDirection().getUnitVector()));
+
+            this.setVelocity(newVelocity);
         }
     }
 
@@ -160,10 +171,20 @@ public class BombchuEntity extends AbstractBombEntity implements ISurfaceSticker
     }
 
     public void unstick() {
+        boolean bl = this.getPitch() != 0;
+
         setPrevAttachedFaceClient(this.attachedFace.getDirection());
         this.setPitch(0);
         this.setYaw(this.attachedFace.ceiling() ? this.getYaw() - 180 : this.getYaw());
         this.attachedFace = FloorAttachState.DETACHED;
+
+        if (bl) {
+            this.setPosition(this.getPos().add(0, 0.25, 0));
+
+            this.move(MovementType.SELF, updateVelocityDirection(FloorAttachState.FLOOR, this.getYaw(), this.getPitch(), SPEED));
+
+            this.setVelocity(Vec3d.ZERO);
+        }
     }
 
     @Override

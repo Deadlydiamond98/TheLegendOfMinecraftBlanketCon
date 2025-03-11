@@ -1,18 +1,13 @@
 package net.deadlydiamond98.blocks.entities.doors;
 
 import net.deadlydiamond98.blocks.doors.DungeonDoor;
-import net.deadlydiamond98.blocks.doors.DungeonDoorParts;
 import net.deadlydiamond98.blocks.entities.ZeldaBlockEntities;
-import net.deadlydiamond98.sounds.ZeldaSounds;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
-import net.minecraft.sound.SoundCategory;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 
 public class DungeonDoorEntity extends BlockEntity {

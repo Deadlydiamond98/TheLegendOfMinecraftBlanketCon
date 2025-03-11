@@ -2,34 +2,37 @@ package net.deadlydiamond98.items;
 
 import net.deadlydiamond98.ZeldaCraft;
 import net.deadlydiamond98.entities.ZeldaEntities;
-import net.deadlydiamond98.items.items.balls.Baseball;
-import net.deadlydiamond98.items.items.balls.BouncyBall;
-import net.deadlydiamond98.items.items.balls.OctoRock;
-import net.deadlydiamond98.items.items.bats.CrackedBat;
-import net.deadlydiamond98.items.items.Swords.MagicSword;
-import net.deadlydiamond98.items.items.Swords.MasterSword;
-import net.deadlydiamond98.items.items.arrows.BombArrow;
-import net.deadlydiamond98.items.items.arrows.SilverArrow;
-import net.deadlydiamond98.items.items.bomb.regular_bombs.BombItem;
-import net.deadlydiamond98.items.items.bomb.BombchuItem;
-import net.deadlydiamond98.items.items.bomb.DekuNutItem;
-import net.deadlydiamond98.items.items.bomb.regular_bombs.RemoteBombItem;
-import net.deadlydiamond98.items.items.bomb.regular_bombs.SuperBombItem;
-import net.deadlydiamond98.items.items.boomerang.IronBoomerangItem;
-import net.deadlydiamond98.items.items.boomerang.MagicBoomerangItem;
-import net.deadlydiamond98.items.items.boomerang.WoodBoomerangItem;
-import net.deadlydiamond98.items.items.custombundle.BombBag;
-import net.deadlydiamond98.items.items.custombundle.Quiver;
-import net.deadlydiamond98.items.items.manaitems.*;
-import net.deadlydiamond98.items.items.manaitems.magicpower.MagicPowder;
-import net.deadlydiamond98.items.items.manaitems.restoring.MagicCandy;
-import net.deadlydiamond98.items.items.manaitems.restoring.MagicJar;
-import net.deadlydiamond98.items.items.manaitems.restoring.StarFragment;
-import net.deadlydiamond98.items.items.manaitems.restoring.ZeldaMagicFood;
-import net.deadlydiamond98.items.items.manaitems.wearable.*;
-import net.deadlydiamond98.items.items.other.*;
-import net.deadlydiamond98.items.items.shields.HylianShieldItem;
-import net.deadlydiamond98.sounds.ZeldaSounds;
+import net.deadlydiamond98.items.balls.Baseball;
+import net.deadlydiamond98.items.balls.BouncyBall;
+import net.deadlydiamond98.items.balls.OctoRock;
+import net.deadlydiamond98.items.bats.CrackedBat;
+import net.deadlydiamond98.items.swords.MagicSword;
+import net.deadlydiamond98.items.swords.MasterSword;
+import net.deadlydiamond98.items.arrows.BombArrow;
+import net.deadlydiamond98.items.arrows.SilverArrow;
+import net.deadlydiamond98.items.bomb.regular_bombs.BombItem;
+import net.deadlydiamond98.items.bomb.BombchuItem;
+import net.deadlydiamond98.items.bomb.DekuNutItem;
+import net.deadlydiamond98.items.bomb.regular_bombs.RemoteBombItem;
+import net.deadlydiamond98.items.bomb.regular_bombs.SuperBombItem;
+import net.deadlydiamond98.items.boomerang.IronBoomerangItem;
+import net.deadlydiamond98.items.boomerang.MagicBoomerangItem;
+import net.deadlydiamond98.items.boomerang.WoodBoomerangItem;
+import net.deadlydiamond98.items.bundle.BombBag;
+import net.deadlydiamond98.items.bundle.CustomBundle;
+import net.deadlydiamond98.items.manaitems.*;
+import net.deadlydiamond98.items.manaitems.magicpower.MagicPowder;
+import net.deadlydiamond98.items.manaitems.restoring.MagicCandy;
+import net.deadlydiamond98.items.manaitems.restoring.MagicJar;
+import net.deadlydiamond98.items.manaitems.restoring.StarFragment;
+import net.deadlydiamond98.items.manaitems.restoring.ZeldaMagicFood;
+import net.deadlydiamond98.items.shields.HylianShieldItem;
+import net.deadlydiamond98.items.manaitems.wearable.DefensiveRing;
+import net.deadlydiamond98.items.manaitems.wearable.FairyBell;
+import net.deadlydiamond98.items.manaitems.wearable.JumpPendant;
+import net.deadlydiamond98.items.manaitems.wearable.MagicPendant;
+import net.deadlydiamond98.items.other.*;
+import net.deadlydiamond98.util.sounds.ZeldaSounds;
 import net.deadlydiamond98.util.ZeldaTags;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroupEntries;
@@ -107,15 +110,12 @@ public class ZeldaItems {
     public static final Item Better_Bomb_Bag = registerItem("better_bomb_bag", new BombBag(
             new FabricItemSettings().maxCount(1),128,
             List.of(ZeldaTags.Items.Bombs)));
-    public static final Item Quiver = registerItem("quiver", new Quiver(
+    public static final Item Quiver = registerItem("quiver", new CustomBundle(
             new FabricItemSettings().maxCount(1),160,
             List.of(ItemTags.ARROWS)));
-    public static final Item Better_Quiver = registerItem("better_quiver", new Quiver(
+    public static final Item Better_Quiver = registerItem("better_quiver", new CustomBundle(
             new FabricItemSettings().maxCount(1),320,
             List.of(ItemTags.ARROWS)));
-//    public static final Item Deku_Seed_Bullet_Bag = registerItem("seed_bag", new SeedBulletBag(
-//            new FabricItemSettings().maxCount(1),640,
-//            List.of(ZeldaTags.Items.Slingshot_Ammo)));
 
     //Arrows
     public static final Item Silver_Arrow = registerItem("silver_arrow", new SilverArrow(
@@ -307,6 +307,8 @@ public class ZeldaItems {
             ZeldaEntities.Like_Like_Entity, 0xd79c8c, 0x160407, new FabricItemSettings()));
     public static final Item Ramblin_Mushroom_Spawn_Egg = registerItem("ramblin_mushroom_spawn_egg", new SpawnEggItem(
             ZeldaEntities.Ramblin_Mushroom_Entity, 0xa00f10, 0xffffff, new FabricItemSettings()));
+    public static final Item Armos_Spawn_Egg = registerItem("armos_spawn_egg", new SpawnEggItem(
+            ZeldaEntities.Armos_Entity, 0x4d4d55, 0xfad64a, new FabricItemSettings()));
 
 
 
@@ -324,8 +326,9 @@ public class ZeldaItems {
         entry.add(Blue_Tektite_Spawn_Egg);
         entry.add(Octorok_Spawn_Egg);
         entry.add(Blue_Octorok_Spawn_Egg);
-        entry.add(Like_Like_Spawn_Egg);
+//        entry.add(Like_Like_Spawn_Egg);
         entry.add(Ramblin_Mushroom_Spawn_Egg);
+        entry.add(Armos_Spawn_Egg);
     }
     public static void registerItems() {
         ZeldaCraft.LOGGER.debug("Registering Items for" + ZeldaCraft.MOD_ID);

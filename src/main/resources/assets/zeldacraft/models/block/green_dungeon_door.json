@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/block",
+  "textures": {
+    "particle": "zeldacraft:block/doors_for_particles/green_dungeon_door"
+  },
+  "elements": []
+}

@@ -7,8 +7,10 @@ import net.deadlydiamond98.blocks.loot.LootPot;
 import net.deadlydiamond98.blocks.loot.LootSkullBlock;
 import net.deadlydiamond98.blocks.loot.WitheredLootSkullBlock;
 import net.deadlydiamond98.blocks.other.BombFlower;
+import net.deadlydiamond98.blocks.other.MagicWorkbench;
 import net.deadlydiamond98.blocks.other.PedestalBlock;
 import net.deadlydiamond98.blocks.other.SomariaBlock;
+import net.deadlydiamond98.blocks.redstoneish.WarpTile;
 import net.deadlydiamond98.blocks.redstoneish.onoff.OnOffBlock;
 import net.deadlydiamond98.blocks.redstoneish.onoff.CrystalSwitch;
 import net.deadlydiamond98.blocks.dungeon.DungeonciteBlockPallet;
@@ -42,54 +44,10 @@ public class ZeldaBlocks {
     public static final Block Plain_Pot = registerBlock("plain_pot",
             new LootPot(FabricBlockSettings.copyOf(Blocks.DECORATED_POT).strength(0.3F, 0.0F)
                     .sounds(BlockSoundGroup.DECORATED_POT_SHATTER).nonOpaque().breakInstantly()));
-    public static final Block Red_Pot = registerBlock("red_pot",
-            new LootPot(FabricBlockSettings.copyOf(Blocks.DECORATED_POT).strength(0.3F, 0.0F)
-                    .sounds(BlockSoundGroup.DECORATED_POT_SHATTER).nonOpaque().breakInstantly()));
-    public static final Block Orange_Pot = registerBlock("orange_pot",
-            new LootPot(FabricBlockSettings.copyOf(Blocks.DECORATED_POT).strength(0.3F, 0.0F)
-                    .sounds(BlockSoundGroup.DECORATED_POT_SHATTER).nonOpaque().breakInstantly()));
-    public static final Block Yellow_Pot = registerBlock("yellow_pot",
-            new LootPot(FabricBlockSettings.copyOf(Blocks.DECORATED_POT).strength(0.3F, 0.0F)
-                    .sounds(BlockSoundGroup.DECORATED_POT_SHATTER).nonOpaque().breakInstantly()));
-    public static final Block Green_Pot = registerBlock("green_pot",
-            new LootPot(FabricBlockSettings.copyOf(Blocks.DECORATED_POT).strength(0.3F, 0.0F)
-                    .sounds(BlockSoundGroup.DECORATED_POT_SHATTER).nonOpaque().breakInstantly()));
-    public static final Block Lime_Pot = registerBlock("lime_pot",
-            new LootPot(FabricBlockSettings.copyOf(Blocks.DECORATED_POT).strength(0.3F, 0.0F)
-                    .sounds(BlockSoundGroup.DECORATED_POT_SHATTER).nonOpaque().breakInstantly()));
-    public static final Block Blue_Pot = registerBlock("blue_pot",
-            new LootPot(FabricBlockSettings.copyOf(Blocks.DECORATED_POT).strength(0.3F, 0.0F)
-                    .sounds(BlockSoundGroup.DECORATED_POT_SHATTER).nonOpaque().breakInstantly()));
-    public static final Block Cyan_Pot = registerBlock("cyan_pot",
-            new LootPot(FabricBlockSettings.copyOf(Blocks.DECORATED_POT).strength(0.3F, 0.0F)
-                    .sounds(BlockSoundGroup.DECORATED_POT_SHATTER).nonOpaque().breakInstantly()));
-    public static final Block Light_Blue_Pot = registerBlock("light_blue_pot",
-            new LootPot(FabricBlockSettings.copyOf(Blocks.DECORATED_POT).strength(0.3F, 0.0F)
-                    .sounds(BlockSoundGroup.DECORATED_POT_SHATTER).nonOpaque().breakInstantly()));
-    public static final Block Purple_Pot = registerBlock("purple_pot",
-            new LootPot(FabricBlockSettings.copyOf(Blocks.DECORATED_POT).strength(0.3F, 0.0F)
-                    .sounds(BlockSoundGroup.DECORATED_POT_SHATTER).nonOpaque().breakInstantly()));
-    public static final Block Magenta_Pot = registerBlock("magenta_pot",
-            new LootPot(FabricBlockSettings.copyOf(Blocks.DECORATED_POT).strength(0.3F, 0.0F)
-                    .sounds(BlockSoundGroup.DECORATED_POT_SHATTER).nonOpaque().breakInstantly()));
-    public static final Block Pink_Pot = registerBlock("pink_pot",
-            new LootPot(FabricBlockSettings.copyOf(Blocks.DECORATED_POT).strength(0.3F, 0.0F)
-                    .sounds(BlockSoundGroup.DECORATED_POT_SHATTER).nonOpaque().breakInstantly()));
-    public static final Block White_Pot = registerBlock("white_pot",
-            new LootPot(FabricBlockSettings.copyOf(Blocks.DECORATED_POT).strength(0.3F, 0.0F)
-                    .sounds(BlockSoundGroup.DECORATED_POT_SHATTER).nonOpaque().breakInstantly()));
-    public static final Block Gray_Pot = registerBlock("gray_pot",
-            new LootPot(FabricBlockSettings.copyOf(Blocks.DECORATED_POT).strength(0.3F, 0.0F)
-                    .sounds(BlockSoundGroup.DECORATED_POT_SHATTER).nonOpaque().breakInstantly()));
-    public static final Block Light_Gray_Pot = registerBlock("light_gray_pot",
-            new LootPot(FabricBlockSettings.copyOf(Blocks.DECORATED_POT).strength(0.3F, 0.0F)
-                    .sounds(BlockSoundGroup.DECORATED_POT_SHATTER).nonOpaque().breakInstantly()));
-    public static final Block Black_Pot = registerBlock("black_pot",
-            new LootPot(FabricBlockSettings.copyOf(Blocks.DECORATED_POT).strength(0.3F, 0.0F)
-                    .sounds(BlockSoundGroup.DECORATED_POT_SHATTER).nonOpaque().breakInstantly()));
-    public static final Block Brown_Pot = registerBlock("brown_pot",
-            new LootPot(FabricBlockSettings.copyOf(Blocks.DECORATED_POT).strength(0.3F, 0.0F)
-                    .sounds(BlockSoundGroup.DECORATED_POT_SHATTER).nonOpaque().breakInstantly()));
+
+    public static final DyedBlocks Loot_Pots = new DyedBlocks("pot",
+            () -> new LootPot(FabricBlockSettings.copyOf(Blocks.DECORATED_POT).strength(0.3F, 0.0F)
+            .sounds(BlockSoundGroup.DECORATED_POT_SHATTER).nonOpaque().breakInstantly()));
 
     public static final Block Loot_Skull = registerBlock("loot_skull",
             new LootSkullBlock(FabricBlockSettings.copyOf(Blocks.BONE_BLOCK).strength(0.3F, 0.0F)
@@ -143,6 +101,9 @@ public class ZeldaBlocks {
     public static final Block Blue_Dungeon_Door = registerBlock("blue_dungeon_door",
             new DungeonDoor(FabricBlockSettings.copyOf(Blocks.SPRUCE_PLANKS).strength(1.5F, 1200.0F)
                     .sounds(BlockSoundGroup.HANGING_SIGN).nonOpaque().notSolid(), DoorColor.BLUE));
+    public static final Block Green_Dungeon_Door = registerBlock("green_dungeon_door",
+            new DungeonDoor(FabricBlockSettings.copyOf(Blocks.SPRUCE_PLANKS).strength(1.5F, 1200.0F)
+                    .sounds(BlockSoundGroup.HANGING_SIGN).nonOpaque().notSolid(), DoorColor.GREEN));
 
     public static final Block Opening_Dungeon_Door = registerBlock("auto_dungeon_door",
             new AutoDungeonDoor(FabricBlockSettings.copyOf(Blocks.SPRUCE_PLANKS).strength(1.5F, 1200.0F)
@@ -153,6 +114,16 @@ public class ZeldaBlocks {
     public static final Block Blue_Opening_Dungeon_Door = registerBlock("blue_auto_dungeon_door",
             new AutoDungeonDoor(FabricBlockSettings.copyOf(Blocks.SPRUCE_PLANKS).strength(1.5F, 1200.0F)
                     .sounds(BlockSoundGroup.HANGING_SIGN).nonOpaque().notSolid(), DoorColor.BLUE));
+    public static final Block Green_Opening_Dungeon_Door = registerBlock("green_auto_dungeon_door",
+            new AutoDungeonDoor(FabricBlockSettings.copyOf(Blocks.SPRUCE_PLANKS).strength(1.5F, 1200.0F)
+                    .sounds(BlockSoundGroup.HANGING_SIGN).nonOpaque().notSolid(), DoorColor.GREEN));
+
+    // Warps
+
+    public static final DyedBlocks Warp_Tiles = new DyedBlocks("warp_tile",
+            () -> new WarpTile(FabricBlockSettings.copyOf(Blocks.STONE).strength(1.5F, 6.0F)
+            .sounds(BlockSoundGroup.STONE).nonOpaque().notSolid()));
+
 
     // Pedestals
 
@@ -162,7 +133,7 @@ public class ZeldaBlocks {
 
     // Dungeoncite
 
-    public static final DungeonciteBlockPallet Brown_Dungeoncite = new DungeonciteBlockPallet("brown", "zeldacraft:miasi");
+    public static final DungeonciteBlockPallet Brown_Dungeoncite = new DungeonciteBlockPallet("brown", "zeldacraft:boss_defeat");
 
     // Other
 
@@ -181,15 +152,10 @@ public class ZeldaBlocks {
                             30, 1200.0F)
                     .sounds(BlockSoundGroup.DEEPSLATE).requiresTool(), UniformIntProvider.create(3, 7)));
 
-//    public static final Block Magic_Workbench = registerBlock("magic_workbench",
-//            new MagicWorkbench(FabricBlockSettings.copyOf(Blocks.SMITHING_TABLE).strength(
-//                            2.0F, 3.0F)
-//                    .sounds(BlockSoundGroup.WOOD).requiresTool()));
-
-
-
-
-
+    public static final Block Magic_Workbench = registerBlock("magic_workbench",
+            new MagicWorkbench(FabricBlockSettings.copyOf(Blocks.SMITHING_TABLE).strength(
+                            2.0F, 3.0F)
+                    .sounds(BlockSoundGroup.WOOD)));
 
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

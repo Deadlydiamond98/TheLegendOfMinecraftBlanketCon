@@ -58,6 +58,17 @@ public interface ISurfaceSticker extends IRaycast {
         private boolean is(FloorAttachState state) {
             return this == state;
         }
+
+        @Nullable
+        public static FloorAttachState getFromDirection(Direction direction) {
+            for (FloorAttachState state : values()) {
+                if (state.direction == direction) {
+                    return state;
+                }
+            }
+            return null;
+        }
+
     }
 
     default FloorAttachState changeSide(Direction direction) {

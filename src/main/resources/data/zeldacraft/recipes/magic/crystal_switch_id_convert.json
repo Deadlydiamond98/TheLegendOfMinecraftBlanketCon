@@ -1,0 +1,17 @@
+{
+  "type": "zeldacraft:magic_workbench",
+  "pattern": [
+    "G"
+  ],
+  "key": {
+    "G": {
+      "item": "zeldacraft:crystal_switch"
+    }
+  },
+  "result": {
+    "item": "zeldacraft:crystal_switch",
+    "count": 1
+  },
+  "bindable_id": true,
+  "mana_cost": 0
+}

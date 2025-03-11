@@ -12,6 +12,7 @@ import net.minecraft.client.render.entity.model.EntityModelLayer;
 import net.minecraft.client.render.entity.model.SinglePartEntityModel;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.MathHelper;
 
 public class RamblinMushroomModel extends SinglePartEntityModel<RamblinMushroomEntity> {
 	public static final EntityModelLayer LAYER_LOCATION = new EntityModelLayer(new Identifier(ZeldaCraft.MOD_ID, "ramblin_mushroom_entity"), "main");
@@ -49,6 +50,9 @@ public class RamblinMushroomModel extends SinglePartEntityModel<RamblinMushroomE
 
 	@Override
 	public void setAngles(RamblinMushroomEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+		this.legl.pitch = MathHelper.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
+		this.legr.pitch = -this.legl.pitch;
+		this.body.roll = MathHelper.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount * 0.1f;
 	}
 
 	@Override

@@ -1,0 +1,23 @@
+{
+  "display": {
+    "icon": {
+      "item": "zeldacraft:loot_grass"
+    },
+    "title": {
+      "translate": "advancements.zeldacraft.boss_defeat"
+    },
+    "description": {
+      "translate": "advancements.zeldacraft.boss_defeat.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "parent": "zeldacraft:rootzelda",
+  "criteria": {
+    "requirement": {
+      "trigger": "zeldacraft:boss_defeat"
+    }
+  }
+}

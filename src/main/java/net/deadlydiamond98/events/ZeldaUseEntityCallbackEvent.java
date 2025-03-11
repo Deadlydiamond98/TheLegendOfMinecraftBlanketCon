@@ -1,6 +1,6 @@
 package net.deadlydiamond98.events;
 
-import net.deadlydiamond98.entities.monsters.FairyEntity;
+import net.deadlydiamond98.entities.fairy.FairyEntity;
 import net.deadlydiamond98.items.ZeldaItems;
 import net.fabricmc.fabric.api.event.player.UseEntityCallback;
 import net.minecraft.entity.Entity;

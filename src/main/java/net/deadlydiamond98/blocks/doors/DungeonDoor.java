@@ -3,8 +3,8 @@ package net.deadlydiamond98.blocks.doors;
 import net.deadlydiamond98.blocks.ZeldaBlocks;
 import net.deadlydiamond98.blocks.entities.ZeldaBlockEntities;
 import net.deadlydiamond98.blocks.entities.doors.DungeonDoorEntity;
-import net.deadlydiamond98.sounds.ZeldaSounds;
-import net.deadlydiamond98.util.interfaces.block.Lockable;
+import net.deadlydiamond98.util.sounds.ZeldaSounds;
+import net.deadlydiamond98.util.interfaces.block.ILockable;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
@@ -30,7 +30,7 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
-public class DungeonDoor extends BlockWithEntity implements Lockable {
+public class DungeonDoor extends BlockWithEntity implements ILockable {
 
     // Collision Shapes
     protected static final VoxelShape NORTH_SOUTH_SHAPE = Block.createCuboidShape(0.0, 0.0, 6.0, 16.0, 16.0, 10.0);

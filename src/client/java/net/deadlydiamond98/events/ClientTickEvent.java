@@ -20,10 +20,8 @@ import org.lwjgl.glfw.GLFW;
 public class ClientTickEvent {
     public static final String ZELDACRAFT_KEY_CATEGORY = "key.category.zeldacraft.zeldacraftkeys";
     public static final String Trinket_Neck_Key = "key.zeldacraft.trinketneck";
-    public static final String Trinket_Back_Key = "key.zeldacraft.trinketback";
 
     public static KeyBinding trinketNeck;
-    public static KeyBinding trinketBack;
 
     public static boolean attackKeyWasPressed = false;
 
@@ -34,21 +32,16 @@ public class ClientTickEvent {
                 return;
             }
 
-            // This checks for left clicks/attacking
-
             if (ZeldaCraft.isModLoaded("bettercombat")) {
                 attackKeyWasPressed = false;
             }
 
             if (client.options.attackKey.isPressed()) {
                 if (!attackKeyWasPressed) {
-                    ZeldaClientPackets.sendSwordSwingPacket(); // Magic/Master sword functionality
+                    ZeldaClientPackets.sendSwordSwingPacket();
                     attackKeyWasPressed = true;
                 }
 
-                // Loot grass cutting is handled here, as checking for block breaking w/out fully breaking
-                // the block isn't fully possible, check on start breaking works, but doesn't work 100%
-                // when holding break
                 if (client.crosshairTarget != null && client.crosshairTarget.getType() == HitResult.Type.BLOCK) {
                     if (client.world.getBlockState((((BlockHitResult) client.crosshairTarget).getBlockPos())).isOf(ZeldaBlocks.Loot_Grass)) {
                         ZeldaClientPackets.sendSmashLootGrassPacket(((BlockHitResult) client.crosshairTarget).getBlockPos());
@@ -61,13 +54,6 @@ public class ClientTickEvent {
 
             if (trinketNeck.wasPressed()) {
                 ZeldaClientPackets.sendNeckTrinketPacket();
-            }
-            if (trinketBack.wasPressed()) {
-                ZeldaClientPackets.sendBackTrinketPacket();
-                TrinketComponent trinket = TrinketsApi.getTrinketComponent(client.player).get();
-                if (trinket.isEquipped(ZeldaItems.Quiver) || trinket.isEquipped(ZeldaItems.Better_Quiver)) {
-                    client.player.playSound(SoundEvents.ITEM_BUNDLE_INSERT, 0.8F, 0.8F + client.player.getWorld().getRandom().nextFloat() * 0.4F);
-                }
             }
         });
     }
@@ -83,12 +69,6 @@ public class ClientTickEvent {
                 Trinket_Neck_Key,
                 InputUtil.Type.KEYSYM,
                 GLFW.GLFW_KEY_R,
-                ZELDACRAFT_KEY_CATEGORY
-        ));
-        trinketBack = KeyBindingHelper.registerKeyBinding(new KeyBinding(
-                Trinket_Back_Key,
-                InputUtil.Type.KEYSYM,
-                GLFW.GLFW_KEY_V,
                 ZELDACRAFT_KEY_CATEGORY
         ));
     }

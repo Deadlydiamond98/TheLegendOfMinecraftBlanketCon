@@ -1,6 +1,7 @@
 package net.deadlydiamond98.renderer.entity;
 
 import net.deadlydiamond98.entities.projectiles.HookshotEntity;
+import net.deadlydiamond98.items.other.HookshotItem;
 import net.deadlydiamond98.model.entity.HookshotHeadModel;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.*;
@@ -9,15 +10,18 @@ import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
+import net.minecraft.util.Arm;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RotationAxis;
 import net.minecraft.util.math.Vec3d;
 import org.joml.Matrix3f;
 import org.joml.Matrix4f;
 
-public class HookshotRenderer extends EntityRenderer<HookshotEntity> {
+public class HookshotRenderer extends EntityRenderer<HookshotEntity> implements ChainRender{
     private static final Identifier TEXTURE = new Identifier("minecraft", "textures/block/anvil.png");
-    private static final Identifier CHAIN_TEXTURE = new Identifier("minecraft", "textures/block/chain.png");
     private final HookshotHeadModel<HookshotEntity> entityModel;
     public HookshotRenderer(EntityRendererFactory.Context ctx) {
         super(ctx);
@@ -38,21 +42,83 @@ public class HookshotRenderer extends EntityRenderer<HookshotEntity> {
             matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees(entity.getPitch()));
             matrices.translate(0, -0.75f, 0);
             VertexConsumer vertexConsumer = vertexConsumers.getBuffer(this.entityModel.getLayer(getTexture(entity)));
-            this.entityModel.render(matrices, vertexConsumer, brightness, OverlayTexture.DEFAULT_UV, 1.0F, 1.0F, 1.0F, 1.0F);
+            this.entityModel.render(matrices, vertexConsumer, brightness, OverlayTexture.DEFAULT_UV, 1, 1, 1, 1);
             matrices.pop();
 
             //Chain Rendering
+            int handSide = (player.getMainArm() == Arm.RIGHT) ? 1 : -1;
+
+            float bodyYawRadians = MathHelper.lerp(tickDelta, player.prevBodyYaw, player.bodyYaw) * 0.017453292f;
+
+            double sinYaw = Math.sin(bodyYawRadians);
+            double cosYaw = Math.cos(bodyYawRadians);
+            double forwardOffset = 0.6;
+            double sideOffset = handSide * 0.35;
+            double downOffset;
+
+            double startX = MathHelper.lerp(tickDelta, player.prevX, player.getX());
+            double startY = MathHelper.lerp(tickDelta, player.prevY, player.getY()) + player.getStandingEyeHeight();
+            double startZ = MathHelper.lerp(tickDelta, player.prevZ, player.getZ());
+
+            if ((this.dispatcher.gameOptions == null || this.dispatcher.gameOptions.getPerspective().isFirstPerson()) && player == MinecraftClient.getInstance().player) {
+
+                downOffset = -0.625;
+
+                float h = player.getHandSwingProgress(tickDelta);
+                float k = MathHelper.sin(MathHelper.sqrt(h) * (float) Math.PI);
+
+                double fov = 960.0 / (double)this.dispatcher.gameOptions.getFov().getValue();
+                Vec3d vec3d = this.dispatcher.camera.getProjection().getPosition((float)handSide * 0.75f, (float) downOffset);
+
+                vec3d = vec3d.multiply(fov - 3.5);
+
+                vec3d = vec3d.rotateY(-k * 0.5f);
+                vec3d = vec3d.rotateX(k * 0.7f);
+
+                startX += vec3d.x;
+                startY += vec3d.y;
+                startZ += vec3d.z;
+            }
+            else {
+                downOffset = 0.725;
+
+                if (player.isInSneakingPose()) {
+                    downOffset += 0.1875;
+                    forwardOffset -= 0.15;
+                }
+
+                startX = MathHelper.lerp(tickDelta, player.prevX, player.getX())
+                        - cosYaw * sideOffset
+                        - sinYaw * forwardOffset;
+                startY = player.prevY + (double) player.getStandingEyeHeight()
+                        + (player.getY() - player.prevY) * tickDelta
+                        - downOffset;
+                startZ = MathHelper.lerp(tickDelta, player.prevZ, player.getZ())
+                        - sinYaw * sideOffset
+                        + cosYaw * forwardOffset;
+            }
+
+            double endX = MathHelper.lerp(tickDelta, entity.prevX, entity.getX());
+            double endY = MathHelper.lerp(tickDelta, entity.prevY, entity.getY()) + 0.25;
+            double endZ = MathHelper.lerp(tickDelta, entity.prevZ, entity.getZ());
+
+            Vec3d headPos = entity.getLerpedPos(tickDelta).add(0, 0.25, 0);
+
+
+            double chainDx = startX - headPos.x;
+            double chainDy = startY - headPos.y;
+            double chainDz = startZ - headPos.z;
+
             matrices.push();
-            Vec3d handPos = player.getLerpedPos(tickDelta).add(0, player.getEyeHeight(player.getPose()) - 0.6, 0)
-                    .add(player.getRotationVec(tickDelta).normalize().crossProduct(new Vec3d(0, 1, 0))
-                            .multiply(0.5));
+            matrices.translate(
+                    endX - MathHelper.lerp(tickDelta, entity.prevX, entity.getX()),
+                    endY - MathHelper.lerp(tickDelta, entity.prevY, entity.getY()),
+                    endZ - MathHelper.lerp(tickDelta, entity.prevZ, entity.getZ())
+            );
 
-            Vec3d playerPos = handPos.subtract(entity.getLerpedPos(tickDelta));
-            Vec3d headPos = entity.getLerpedPos(tickDelta).add(0, 0.2, 0).subtract(entity.getLerpedPos(tickDelta)).subtract(playerPos);
+            VertexConsumer chainConsumer = vertexConsumers.getBuffer(RenderLayer.getEntityTranslucent(getChainTexture()));
 
-            VertexConsumer vertexConsumerChain = vertexConsumers.getBuffer(RenderLayer.getEntityTranslucent(CHAIN_TEXTURE));
-            matrices.translate(playerPos.x, playerPos.y, playerPos.z);
-            renderChain(headPos, matrices, vertexConsumerChain, brightness, OverlayTexture.DEFAULT_UV);
+            renderChain(new Vec3d(chainDx, chainDy, chainDz), matrices, chainConsumer, 15728880, OverlayTexture.DEFAULT_UV);
             matrices.pop();
         }
     }
@@ -60,32 +126,6 @@ public class HookshotRenderer extends EntityRenderer<HookshotEntity> {
     @Override
     public boolean shouldRender(HookshotEntity entity, Frustum frustum, double x, double y, double z) {
         return true;
-    }
-
-    public static void renderChain(Vec3d end, MatrixStack matrices, VertexConsumer buffer, int light, int overlayCoords) {
-        double distance = end.horizontalLength();
-        float chainWidth = 3F / 16F;
-        float chainOffset = chainWidth * -0.5F;
-        float chainLength = (float) end.length();
-        matrices.push();
-        matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees((float) (Math.atan2(end.x, end.z) * (double) (180F / (float) Math.PI))));
-        matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees((float) (-(Math.atan2(end.y, distance) * (double) (180F / (float) Math.PI))) - 90.0F));
-        matrices.translate(0, -chainLength, 0);
-        MatrixStack.Entry entry = matrices.peek();
-        Matrix4f matrix4f = entry.getPositionMatrix();
-        Matrix3f matrix3f = entry.getNormalMatrix();
-        // x links
-        buffer.vertex(matrix4f, chainOffset, 0, 0).color(255, 255, 255, 255).texture((float) 0, (float) chainLength).overlay(overlayCoords).light(light).normal(matrix3f, 0.0F, -1.0F, 0.0F).next();
-        buffer.vertex(matrix4f, chainWidth + chainOffset, 0, 0).color(255, 255, 255, 255).texture((float) chainWidth, (float) chainLength).overlay(overlayCoords).light(light).normal(matrix3f, 0.0F, -1.0F, 0.0F).next();
-        buffer.vertex(matrix4f, chainWidth + chainOffset, chainLength, 0).color(255, 255, 255, 255).texture((float) chainWidth, (float) 0).overlay(overlayCoords).light(light).normal(matrix3f, 0.0F, -1.0F, 0.0F).next();
-        buffer.vertex(matrix4f, chainOffset, chainLength, 0).color(255, 255, 255, 255).texture((float) 0, (float) 0).overlay(overlayCoords).light(light).normal(matrix3f, 0.0F, -1.0F, 0.0F).next();
-        float pixelSkip = 2.5F / 16F;
-        // z links
-        buffer.vertex(matrix4f, 0, pixelSkip, chainOffset).color(255, 255, 255, 255).texture((float) chainWidth, (float) chainLength + pixelSkip).overlay(overlayCoords).light(light).normal(matrix3f, 0.0F, -1.0F, 0.0F).next();
-        buffer.vertex(matrix4f, 0, pixelSkip, chainWidth + chainOffset).color(255, 255, 255, 255).texture((float) chainWidth * 2, (float) chainLength + pixelSkip).overlay(overlayCoords).light(light).normal(matrix3f, 0.0F, -1.0F, 0.0F).next();
-        buffer.vertex(matrix4f, 0, chainLength + pixelSkip, chainWidth + chainOffset).color(255, 255, 255, 255).texture((float) chainWidth * 2, (float) pixelSkip).overlay(overlayCoords).light(light).normal(matrix3f, 0.0F, -1.0F, 0.0F).next();
-        buffer.vertex(matrix4f, 0, chainLength + pixelSkip, chainOffset).color(255, 255, 255, 255).texture((float) chainWidth, (float) pixelSkip).overlay(overlayCoords).light(light).normal(matrix3f, 0.0F, -1.0F, 0.0F).next();
-        matrices.pop();
     }
 
 

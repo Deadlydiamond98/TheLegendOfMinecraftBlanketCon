@@ -21,6 +21,7 @@
   "block.zeldacraft.crystal_switch": "Crystal Switch",
   "block.zeldacraft.on_block": "On Block",
   "block.zeldacraft.off_block": "Off Block",
+  "item.zeldacraft.switch_block.tooltip": "Block Group: (%s)",
 
   "block.zeldacraft.stone_pedestal": "Stone Sword Pedestal",
 
@@ -38,10 +39,29 @@
   "block.zeldacraft.dungeon_door": "Dungeon Door",
   "block.zeldacraft.red_dungeon_door": "Red Dungeon Door",
   "block.zeldacraft.blue_dungeon_door": "Blue Dungeon Door",
+  "block.zeldacraft.green_dungeon_door": "Green Dungeon Door",
 
   "block.zeldacraft.auto_dungeon_door": "Auto Dungeon Door",
   "block.zeldacraft.red_auto_dungeon_door": "Red Auto Dungeon Door",
   "block.zeldacraft.blue_auto_dungeon_door": "Blue Auto Dungeon Door",
+  "block.zeldacraft.green_auto_dungeon_door": "Green Auto Dungeon Door",
+
+  "block.zeldacraft.white_warp_tile": "White Warp Tile",
+  "block.zeldacraft.orange_warp_tile": "Orange Warp Tile",
+  "block.zeldacraft.magenta_warp_tile": "Magenta Warp Tile",
+  "block.zeldacraft.light_blue_warp_tile": "Light Blue Warp Tile",
+  "block.zeldacraft.yellow_warp_tile": "Yellow Warp Tile",
+  "block.zeldacraft.lime_warp_tile": "Lime Warp Tile",
+  "block.zeldacraft.pink_warp_tile": "Pink Warp Tile",
+  "block.zeldacraft.gray_warp_tile": "Gray Warp Tile",
+  "block.zeldacraft.light_gray_warp_tile": "Light Gray Warp Tile",
+  "block.zeldacraft.cyan_warp_tile": "Cyan Warp Tile",
+  "block.zeldacraft.purple_warp_tile": "Purple Warp Tile",
+  "block.zeldacraft.blue_warp_tile": "Blue Warp Tile",
+  "block.zeldacraft.brown_warp_tile": "Brown Warp Tile",
+  "block.zeldacraft.green_warp_tile": "Green Warp Tile",
+  "block.zeldacraft.red_warp_tile": "Red Warp Tile",
+  "block.zeldacraft.black_warp_tile": "Black Warp Tile",
 
   "item.zeldacraft.red_tektite_chitin": "Red Tektite Chitin",
   "item.zeldacraft.blue_tektite_chitin": "Blue Tektite Chitin",
@@ -113,6 +133,7 @@
   "block.zeldacraft.light_gray_pot": "Light Gray Pot",
   "block.zeldacraft.brown_pot": "Brown Pot",
 
+  "container.zeldacraft.magic_crafting": "Magic Crafting",
   "block.zeldacraft.magic_workbench": "Magic Workbench",
 
   "block.zeldacraft.secret_cracked_stone_bricks": "Secret Cracked Stone Bricks",
@@ -243,6 +264,8 @@
   "entity.zeldacraft.bubble": "Bubble",
   "item.zeldacraft.fairy_spawn_egg": "Fairy Spawn Egg",
   "entity.zeldacraft.fairy": "Fairy",
+  "item.zeldacraft.armos_spawn_egg": "Armos Spawn Egg",
+  "entity.zeldacraft.armos": "Armos",
   "item.zeldacraft.beamos_spawn_egg": "Beamos Spawn Egg",
   "entity.zeldacraft.beamos": "Beamos",
   "item.zeldacraft.keese_spawn_egg": "Keese Spawn Egg",
@@ -261,20 +284,27 @@
   "entity.zeldacraft.ramblin_mushroom": "Ramblin' Mushroom",
 
   "sounds.zeldacraft.falling_star": "Star Falling from Sky",
+
   "sounds.zeldacraft.fire_magic": "Fire Rod Shot",
   "sounds.zeldacraft.ice_magic": "Ice Rod Shot",
   "sounds.zeldacraft.beam_magic": "Beam Shot",
+
   "sounds.zeldacraft.sword_shoot": "Sword Beam Shot",
+
   "sounds.zeldacraft.fairy_ambient": "Fairy Ambience",
   "sounds.zeldacraft.fairy_hurt": "Fairy hurts",
   "sounds.zeldacraft.fairy_death": "Fairy dies",
+
   "sounds.zeldacraft.fairy_in": "Fairy Entering Owner's Pocket",
   "sounds.zeldacraft.fairy_out": "Fairy Exiting Owner's Pocket",
+
   "sounds.zeldacraft.navi_hello": "Navi Saying Hello",
   "sounds.zeldacraft.navi_attention": "Navi Grabbing Your Attention",
+
   "sounds.zeldacraft.tatl_attention": "Tatl Grabbing Your Attention",
   "sounds.zeldacraft.tatl_sad": "Tatl Being Depressed due to Your Absence",
   "sounds.zeldacraft.tatl_hello": "Tatl Saying Hello",
+
   "sounds.zeldacraft.hookshot_active": "Hookshot Chain Clinks",
   "sounds.zeldacraft.boomerang_in_air": "Boomerang in Air",
   "sounds.zeldacraft.boomerang_caught": "Boomerang being caught",
@@ -282,12 +312,20 @@
   "sounds.zeldacraft.tektite_hurt": "Tektite hurts",
   "sounds.zeldacraft.tektite_death": "Tektite dies",
 
+  "sounds.zeldacraft.armos_hurt": "Armos hurts",
+  "sounds.zeldacraft.armos_death": "Armos dies",
+  "sounds.zeldacraft.armos_animating": "Armos coming to life",
+
+  "sounds.zeldacraft.switch.toggle": "On Off Switch Toggled",
+
 
   "zeldacraft.midnightconfig.title": "Legend of Steve Configs",
-  "zeldacraft.midnightconfig.mobsDropShards": "Mobs can drop Emerald Shards",
+  "zeldacraft.midnightconfig.mobsDropShards": "Mobs can drop Emerald Shards, Guardian Acorns, and Pieces of Power",
   "zeldacraft.midnightconfig.hookShotAnything": "Make any block Hookshot-able",
   "zeldacraft.midnightconfig.healpgoodcompat": "Allow grass to drop hearts from Healing Pretty Good",
   "zeldacraft.midnightconfig.advancementfanfare": "Enable custom sound for advancements from The Legend of Steve",
+  "zeldacraft.midnightconfig.doMeteorShowerWeatherEvent": "Allow the Meteor Shower Weather Event to naturally happen",
+  "zeldacraft.midnightconfig.shootingStars": "Enable Shooting Stars at Night",
 
   "advancements.zeldacraft.root": "The Legend of Steve",
   "advancements.zeldacraft.root.desc": "The beginning of the Legend of Steve advancement tree",

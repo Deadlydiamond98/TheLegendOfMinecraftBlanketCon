@@ -1,15 +1,7 @@
 package net.deadlydiamond98.entities.projectiles;
 
-import net.deadlydiamond98.ZeldaCraft;
-import net.deadlydiamond98.entities.PlayerFairyCompanion;
 import net.deadlydiamond98.entities.ZeldaEntities;
-import net.deadlydiamond98.entities.monsters.FairyEntity;
-import net.deadlydiamond98.networking.ZeldaServerPackets;
 import net.deadlydiamond98.particle.ZeldaParticles;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.block.entity.EndGatewayBlockEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -22,7 +14,6 @@ import net.minecraft.entity.projectile.ProjectileUtil;
 import net.minecraft.particle.DustParticleEffect;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleTypes;
-import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.EntityHitResult;
@@ -30,10 +21,6 @@ import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import org.joml.Vector3f;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class BeamEntity extends ProjectileEntity {
     private static final TrackedData<Boolean> isLeader;

@@ -31,12 +31,15 @@ import net.deadlydiamond98.renderer.entity.monster.*;
 import net.deadlydiamond98.renderer.entity.projectile_items.BoomerangProjectileRenderer;
 import net.deadlydiamond98.renderer.entity.magic.MagicFireProjectileRenderer;
 import net.deadlydiamond98.renderer.entity.projectile_items.ZeldaArrowRenderer;
+import net.deadlydiamond98.screen.MagicWorkbenchScreen;
+import net.deadlydiamond98.screen_handlers.ZeldaScreenHandlers;
 import net.deadlydiamond98.util.interfaces.mixin.ZeldaPlayerData;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.rendering.v1.*;
 import net.minecraft.client.color.world.BiomeColors;
 import net.minecraft.client.color.world.GrassColors;
+import net.minecraft.client.gui.screen.ingame.HandledScreens;
 import net.minecraft.client.item.CompassAnglePredicateProvider;
 import net.minecraft.client.item.ModelPredicateProviderRegistry;
 import net.minecraft.client.render.RenderLayer;
@@ -76,25 +79,21 @@ public class ZeldaCraftClient implements ClientModInitializer {
 		registerTintables();
 
 		ZeldaClientCommands.register();
+
+		registerScreens();
 //		ZeldaEquipmentRedererRegistry.register();
+	}
+
+	private void registerScreens() {
+		HandledScreens.register(ZeldaScreenHandlers.MAGIC_WORKBENCH_SCREEN_HANDLER, MagicWorkbenchScreen::new);
 	}
 
 	private void registerModelPredicatees() {
 		ModelPredicateProviderRegistry.register(ZeldaItems.Quiver, new Identifier("filled"), (stack, world, entity, seed) -> {
-			if (stack.getNbt() != null && stack.getNbt().contains("filled", NbtElement.INT_TYPE)) {
-				return stack.getNbt().getInt("filled");
-			}
-			else {
-				return 0;
-			}
+			return !stack.isItemBarVisible() ? 0 : 1;
 		});
 		ModelPredicateProviderRegistry.register(ZeldaItems.Better_Quiver, new Identifier("filled"), (stack, world, entity, seed) -> {
-			if (stack.getNbt() != null && stack.getNbt().contains("filled", NbtElement.INT_TYPE)) {
-				return stack.getNbt().getInt("filled");
-			}
-			else {
-				return 0;
-			}
+			return !stack.isItemBarVisible() ? 0 : 1;
 		});
 		ModelPredicateProviderRegistry.register(ZeldaItems.Hylain_Shield, new Identifier("blocking"), ((stack, world, entity, seed) -> {
 			return entity != null && entity.isUsingItem() && entity.getActiveItem() == stack ? 1.0f : 0.0f;
@@ -146,7 +145,6 @@ public class ZeldaCraftClient implements ClientModInitializer {
 		}));
 	}
 
-
 	private void registerEntityRenderers() {
 		EntityRendererRegistry.register(ZeldaEntities.Sword_Beam, SwordBeamRenderer::new);
 		EntityRendererRegistry.register(ZeldaEntities.Shooting_Star, ShootingStarRenderer::new);
@@ -174,6 +172,7 @@ public class ZeldaCraftClient implements ClientModInitializer {
 		EntityRendererRegistry.register(ZeldaEntities.Beamos_Entity, BeamosRenderer::new);
 		EntityRendererRegistry.register(ZeldaEntities.Like_Like_Entity, LikeLikeRenderer::new);
 		EntityRendererRegistry.register(ZeldaEntities.Ramblin_Mushroom_Entity, RamblinMushroomRenderer::new);
+		EntityRendererRegistry.register(ZeldaEntities.Armos_Entity, ArmosRenderer::new);
 
 		EntityRendererRegistry.register(ZeldaEntities.Bouncy_Ball_Entity, FlyingItemEntityRenderer::new);
 		EntityRendererRegistry.register(ZeldaEntities.Baseball_Entity, FlyingItemEntityRenderer::new);
@@ -214,6 +213,7 @@ public class ZeldaCraftClient implements ClientModInitializer {
 		EntityModelLayerRegistry.registerModelLayer(OctorokEntityModel.LAYER_LOCATION, OctorokEntityModel::getTexturedModelData);
 		EntityModelLayerRegistry.registerModelLayer(LikeLikeModel.LAYER_LOCATION, LikeLikeModel::getTexturedModelData);
 		EntityModelLayerRegistry.registerModelLayer(RamblinMushroomModel.LAYER_LOCATION, RamblinMushroomModel::getTexturedModelData);
+		EntityModelLayerRegistry.registerModelLayer(ArmosEntityModel.LAYER_LOCATION, ArmosEntityModel::getTexturedModelData);
 
 		EntityModelLayerRegistry.registerModelLayer(DungeonDoorModel.LAYER_LOCATION, DungeonDoorModel::getTexturedModelData);
 		EntityModelLayerRegistry.registerModelLayer(CrystalSwitchModel.LAYER_LOCATION, CrystalSwitchModel::getTexturedModelData);

@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "zeldacraft:block/warp_tile/white_warp_tile"
+    }
+  }
+}

@@ -2,7 +2,7 @@ package net.deadlydiamond98.items;
 
 import net.deadlydiamond98.ZeldaCraft;
 import net.deadlydiamond98.blocks.ZeldaBlocks;
-import net.deadlydiamond98.util.FairyColorUtil;
+import net.deadlydiamond98.util.FairyUtil;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
@@ -18,7 +18,7 @@ public class ZeldaItemsTab {
             FabricItemGroup.builder().displayName(Text.translatable("itemgroup.zeldacraft_items"))
                     .icon(ZeldaItems.Master_Sword::getDefaultStack).entries((displayContext, entry) -> {
                         //Swords
-                        entry.add(ZeldaItems.Tesing_Rod);
+//                        entry.add(ZeldaItems.Tesing_Rod);
                         entry.add(ZeldaItems.Kokiri_Sword);
                         entry.add(ZeldaItems.Magic_Sword);
                         entry.add(ZeldaItems.Master_Sword);
@@ -72,7 +72,7 @@ public class ZeldaItemsTab {
                         entry.add(ZeldaItems.Blue_Ring);
                         entry.add(ZeldaItems.Fairy_Bell);
                         entry.add(ZeldaItems.Shield_Pendant);
-                        entry.add(ZeldaItems.Jump_Pendant);
+//                        entry.add(ZeldaItems.Jump_Pendant);
                         entry.add(ZeldaItems.Heart_Pendant);
                         entry.add(ZeldaItems.Fairy_Pendant);
                         //Consumables
@@ -94,7 +94,7 @@ public class ZeldaItemsTab {
                         entry.add(ZeldaItems.Gold_Lock);
                         entry.add(ZeldaItems.Boss_Lock);
 
-                        entry.add(ZeldaItems.Master_Key);
+//                        entry.add(ZeldaItems.Master_Key);
                         entry.add(ZeldaItems.Star_Compass);
                         //Misc / Materials
                         entry.add(ZeldaItems.Music_Disc_Legend);
@@ -114,8 +114,8 @@ public class ZeldaItemsTab {
 //                        entry.add(ZeldaItems.Kokiri_Cloth);
 //                        entry.add(ZeldaItems.Goron_Cloth);
 //                        entry.add(ZeldaItems.Zora_Cloth);
-                        for (String color : FairyColorUtil.colors) {
-                            if (!color.equals(FairyColorUtil.colors.get(0))) {
+                        for (String color : FairyUtil.colors) {
+                            if (!color.equals(FairyUtil.colors.get(0))) {
                                 ItemStack stack = new ItemStack(ZeldaItems.Fairy_Bottle);
                                 NbtCompound nbt = new NbtCompound();
                                 nbt.putString("fairycolor", color);

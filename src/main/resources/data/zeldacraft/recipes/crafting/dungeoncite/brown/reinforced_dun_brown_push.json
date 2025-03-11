@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "zeldacraft:reinforced_brown_dungeoncite"
+    }
+  ],
+  "result": {
+    "item": "zeldacraft:brown_dungeoncite_push_block",
+    "count": 1
+  }
+}

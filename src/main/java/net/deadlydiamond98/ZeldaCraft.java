@@ -6,6 +6,7 @@ import net.deadlydiamond98.blocks.ZeldaBlocksTab;
 import net.deadlydiamond98.blocks.entities.ZeldaBlockEntities;
 import net.deadlydiamond98.commands.ZeldaServerCommands;
 import net.deadlydiamond98.enchantments.ZeldaEnchantments;
+import net.deadlydiamond98.entities.fairy.FairyEntity;
 import net.deadlydiamond98.entities.monsters.*;
 import net.deadlydiamond98.entities.ZeldaEntities;
 import net.deadlydiamond98.entities.monsters.keese.KeeseEntity;
@@ -21,9 +22,11 @@ import net.deadlydiamond98.items.ZeldaItems;
 import net.deadlydiamond98.items.ZeldaItemsTab;
 import net.deadlydiamond98.networking.ZeldaServerPackets;
 import net.deadlydiamond98.particle.ZeldaParticles;
-import net.deadlydiamond98.sounds.ZeldaSounds;
+import net.deadlydiamond98.recipes.ZeldaRecipes;
+import net.deadlydiamond98.screen_handlers.ZeldaScreenHandlers;
+import net.deadlydiamond98.util.sounds.ZeldaSounds;
 import net.deadlydiamond98.statuseffects.ZeldaStatusEffects;
-import net.deadlydiamond98.util.ZeldaAdvancementCriterion;
+import net.deadlydiamond98.util.advancment.ZeldaAdvancementCriterion;
 import net.deadlydiamond98.util.ZeldaConfig;
 import net.deadlydiamond98.util.ZeldaLootTables;
 import net.deadlydiamond98.util.ZeldaPotionRecipes;
@@ -56,11 +59,13 @@ public class ZeldaCraft implements ModInitializer {
 		ZeldaEntities.registerEntities();
 		registerEntityAttributes();
 		ZeldaBlockEntities.registerBlockEntities();
+		ZeldaScreenHandlers.registerScreenHandlers();
 		ZeldaServerPackets.registerS2CPackets();
 		ZeldaParticles.registerParticles();
 		ZeldaStatusEffects.registerStatusEffects();
 		ZeldaEnchantments.registerEnchants();
 		ZeldaPotionRecipes.registerBrewingRecipes();
+		ZeldaRecipes.registerRecipes();
 
 		//Events
 		ZeldaSeverTickEvent.registerTickEvent();
@@ -91,6 +96,7 @@ public class ZeldaCraft implements ModInitializer {
 		FabricDefaultAttributeRegistry.register(ZeldaEntities.Blue_Octorok_Entity, BlueOctorokEntity.createCustomAttributes());
 		FabricDefaultAttributeRegistry.register(ZeldaEntities.Like_Like_Entity, LikeLikeEntity.createCustomAttributes());
 		FabricDefaultAttributeRegistry.register(ZeldaEntities.Ramblin_Mushroom_Entity, RamblinMushroomEntity.createCustomAttributes());
+		FabricDefaultAttributeRegistry.register(ZeldaEntities.Armos_Entity, ArmosEntity.createCustomAttributes());
 	}
 
 	public static boolean isModLoaded(String modid) {

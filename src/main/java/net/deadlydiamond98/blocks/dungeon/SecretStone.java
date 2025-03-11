@@ -1,6 +1,6 @@
 package net.deadlydiamond98.blocks.dungeon;
 
-import net.deadlydiamond98.sounds.ZeldaSounds;
+import net.deadlydiamond98.util.sounds.ZeldaSounds;
 import net.minecraft.block.Block;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.util.math.BlockPos;

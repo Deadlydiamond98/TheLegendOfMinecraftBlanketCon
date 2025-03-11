@@ -1,0 +1,31 @@
+{
+  "type": "zeldacraft:magic_workbench",
+  "pattern": [
+    "SSS",
+    "rEr",
+    "iIi"
+  ],
+  "key": {
+    "S": {
+      "item": "zeldacraft:stardust"
+    },
+    "r": {
+      "item": "minecraft:red_dye"
+    },
+    "E": {
+      "item": "minecraft:ender_eye"
+    },
+    "i": {
+      "item": "minecraft:iron_ingot"
+    },
+    "I": {
+      "item": "minecraft:iron_block"
+    }
+  },
+  "result": {
+    "item": "zeldacraft:red_warp_tile",
+    "count": 1
+  },
+  "bindable_id": false,
+  "mana_cost": 0
+}

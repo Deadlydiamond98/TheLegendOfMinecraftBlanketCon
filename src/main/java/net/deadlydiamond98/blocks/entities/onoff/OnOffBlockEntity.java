@@ -5,7 +5,6 @@ import net.deadlydiamond98.blocks.redstoneish.onoff.OnOffBlock;
 import net.deadlydiamond98.world.ZeldaWorldDataManager;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
@@ -44,6 +43,10 @@ public class OnOffBlockEntity extends BlockEntity {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getID() {
+        return this.id;
     }
 
     @Override

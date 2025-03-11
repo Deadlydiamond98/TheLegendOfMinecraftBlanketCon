@@ -32,30 +32,40 @@ public class BombchuEntityRenderer extends EntityRenderer<BombchuEntity> {
         Direction floor = entity.getAttachedFaceClient();
 
         switch (floor) {
-            case DOWN -> matrices.multiply(RotationAxis.NEGATIVE_Y.rotationDegrees(entity.getYaw() + 180));
+            case DOWN -> {
+                matrices.multiply(RotationAxis.NEGATIVE_Y.rotationDegrees(entity.getYaw() + 180));
+                matrices.translate(0, 0.25, 0);
+            }
             case UP -> {
                 matrices.multiply(RotationAxis.NEGATIVE_X.rotationDegrees(entity.getPitch()));
                 matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(entity.getYaw() + 180));
+                matrices.translate(0, -0.25, 0);
             }
             case NORTH -> {
                 matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees(90));
                 matrices.multiply(RotationAxis.NEGATIVE_Y.rotationDegrees(entity.getYaw() + 180));
+                matrices.translate(0, -0.01625, 0);
             }
             case SOUTH -> {
                 matrices.multiply(RotationAxis.NEGATIVE_X.rotationDegrees(90));
                 matrices.multiply(RotationAxis.NEGATIVE_Y.rotationDegrees(entity.getYaw() + 180));
+                matrices.translate(0, -0.01625, 0);
             }
             case EAST -> {
                 matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(90));
                 matrices.multiply(RotationAxis.NEGATIVE_Y.rotationDegrees(entity.getYaw() + 180));
+                matrices.translate(0, -0.01625, 0);
             }
             case WEST -> {
                 matrices.multiply(RotationAxis.NEGATIVE_Z.rotationDegrees(90));
                 matrices.multiply(RotationAxis.NEGATIVE_Y.rotationDegrees(entity.getYaw() + 180));
+                matrices.translate(0, -0.01625, 0);
             }
         }
 
         VertexConsumer vertexConsumer = vertexConsumers.getBuffer(this.entityModel.getLayer(getTexture(entity)));
+
+        this.entityModel.setAngles(entity, 0 ,0, tickDelta, 0, 0);
         this.entityModel.render(matrices, vertexConsumer, light, OverlayTexture.DEFAULT_UV, 1.0F, 1.0F, 1.0F, 1.0F);
 
         if (entity.getFuse() <= 15) {

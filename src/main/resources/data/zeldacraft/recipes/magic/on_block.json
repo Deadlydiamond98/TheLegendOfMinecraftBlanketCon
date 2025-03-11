@@ -1,0 +1,22 @@
+{
+  "type": "zeldacraft:magic_workbench",
+  "pattern": [
+    "rrr",
+    "rSr",
+    "rrr"
+  ],
+  "key": {
+    "S": {
+      "item": "zeldacraft:stardust"
+    },
+    "r": {
+      "item": "minecraft:redstone"
+    }
+  },
+  "result": {
+    "item": "zeldacraft:on_block",
+    "count": 8
+  },
+  "bindable_id": true,
+  "mana_cost": 0
+}

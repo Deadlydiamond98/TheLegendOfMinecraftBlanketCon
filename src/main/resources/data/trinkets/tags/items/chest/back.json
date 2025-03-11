@@ -1,7 +1,6 @@
 {
   "replace": false,
   "values": [
-    "zeldacraft:quiver",
-    "zeldacraft:better_quiver"
+    "#zeldacraft:quivers"
   ]
 }

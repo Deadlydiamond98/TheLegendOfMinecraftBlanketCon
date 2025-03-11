@@ -13,48 +13,49 @@ public class ZeldaBlocksTab {
             new Identifier(ZeldaCraft.MOD_ID, "zeldacraft_blocks_group"),
             FabricItemGroup.builder().displayName(Text.translatable("itemgroup.zeldacraft_blocks"))
                     .icon(() -> ZeldaBlocks.Plain_Pot.asItem().getDefaultStack()).entries((displayContext, entry) -> {
+                        //Crafting
+                        entry.add(ZeldaBlocks.Magic_Workbench);
+
                         //Lootables
                         entry.add(ZeldaBlocks.Loot_Grass);
                         entry.add(ZeldaBlocks.Plain_Pot);
-                        entry.add(ZeldaBlocks.White_Pot);
-                        entry.add(ZeldaBlocks.Light_Gray_Pot);
-                        entry.add(ZeldaBlocks.Gray_Pot);
-                        entry.add(ZeldaBlocks.Black_Pot);
-                        entry.add(ZeldaBlocks.Brown_Pot);
-                        entry.add(ZeldaBlocks.Red_Pot);
-                        entry.add(ZeldaBlocks.Orange_Pot);
-                        entry.add(ZeldaBlocks.Yellow_Pot);
-                        entry.add(ZeldaBlocks.Lime_Pot);
-                        entry.add(ZeldaBlocks.Green_Pot);
-                        entry.add(ZeldaBlocks.Cyan_Pot);
-                        entry.add(ZeldaBlocks.Light_Blue_Pot);
-                        entry.add(ZeldaBlocks.Blue_Pot);
-                        entry.add(ZeldaBlocks.Purple_Pot);
-                        entry.add(ZeldaBlocks.Magenta_Pot);
-                        entry.add(ZeldaBlocks.Pink_Pot);
+                        ZeldaBlocks.Loot_Pots.addDyedBlocksToCreative(entry);
+
                         entry.add(ZeldaBlocks.Loot_Skull);
                         entry.add(ZeldaBlocks.Withered_Loot_Skull);
+
                         //Switch
                         entry.add(ZeldaBlocks.Crystal_Switch);
                         entry.add(ZeldaBlocks.On_Block);
                         entry.add(ZeldaBlocks.Off_Block);
+
                         //Secret Cracked Bricks
                         entry.add(ZeldaBlocks.Secret_Cracked_Stone_Brick);
                         entry.add(ZeldaBlocks.Secret_Cracked_Deepslate_Brick);
                         entry.add(ZeldaBlocks.Secret_Cracked_Deepslate_Tile);
                         entry.add(ZeldaBlocks.Secret_Cracked_Nether_Brick);
                         entry.add(ZeldaBlocks.Secret_Cracked_Polished_Blackstone_Brick);
+
                         //Dungeon 1 Build Palette
                         ZeldaBlocks.Brown_Dungeoncite.addDungeonciteToCreative(entry);
+
                         //Dungeon Doors
                         entry.add(ZeldaBlocks.Dungeon_Door);
                         entry.add(ZeldaBlocks.Red_Dungeon_Door);
                         entry.add(ZeldaBlocks.Blue_Dungeon_Door);
+                        entry.add(ZeldaBlocks.Green_Dungeon_Door);
+
                         entry.add(ZeldaBlocks.Opening_Dungeon_Door);
                         entry.add(ZeldaBlocks.Red_Opening_Dungeon_Door);
                         entry.add(ZeldaBlocks.Blue_Opening_Dungeon_Door);
+                        entry.add(ZeldaBlocks.Green_Opening_Dungeon_Door);
+
+                        //Warp
+                        ZeldaBlocks.Warp_Tiles.addDyedBlocksToCreative(entry);
+
                         //Pedestals
                         entry.add(ZeldaBlocks.Stone_Pedestal);
+
                         //Material Blocks
                         entry.add(ZeldaBlocks.Master_Ore);
                         entry.add(ZeldaBlocks.Master_Block);
