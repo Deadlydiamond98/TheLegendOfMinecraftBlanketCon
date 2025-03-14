@@ -203,6 +203,21 @@ public class BubbleEntity extends HostileEntity implements Monster, IRaycast {
         this.dataTracker.set(ATTACKABLE_STATE, bool);
     }
 
+    @Override
+    public World getRaycastWorld() {
+        return this.getWorld();
+    }
+
+    @Override
+    public Vec3d getRaycastPos() {
+        return this.getPos();
+    }
+
+    @Override
+    public float getRaycastHeight() {
+        return this.getHeight();
+    }
+
     static class LookAtTargetGoal extends Goal {
         private final BubbleEntity bubble;
 

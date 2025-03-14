@@ -236,4 +236,19 @@ public class BombchuEntity extends AbstractBombEntity implements ISurfaceSticker
     private void setGravityClient(boolean bool) {
         this.dataTracker.set(GRAVITY_CLIENT, bool);
     }
+
+    @Override
+    public float getRaycastHeight() {
+        return this.getHeight();
+    }
+
+    @Override
+    public Vec3d getRaycastPos() {
+        return this.getPos();
+    }
+
+    @Override
+    public World getRaycastWorld() {
+        return this.getWorld();
+    }
 }
