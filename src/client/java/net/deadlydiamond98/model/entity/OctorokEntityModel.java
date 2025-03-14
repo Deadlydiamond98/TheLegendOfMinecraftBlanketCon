@@ -12,7 +12,7 @@ import net.minecraft.util.math.MathHelper;
 
 public class OctorokEntityModel extends SinglePartEntityModel<OctorokEntity> {
 
-	public static final EntityModelLayer LAYER_LOCATION = new EntityModelLayer(new Identifier(ZeldaCraft.MOD_ID, "octorok_entity"), "main");
+	public static final EntityModelLayer LAYER_LOCATION = new EntityModelLayer(Identifier.of(ZeldaCraft.MOD_ID, "octorok_entity"), "main");
 
 	private final ModelPart root;
 	private final ModelPart body;
@@ -69,8 +69,8 @@ public class OctorokEntityModel extends SinglePartEntityModel<OctorokEntity> {
 		this.tentaclefr.yaw = MathHelper.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount * 0.5f;
 	}
 	@Override
-	public void render(MatrixStack matrices, VertexConsumer vertexConsumer, int light, int overlay, float red, float green, float blue, float alpha) {
-		root.render(matrices, vertexConsumer, light, overlay, red, green, blue, alpha);
+	public void render(MatrixStack matrices, VertexConsumer vertices, int light, int overlay, int color) {
+		root.render(matrices, vertices, light, overlay, color);
 	}
 
 	@Override

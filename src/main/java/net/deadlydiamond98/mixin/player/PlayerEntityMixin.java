@@ -8,8 +8,10 @@ import net.deadlydiamond98.networking.ZeldaServerPackets;
 import net.deadlydiamond98.util.sounds.ZeldaSounds;
 import net.deadlydiamond98.util.interfaces.mixin.ZeldaPlayerData;
 import net.minecraft.advancement.Advancement;
+import net.minecraft.advancement.AdvancementEntry;
 import net.minecraft.entity.EntityDimensions;
 import net.minecraft.entity.EquipmentSlot;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.damage.DamageTypes;
 import net.minecraft.entity.player.ItemCooldownManager;
@@ -208,18 +210,11 @@ public abstract class PlayerEntityMixin implements ZeldaPlayerData {
         }
     }
 
-    @Inject(method = "getDimensions", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "getBaseDimensions", at = @At("HEAD"), cancellable = true)
     private void getCustomDimensions(CallbackInfoReturnable<EntityDimensions> cir) {
         if (this.isFairy()) {
-            EntityDimensions customDimensions = EntityDimensions.fixed(0.4F, 0.4F);
+            EntityDimensions customDimensions = EntityDimensions.fixed(0.4F, 0.4F).withEyeHeight(0.33f);
             cir.setReturnValue(customDimensions);
-        }
-    }
-
-    @Inject(method = "getActiveEyeHeight", at = @At("HEAD"), cancellable = true)
-    private void getCustomEyeHeight(CallbackInfoReturnable<Float> cir) {
-        if (this.isFairy()) {
-            cir.setReturnValue(0.35F);
         }
     }
 
@@ -240,7 +235,7 @@ public abstract class PlayerEntityMixin implements ZeldaPlayerData {
     }
 
     @Inject(method = "disableShield", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/PlayerEntity;clearActiveItem()V"))
-    private void shieldDurability(boolean sprinting, CallbackInfo ci) {
+    private void shieldDurability(CallbackInfo ci) {
         this.getItemCooldownManager().set(ZeldaItems.Hylain_Shield, 100);
         this.getItemCooldownManager().set(ZeldaItems.Mirror_Shield, 100);
     }
@@ -254,9 +249,7 @@ public abstract class PlayerEntityMixin implements ZeldaPlayerData {
         if (amount >= 3.0F) {
             int i = 1 + MathHelper.floor(amount);
             Hand hand = zeldacraf$self().getActiveHand();
-            livingEntityAccessor.getActiveItemStack().damage(i, zeldacraf$self(), (player) -> {
-                player.sendToolBreakStatus(hand);
-            });
+            zeldacraf$self().getMainHandStack().damage(i, zeldacraf$self(), LivingEntity.getSlotForHand(hand));
             if (livingEntityAccessor.getActiveItemStack().isEmpty()) {
                 if (hand == Hand.MAIN_HAND) {
                     zeldacraf$self().equipStack(EquipmentSlot.MAINHAND, ItemStack.EMPTY);
@@ -375,7 +368,7 @@ public abstract class PlayerEntityMixin implements ZeldaPlayerData {
                 MinecraftServer server = zeldacraf$self().getServer();
 
                 if (server != null) {
-                    Advancement advancement = server.getAdvancementLoader().get(new Identifier(advancementID));
+                    AdvancementEntry advancement = server.getAdvancementLoader().get(Identifier.of(advancementID));
 
                     if (advancement != null) {
                         boolean bl = serverPlayer.getAdvancementTracker().getProgress(advancement).isDone();

@@ -44,7 +44,7 @@ public class DungeonDoorRenderer implements BlockEntityRenderer<DungeonDoorEntit
         matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(yaw));
 
         VertexConsumer vertexConsumer = vertexConsumers.getBuffer(RenderLayer.getEntitySolid(this.getDoorTexture(entity)));
-        model.render(matrices, vertexConsumer, light, overlay, 1.0F, 1.0F, 1.0F, 1.0F);
+        model.render(matrices, vertexConsumer, light, overlay, 0xffffff);
 
         matrices.pop();
     }
@@ -62,10 +62,10 @@ public class DungeonDoorRenderer implements BlockEntityRenderer<DungeonDoorEntit
     }
 
     public Identifier getTexture(String color) {
-        return new Identifier(ZeldaCraft.MOD_ID, "textures/entity/doors/" + color + "_dungeon_door.png");
+        return Identifier.of(ZeldaCraft.MOD_ID, "textures/entity/doors/" + color + "_dungeon_door.png");
     }
 
     public Identifier getLockedTexture(String color, String lock) {
-        return new Identifier(ZeldaCraft.MOD_ID, "textures/entity/doors/" + lock + "_locked_" + color + "_dungeon_door.png");
+        return Identifier.of(ZeldaCraft.MOD_ID, "textures/entity/doors/" + lock + "_locked_" + color + "_dungeon_door.png");
     }
 }

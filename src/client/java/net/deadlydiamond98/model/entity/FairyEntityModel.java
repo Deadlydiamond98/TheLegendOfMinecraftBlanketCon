@@ -15,7 +15,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
 
 public class FairyEntityModel<T extends Entity> extends SinglePartEntityModel<T> {
-	public static final EntityModelLayer LAYER_LOCATION = new EntityModelLayer(new Identifier(ZeldaCraft.MOD_ID, "fairy_entity"), "main");
+	public static final EntityModelLayer LAYER_LOCATION = new EntityModelLayer(Identifier.of(ZeldaCraft.MOD_ID, "fairy_entity"), "main");
 	private final ModelPart root;
 	private final ModelPart body;
 	private final ModelPart left_wing;
@@ -49,9 +49,10 @@ public class FairyEntityModel<T extends Entity> extends SinglePartEntityModel<T>
 		this.right_wing.yaw = MathHelper.cos(ageInTicks * 74 * 0.005f) * 0.25f * (float) Math.PI;
 		this.left_wing.yaw = -this.right_wing.yaw;
 	}
+
 	@Override
-	public void render(MatrixStack matrices, VertexConsumer vertexConsumer, int light, int overlay, float red, float green, float blue, float alpha) {
-		body.render(matrices, vertexConsumer, light, overlay, red, green, blue, alpha);
+	public void render(MatrixStack matrices, VertexConsumer vertices, int light, int overlay, int color) {
+		body.render(matrices, vertices, light, overlay, color);
 	}
 
 	@Override

@@ -22,8 +22,8 @@ public class SwordSickStatusEffect extends StatusEffect {
     }
 
     @Override
-    public void onApplied(LivingEntity entity, AttributeContainer attributes, int amplifier) {
-        super.onApplied(entity, attributes, amplifier);
+    public void onApplied(LivingEntity entity, int amplifier) {
+        super.onApplied(entity, amplifier);
         if (entity instanceof PlayerEntity user) {
             StatusEffectInstance effectInstance = user.getStatusEffect(ZeldaStatusEffects.Sword_Sick_Status_Effect);
             if (effectInstance != null) {
@@ -38,8 +38,7 @@ public class SwordSickStatusEffect extends StatusEffect {
     }
 
     @Override
-    public void applyUpdateEffect(LivingEntity entity, int amplifier) {
-        super.applyUpdateEffect(entity, amplifier);
+    public boolean applyUpdateEffect(LivingEntity entity, int amplifier) {
         if (entity instanceof PlayerEntity user) {
             if (isSword(user.getMainHandStack().getItem())) {
                 StatusEffectInstance effectInstance = user.getStatusEffect(ZeldaStatusEffects.Sword_Sick_Status_Effect);
@@ -48,6 +47,7 @@ public class SwordSickStatusEffect extends StatusEffect {
                 }
             }
         }
+        return super.applyUpdateEffect(entity, amplifier);
     }
 
     private void applyCooldownToSwords(PlayerEntity player, int duration) {

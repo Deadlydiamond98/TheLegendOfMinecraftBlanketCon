@@ -33,15 +33,15 @@ public class IronBoomerang extends BaseBoomerangProjectile {
     private void checkForActivatableBlocks() {
         BlockPos pos = this.getBlockPos();
         for (BlockPos blockPos : BlockPos.iterate(pos.add(-1, -1, -1), pos.add(1, 1, 1))) {
-            if (this.getWorld().getBlockState(blockPos).getBlock() instanceof ButtonBlock buttonBlock) {
-                buttonBlock.powerOn(this.getWorld().getBlockState(blockPos), this.getWorld(), blockPos);
+            if (this.getWorld().getBlockState(blockPos).getBlock() instanceof ButtonBlock buttonBlock && this.getOwner() instanceof PlayerEntity player) {
+                buttonBlock.powerOn(this.getWorld().getBlockState(blockPos), this.getWorld(), blockPos, player);
                 this.activated = true;
                 this.returnBack();
                 this.getWorld().playSound(null, blockPos, SoundEvents.BLOCK_STONE_BUTTON_CLICK_ON, SoundCategory.BLOCKS, 1.0f, 1.0f);
                 break;
             }
-            if (this.getWorld().getBlockState(blockPos).getBlock() instanceof LeverBlock leverBlock) {
-                leverBlock.togglePower(this.getWorld().getBlockState(blockPos), this.getWorld(), blockPos);
+            if (this.getWorld().getBlockState(blockPos).getBlock() instanceof LeverBlock leverBlock && this.getOwner() instanceof PlayerEntity player) {
+                leverBlock.togglePower(this.getWorld().getBlockState(blockPos), this.getWorld(), blockPos, player);
                 this.activated = true;
                 this.returnBack();
                 this.getWorld().playSound(null, blockPos, SoundEvents.BLOCK_STONE_BUTTON_CLICK_ON, SoundCategory.BLOCKS, 1.0f, 1.0f);

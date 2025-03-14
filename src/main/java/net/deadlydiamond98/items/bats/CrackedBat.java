@@ -2,22 +2,21 @@ package net.deadlydiamond98.items.bats;
 
 import net.deadlydiamond98.networking.ZeldaServerPackets;
 import net.deadlydiamond98.util.sounds.ZeldaSounds;
-import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ToolMaterial;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
-import net.minecraft.world.World;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
 public class CrackedBat extends BatItem {
-    public CrackedBat(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
-        super(toolMaterial, attackDamage, attackSpeed, settings);
+
+    public CrackedBat(ToolMaterial toolMaterial, Settings settings) {
+        super(toolMaterial, settings);
     }
 
     @Override
@@ -33,8 +32,10 @@ public class CrackedBat extends BatItem {
         }
         return result;
     }
+
     @Override
-    public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
+    public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
+        super.appendTooltip(stack, context, tooltip, type);
         tooltip.add(Text.translatable("item.zeldacraft.cracked_bat.tooltip").formatted(Formatting.GREEN));
     }
 }

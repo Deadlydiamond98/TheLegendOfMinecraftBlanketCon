@@ -12,7 +12,7 @@ import net.minecraft.util.math.MathHelper;
 
 @Environment(EnvType.CLIENT)
 public class KeeseEntityModel extends SinglePartEntityModel<KeeseEntity> {
-    public static final EntityModelLayer LAYER_LOCATION = new EntityModelLayer(new Identifier(ZeldaCraft.MOD_ID, "keese_entity"), "main");
+    public static final EntityModelLayer LAYER_LOCATION = new EntityModelLayer(Identifier.of(ZeldaCraft.MOD_ID, "keese_entity"), "main");
     private final ModelPart root;
     private final ModelPart head;
     private final ModelPart body;

@@ -19,25 +19,24 @@ public class BombBag extends CustomBundle {
     }
 
 
-    @Override
-    public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
-        if (!user.isSneaking()) {
-
-            Optional<ItemStack> bombStack = CustomBundleUtil.getFirstItem(user.getStackInHand(hand));
-
-            if (bombStack.isPresent()) {
-
-                Optional<ItemStack> bomb = CustomBundleUtil.removeOneItem(user.getStackInHand(hand), bombStack.get().getItem());
-
-                if (bomb.isPresent()) {
-
-                    user.getItemCooldownManager().set(this, 40);
-                    return bomb.get().use(world, user, hand);
-                }
-
-                return TypedActionResult.fail(user.getStackInHand(hand));
-            }
-        }
-        return super.use(world, user, hand);
-    }
+//    @Override
+//    public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
+//        if (!user.isSneaking()) {
+//            Optional<ItemStack> bombStack = CustomBundleUtil.getFirstItem(user.getStackInHand(hand));
+//
+//            if (bombStack.isPresent()) {
+//
+//                Optional<ItemStack> bomb = CustomBundleUtil.removeOneItem(user.getStackInHand(hand), bombStack.get().getItem());
+//
+//                if (bomb.isPresent()) {
+//
+//                    user.getItemCooldownManager().set(this, 40);
+//                    return bomb.get().use(world, user, hand);
+//                }
+//
+//                return TypedActionResult.fail(user.getStackInHand(hand));
+//            }
+//        }
+//        return super.use(world, user, hand);
+//    }
 }

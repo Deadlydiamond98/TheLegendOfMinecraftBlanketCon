@@ -14,7 +14,7 @@ import org.joml.Matrix4f;
 
 public class BeamProjectileRenderer<T extends Entity> extends EntityRenderer<BeamEntity> {
 
-    public static final Identifier BEAM_TEXTURE = new Identifier(ZeldaCraft.MOD_ID, "textures/entity/beam.png");
+    public static final Identifier BEAM_TEXTURE = Identifier.of(ZeldaCraft.MOD_ID, "textures/entity/beam.png");
     public BeamProjectileRenderer(EntityRendererFactory.Context ctx) {
         super(ctx);
     }
@@ -36,7 +36,7 @@ public class BeamProjectileRenderer<T extends Entity> extends EntityRenderer<Bea
         VertexConsumer buffer = vertexConsumers.getBuffer(RenderLayer.getEntityTranslucent(BEAM_TEXTURE));
         MatrixStack.Entry entry = matrices.peek();
         Matrix4f matrix4f = entry.getPositionMatrix();
-        Matrix3f matrix3f = entry.getNormalMatrix();
+        MatrixStack.Entry matrix3f = matrices.peek();
 
 
         int textureIndex = entity.age % 3;
@@ -49,15 +49,15 @@ public class BeamProjectileRenderer<T extends Entity> extends EntityRenderer<Bea
 
         int emissiveLight = 15728880;
 
-        buffer.vertex(matrix4f, beamOffset, 0, 0).color(255, 255, 255, 255).texture(textureU1, textureV1).overlay(OverlayTexture.DEFAULT_UV).light(emissiveLight).normal(matrix3f, 0.0F, 0.0F, -1.0F).next();
-        buffer.vertex(matrix4f, beamWidth + beamOffset, 0, 0).color(255, 255, 255, 255).texture(textureU2, textureV1).overlay(OverlayTexture.DEFAULT_UV).light(emissiveLight).normal(matrix3f, 0.0F, 0.0F, -1.0F).next();
-        buffer.vertex(matrix4f, beamWidth + beamOffset, 1, 0).color(255, 255, 255, 255).texture(textureU2, textureV2).overlay(OverlayTexture.DEFAULT_UV).light(emissiveLight).normal(matrix3f, 0.0F, 0.0F, -1.0F).next();
-        buffer.vertex(matrix4f, beamOffset, 1, 0).color(255, 255, 255, 255).texture(textureU1, textureV2).overlay(OverlayTexture.DEFAULT_UV).light(emissiveLight).normal(matrix3f, 0.0F, 0.0F, -1.0F).next();
+        buffer.vertex(matrix4f, beamOffset, 0, 0).color(255, 255, 255, 255).texture(textureU1, textureV1).overlay(OverlayTexture.DEFAULT_UV).light(emissiveLight).normal(matrix3f, 0.0F, 0.0F, -1.0F);
+        buffer.vertex(matrix4f, beamWidth + beamOffset, 0, 0).color(255, 255, 255, 255).texture(textureU2, textureV1).overlay(OverlayTexture.DEFAULT_UV).light(emissiveLight).normal(matrix3f, 0.0F, 0.0F, -1.0F);
+        buffer.vertex(matrix4f, beamWidth + beamOffset, 1, 0).color(255, 255, 255, 255).texture(textureU2, textureV2).overlay(OverlayTexture.DEFAULT_UV).light(emissiveLight).normal(matrix3f, 0.0F, 0.0F, -1.0F);
+        buffer.vertex(matrix4f, beamOffset, 1, 0).color(255, 255, 255, 255).texture(textureU1, textureV2).overlay(OverlayTexture.DEFAULT_UV).light(emissiveLight).normal(matrix3f, 0.0F, 0.0F, -1.0F);
 
-        buffer.vertex(matrix4f, 0, 0, beamOffset).color(255, 255, 255, 255).texture(textureU1, textureV1).overlay(OverlayTexture.DEFAULT_UV).light(emissiveLight).normal(matrix3f, -1.0F, 0.0F, 0.0F).next();
-        buffer.vertex(matrix4f, 0, 0, beamWidth + beamOffset).color(255, 255, 255, 255).texture(textureU2, textureV1).overlay(OverlayTexture.DEFAULT_UV).light(emissiveLight).normal(matrix3f, -1.0F, 0.0F, 0.0F).next();
-        buffer.vertex(matrix4f, 0, 1, beamWidth + beamOffset).color(255, 255, 255, 255).texture(textureU2, textureV2).overlay(OverlayTexture.DEFAULT_UV).light(emissiveLight).normal(matrix3f, -1.0F, 0.0F, 0.0F).next();
-        buffer.vertex(matrix4f, 0, 1, beamOffset).color(255, 255, 255, 255).texture(textureU1, textureV2).overlay(OverlayTexture.DEFAULT_UV).light(emissiveLight).normal(matrix3f, -1.0F, 0.0F, 0.0F).next();
+        buffer.vertex(matrix4f, 0, 0, beamOffset).color(255, 255, 255, 255).texture(textureU1, textureV1).overlay(OverlayTexture.DEFAULT_UV).light(emissiveLight).normal(matrix3f, -1.0F, 0.0F, 0.0F);
+        buffer.vertex(matrix4f, 0, 0, beamWidth + beamOffset).color(255, 255, 255, 255).texture(textureU2, textureV1).overlay(OverlayTexture.DEFAULT_UV).light(emissiveLight).normal(matrix3f, -1.0F, 0.0F, 0.0F);
+        buffer.vertex(matrix4f, 0, 1, beamWidth + beamOffset).color(255, 255, 255, 255).texture(textureU2, textureV2).overlay(OverlayTexture.DEFAULT_UV).light(emissiveLight).normal(matrix3f, -1.0F, 0.0F, 0.0F);
+        buffer.vertex(matrix4f, 0, 1, beamOffset).color(255, 255, 255, 255).texture(textureU1, textureV2).overlay(OverlayTexture.DEFAULT_UV).light(emissiveLight).normal(matrix3f, -1.0F, 0.0F, 0.0F);
         matrices.pop();
     }
 

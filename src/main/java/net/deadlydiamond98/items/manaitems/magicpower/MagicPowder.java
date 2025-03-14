@@ -5,12 +5,12 @@ import net.deadlydiamond98.entities.ZeldaEntities;
 import net.deadlydiamond98.magiclib.items.consumers.TransformationItem;
 import net.deadlydiamond98.util.sounds.ZeldaSounds;
 import net.minecraft.block.Blocks;
-import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.text.Text;
@@ -36,9 +36,9 @@ public class MagicPowder extends TransformationItem {
     protected void initializeBlockConversions() {
         super.initializeBlockConversions();
 
-        blockConversionMap.put(Blocks.CRAFTING_TABLE, ZeldaBlocks.Magic_Workbench);
+//        blockConversionMap.put(Blocks.CRAFTING_TABLE, ZeldaBlocks.Magic_Workbench);
 
-        blockConversionMap.put(Blocks.GRASS, ZeldaBlocks.Loot_Grass);
+        blockConversionMap.put(Blocks.SHORT_GRASS, ZeldaBlocks.Loot_Grass);
         blockConversionMap.put(Blocks.GRASS_BLOCK, Blocks.MYCELIUM);
 
         blockConversionMap.put(Blocks.POWDER_SNOW, Blocks.SNOW);
@@ -150,7 +150,7 @@ public class MagicPowder extends TransformationItem {
     }
 
     @Override
-    public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
+    public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
         tooltip.add(Text.translatable("item.zeldacraft.magic_powder.tooltipa").formatted(Formatting.GREEN));
         tooltip.add(Text.translatable("item.zeldacraft.magic_powder.tooltipb").formatted(Formatting.GREEN));
     }

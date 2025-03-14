@@ -30,9 +30,9 @@ public class OctoRockEntity extends AbstractBallEntity {
     private static final TrackedData<Boolean> OCTOROK_ORIGIN;
 
     @Override
-    protected void initDataTracker() {
-        super.initDataTracker();
-        this.dataTracker.startTracking(OCTOROK_ORIGIN, false);
+    protected void initDataTracker(DataTracker.Builder builder) {
+        super.initDataTracker(builder);
+        builder.add(OCTOROK_ORIGIN, false);
     }
 
     static {
@@ -75,17 +75,14 @@ public class OctoRockEntity extends AbstractBallEntity {
             BlockPos blockPos = ((BlockHitResult) hitResult).getBlockPos();
             BlockState blockState = this.getWorld().getBlockState(blockPos);
             if (blockState.isOf(Blocks.NETHER_PORTAL)) {
-                this.setInNetherPortal(blockPos);
                 specialCollision = true;
             }
             else if (blockState.isOf(Blocks.END_GATEWAY)) {
-                BlockEntity blockEntity = this.getWorld().getBlockEntity(blockPos);
-                if (blockEntity instanceof EndGatewayBlockEntity && EndGatewayBlockEntity.canTeleport(this)) {
-                    EndGatewayBlockEntity.tryTeleportingEntity(this.getWorld(), blockPos, blockState, this, (EndGatewayBlockEntity) blockEntity);
-                }
                 specialCollision = true;
             }
         }
+
+        this.tickPortalTeleportation();
 
         if (hitResult.getType() != HitResult.Type.MISS && !specialCollision) {
             this.onCollision(hitResult);

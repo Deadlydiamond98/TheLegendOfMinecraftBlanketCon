@@ -1,16 +1,19 @@
 package net.deadlydiamond98.blocks.redstoneish.onoff;
 
+import com.mojang.serialization.MapCodec;
 import net.deadlydiamond98.blocks.entities.onoff.AbstractOnOffBlock;
 import net.deadlydiamond98.blocks.entities.onoff.CrystalSwitchBlockEntity;
 import net.deadlydiamond98.blocks.entities.ZeldaBlockEntities;
 import net.deadlydiamond98.blocks.entities.onoff.OnOffBlockEntity;
+import net.deadlydiamond98.util.NBTUtil;
 import net.deadlydiamond98.util.sounds.ZeldaSounds;
 import net.deadlydiamond98.world.ZeldaWorldDataManager;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
-import net.minecraft.client.item.TooltipContext;
+import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.NbtComponent;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -34,14 +37,22 @@ import java.util.List;
 
 public class CrystalSwitch extends AbstractOnOffBlock {
 
+    public static final MapCodec<CrystalSwitch> CODEC = createCodec(CrystalSwitch::new);
+
     public CrystalSwitch(Settings settings) {
         super(settings);
     }
 
     @Override
+    protected MapCodec<? extends BlockWithEntity> getCodec() {
+        return CODEC;
+    }
+
+
+    @Override
     public void onPlaced(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack itemStack) {
 
-        NbtCompound nbt = itemStack.getOrCreateNbt();
+        NbtCompound nbt = NBTUtil.getOrCreateNBT(itemStack);
 
         if (nbt.contains("switchId") && placer != null) {
             BlockEntity blockEntity = world.getBlockEntity(pos);
@@ -52,23 +63,23 @@ public class CrystalSwitch extends AbstractOnOffBlock {
     }
 
     @Override
-    public void onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
-        if (!world.isClient) {
+    public BlockState onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
+        if (!world.isClient && !player.isCreative()) {
             BlockEntity blockEntity = world.getBlockEntity(pos);
             if (blockEntity instanceof CrystalSwitchBlockEntity switchBlock) {
                 ItemStack stack = new ItemStack(this);
                 NbtCompound nbt = new NbtCompound();
                 nbt.putString("switchId", switchBlock.getID());
-                stack.setNbt(nbt);
+                NBTUtil.updateNBT(nbt, stack);
                 ItemScatterer.spawn(world, pos.getX(), pos.getY(), pos.getZ(), stack);
             }
         }
-        super.onBreak(world, pos, state, player);
+        this.spawnBreakParticles(world, player, pos, state);
+        return state;
     }
 
     @Override
-    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-
+    protected ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
         BlockEntity blockEntity = world.getBlockEntity(pos);
 
         if (blockEntity instanceof CrystalSwitchBlockEntity switchBlock && player.isSneaking()) {
@@ -78,14 +89,13 @@ public class CrystalSwitch extends AbstractOnOffBlock {
             }
             return ActionResult.SUCCESS;
         }
-
-        return super.onUse(state, world, pos, player, hand, hit);
+        return super.onUse(state, world, pos, player, hit);
     }
 
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
-        return checkType(type, ZeldaBlockEntities.CRYSTAL_SWITCH, CrystalSwitchBlockEntity::tick);
+        return validateTicker(type, ZeldaBlockEntities.CRYSTAL_SWITCH, CrystalSwitchBlockEntity::tick);
     }
 
     @Nullable

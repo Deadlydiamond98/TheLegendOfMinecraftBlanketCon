@@ -22,13 +22,13 @@ public class SilverArrowEntity extends PersistentProjectileEntity {
         super(entityType, world);
     }
 
-    public SilverArrowEntity(World world, LivingEntity owner) {
-        super(ZeldaEntities.Silver_Arrow, owner, world);
-    }
-
-    public SilverArrowEntity(World world, double x, double y, double z) {
-        super(ZeldaEntities.Silver_Arrow, x, y, z, world);
-    }
+//    public SilverArrowEntity(World world, LivingEntity owner) {
+//        super(ZeldaEntities.Silver_Arrow, owner, world);
+//    }
+//
+//    public SilverArrowEntity(World world, double x, double y, double z) {
+//        super(ZeldaEntities.Silver_Arrow, x, y, z, world);
+//    }
 
     @Override
     protected void onHit(LivingEntity target) {
@@ -48,9 +48,10 @@ public class SilverArrowEntity extends PersistentProjectileEntity {
     }
 
     @Override
-    protected ItemStack asItemStack() {
+    protected ItemStack getDefaultItemStack() {
         return new ItemStack(ZeldaItems.Silver_Arrow);
     }
+
     @Override
 
     public void readCustomDataFromNbt(NbtCompound nbt) {

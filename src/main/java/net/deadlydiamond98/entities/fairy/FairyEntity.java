@@ -32,15 +32,16 @@ import java.util.Random;
 
 public class FairyEntity extends PassiveEntity {
     private static final Random random = new Random();
-    private static final TrackedData<String> color;
+    private static final TrackedData<String> COLOR;
+
     @Override
-    protected void initDataTracker() {
-        super.initDataTracker();
-        this.dataTracker.startTracking(color, FairyUtil.colors.get(0));
+    protected void initDataTracker(DataTracker.Builder builder) {
+        super.initDataTracker(builder);
+        builder.add(COLOR, FairyUtil.colors.get(0));
     }
 
     static {
-        color = DataTracker.registerData(FairyEntity.class, TrackedDataHandlerRegistry.STRING);
+        COLOR = DataTracker.registerData(FairyEntity.class, TrackedDataHandlerRegistry.STRING);
     }
 
     public FairyEntity(EntityType<? extends PassiveEntity> entityType, World world) {
@@ -128,11 +129,11 @@ public class FairyEntity extends PassiveEntity {
     }
 
     public String getColor() {
-        return (String) this.dataTracker.get(color);
+        return (String) this.dataTracker.get(COLOR);
     }
 
     public void setColor(String bool) {
-        this.dataTracker.set(color, bool);
+        this.dataTracker.set(COLOR, bool);
     }
 
     @Override

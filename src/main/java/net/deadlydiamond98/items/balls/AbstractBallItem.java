@@ -28,7 +28,7 @@ public abstract class AbstractBallItem extends Item {
             ball.setItem(itemStack);
             ball.setPos(ball.getX(), ball.getY() - 0.5, ball.getZ());
             ball.setVelocity(user, user.getPitch(), user.getYaw(), 0.0f, 0.1f, 1.0f);
-            ball.addVelocity(0.0, ball.getGravity() * 2 + 0.2, 0.0);
+            ball.addVelocity(0.0, ball.getBallGravity() * 2 + 0.2, 0.0);
             world.spawnEntity(ball);
             user.getItemCooldownManager().set(this, 20);
         }

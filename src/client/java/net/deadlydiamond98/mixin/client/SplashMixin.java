@@ -38,11 +38,12 @@ public abstract class SplashMixin {
             "OOOOOOOOOOOOOOOOOOOHHHHHHHHHHHHHH",
             "If all else fails, use fire.",
             "Gee, it sure is BORING around here...",
-            "Shoutout to SOSSALMON for composing some music!",
+            "Shoutout to SOSSALMON for composing some of the music!",
             "Big Dungeons coming soon",
             "Also check out Healing Pretty Good",
             "Also check out Vinyl Frontier",
-            "Also check out Familiar Friends"
+            "Also check out Familiar Friends",
+            "Blanketcon 25 is pretty cool"
     );
 
 

@@ -1,5 +1,6 @@
 package net.deadlydiamond98.renderer.entity.monster;
 
+import net.deadlydiamond98.entities.monsters.ArmosEntity;
 import net.deadlydiamond98.entities.monsters.tektites.TektiteEntity;
 import net.deadlydiamond98.model.entity.TektiteModel;
 import net.minecraft.client.render.VertexConsumerProvider;
@@ -28,8 +29,9 @@ public abstract class TektiteRenderer<T extends TektiteEntity> extends MobEntity
 
     }
 
-    protected void setupTransforms(T mob, MatrixStack matrixStack, float f, float g, float h) {
-        g = mob.getYawClient();
-        super.setupTransforms(mob, matrixStack, f, g, h);
+    @Override
+    protected void setupTransforms(T entity, MatrixStack matrices, float animationProgress, float bodyYaw, float tickDelta, float scale) {
+        bodyYaw = entity.getYawClient();
+        super.setupTransforms(entity, matrices, animationProgress, bodyYaw, tickDelta, scale);
     }
 }

@@ -1,8 +1,8 @@
 package net.deadlydiamond98.items.manaitems.wearable;
 
 import dev.emi.trinkets.api.TrinketItem;
-import net.minecraft.client.item.TooltipContext;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.world.World;
@@ -22,9 +22,10 @@ public class MagicPendant extends TrinketItem {
     }
 
     @Override
-    public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
+    public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
+        super.appendTooltip(stack, context, tooltip, type);
         tooltip.add(Text.translatable(this.tooltipa).formatted(Formatting.GREEN));
-        if (two) {
+        if (this.two) {
             tooltip.add(Text.translatable(this.tooltipb).formatted(Formatting.DARK_GREEN));
         }
     }

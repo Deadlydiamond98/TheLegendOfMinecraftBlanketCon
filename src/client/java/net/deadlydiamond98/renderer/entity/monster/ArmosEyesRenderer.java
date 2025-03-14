@@ -16,7 +16,7 @@ import net.minecraft.util.math.MathHelper;
 
 public class ArmosEyesRenderer<T extends ArmosEntity, M extends EntityModel<ArmosEntity>> extends FeatureRenderer<ArmosEntity, M> {
 
-    private static final RenderLayer EYES = RenderLayer.getItemEntityTranslucentCull(new Identifier(ZeldaCraft.MOD_ID, "textures/entity/armos_eyes.png"));
+    private static final RenderLayer EYES = RenderLayer.getItemEntityTranslucentCull(Identifier.of(ZeldaCraft.MOD_ID, "textures/entity/armos_eyes.png"));
 
     public ArmosEyesRenderer(FeatureRendererContext<ArmosEntity, M> context) {
         super(context);
@@ -25,6 +25,13 @@ public class ArmosEyesRenderer<T extends ArmosEntity, M extends EntityModel<Armo
     @Override
     public void render(MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, ArmosEntity entity, float limbAngle, float limbDistance, float tickDelta, float animationProgress, float headYaw, float headPitch) {
         VertexConsumer vertexConsumer = vertexConsumers.getBuffer(EYES);
-        this.getContextModel().render(matrices, vertexConsumer, 15728640, OverlayTexture.DEFAULT_UV, 1.0F, 1.0F, 1.0F, entity.getEyeAlpha());
+
+        float alphaFloat = (float) entity.getEyeAlpha();
+
+        int alpha = (int) (alphaFloat * 255);
+
+        int argbColor = (alpha << 24) | 0x00_FF_FF_FF;
+
+        this.getContextModel().render(matrices, vertexConsumer, 15728640, OverlayTexture.DEFAULT_UV, argbColor);
     }
 }

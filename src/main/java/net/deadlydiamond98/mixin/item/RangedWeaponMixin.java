@@ -21,42 +21,42 @@ import java.util.function.Predicate;
 
 @Mixin(RangedWeaponItem.class)
 public abstract class RangedWeaponMixin {
-    @Inject(method = "getHeldProjectile", at = @At("HEAD"), cancellable = true)
-    private static void getArrowFromQuiver(LivingEntity entity, Predicate<ItemStack> predicate, CallbackInfoReturnable<ItemStack> cir) {
-
-        if (entity instanceof PlayerEntity player) {
-
-            TrinketComponent trinket = TrinketsApi.getTrinketComponent(player).get();
-
-            for (Pair<SlotReference, ItemStack> entry : trinket.getAllEquipped()) {
-                ItemStack stack = entry.getRight();
-                if (stack.isIn(ZeldaTags.Items.Quivers)) {
-                    handleQuiver(stack, cir);
-                    if (cir.getReturnValue() != null) {
-                        return;
-                    }
-                }
-            }
-
-            for (int i = 0; i < player.getInventory().size(); i++) {
-                ItemStack stack = player.getInventory().getStack(i);
-                if (stack.isIn(ZeldaTags.Items.Quivers)) {
-                    handleQuiver(stack, cir);
-                    if (cir.getReturnValue() != null) {
-                        return;
-                    }
-                }
-            }
-        }
-    }
-
-    @Unique
-    private static void handleQuiver(ItemStack stack, CallbackInfoReturnable<ItemStack> cir) {
-        Optional<ItemStack> arrowStack = CustomBundleUtil.getFirstItem(stack);
-
-        if (arrowStack.isPresent()) {
-            ItemStack arrowToRemove = arrowStack.get();
-            cir.setReturnValue(arrowToRemove);
-        }
-    }
+//    @Inject(method = "getHeldProjectile", at = @At("HEAD"), cancellable = true)
+//    private static void getArrowFromQuiver(LivingEntity entity, Predicate<ItemStack> predicate, CallbackInfoReturnable<ItemStack> cir) {
+//
+//        if (entity instanceof PlayerEntity player) {
+//
+//            TrinketComponent trinket = TrinketsApi.getTrinketComponent(player).get();
+//
+//            for (Pair<SlotReference, ItemStack> entry : trinket.getAllEquipped()) {
+//                ItemStack stack = entry.getRight();
+//                if (stack.isIn(ZeldaTags.Items.Quivers)) {
+//                    handleQuiver(stack, cir);
+//                    if (cir.getReturnValue() != null) {
+//                        return;
+//                    }
+//                }
+//            }
+//
+//            for (int i = 0; i < player.getInventory().size(); i++) {
+//                ItemStack stack = player.getInventory().getStack(i);
+//                if (stack.isIn(ZeldaTags.Items.Quivers)) {
+//                    handleQuiver(stack, cir);
+//                    if (cir.getReturnValue() != null) {
+//                        return;
+//                    }
+//                }
+//            }
+//        }
+//    }
+//
+//    @Unique
+//    private static void handleQuiver(ItemStack stack, CallbackInfoReturnable<ItemStack> cir) {
+//        Optional<ItemStack> arrowStack = CustomBundleUtil.getFirstItem(stack);
+//
+//        if (arrowStack.isPresent()) {
+//            ItemStack arrowToRemove = arrowStack.get();
+//            cir.setReturnValue(arrowToRemove);
+//        }
+//    }
 }

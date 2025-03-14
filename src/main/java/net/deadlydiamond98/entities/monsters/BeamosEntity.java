@@ -39,10 +39,11 @@ public class BeamosEntity extends HostileEntity implements Monster {
     @Nullable
     private LivingEntity cachedBeamTarget;
 
-    protected void initDataTracker() {
-        super.initDataTracker();
-        this.dataTracker.startTracking(BEAM_TARGET_ID, 0);
-        this.dataTracker.startTracking(YAW, this.getYaw());
+    @Override
+    protected void initDataTracker(DataTracker.Builder builder) {
+        super.initDataTracker(builder);
+        builder.add(BEAM_TARGET_ID, 0);
+        builder.add(YAW, this.getYaw());
     }
 
     static {

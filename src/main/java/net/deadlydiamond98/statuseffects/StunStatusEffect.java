@@ -3,8 +3,6 @@ package net.deadlydiamond98.statuseffects;
 import net.deadlydiamond98.networking.ZeldaServerPackets;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.AttributeContainer;
-import net.minecraft.entity.attribute.EntityAttributeModifier;
-import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.entity.player.PlayerEntity;
@@ -17,11 +15,7 @@ public class StunStatusEffect extends StatusEffect {
         ICE,
         CLOCK
     }
-    private static final EntityAttributeModifier Stun_Modifier = new EntityAttributeModifier(
-            "stunModifier",
-            0.0f,
-            EntityAttributeModifier.Operation.MULTIPLY_TOTAL
-    );
+
     private OverlayType overlay;
 
     protected StunStatusEffect() {
@@ -30,29 +24,16 @@ public class StunStatusEffect extends StatusEffect {
     }
 
     @Override
-    public void onApplied(LivingEntity entity, AttributeContainer attributes, int amplifier) {
-        super.onApplied(entity, attributes, amplifier);
-        notifyPlayers(entity, true, overlay);
-        entity.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED).addPersistentModifier(Stun_Modifier);
-    }
-
-    @Override
-    public void onRemoved(LivingEntity entity, AttributeContainer attributes, int amplifier) {
-        super.onRemoved(entity, attributes, amplifier);
-        notifyPlayers(entity, false, overlay);
-        entity.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED).removeModifier(Stun_Modifier);
-    }
-
-    @Override
     public boolean canApplyUpdateEffect(int duration, int amplifier) {
         return true;
     }
 
+
     @Override
-    public void applyUpdateEffect(LivingEntity entity, int amplifier) {
-        super.applyUpdateEffect(entity, amplifier);
+    public boolean applyUpdateEffect(LivingEntity entity, int amplifier) {
         notifyPlayers(entity, true, overlay);
         entity.setVelocity(0, 0, 0);
+        return super.applyUpdateEffect(entity, amplifier);
     }
 
     private void notifyPlayers(LivingEntity entity, boolean apply, OverlayType hasOverlay) {
@@ -61,7 +42,7 @@ public class StunStatusEffect extends StatusEffect {
                 ServerPlayerEntity serverPlayer = (ServerPlayerEntity) player;
                 double distance = entity.squaredDistanceTo(serverPlayer);
                 if (distance < 10000) {
-                    ZeldaServerPackets.sendDekuStunOverlayPacket(serverPlayer, entity.getId(), apply, hasOverlay);
+                    ZeldaServerPackets.sendDekuStunOverlayPacket(serverPlayer, entity.getId(), apply);
                 }
             }
         }

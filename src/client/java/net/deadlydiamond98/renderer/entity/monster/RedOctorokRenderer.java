@@ -6,7 +6,7 @@ import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.util.Identifier;
 
 public class RedOctorokRenderer extends OctorokRenderer {
-    private static final Identifier TEXTURE = new Identifier(ZeldaCraft.MOD_ID, "textures/entity/red_octorok.png");
+    private static final Identifier TEXTURE = Identifier.of(ZeldaCraft.MOD_ID, "textures/entity/red_octorok.png");
 
     public RedOctorokRenderer(EntityRendererFactory.Context context) {
         super(context);

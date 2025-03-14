@@ -23,18 +23,19 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
 public class BeamEntity extends ProjectileEntity {
-    private static final TrackedData<Boolean> isLeader;
+    private static final TrackedData<Boolean> IS_LEADER;
     private int beams;
 
     private Vec3d startPos;
 
 
     @Override
-    protected void initDataTracker() {
-        this.dataTracker.startTracking(isLeader, false);
+    protected void initDataTracker(DataTracker.Builder builder) {
+        builder.add(IS_LEADER, false);
     }
+
     static {
-        isLeader = DataTracker.registerData(BeamEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+        IS_LEADER = DataTracker.registerData(BeamEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     }
     public BeamEntity(EntityType<BeamEntity> entityType, World world) {
         super(entityType, world);
@@ -51,11 +52,11 @@ public class BeamEntity extends ProjectileEntity {
     }
 
     public Boolean getLeader() {
-        return this.dataTracker.get(isLeader);
+        return this.dataTracker.get(IS_LEADER);
     }
 
     private void hasLeader(Boolean leader) {
-        this.dataTracker.set(isLeader, leader);
+        this.dataTracker.set(IS_LEADER, leader);
     }
 
     @Override
@@ -116,7 +117,7 @@ public class BeamEntity extends ProjectileEntity {
             }
         }
         else {
-            this.updateTrackedPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.getYaw(), this.getPitch(), 20, true);
+            this.updateTrackedPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.getYaw(), this.getPitch(), 20);
             if (this.age % 2 == 0 && this.getLeader() && this.age > 5) {
                 this.getWorld().addParticle(ZeldaParticles.Beam_Particle, this.getX(), this.getY(), this.getZ(), 0, 0, 0);
             }

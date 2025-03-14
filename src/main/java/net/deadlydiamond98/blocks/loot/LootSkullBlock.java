@@ -1,5 +1,6 @@
 package net.deadlydiamond98.blocks.loot;
 
+import net.deadlydiamond98.blocks.entities.loot.LootPotBlockEntity;
 import net.deadlydiamond98.blocks.entities.loot.LootSkullBlockEntity;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SkullBlock;
@@ -48,13 +49,12 @@ public class LootSkullBlock extends SkullBlock {
     }
 
     @Override
-    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+    protected ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
         if (!world.isClient) {
-            LootSkullBlockEntity blockEntity = (LootSkullBlockEntity) world.getBlockEntity(pos);
+            LootPotBlockEntity blockEntity = (LootPotBlockEntity) world.getBlockEntity(pos);
             if (blockEntity != null) {
-                ItemStack stack = player.getStackInHand(hand);
+                ItemStack stack = player.getMainHandStack();
                 if (blockEntity.hasLootTable()) {
-                    blockEntity.checkLootInteraction(player);
                     ItemStack loot = blockEntity.getStack(0);
                     if (player.isSneaking() && stack.isEmpty()) {
                         player.giveItemStack(loot);
@@ -86,13 +86,12 @@ public class LootSkullBlock extends SkullBlock {
     }
 
     @Override
-    public void onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
-        LootSkullBlockEntity blockEntity = (LootSkullBlockEntity) world.getBlockEntity(pos);
-        if (blockEntity instanceof LootSkullBlockEntity) {
-            blockEntity.checkLootInteraction(player);
+    public BlockState onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
+        LootPotBlockEntity blockEntity = (LootPotBlockEntity) world.getBlockEntity(pos);
+        if (blockEntity instanceof LootPotBlockEntity) {
             DefaultedList<ItemStack> items = blockEntity.getItems();
             ItemScatterer.spawn(world, pos, items);
         }
-        super.onBreak(world, pos, state, player);
+        return super.onBreak(world, pos, state, player);
     }
 }

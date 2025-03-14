@@ -16,7 +16,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.util.Identifier;
 
 public class HookshotHeadModel<T extends HookshotEntity> extends SinglePartEntityModel<T> {
-	public static final EntityModelLayer LAYER_LOCATION = new EntityModelLayer(new Identifier(ZeldaCraft.MOD_ID, "hookshot_head"), "main");
+	public static final EntityModelLayer LAYER_LOCATION = new EntityModelLayer(Identifier.of(ZeldaCraft.MOD_ID, "hookshot_head"), "main");
 	private final ModelPart root;
 	private final ModelPart head;
 	public HookshotHeadModel(ModelPart root) {
@@ -41,8 +41,8 @@ public class HookshotHeadModel<T extends HookshotEntity> extends SinglePartEntit
 	public void setAngles(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
 	}
 	@Override
-	public void render(MatrixStack matrices, VertexConsumer vertexConsumer, int light, int overlay, float red, float green, float blue, float alpha) {
-		head.render(matrices, vertexConsumer, light, overlay, red, green, blue, alpha);
+	public void render(MatrixStack matrices, VertexConsumer vertices, int light, int overlay, int color) {
+		head.render(matrices, vertices, light, overlay, color);
 	}
 
 	@Override

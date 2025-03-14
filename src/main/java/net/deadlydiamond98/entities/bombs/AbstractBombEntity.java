@@ -8,7 +8,6 @@ import net.deadlydiamond98.items.bats.BatItem;
 import net.deadlydiamond98.networking.ZeldaServerPackets;
 import net.deadlydiamond98.util.interfaces.block.IBombBreakInteraction;
 import net.deadlydiamond98.util.sounds.ZeldaSounds;
-import net.deadlydiamond98.util.advancment.ZeldaAdvancementCriterion;
 import net.deadlydiamond98.util.ZeldaTags;
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -54,8 +53,8 @@ public abstract class AbstractBombEntity extends Entity implements Ownable {
     }
 
     @Override
-    protected void initDataTracker() {
-        this.dataTracker.startTracking(FUSE, 80);
+    protected void initDataTracker(DataTracker.Builder builder) {
+        builder.add(FUSE, 80);
     }
 
     public void tick() {
@@ -117,7 +116,7 @@ public abstract class AbstractBombEntity extends Entity implements Ownable {
             if (playSecret) {
                 this.getWorld().playSound(null, this.getBlockPos(), ZeldaSounds.SecretRoom, SoundCategory.BLOCKS, 1.0f, 1.0f);
                 if (this.getOwner() != null && this.getOwner() instanceof PlayerEntity player) {
-                    ZeldaAdvancementCriterion.ps.trigger((ServerPlayerEntity) player);
+//                    ZeldaAdvancementCriterion.ps.trigger((ServerPlayerEntity) player);
                 }
             }
 
@@ -158,7 +157,9 @@ public abstract class AbstractBombEntity extends Entity implements Ownable {
 
                 double launchPower = 1.0;
 
-                double updraft = EnchantmentHelper.getLevel(ZeldaEnchantments.Updraft, heldItem) * 0.25;
+//                double updraft = EnchantmentHelper.getLevel(ZeldaEnchantments.Updraft, heldItem) * 0.25;
+                double updraft = 0;
+
                 double velocityY = lookVec.y * launchPower;
 
                 if (updraft > 0) {

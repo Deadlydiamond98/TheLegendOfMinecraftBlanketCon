@@ -2,9 +2,9 @@ package net.deadlydiamond98.items.boomerang;
 
 import net.deadlydiamond98.entities.ZeldaEntities;
 import net.deadlydiamond98.entities.boomerangs.MagicalBoomerang;
-import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Hand;
@@ -26,7 +26,7 @@ public class MagicBoomerangItem extends BaseBoomerangItem {
     }
 
     @Override
-    public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
+    public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
         tooltip.add(Text.translatable("item.zeldacraft.magic_boomerang.tooltipa").formatted(Formatting.GREEN));
         tooltip.add(Text.translatable("item.zeldacraft.magic_boomerang.tooltipb").formatted(Formatting.DARK_GREEN));
     }

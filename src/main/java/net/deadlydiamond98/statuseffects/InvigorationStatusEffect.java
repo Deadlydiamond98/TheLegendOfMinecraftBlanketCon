@@ -15,8 +15,8 @@ public class InvigorationStatusEffect extends InstantStatusEffect {
     }
 
     @Override
-    public void onApplied(LivingEntity entity, AttributeContainer attributes, int amplifier) {
-        super.onApplied(entity, attributes, amplifier);
+    public void onApplied(LivingEntity entity, int amplifier) {
+        super.onApplied(entity, amplifier);
         if (entity instanceof PlayerEntity user) {
             if (!user.getWorld().isClient()) {
                 user.addMana(70 * (amplifier + 1));

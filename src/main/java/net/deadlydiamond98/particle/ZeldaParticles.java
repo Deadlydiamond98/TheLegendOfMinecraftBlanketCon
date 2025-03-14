@@ -2,25 +2,25 @@ package net.deadlydiamond98.particle;
 
 import net.deadlydiamond98.ZeldaCraft;
 import net.fabricmc.fabric.api.particle.v1.FabricParticleTypes;
-import net.minecraft.particle.DefaultParticleType;
+import net.minecraft.particle.SimpleParticleType;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
 
 public class ZeldaParticles {
-    public static DefaultParticleType Smaaash_Particle;
-    public static DefaultParticleType Explosion_Particle;
-    public static DefaultParticleType Snap_Particle;
-    public static DefaultParticleType Magic_Fire_Particle;
-    public static DefaultParticleType Magic_Ice_Particle;
-    public static DefaultParticleType Magic_Ice_Particle_Bullet;
-    public static DefaultParticleType Beam_Particle;
-    public static DefaultParticleType Meteor_Shower_Rain_Particle;
-    public static DefaultParticleType Item_Baseball;
+    public static SimpleParticleType Smaaash_Particle;
+    public static SimpleParticleType Explosion_Particle;
+    public static SimpleParticleType Snap_Particle;
+    public static SimpleParticleType Magic_Fire_Particle;
+    public static SimpleParticleType Magic_Ice_Particle;
+    public static SimpleParticleType Magic_Ice_Particle_Bullet;
+    public static SimpleParticleType Beam_Particle;
+    public static SimpleParticleType Meteor_Shower_Rain_Particle;
+    public static SimpleParticleType Item_Baseball;
 
 
-    private static DefaultParticleType registerParticle(String name, DefaultParticleType particleType) {
-        return Registry.register(Registries.PARTICLE_TYPE, new Identifier(ZeldaCraft.MOD_ID, name), particleType);
+    private static SimpleParticleType registerParticle(String name, SimpleParticleType particleType) {
+        return Registry.register(Registries.PARTICLE_TYPE, Identifier.of(ZeldaCraft.MOD_ID, name), particleType);
     }
 
     public static void registerParticles() {

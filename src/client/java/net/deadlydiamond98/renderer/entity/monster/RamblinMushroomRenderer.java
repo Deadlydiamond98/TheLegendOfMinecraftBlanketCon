@@ -17,12 +17,7 @@ public class RamblinMushroomRenderer extends MobEntityRenderer<RamblinMushroomEn
     }
 
     @Override
-    protected void setupTransforms(RamblinMushroomEntity entity, MatrixStack matrices, float animationProgress, float bodyYaw, float tickDelta) {
-        super.setupTransforms(entity, matrices, animationProgress, bodyYaw, tickDelta);
-    }
-
-    @Override
     public Identifier getTexture(RamblinMushroomEntity entity) {
-        return new Identifier(ZeldaCraft.MOD_ID, "textures/entity/ramblin_mushroom.png");
+        return Identifier.of(ZeldaCraft.MOD_ID, "textures/entity/ramblin_mushroom.png");
     }
 }

@@ -1,8 +1,11 @@
 package net.deadlydiamond98.networking;
 
-import net.deadlydiamond98.networking.packets.*;
-import net.deadlydiamond98.statuseffects.StunStatusEffect;
+import net.deadlydiamond98.networking.packets.client.*;
+import net.deadlydiamond98.networking.packets.server.SmashLootGrassPacket;
+import net.deadlydiamond98.networking.packets.server.SwordSwingPacket;
+import net.deadlydiamond98.networking.packets.server.UseNeckTrinketPacket;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
+import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
@@ -12,67 +15,50 @@ import net.minecraft.util.math.GlobalPos;
 
 public class ZeldaServerPackets {
 
-    public static void registerS2CPackets() {
-        ServerPlayNetworking.registerGlobalReceiver(ZeldaPacketIDS.SwordSwingPacket, SwordSwingC2SPacket::receive);
-        ServerPlayNetworking.registerGlobalReceiver(ZeldaPacketIDS.SmashLootGrassPacket, SmashLootGrassC2SPacket::receive);
-        ServerPlayNetworking.registerGlobalReceiver(ZeldaPacketIDS.NeckTrinketPacket, UseNeckTrinketC2SPacket::receive);
-        ServerPlayNetworking.registerGlobalReceiver(ZeldaPacketIDS.UpdateMagicWorkbenchServer, MagicWorkbenchC2SPacket::receive);
+    public static void registerServerPackets() {
+
+        PayloadTypeRegistry.playS2C().register(AdvancementStatusPacket.ID, AdvancementStatusPacket.CODEC);
+        PayloadTypeRegistry.playS2C().register(DekuStunOverlayPacket.ID, DekuStunOverlayPacket.CODEC);
+        PayloadTypeRegistry.playS2C().register(EntityStatsPacket.ID, EntityStatsPacket.CODEC);
+        PayloadTypeRegistry.playS2C().register(ParticlePacket.ID, ParticlePacket.CODEC);
+        PayloadTypeRegistry.playS2C().register(PedestalPacket.ID, PedestalPacket.CODEC);
+        PayloadTypeRegistry.playS2C().register(StarCompassPacket.ID, StarCompassPacket.CODEC);
+        PayloadTypeRegistry.playS2C().register(PlayerStatsPacket.ID, PlayerStatsPacket.CODEC);
+        PayloadTypeRegistry.playS2C().register(ZeldaSoundPacket.ID, ZeldaSoundPacket.CODEC);
+
+        PayloadTypeRegistry.playC2S().register(SmashLootGrassPacket.ID, SmashLootGrassPacket.CODEC);
+        PayloadTypeRegistry.playC2S().register(SwordSwingPacket.ID, SwordSwingPacket.CODEC);
+        PayloadTypeRegistry.playC2S().register(UseNeckTrinketPacket.ID, UseNeckTrinketPacket.CODEC);
+
+        ServerPlayNetworking.registerGlobalReceiver(SmashLootGrassPacket.ID, SmashLootGrassPacket::receive);
+        ServerPlayNetworking.registerGlobalReceiver(SwordSwingPacket.ID, SwordSwingPacket::receive);
+        ServerPlayNetworking.registerGlobalReceiver(UseNeckTrinketPacket.ID, UseNeckTrinketPacket::receive);
     }
 
     public static void sendParticlePacket(ServerPlayerEntity player, double x, double y, double z, int particle) {
-        PacketByteBuf buf = PacketByteBufs.create();
-        buf.writeInt(particle);
-        buf.writeDouble(x);
-        buf.writeDouble(y);
-        buf.writeDouble(z);
-        ServerPlayNetworking.send(player, ZeldaPacketIDS.ParticlePacket, buf);
+        ServerPlayNetworking.send(player, new ParticlePacket(particle, (int) x, (int) y, (int) z));
     }
     public static void sendPedestalPacket(ServerPlayerEntity player, BlockPos pos, ItemStack stack, float rotation) {
-        PacketByteBuf buf = PacketByteBufs.create();
-        buf.writeBlockPos(pos);
-        buf.writeItemStack(stack);
-        buf.writeFloat(rotation);
-        ServerPlayNetworking.send(player, ZeldaPacketIDS.PedestalPacket, buf);
+        ServerPlayNetworking.send(player, new PedestalPacket(pos, stack, rotation));
+
     }
-    public static void sendDekuStunOverlayPacket(ServerPlayerEntity player, int entityId, boolean hasEffect, StunStatusEffect.OverlayType overlay) {
-        PacketByteBuf buf = PacketByteBufs.create();
-        buf.writeInt(entityId);
-        buf.writeBoolean(hasEffect);
-        buf.writeEnumConstant(overlay);
-        ServerPlayNetworking.send(player, ZeldaPacketIDS.DekuStunOverlayPacket, buf);
+    public static void sendDekuStunOverlayPacket(ServerPlayerEntity player, int entityId, boolean hasEffect) {
+        ServerPlayNetworking.send(player, new DekuStunOverlayPacket(entityId, hasEffect));
     }
     public static void sendPlayerStatsPacket(ServerPlayerEntity player, boolean fairyControl,
                                              boolean fairyfriend, boolean searchStar) {
-        PacketByteBuf buf = PacketByteBufs.create();
-        buf.writeBoolean(fairyControl);
-        buf.writeBoolean(fairyfriend);
-        buf.writeBoolean(searchStar);
-        ServerPlayNetworking.send(player, ZeldaPacketIDS.PlayerStatsPacket, buf);
+        ServerPlayNetworking.send(player, new PlayerStatsPacket(fairyControl, fairyfriend, searchStar));
     }
     public static void sendStarCompassPacket(ServerPlayerEntity player, GlobalPos starPos) {
-        PacketByteBuf buf = PacketByteBufs.create();
-        buf.writeGlobalPos(starPos);
-        ServerPlayNetworking.send(player, ZeldaPacketIDS.StarCompassPacket, buf);
+        ServerPlayNetworking.send(player, new StarCompassPacket(starPos));
     }
     public static void sendEntityStatsPacket(ServerPlayerEntity player, boolean flip, int entityId) {
-        PacketByteBuf buf = PacketByteBufs.create();
-        buf.writeInt(entityId);
-        buf.writeBoolean(flip);
-        ServerPlayNetworking.send(player, ZeldaPacketIDS.EntityStatsPacket, buf);
+        ServerPlayNetworking.send(player, new EntityStatsPacket(entityId, flip));
     }
     public static void sendSoundPacket(ServerPlayerEntity player, int soundType) {
-        PacketByteBuf buf = PacketByteBufs.create();
-        buf.writeVarInt(soundType);
-        ServerPlayNetworking.send(player, ZeldaPacketIDS.PlaySoundPacket, buf);
+        ServerPlayNetworking.send(player, new ZeldaSoundPacket(soundType));
     }
     public static void updateAdvancmentStatus(ServerPlayerEntity player, boolean bl) {
-        PacketByteBuf buf = PacketByteBufs.create();
-        buf.writeBoolean(bl);
-        ServerPlayNetworking.send(player, ZeldaPacketIDS.UpdateAdvancmentStatus, buf);
-    }
-    public static void updateMagicWorkbench(ServerPlayerEntity player, boolean bl) {
-        PacketByteBuf buf = PacketByteBufs.create();
-        buf.writeBoolean(bl);
-        ServerPlayNetworking.send(player, ZeldaPacketIDS.UpdateMagicWorkbenchClient, buf);
+        ServerPlayNetworking.send(player, new AdvancementStatusPacket(bl));
     }
 }

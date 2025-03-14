@@ -13,6 +13,6 @@ public class RedTektiteRenderer extends TektiteRenderer<RedTektite>{
 
     @Override
     public Identifier getTexture(TektiteEntity batEntity) {
-        return new Identifier(ZeldaCraft.MOD_ID, "textures/entity/red_tektite.png");
+        return Identifier.of(ZeldaCraft.MOD_ID, "textures/entity/red_tektite.png");
     }
 }

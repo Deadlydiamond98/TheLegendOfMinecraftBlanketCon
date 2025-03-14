@@ -182,8 +182,8 @@ public class HookshotEntity extends ProjectileEntity implements Ownable {
     }
 
     @Override
-    protected void initDataTracker() {
-        this.dataTracker.startTracking(WOOD_ATTACHED, false);
+    protected void initDataTracker(DataTracker.Builder builder) {
+        builder.add(WOOD_ATTACHED, false);
     }
 
     static {

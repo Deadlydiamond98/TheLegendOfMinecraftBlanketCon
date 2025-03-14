@@ -26,12 +26,9 @@ import net.deadlydiamond98.recipes.ZeldaRecipes;
 import net.deadlydiamond98.screen_handlers.ZeldaScreenHandlers;
 import net.deadlydiamond98.util.sounds.ZeldaSounds;
 import net.deadlydiamond98.statuseffects.ZeldaStatusEffects;
-import net.deadlydiamond98.util.advancment.ZeldaAdvancementCriterion;
 import net.deadlydiamond98.util.ZeldaConfig;
 import net.deadlydiamond98.util.ZeldaLootTables;
-import net.deadlydiamond98.util.ZeldaPotionRecipes;
 import net.deadlydiamond98.world.ZeldaFeatures;
-import net.deadlydiamond98.world.zeldadungeons.ZeldaDungeons;
 import net.fabricmc.api.ModInitializer;
 
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
@@ -46,7 +43,7 @@ public class ZeldaCraft implements ModInitializer {
 
 	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
-	public static final Identifier HYLIAN = new Identifier(MOD_ID, "hylian");
+	public static final Identifier HYLIAN = Identifier.of(MOD_ID, "hylian");
 
 	@Override
 	public void onInitialize() {
@@ -60,11 +57,11 @@ public class ZeldaCraft implements ModInitializer {
 		registerEntityAttributes();
 		ZeldaBlockEntities.registerBlockEntities();
 		ZeldaScreenHandlers.registerScreenHandlers();
-		ZeldaServerPackets.registerS2CPackets();
+		ZeldaServerPackets.registerServerPackets();
 		ZeldaParticles.registerParticles();
 		ZeldaStatusEffects.registerStatusEffects();
 		ZeldaEnchantments.registerEnchants();
-		ZeldaPotionRecipes.registerBrewingRecipes();
+//		ZeldaPotionRecipes.registerBrewingRecipes();
 		ZeldaRecipes.registerRecipes();
 
 		//Events
@@ -77,11 +74,11 @@ public class ZeldaCraft implements ModInitializer {
 		ZeldaServerCommands.register();
 
 		ZeldaFeatures.register();
-		ZeldaDungeons.registerDungeons();
+//		ZeldaDungeons.registerDungeons();
 		ZeldaItemsTab.registerItemGroup();
 		ZeldaBlocksTab.registerBlockItemGroup();
 		ZeldaEntities.addEntitiesToWorld();
-		ZeldaAdvancementCriterion.registerAdvancements();
+//		ZeldaAdvancementCriterion.registerAdvancements();
 		LOGGER.info("Mod Loaded");
 	}
 

@@ -1,5 +1,6 @@
 package net.deadlydiamond98.items.bundle;
 
+import net.minecraft.component.DataComponentTypes;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
@@ -14,7 +15,9 @@ public class BundleItemData {
 
     public BundleItemData(ItemStack stack, int count) {
         this.itemId = Registries.ITEM.getId(stack.getItem()).toString();
-        this.itemNbt = stack.getNbt() != null ? stack.getNbt().copy() : new NbtCompound();
+        this.itemNbt = stack.get(DataComponentTypes.CUSTOM_DATA) != null
+                ? stack.get(DataComponentTypes.CUSTOM_DATA).copyNbt()
+                : new NbtCompound();
         this.count = count;
     }
 
@@ -43,6 +46,6 @@ public class BundleItemData {
     }
 
     public Item getItem() {
-        return Registries.ITEM.get(new Identifier(this.itemId));
+        return Registries.ITEM.get(Identifier.of(this.itemId));
     }
 }

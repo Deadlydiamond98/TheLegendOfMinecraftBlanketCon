@@ -12,7 +12,7 @@ import net.minecraft.util.Identifier;
 
 public class LikeLikeModel extends SinglePartEntityModel<LikeLikeEntity> {
 
-	public static final EntityModelLayer LAYER_LOCATION = new EntityModelLayer(new Identifier(ZeldaCraft.MOD_ID, "like_like_entity"), "main");
+	public static final EntityModelLayer LAYER_LOCATION = new EntityModelLayer(Identifier.of(ZeldaCraft.MOD_ID, "like_like_entity"), "main");
 
 	private final ModelPart root;
 	private final ModelPart body;
@@ -45,8 +45,8 @@ public class LikeLikeModel extends SinglePartEntityModel<LikeLikeEntity> {
 	public void setAngles(LikeLikeEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
 	}
 	@Override
-	public void render(MatrixStack matrices, VertexConsumer vertexConsumer, int light, int overlay, float red, float green, float blue, float alpha) {
-		body.render(matrices, vertexConsumer, light, overlay, red, green, blue, alpha);
+	public void render(MatrixStack matrices, VertexConsumer vertices, int light, int overlay, int color) {
+		body.render(matrices, vertices, light, overlay, color);
 	}
 
 	@Override

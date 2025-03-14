@@ -21,43 +21,42 @@ import java.util.Optional;
 
 @Mixin(BowItem.class)
 public abstract class BowItemMixin {
-
-    @Unique
-    private Item getItem() {
-        return (Item) (Object) this;
-    }
-
-    @Inject(method = "use", at = @At("HEAD"), cancellable = true)
-    private void swapQuiver(World world, PlayerEntity user, Hand hand, CallbackInfoReturnable<TypedActionResult<ItemStack>> cir) {
-        if (QuiverUtil.useQuiver(user)) {
-            cir.setReturnValue(TypedActionResult.success(user.getStackInHand(hand)));
-            cir.cancel();
-        }
-    }
-
-
-    @Inject(
-            method = "onStoppedUsing",
-            at = @At(
-                    value = "INVOKE",
-                    target = "Lnet/minecraft/world/World;playSound(Lnet/minecraft/entity/player/PlayerEntity;DDDLnet/minecraft/sound/SoundEvent;Lnet/minecraft/sound/SoundCategory;FF)V",
-                    shift = At.Shift.AFTER
-            ),
-            locals = LocalCapture.CAPTURE_FAILEXCEPTION,
-            cancellable = true)
-    private void onReleaseUsing(ItemStack stack, World world, LivingEntity entity, int remainingUseTicks, CallbackInfo ci,
-                                PlayerEntity user, boolean bl, ItemStack itemStack, int i, float f) {
-
-        ItemStack quiverStack = QuiverUtil.findQuiver(user);
-        if (quiverStack != null) {
-            Optional<ItemStack> arrowStack = CustomBundleUtil.getFirstItem(quiverStack);
-            if (arrowStack.isPresent()) {
-                if (!user.getAbilities().creativeMode) {
-                    CustomBundleUtil.removeOneItem(quiverStack, arrowStack.get().getItem());
-                }
-                user.incrementStat(Stats.USED.getOrCreateStat(getItem()));
-                ci.cancel();
-            }
-        }
-    }
+//
+//    @Unique
+//    private Item getItem() {
+//        return (Item) (Object) this;
+//    }
+//
+//    @Inject(method = "use", at = @At("HEAD"), cancellable = true)
+//    private void swapQuiver(World world, PlayerEntity user, Hand hand, CallbackInfoReturnable<TypedActionResult<ItemStack>> cir) {
+//        if (QuiverUtil.useQuiver(user)) {
+//            cir.setReturnValue(TypedActionResult.success(user.getStackInHand(hand)));
+//            cir.cancel();
+//        }
+//    }
+//
+//
+//    @Inject(
+//            method = "onStoppedUsing",
+//            at = @At(
+//                    value = "INVOKE",
+//                    target = "Lnet/minecraft/world/World;playSound(Lnet/minecraft/entity/player/PlayerEntity;DDDLnet/minecraft/sound/SoundEvent;Lnet/minecraft/sound/SoundCategory;FF)V",
+//                    shift = At.Shift.AFTER
+//            ),
+//            locals = LocalCapture.CAPTURE_FAILEXCEPTION,
+//            cancellable = true)
+//    private void onReleaseUsing(ItemStack stack, World world, LivingEntity user, int remainingUseTicks, CallbackInfo ci, PlayerEntity playerEntity) {
+//
+//        ItemStack quiverStack = QuiverUtil.findQuiver(playerEntity);
+//        if (quiverStack != null) {
+//            Optional<ItemStack> arrowStack = CustomBundleUtil.getFirstItem(quiverStack);
+//            if (arrowStack.isPresent()) {
+//                if (!playerEntity.getAbilities().creativeMode) {
+//                    CustomBundleUtil.removeOneItem(quiverStack, arrowStack.get().getItem());
+//                }
+//                playerEntity.incrementStat(Stats.USED.getOrCreateStat(getItem()));
+//                ci.cancel();
+//            }
+//        }
+//    }
 }

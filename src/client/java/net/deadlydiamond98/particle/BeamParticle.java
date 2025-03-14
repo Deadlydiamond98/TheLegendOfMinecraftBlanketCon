@@ -7,7 +7,7 @@ import net.minecraft.client.particle.ParticleTextureSheet;
 import net.minecraft.client.particle.SpriteBillboardParticle;
 import net.minecraft.client.particle.SpriteProvider;
 import net.minecraft.client.world.ClientWorld;
-import net.minecraft.particle.DefaultParticleType;
+import net.minecraft.particle.SimpleParticleType;
 
 public class BeamParticle extends SpriteBillboardParticle {
     private int tickCounter = 0;
@@ -50,7 +50,7 @@ public class BeamParticle extends SpriteBillboardParticle {
     }
 
     @Environment(EnvType.CLIENT)
-    public static class BeamParticleFactory implements ParticleFactory<DefaultParticleType> {
+    public static class BeamParticleFactory implements ParticleFactory<SimpleParticleType> {
 
         private final SpriteProvider spriteProvider;
 
@@ -59,7 +59,7 @@ public class BeamParticle extends SpriteBillboardParticle {
         }
 
         @Override
-        public BeamParticle createParticle(DefaultParticleType type, ClientWorld world, double x, double y, double z, double velocityX, double velocityY, double velocityZ) {
+        public BeamParticle createParticle(SimpleParticleType type, ClientWorld world, double x, double y, double z, double velocityX, double velocityY, double velocityZ) {
             return new BeamParticle(world, x, y, z, this.spriteProvider);
         }
     }

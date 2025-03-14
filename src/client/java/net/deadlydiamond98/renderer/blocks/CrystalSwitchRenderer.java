@@ -10,6 +10,7 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.render.*;
 import net.minecraft.client.render.block.entity.BlockEntityRenderer;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactory;
+import net.minecraft.client.render.entity.LivingEntityRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.RotationAxis;
@@ -45,12 +46,12 @@ public class CrystalSwitchRenderer<T extends BlockEntity> implements BlockEntity
 
         VertexConsumer vertexConsumerOutline = vertexConsumers.getBuffer(RenderLayer.getBeaconBeam(this.getOutlineTexture(), false));
 
-        outline.render(matrices, vertexConsumerOutline, LightmapTextureManager.MAX_BLOCK_LIGHT_COORDINATE, overlay, 1.0f, 1.0f, 1.0f, 1.0f);
+        outline.render(matrices, vertexConsumerOutline, LightmapTextureManager.MAX_BLOCK_LIGHT_COORDINATE, overlay, 0xffffff);
 
         matrices.pop();
 
         VertexConsumer vertexConsumer = vertexConsumers.getBuffer(RenderLayer.getEntitySolid(this.getOrbTexture(entity)));
-        model.render(matrices, vertexConsumer, 200, overlay, 1.0f, 1.0f, 1.0f, 1.0f);
+        model.render(matrices, vertexConsumer, 200, overlay, 0xffffff);
 
         matrices.pop();
     }
@@ -68,10 +69,10 @@ public class CrystalSwitchRenderer<T extends BlockEntity> implements BlockEntity
             }
         }
 
-        return new Identifier(ZeldaCraft.MOD_ID, "textures/entity/crystal_switch/" + color + "_crystal_switch_orb.png");
+        return Identifier.of(ZeldaCraft.MOD_ID, "textures/entity/crystal_switch/" + color + "_crystal_switch_orb.png");
     }
 
     public Identifier getOutlineTexture() {
-        return new Identifier(ZeldaCraft.MOD_ID, "textures/entity/crystal_switch/crystal_switch_outline.png");
+        return Identifier.of(ZeldaCraft.MOD_ID, "textures/entity/crystal_switch/crystal_switch_outline.png");
     }
 }

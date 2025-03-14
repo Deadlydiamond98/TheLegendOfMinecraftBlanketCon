@@ -40,10 +40,10 @@ public class MasterSwordBeamRenderer<T extends Entity> extends EntityRenderer<Ma
 
         //Render
         int emissiveLight = 15728880;
-        vertexConsumer.vertex(modelMatrix, -0.25F, 0.25F, 0.0F).color(255, 255, 255, 255).texture(0.0F, v + 0.25f).overlay(OverlayTexture.DEFAULT_UV).light(emissiveLight).normal(normalMatrix, 0, 1, 0).next();
-        vertexConsumer.vertex(modelMatrix, 0.25F, 0.25F, 0.0F).color(255, 255, 255, 255).texture(1.0F, v + 0.25f).overlay(OverlayTexture.DEFAULT_UV).light(emissiveLight).normal(normalMatrix, 0, 1, 0).next();
-        vertexConsumer.vertex(modelMatrix, 0.25F, -0.25F, 0.0F).color(255, 255, 255, 255).texture(1.0F, v).overlay(OverlayTexture.DEFAULT_UV).light(emissiveLight).normal(normalMatrix, 0, 1, 0).next();
-        vertexConsumer.vertex(modelMatrix, -0.25F, -0.25F, 0.0F).color(255, 255, 255, 255).texture(0.0F, v).overlay(OverlayTexture.DEFAULT_UV).light(emissiveLight).normal(normalMatrix, 0, 1, 0).next();
+        vertexConsumer.vertex(modelMatrix, -0.25F, 0.25F, 0.0F).color(255, 255, 255, 255).texture(0.0F, v + 0.25f).overlay(OverlayTexture.DEFAULT_UV).light(emissiveLight).normal(matrixEntry, 0, 1, 0);
+        vertexConsumer.vertex(modelMatrix, 0.25F, 0.25F, 0.0F).color(255, 255, 255, 255).texture(1.0F, v + 0.25f).overlay(OverlayTexture.DEFAULT_UV).light(emissiveLight).normal(matrixEntry, 0, 1, 0);
+        vertexConsumer.vertex(modelMatrix, 0.25F, -0.25F, 0.0F).color(255, 255, 255, 255).texture(1.0F, v).overlay(OverlayTexture.DEFAULT_UV).light(emissiveLight).normal(matrixEntry, 0, 1, 0);
+        vertexConsumer.vertex(modelMatrix, -0.25F, -0.25F, 0.0F).color(255, 255, 255, 255).texture(0.0F, v).overlay(OverlayTexture.DEFAULT_UV).light(emissiveLight).normal(matrixEntry, 0, 1, 0);
 
         matrices.pop();
         super.render(entity, yaw, tickDelta, matrices, vertexConsumers, light);
@@ -56,6 +56,6 @@ public class MasterSwordBeamRenderer<T extends Entity> extends EntityRenderer<Ma
 
     @Override
     public Identifier getTexture(MasterSwordBeamEntity entity) {
-        return new Identifier(ZeldaCraft.MOD_ID, "textures/entity/master_sword_beam.png");
+        return Identifier.of(ZeldaCraft.MOD_ID, "textures/entity/master_sword_beam.png");
     }
 }

@@ -13,9 +13,4 @@ public abstract class OctorokRenderer extends MobEntityRenderer<OctorokEntity, O
     public OctorokRenderer(EntityRendererFactory.Context context) {
            super(context, new OctorokEntityModel(context.getPart(OctorokEntityModel.LAYER_LOCATION)), 0.25F);
     }
-
-    @Override
-    protected void setupTransforms(OctorokEntity entity, MatrixStack matrices, float animationProgress, float bodyYaw, float tickDelta) {
-        super.setupTransforms(entity, matrices, animationProgress, bodyYaw, tickDelta);
-    }
 }

@@ -12,6 +12,6 @@ public class AutoDungeonDoorRenderer extends DungeonDoorRenderer {
 
     @Override
     public Identifier getTexture(String color) {
-        return new Identifier(ZeldaCraft.MOD_ID, "textures/entity/doors/auto_" + color + "_dungeon_door.png");
+        return Identifier.of(ZeldaCraft.MOD_ID, "textures/entity/doors/auto_" + color + "_dungeon_door.png");
     }
 }

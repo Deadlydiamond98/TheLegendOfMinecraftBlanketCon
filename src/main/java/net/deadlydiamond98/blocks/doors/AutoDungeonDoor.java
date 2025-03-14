@@ -22,11 +22,6 @@ public class AutoDungeonDoor extends DungeonDoor {
     }
 
     @Override
-    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-        return super.onUse(state, world, pos, player, hand, hit);
-    }
-
-    @Override
     protected void openCloseDoor(DungeonDoorParts part, World world, BlockPos pos, Direction direction, boolean newOpenState, boolean currentOpenState) {
     }
 
@@ -37,6 +32,6 @@ public class AutoDungeonDoor extends DungeonDoor {
 
     @Override
     public @Nullable <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
-        return checkType(type, ZeldaBlockEntities.OPENING_DUNGEON_DOOR, OpeningDungeonDoorEntity::tickAutoDungeonDoor);
+        return validateTicker(type, ZeldaBlockEntities.OPENING_DUNGEON_DOOR, OpeningDungeonDoorEntity::tickAutoDungeonDoor);
     }
 }

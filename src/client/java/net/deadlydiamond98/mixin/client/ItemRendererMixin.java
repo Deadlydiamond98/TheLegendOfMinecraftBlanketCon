@@ -98,14 +98,14 @@ public class ItemRendererMixin {
 
         VertexConsumer vertexConsumer;
         vertexConsumer = vertexConsumers.getBuffer(RenderLayer.getEntityTranslucent(
-                new Identifier(ZeldaCraft.MOD_ID, "textures/item/icon/" + icon + "_icon.png")
+                Identifier.of(ZeldaCraft.MOD_ID, "textures/item/icon/" + icon + "_icon.png")
         ));
 
         int light = LightmapTextureManager.MAX_BLOCK_LIGHT_COORDINATE;
-        vertexConsumer.vertex(modelMatrix, -1,  1, 0.0F).color(255, 255, 255, 255).texture(1, 0).overlay(OverlayTexture.DEFAULT_UV).light(light).normal(normalMatrix, 0, 1, 0).next();
-        vertexConsumer.vertex(modelMatrix,  1,  1, 0.0F).color(255, 255, 255, 255).texture(0, 0).overlay(OverlayTexture.DEFAULT_UV).light(light).normal(normalMatrix, 0, 1, 0).next();
-        vertexConsumer.vertex(modelMatrix,  1, -1, 0.0F).color(255, 255, 255, 255).texture(0, 1).overlay(OverlayTexture.DEFAULT_UV).light(light).normal(normalMatrix, 0, 1, 0).next();
-        vertexConsumer.vertex(modelMatrix, -1, -1, 0.0F).color(255, 255, 255, 255).texture(1, 1).overlay(OverlayTexture.DEFAULT_UV).light(light).normal(normalMatrix, 0, 1, 0).next();
+        vertexConsumer.vertex(modelMatrix, -1,  1, 0.0F).color(255, 255, 255, 255).texture(1, 0).overlay(OverlayTexture.DEFAULT_UV).light(light).normal(entry, 0, 1, 0);
+        vertexConsumer.vertex(modelMatrix,  1,  1, 0.0F).color(255, 255, 255, 255).texture(0, 0).overlay(OverlayTexture.DEFAULT_UV).light(light).normal(entry, 0, 1, 0);
+        vertexConsumer.vertex(modelMatrix,  1, -1, 0.0F).color(255, 255, 255, 255).texture(0, 1).overlay(OverlayTexture.DEFAULT_UV).light(light).normal(entry, 0, 1, 0);
+        vertexConsumer.vertex(modelMatrix, -1, -1, 0.0F).color(255, 255, 255, 255).texture(1, 1).overlay(OverlayTexture.DEFAULT_UV).light(light).normal(entry, 0, 1, 0);
     }
 }
 

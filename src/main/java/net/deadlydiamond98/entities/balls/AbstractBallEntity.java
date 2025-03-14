@@ -1,13 +1,11 @@
 package net.deadlydiamond98.entities.balls;
 
-import net.deadlydiamond98.enchantments.ZeldaEnchantments;
 import net.deadlydiamond98.items.bats.BatItem;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.EndGatewayBlockEntity;
-import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -48,12 +46,12 @@ public abstract class AbstractBallEntity extends ThrownItemEntity {
     private static final TrackedData<Float> DRAG;
 
     @Override
-    protected void initDataTracker() {
-        super.initDataTracker();
-        this.dataTracker.startTracking(DRAG, 1.0f);
-        this.dataTracker.startTracking(GRAVITY, 1.0f);
-        this.dataTracker.startTracking(BOUNCE, 1.0f);
-        this.dataTracker.startTracking(AIR_DRAG, 1.0f);
+    protected void initDataTracker(DataTracker.Builder builder) {
+        super.initDataTracker(builder);
+        builder.add(DRAG, 1.0f);
+        builder.add(GRAVITY, 1.0f);
+        builder.add(BOUNCE, 1.0f);
+        builder.add(AIR_DRAG, 1.0f);
     }
 
     static {
@@ -95,17 +93,14 @@ public abstract class AbstractBallEntity extends ThrownItemEntity {
             BlockPos blockPos = ((BlockHitResult) hitResult).getBlockPos();
             BlockState blockState = this.getWorld().getBlockState(blockPos);
             if (blockState.isOf(Blocks.NETHER_PORTAL)) {
-                this.setInNetherPortal(blockPos);
                 specialCollision = true;
             }
             else if (blockState.isOf(Blocks.END_GATEWAY)) {
-                BlockEntity blockEntity = this.getWorld().getBlockEntity(blockPos);
-                if (blockEntity instanceof EndGatewayBlockEntity && EndGatewayBlockEntity.canTeleport(this)) {
-                    EndGatewayBlockEntity.tryTeleportingEntity(this.getWorld(), blockPos, blockState, this, (EndGatewayBlockEntity) blockEntity);
-                }
                 specialCollision = true;
             }
         }
+
+        this.tickPortalTeleportation();
 
         if (hitResult.getType() != HitResult.Type.MISS && !specialCollision) {
             this.onCollision(hitResult);
@@ -117,7 +112,7 @@ public abstract class AbstractBallEntity extends ThrownItemEntity {
 
         if (!this.hasNoGravity()) {
             if (!this.isSubmergedInWater()) {
-                adjustedVelocity = adjustedVelocity.add(0, -this.getGravity(), 0);
+                adjustedVelocity = adjustedVelocity.add(0, -this.getBallGravity(), 0);
             } else {
                 adjustedVelocity = onTouchWater(adjustedVelocity);
             }
@@ -164,7 +159,7 @@ public abstract class AbstractBallEntity extends ThrownItemEntity {
     }
 
     protected Vec3d onTouchWater(Vec3d adjustedVelocity) {
-        return adjustedVelocity.add(0, -this.getGravity(), 0);
+        return adjustedVelocity.add(0, -this.getBallGravity(), 0);
     }
 
     private ParticleEffect getParticle() {
@@ -249,7 +244,7 @@ public abstract class AbstractBallEntity extends ThrownItemEntity {
 
                 Block block = blockState.getBlock();
                 if (movement.y != vec3d.y) {
-                    if (this.getVelocity().y * -this.getBounce() > this.getGravity() + 0.001) {
+                    if (this.getVelocity().y * -this.getBounce() > this.getBallGravity() + 0.001) {
                         this.setVelocity(this.getVelocity().multiply(1, -this.getBounce(), 1));
                     }
                     else {
@@ -341,7 +336,7 @@ public abstract class AbstractBallEntity extends ThrownItemEntity {
         switch (direction) {
             case DOWN -> this.setVelocity(this.getVelocity().multiply(1, -1, 1));
             case UP -> {
-                if (this.getVelocity().y * -this.getBounce() > this.getGravity() + 0.001) {
+                if (this.getVelocity().y * -this.getBounce() > this.getBallGravity() + 0.001) {
                     this.setVelocity(this.getVelocity().multiply(1, -this.getBounce(), 1));
                 }
                 else {
@@ -383,7 +378,8 @@ public abstract class AbstractBallEntity extends ThrownItemEntity {
                         Vec3d lookVec = player.getRotationVector();
                         double launchPower = 0.7 * sourceEntity.distanceTo(this);
 
-                        double updraft = EnchantmentHelper.getLevel(ZeldaEnchantments.Updraft, heldItem) * 0.25;
+//                        double updraft = EnchantmentHelper.getLevel(ZeldaEnchantments.Updraft, heldItem) * 0.25;
+                        double updraft = 0;
 
                         double velocityY = lookVec.y * launchPower;
 
@@ -440,8 +436,7 @@ public abstract class AbstractBallEntity extends ThrownItemEntity {
         this.dataTracker.set(AIR_DRAG, f);
     }
 
-    @Override
-    public float getGravity() {
+    public float getBallGravity() {
         return (Float) this.dataTracker.get(GRAVITY);
     }
 
@@ -460,7 +455,7 @@ public abstract class AbstractBallEntity extends ThrownItemEntity {
     @Override
     public void writeCustomDataToNbt(NbtCompound nbt) {
         super.writeCustomDataToNbt(nbt);
-        nbt.putFloat("ballGravity", this.getGravity());
+        nbt.putFloat("ballGravity", this.getBallGravity());
         nbt.putFloat("airDrag", this.getAirDrag());
         nbt.putFloat("drag", this.getDrag());
         nbt.putFloat("bounce", this.getBounce());

@@ -17,12 +17,7 @@ public class LikeLikeRenderer extends MobEntityRenderer<LikeLikeEntity, LikeLike
     }
 
     @Override
-    protected void setupTransforms(LikeLikeEntity entity, MatrixStack matrices, float animationProgress, float bodyYaw, float tickDelta) {
-        super.setupTransforms(entity, matrices, animationProgress, bodyYaw, tickDelta);
-    }
-
-    @Override
     public Identifier getTexture(LikeLikeEntity batEntity) {
-        return new Identifier(ZeldaCraft.MOD_ID, "textures/entity/like_like.png");
+        return Identifier.of(ZeldaCraft.MOD_ID, "textures/entity/like_like.png");
     }
 }

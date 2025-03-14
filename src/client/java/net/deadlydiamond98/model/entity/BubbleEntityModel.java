@@ -15,7 +15,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
 
 public class BubbleEntityModel<T extends BubbleEntity> extends SinglePartEntityModel<T> {
-	public static final EntityModelLayer LAYER_LOCATION = new EntityModelLayer(new Identifier(ZeldaCraft.MOD_ID, "bubble_entity"), "main");
+	public static final EntityModelLayer LAYER_LOCATION = new EntityModelLayer(Identifier.of(ZeldaCraft.MOD_ID, "bubble_entity"), "main");
 	private final ModelPart root;
 	private final ModelPart main;
 	private final ModelPart wingr;
@@ -60,9 +60,10 @@ public class BubbleEntityModel<T extends BubbleEntity> extends SinglePartEntityM
 			this.wingl.pitch = this.wingr.pitch;
 		}
 	}
+
 	@Override
-	public void render(MatrixStack matrices, VertexConsumer vertexConsumer, int light, int overlay, float red, float green, float blue, float alpha) {
-		main.render(matrices, vertexConsumer, light, overlay, red, green, blue, alpha);
+	public void render(MatrixStack matrices, VertexConsumer vertices, int light, int overlay, int color) {
+		main.render(matrices, vertices, light, overlay, color);
 	}
 
 	@Override

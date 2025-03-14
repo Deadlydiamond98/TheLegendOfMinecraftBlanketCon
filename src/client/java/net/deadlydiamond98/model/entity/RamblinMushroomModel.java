@@ -15,7 +15,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
 
 public class RamblinMushroomModel extends SinglePartEntityModel<RamblinMushroomEntity> {
-	public static final EntityModelLayer LAYER_LOCATION = new EntityModelLayer(new Identifier(ZeldaCraft.MOD_ID, "ramblin_mushroom_entity"), "main");
+	public static final EntityModelLayer LAYER_LOCATION = new EntityModelLayer(Identifier.of(ZeldaCraft.MOD_ID, "ramblin_mushroom_entity"), "main");
 
 	private final ModelPart root;
 	private final ModelPart body;
@@ -56,8 +56,8 @@ public class RamblinMushroomModel extends SinglePartEntityModel<RamblinMushroomE
 	}
 
 	@Override
-	public void render(MatrixStack matrices, VertexConsumer vertexConsumer, int light, int overlay, float red, float green, float blue, float alpha) {
-		body.render(matrices, vertexConsumer, light, overlay, red, green, blue, alpha);
+	public void render(MatrixStack matrices, VertexConsumer vertices, int light, int overlay, int color) {
+		body.render(matrices, vertices, light, overlay, color);
 	}
 
 	@Override

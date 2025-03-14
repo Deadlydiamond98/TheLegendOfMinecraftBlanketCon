@@ -12,7 +12,9 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 
 public class PacciCane extends Item implements MagicItemData {
-    private int magicCost;
+
+    private final int magicCost;
+
     public PacciCane(Settings settings) {
         super(settings);
         this.magicCost = 1;

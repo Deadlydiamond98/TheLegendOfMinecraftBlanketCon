@@ -1,11 +1,13 @@
 package net.deadlydiamond98.mixin.entity;
 
 import net.deadlydiamond98.networking.ZeldaServerPackets;
+import net.deadlydiamond98.statuseffects.StunStatusEffect;
 import net.deadlydiamond98.statuseffects.ZeldaStatusEffects;
 import net.deadlydiamond98.util.interfaces.mixin.ZeldaLivingEntityData;
 import net.minecraft.entity.LimbAnimator;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.network.ServerPlayerEntity;
 import org.spongepowered.asm.mixin.Final;
@@ -38,9 +40,13 @@ public abstract class LivingEntityMixin implements ZeldaLivingEntityData {
     @Unique
     private boolean flip;
 
+    @Unique
+    private boolean sendDeku;
+
     @Inject(method = "<init>", at = @At("TAIL"))
     private void onInit(CallbackInfo ci) {
         this.flip = false;
+        this.sendDeku = false;
     }
 
     @Inject(method = "tick", at = @At("HEAD"), cancellable = true)
@@ -48,14 +54,34 @@ public abstract class LivingEntityMixin implements ZeldaLivingEntityData {
         LivingEntity entity = (LivingEntity) (Object) this;
 
         if (entity.hasStatusEffect(ZeldaStatusEffects.Stun_Status_Effect)) {
+
             this.tickStatusEffects();
+
+            this.sendDeku = true;
+
             ci.cancel();
+        } else if (this.sendDeku) {
+            notifyPlayers(entity, false);
+            this.sendDeku = false;
         }
         if (!entity.getWorld().isClient()) {
             entity.getWorld().getPlayers().forEach(player -> {
                 ZeldaServerPackets.sendEntityStatsPacket((ServerPlayerEntity) player,
                         this.flip, entity.getId());
             });
+        }
+    }
+
+    @Unique
+    private void notifyPlayers(LivingEntity entity, boolean apply) {
+        for (PlayerEntity player : entity.getWorld().getPlayers()) {
+            if (player instanceof ServerPlayerEntity) {
+                ServerPlayerEntity serverPlayer = (ServerPlayerEntity) player;
+                double distance = entity.squaredDistanceTo(serverPlayer);
+                if (distance < 10000) {
+                    ZeldaServerPackets.sendDekuStunOverlayPacket(serverPlayer, entity.getId(), apply);
+                }
+            }
         }
     }
 

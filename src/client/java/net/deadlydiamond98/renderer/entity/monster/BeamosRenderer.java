@@ -12,7 +12,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.RotationAxis;
 
 public class BeamosRenderer<T extends Entity> extends MobEntityRenderer<BeamosEntity, BeamosEntityModel<BeamosEntity>> {
-    private static final Identifier TEXTURE = new Identifier(ZeldaCraft.MOD_ID, "textures/entity/beamos.png");
+    private static final Identifier TEXTURE = Identifier.of(ZeldaCraft.MOD_ID, "textures/entity/beamos.png");
 
     public BeamosRenderer(EntityRendererFactory.Context context) {
            super(context, new BeamosEntityModel<BeamosEntity>(context.getPart(BeamosEntityModel.LAYER_LOCATION)), 0.25F);
@@ -33,9 +33,10 @@ public class BeamosRenderer<T extends Entity> extends MobEntityRenderer<BeamosEn
         return true;
     }
 
-    protected void setupTransforms(BeamosEntity mob, MatrixStack matrixStack, float f, float g, float h) {
-        matrixStack.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(180));
-        g = mob.getYawClient();
-        super.setupTransforms(mob, matrixStack, f, g, h);
+    @Override
+    protected void setupTransforms(BeamosEntity entity, MatrixStack matrices, float animationProgress, float bodyYaw, float tickDelta, float scale) {
+        matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(180));
+        bodyYaw = entity.getYawClient();
+        super.setupTransforms(entity, matrices, animationProgress, bodyYaw, tickDelta, scale);
     }
 }

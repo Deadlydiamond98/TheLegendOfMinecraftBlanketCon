@@ -7,9 +7,9 @@ import net.minecraft.util.Identifier;
 
 public class ZeldaRecipes {
     public static void registerRecipes() {
-        Registry.register(Registries.RECIPE_SERIALIZER, new Identifier(ZeldaCraft.MOD_ID, MagicWorkbenchRecipe.Serializer.ID),
+        Registry.register(Registries.RECIPE_SERIALIZER, Identifier.of(ZeldaCraft.MOD_ID, MagicWorkbenchRecipe.Serializer.ID),
                 MagicWorkbenchRecipe.Serializer.INSTANCE);
-        Registry.register(Registries.RECIPE_TYPE, new Identifier(ZeldaCraft.MOD_ID, MagicWorkbenchRecipe.Type.ID),
+        Registry.register(Registries.RECIPE_TYPE, Identifier.of(ZeldaCraft.MOD_ID, MagicWorkbenchRecipe.Type.ID),
                 MagicWorkbenchRecipe.Type.INSTANCE);
     }
 }

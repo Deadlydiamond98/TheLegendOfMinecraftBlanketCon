@@ -8,8 +8,8 @@ import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.util.Identifier;
 
 public class ZeldaArrowRenderer<T extends PersistentProjectileEntity> extends ProjectileEntityRenderer<T> {
-    public static final Identifier Silver_Texture = new Identifier(ZeldaCraft.MOD_ID, "textures/entity/silver_arrow.png");
-    public static final Identifier Bomb_Texture = new Identifier(ZeldaCraft.MOD_ID, "textures/entity/bomb_arrow.png");
+    public static final Identifier Silver_Texture = Identifier.of(ZeldaCraft.MOD_ID, "textures/entity/silver_arrow.png");
+    public static final Identifier Bomb_Texture = Identifier.of(ZeldaCraft.MOD_ID, "textures/entity/bomb_arrow.png");
     public ZeldaArrowRenderer(EntityRendererFactory.Context context) {
         super(context);
     }

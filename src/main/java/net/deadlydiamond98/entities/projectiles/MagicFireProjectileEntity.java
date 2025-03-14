@@ -8,6 +8,7 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.EndGatewayBlockEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.entity.projectile.ProjectileUtil;
 import net.minecraft.particle.ParticleEffect;
@@ -70,24 +71,8 @@ public class MagicFireProjectileEntity extends ProjectileEntity {
         super.tick();
 
         HitResult hitResult = ProjectileUtil.getCollision(this, this::canHit);
-        boolean bl = false;
-        if (hitResult.getType() == HitResult.Type.BLOCK) {
-            BlockPos blockPos = ((BlockHitResult)hitResult).getBlockPos();
-            BlockState blockState = this.getWorld().getBlockState(blockPos);
-            if (blockState.isOf(Blocks.NETHER_PORTAL)) {
-                this.setInNetherPortal(blockPos);
-                bl = true;
-            } else if (blockState.isOf(Blocks.END_GATEWAY)) {
-                BlockEntity blockEntity = this.getWorld().getBlockEntity(blockPos);
-                if (blockEntity instanceof EndGatewayBlockEntity && EndGatewayBlockEntity.canTeleport(this)) {
-                    EndGatewayBlockEntity.tryTeleportingEntity(this.getWorld(), blockPos, blockState, this, (EndGatewayBlockEntity)blockEntity);
-                }
 
-                bl = true;
-            }
-        }
-
-        if (hitResult.getType() != HitResult.Type.MISS && !bl) {
+        if (hitResult.getType() != HitResult.Type.MISS) {
             this.onCollision(hitResult);
         }
 
@@ -108,7 +93,8 @@ public class MagicFireProjectileEntity extends ProjectileEntity {
     }
 
     @Override
-    protected void initDataTracker() {
+    protected void initDataTracker(DataTracker.Builder builder) {
+
     }
 
     @Override

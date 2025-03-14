@@ -43,52 +43,52 @@ public class PlayerInventoryMixin {
 
         boolean hasTrinketBag = hasCustomZeldaBundleTrinket(player, insertStack);
 
-        if (!hasTrinketBag) {
-            for (int i = 0; i < player.getInventory().size(); i++) {
-
-                ItemStack bundleStack = player.getInventory().getStack(i);
-
-                if (bundleStack.getItem() instanceof CustomBundle bundle) {
-
-                    boolean canInsert = CustomBundleUtil.canInsertItem(bundleStack, insertStack.getItem());
-                    boolean isFull = CustomBundleUtil.isFull(bundleStack);
-
-                    if (canInsert && !isFull) {
-                        int added = CustomBundleUtil.addToBundle(bundleStack, insertStack);
-
-                        mimicPickupZelda(player, insertStack, added, () -> bundle.playInsertSound(player));
-                        return true;
-                    }
-                }
-            }
-        }
+//        if (!hasTrinketBag) {
+//            for (int i = 0; i < player.getInventory().size(); i++) {
+//
+//                ItemStack bundleStack = player.getInventory().getStack(i);
+//
+//                if (bundleStack.getItem() instanceof CustomBundle bundle) {
+//
+//                    boolean canInsert = CustomBundleUtil.canInsertItem(bundleStack, insertStack.getItem());
+//                    boolean isFull = CustomBundleUtil.isFull(bundleStack);
+//
+//                    if (canInsert && !isFull) {
+//                        int added = CustomBundleUtil.addToBundle(bundleStack, insertStack);
+//
+//                        mimicPickupZelda(player, insertStack, added, () -> bundle.playInsertSound(player));
+//                        return true;
+//                    }
+//                }
+//            }
+//        }
         return hasTrinketBag;
     }
 
     @Unique
     private boolean hasCustomZeldaBundleTrinket(PlayerEntity player, ItemStack insertStack) {
-        Optional<TrinketComponent> bl = TrinketsApi.getTrinketComponent(player);
-
-        if (bl.isPresent()) {
-            TrinketComponent trinket = bl.get();
-
-            for (Pair<SlotReference, ItemStack> entry : trinket.getAllEquipped()) {
-                ItemStack bundleStack = entry.getRight();
-
-                if (bundleStack.getItem() instanceof CustomBundle bundle) {
-
-                    boolean canInsert = CustomBundleUtil.canInsertItem(bundleStack, insertStack.getItem());
-                    boolean isFull = CustomBundleUtil.isFull(bundleStack);
-
-                    if (canInsert && !isFull) {
-                        int added = CustomBundleUtil.addToBundle(bundleStack, insertStack);
-
-                        mimicPickupZelda(player, insertStack, added, () -> bundle.playInsertSound(player));
-                        return true;
-                    }
-                }
-            }
-        }
+//        Optional<TrinketComponent> bl = TrinketsApi.getTrinketComponent(player);
+//
+//        if (bl.isPresent()) {
+//            TrinketComponent trinket = bl.get();
+//
+//            for (Pair<SlotReference, ItemStack> entry : trinket.getAllEquipped()) {
+//                ItemStack bundleStack = entry.getRight();
+//
+//                if (bundleStack.getItem() instanceof CustomBundle bundle) {
+//
+//                    boolean canInsert = CustomBundleUtil.canInsertItem(bundleStack, insertStack.getItem());
+//                    boolean isFull = CustomBundleUtil.isFull(bundleStack);
+//
+//                    if (canInsert && !isFull) {
+//                        int added = CustomBundleUtil.addToBundle(bundleStack, insertStack);
+//
+//                        mimicPickupZelda(player, insertStack, added, () -> bundle.playInsertSound(player));
+//                        return true;
+//                    }
+//                }
+//            }
+//        }
         return false;
     }
 

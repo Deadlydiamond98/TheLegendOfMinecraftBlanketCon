@@ -11,7 +11,7 @@ public class ZeldaWorldDataManager {
 
     public static MeteorShowerState getMeteorShowerState(ServerWorld world) {
         PersistentStateManager manager = world.getPersistentStateManager();
-        return manager.getOrCreate(MeteorShowerState::fromNbt, MeteorShowerState::new, METOR_SHOWER_DATA);
+        return manager.getOrCreate(MeteorShowerState.getPersistentStateType(), METOR_SHOWER_DATA);
     }
 
     public static void setMeteorShower(ServerWorld world, boolean value) {
@@ -25,7 +25,7 @@ public class ZeldaWorldDataManager {
 
     public static OnOffState getOnOffState(ServerWorld world) {
         PersistentStateManager manager = world.getPersistentStateManager();
-        return manager.getOrCreate(OnOffState::fromNbt, OnOffState::new, ON_OFF_DATA);
+        return manager.getOrCreate(OnOffState.getPersistentStateType(), ON_OFF_DATA);
     }
 
     public static void applyOnOff(ServerWorld world, String key, boolean value) {

@@ -14,6 +14,6 @@ public class RemoteBombRenderer extends AbstractBombRenderer<RemoteBombEntity> {
 
     @Override
     public Identifier getTexture(RemoteBombEntity entity) {
-        return new Identifier(ZeldaCraft.MOD_ID, "textures/entity/remote_bomb_entity.png");
+        return Identifier.of(ZeldaCraft.MOD_ID, "textures/entity/remote_bomb_entity.png");
     }
 }

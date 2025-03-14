@@ -2,11 +2,13 @@ package net.deadlydiamond98.items.other;
 
 import net.deadlydiamond98.entities.ZeldaEntities;
 import net.deadlydiamond98.entities.projectiles.HookshotEntity;
+import net.deadlydiamond98.util.NBTUtil;
 import net.deadlydiamond98.util.interfaces.mixin.ZeldaPlayerData;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
@@ -22,8 +24,12 @@ public class HookshotItem extends Item {
 
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
+
+        NbtCompound nbt = NBTUtil.getOrCreateNBT(stack);
+
         if (!world.isClient()) {
-            stack.getOrCreateNbt().putInt("shot", ((ZeldaPlayerData) entity).canUseHook() ? 0 : 1);
+            nbt.putInt("shot", ((ZeldaPlayerData) entity).canUseHook() ? 0 : 1);
+            NBTUtil.updateNBT(nbt, stack);
         }
         super.inventoryTick(stack, world, entity, slot, selected);
     }

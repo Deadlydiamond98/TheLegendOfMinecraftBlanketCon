@@ -1,5 +1,6 @@
 package net.deadlydiamond98.blocks.other;
 
+import com.mojang.serialization.MapCodec;
 import net.deadlydiamond98.blocks.entities.PedestalBlockEntity;
 import net.deadlydiamond98.blocks.entities.ZeldaBlockEntities;
 import net.minecraft.block.*;
@@ -27,6 +28,7 @@ import org.jetbrains.annotations.Nullable;
 
 public class PedestalBlock extends BlockWithEntity {
 
+    public static final MapCodec<PedestalBlock> CODEC = createCodec(PedestalBlock::new);
     public static final DirectionProperty FACING;
 
     static {
@@ -36,6 +38,11 @@ public class PedestalBlock extends BlockWithEntity {
     public PedestalBlock(Settings settings) {
         super(settings);
         setDefaultState(this.stateManager.getDefaultState().with(FACING, Direction.NORTH));
+    }
+
+    @Override
+    protected MapCodec<? extends BlockWithEntity> getCodec() {
+        return CODEC;
     }
 
     @Override
@@ -57,13 +64,12 @@ public class PedestalBlock extends BlockWithEntity {
     }
 
     @Override
-    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+    protected ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
         if (!world.isClient) {
             PedestalBlockEntity blockEntity = (PedestalBlockEntity) world.getBlockEntity(pos);
-            ItemStack stack = player.getStackInHand(hand);
+            ItemStack stack = player.getMainHandStack();
             if (blockEntity != null) {
                 if (blockEntity.hasLootTable()) {
-                    blockEntity.checkLootInteraction(player);
                     ItemStack loot = blockEntity.getStack(0);
                     if (player.isSneaking() && stack.isEmpty()) {
                         player.giveItemStack(loot);
@@ -95,14 +101,13 @@ public class PedestalBlock extends BlockWithEntity {
     }
 
     @Override
-    public void onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
+    public BlockState onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
         PedestalBlockEntity blockEntity = (PedestalBlockEntity) world.getBlockEntity(pos);
         if (blockEntity instanceof PedestalBlockEntity) {
-            blockEntity.checkLootInteraction(player);
             DefaultedList<ItemStack> items = blockEntity.getItems();
             ItemScatterer.spawn(world, pos, items);
         }
-        super.onBreak(world, pos, state, player);
+        return super.onBreak(world, pos, state, player);
     }
 
     @Nullable
@@ -114,7 +119,7 @@ public class PedestalBlock extends BlockWithEntity {
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
-        return checkType(type, ZeldaBlockEntities.PEDESTAL, PedestalBlockEntity::tick);
+        return validateTicker(type, ZeldaBlockEntities.PEDESTAL, PedestalBlockEntity::tick);
     }
 
     @Override

@@ -4,15 +4,18 @@ import net.deadlydiamond98.ZeldaCraft;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.RegistryKeys;
 import net.minecraft.util.Identifier;
 
 public class ZeldaEnchantments {
-    public static final Enchantment Lawn_Mower = new LawnMower();
-    public static final Enchantment Updraft = new Updraft();
+    public static final RegistryKey<Enchantment> Lawn_Mower = of("lawn_mower");
+    public static final RegistryKey<Enchantment> Updraft = of("updraft");
 
+    private static RegistryKey<Enchantment> of(String id) {
+        return RegistryKey.of(RegistryKeys.ENCHANTMENT, Identifier.of(ZeldaCraft.MOD_ID, id));
+    }
 
     public static void registerEnchants() {
-        Registry.register(Registries.ENCHANTMENT, new Identifier(ZeldaCraft.MOD_ID, "lawn_mower"), Lawn_Mower);
-        Registry.register(Registries.ENCHANTMENT, new Identifier(ZeldaCraft.MOD_ID, "updraft"), Updraft);
     }
 }

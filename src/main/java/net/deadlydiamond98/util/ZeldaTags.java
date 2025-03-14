@@ -12,7 +12,7 @@ public class ZeldaTags {
         public static final TagKey<Block> Bomb_Breakable = createTag("bomb_breakable");
         public static final TagKey<Block> Hookshotable = createTag("hookshotable");
         private static TagKey<Block> createTag(String name) {
-            return TagKey.of(RegistryKeys.BLOCK, new Identifier(ZeldaCraft.MOD_ID, name));
+            return TagKey.of(RegistryKeys.BLOCK, Identifier.of(ZeldaCraft.MOD_ID, name));
         }
     }
     public static class Items {
@@ -24,7 +24,7 @@ public class ZeldaTags {
         public static final TagKey<Item> Switch = createTag("switch");
 
         private static TagKey<Item> createTag(String name) {
-            return TagKey.of(RegistryKeys.ITEM, new Identifier(ZeldaCraft.MOD_ID, name));
+            return TagKey.of(RegistryKeys.ITEM, Identifier.of(ZeldaCraft.MOD_ID, name));
         }
     }
 }

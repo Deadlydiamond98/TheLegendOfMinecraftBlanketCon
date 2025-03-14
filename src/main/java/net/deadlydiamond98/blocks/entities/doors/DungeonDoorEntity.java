@@ -58,8 +58,4 @@ public class DungeonDoorEntity extends BlockEntity {
     public BlockEntityUpdateS2CPacket toUpdatePacket() {
         return BlockEntityUpdateS2CPacket.create(this);
     }
-
-    public NbtCompound toInitialChunkDataNbt() {
-        return this.createNbt();
-    }
 }

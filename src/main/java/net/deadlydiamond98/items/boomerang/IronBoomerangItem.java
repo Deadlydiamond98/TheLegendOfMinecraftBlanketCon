@@ -2,9 +2,9 @@ package net.deadlydiamond98.items.boomerang;
 
 import net.deadlydiamond98.entities.ZeldaEntities;
 import net.deadlydiamond98.entities.boomerangs.IronBoomerang;
-import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Hand;
@@ -24,8 +24,9 @@ public class IronBoomerangItem extends BaseBoomerangItem {
     protected IronBoomerang createBoomerangEntity(World world, PlayerEntity user, ItemStack itemStack, Hand hand) {
         return new IronBoomerang(ZeldaEntities.Iron_Boomerang, world, user, itemStack.copy(), hand);
     }
+
     @Override
-    public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
+    public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
         tooltip.add(Text.translatable("item.zeldacraft.iron_boomerang.tooltip").formatted(Formatting.GREEN));
     }
 }

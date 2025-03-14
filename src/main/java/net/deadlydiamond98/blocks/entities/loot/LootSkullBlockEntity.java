@@ -17,27 +17,7 @@ public class LootSkullBlockEntity extends LootPotBlockEntity {
         super(ZeldaBlockEntities.LOOT_SKULL, pos, state);
     }
 
-    public void writeNbt(NbtCompound nbt) {
-        super.writeNbt(nbt);
-
-        if (this.noteBlockSound != null) {
-            nbt.putString("note_block_sound", this.noteBlockSound.toString());
-        }
-    }
-
-    public void readNbt(NbtCompound nbt) {
-        super.readNbt(nbt);
-
-        if (nbt.contains("note_block_sound", 8)) {
-            this.noteBlockSound = Identifier.tryParse(nbt.getString("note_block_sound"));
-        }
-    }
-
     public BlockEntityUpdateS2CPacket toUpdatePacket() {
         return BlockEntityUpdateS2CPacket.create(this);
-    }
-
-    public NbtCompound toInitialChunkDataNbt() {
-        return this.createNbt();
     }
 }

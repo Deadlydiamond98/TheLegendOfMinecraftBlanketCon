@@ -5,11 +5,10 @@ import net.deadlydiamond98.entities.projectiles.SwordBeamEntity;
 import net.deadlydiamond98.util.interfaces.item.ISwingActionItem;
 import net.deadlydiamond98.magiclib.items.MagicItemData;
 import net.deadlydiamond98.util.sounds.ZeldaSounds;
-import net.deadlydiamond98.util.advancment.ZeldaAdvancementCriterion;
-import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.*;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.text.Text;
@@ -23,10 +22,12 @@ import java.util.List;
 public class MagicSword extends SwordItem implements MagicItemData, ISwingActionItem {
 
     private boolean soundPlay;
-    public MagicSword(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
-        super(toolMaterial, attackDamage, attackSpeed, settings);
-        soundPlay = false;
+
+    public MagicSword(ToolMaterial toolMaterial, Settings settings) {
+        super(toolMaterial, settings);
+        this.soundPlay = false;
     }
+
 
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
@@ -34,18 +35,18 @@ public class MagicSword extends SwordItem implements MagicItemData, ISwingAction
 
         if (entity instanceof PlayerEntity player) {
             if (!world.isClient()) {
-                ZeldaAdvancementCriterion.idtga.trigger((ServerPlayerEntity) entity);
+//                ZeldaAdvancementCriterion.idtga.trigger((ServerPlayerEntity) entity);
             }
 
-            if (!((PlayerEntity) entity).getItemCooldownManager().isCoolingDown(stack.getItem()) && soundPlay) {
-                soundPlay = false;
-                ((PlayerEntity) entity).playSound(ZeldaSounds.SwordRecharge, SoundCategory.PLAYERS, 1, 1);
+            if (!player.getItemCooldownManager().isCoolingDown(stack.getItem()) && this.soundPlay) {
+                this.soundPlay = false;
+                player.playSoundToPlayer(ZeldaSounds.SwordRecharge, SoundCategory.PLAYERS, 1, 1);
             }
         }
     }
 
     @Override
-    public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
+    public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
         tooltip.add(Text.translatable("item.zeldacraft.magic_sword.tooltip").formatted(Formatting.GREEN));
         tooltip.add(Text.translatable("item.zeldacraft.mana_sword.tooltip").formatted(Formatting.DARK_GREEN));
     }
@@ -75,7 +76,7 @@ public class MagicSword extends SwordItem implements MagicItemData, ISwingAction
 
             player.getItemCooldownManager().set(this, 20);
             this.setSoundPlay(true);
-            player.playSound(ZeldaSounds.SwordShoot, SoundCategory.PLAYERS, 1, 1);
+            player.playSoundToPlayer(ZeldaSounds.SwordShoot, SoundCategory.PLAYERS, 1, 1);
             if (!(player.getHealth() == player.getMaxHealth())) {
                 player.removeMana(3);
             }

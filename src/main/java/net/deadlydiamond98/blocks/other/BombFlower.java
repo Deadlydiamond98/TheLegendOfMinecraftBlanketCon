@@ -1,9 +1,9 @@
 package net.deadlydiamond98.blocks.other;
 
+import com.mojang.serialization.MapCodec;
 import net.deadlydiamond98.blocks.ZeldaBlocks;
 import net.deadlydiamond98.entities.bombs.BombEntity;
 import net.deadlydiamond98.items.ZeldaItems;
-import net.deadlydiamond98.util.advancment.ZeldaAdvancementCriterion;
 import net.deadlydiamond98.util.ZeldaTags;
 import net.deadlydiamond98.util.interfaces.block.IBombBreakInteraction;
 import net.minecraft.block.*;
@@ -38,12 +38,19 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldView;
 
 public class BombFlower extends PlantBlock implements IBombBreakInteraction {
+
+    public static final MapCodec<BombFlower> CODEC = createCodec(BombFlower::new);
     public static final DirectionProperty FACING = Properties.HORIZONTAL_FACING;
     public static final IntProperty AGE = Properties.AGE_3;
 
     public BombFlower(Settings settings) {
         super(settings);
         this.setDefaultState(this.stateManager.getDefaultState().with(this.getAgeProperty(), 0).with(FACING, Direction.NORTH));
+    }
+
+    @Override
+    protected MapCodec<? extends PlantBlock> getCodec() {
+        return CODEC;
     }
 
     private IntProperty getAgeProperty() {
@@ -111,7 +118,7 @@ public class BombFlower extends PlantBlock implements IBombBreakInteraction {
     }
 
     @Override
-    public boolean canPathfindThrough(BlockState state, BlockView world, BlockPos pos, NavigationType type) {
+    protected boolean canPathfindThrough(BlockState state, NavigationType type) {
         return true;
     }
 
@@ -126,8 +133,8 @@ public class BombFlower extends PlantBlock implements IBombBreakInteraction {
     }
 
     @Override
-    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-        if (player.getStackInHand(hand).isIn(ZeldaTags.Items.Primes_Bomb_Flowers) && getAge(state) == 3) {
+    protected ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
+        if (player.getMainHandStack().isIn(ZeldaTags.Items.Primes_Bomb_Flowers) && getAge(state) == 3) {
             world.setBlockState(pos, state.with(AGE, 0));
             BombEntity bombEntity = new BombEntity(world, pos.getX() + 0.5, pos.getY() + 0.2,
                     pos.getZ()  + 0.5, null);
@@ -141,12 +148,12 @@ public class BombFlower extends PlantBlock implements IBombBreakInteraction {
             dropStack(world, pos, new ItemStack(ZeldaItems.Bomb, 1));
             world.playSound(null, pos, SoundEvents.BLOCK_SWEET_BERRY_BUSH_PICK_BERRIES, SoundCategory.BLOCKS, 1.0F, 0.8F + world.random.nextFloat() * 0.4F);
             if (!world.isClient()) {
-                ZeldaAdvancementCriterion.eh.trigger((ServerPlayerEntity) player);
+//                ZeldaAdvancementCriterion.eh.trigger((ServerPlayerEntity) player);
             }
             return ActionResult.success(world.isClient);
         }
         else {
-            return super.onUse(state, world, pos, player, hand, hit);
+            return super.onUse(state, world, pos, player, hit);
         }
     }
 

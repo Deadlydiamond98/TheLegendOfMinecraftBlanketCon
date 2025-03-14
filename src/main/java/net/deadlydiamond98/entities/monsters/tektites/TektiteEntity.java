@@ -1,6 +1,7 @@
 package net.deadlydiamond98.entities.monsters.tektites;
 
 import net.deadlydiamond98.util.sounds.ZeldaSounds;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.*;
@@ -11,10 +12,13 @@ import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.mob.Monster;
+import net.minecraft.entity.mob.SlimeEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
@@ -33,9 +37,9 @@ public class TektiteEntity extends HostileEntity implements Monster {
     private boolean secondHopChance;
 
     @Override
-    protected void initDataTracker() {
-        super.initDataTracker();
-        this.dataTracker.startTracking(YAW, this.getYaw());
+    protected void initDataTracker(DataTracker.Builder builder) {
+        super.initDataTracker(builder);
+        builder.add(YAW, this.getYaw());
     }
 
     static {
@@ -119,10 +123,14 @@ public class TektiteEntity extends HostileEntity implements Monster {
     }
 
     protected void damage(LivingEntity target) {
-        if (this.isAlive()) {
-            if (this.canSee(target) && target.damage(this.getDamageSources().mobAttack(this),
-                    (float) Objects.requireNonNull(this.getAttributeInstance(EntityAttributes.GENERIC_ATTACK_DAMAGE)).getValue())) {
-                this.applyDamageEffects(this, target);
+        if (this.isAlive() && this.isInAttackRange(target) && this.canSee(target)) {
+            DamageSource damageSource = this.getDamageSources().mobAttack(this);
+            if (target.damage(damageSource, (float) Objects.requireNonNull(this.getAttributeInstance(EntityAttributes.GENERIC_ATTACK_DAMAGE)).getValue())) {
+                this.playSound(SoundEvents.ENTITY_SLIME_ATTACK, 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
+                World var4 = this.getWorld();
+                if (var4 instanceof ServerWorld serverWorld) {
+                    EnchantmentHelper.onTargetDamaged(serverWorld, target, damageSource);
+                }
             }
         }
     }

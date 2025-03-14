@@ -4,8 +4,12 @@ import dev.emi.trinkets.api.TrinketComponent;
 import dev.emi.trinkets.api.TrinketsApi;
 import net.deadlydiamond98.entities.ZeldaEntities;
 import net.deadlydiamond98.items.ZeldaItems;
+import net.deadlydiamond98.items.manaitems.wearable.FairyBell;
+import net.deadlydiamond98.util.NBTUtil;
 import net.deadlydiamond98.util.sounds.ZeldaSounds;
 import net.deadlydiamond98.util.FairyUtil;
+import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.NbtComponent;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.MovementType;
@@ -39,11 +43,13 @@ public class PlayerFairyCompanion extends Entity implements Ownable {
     private Entity owner;
     private Vec3d prevOwnerPos;
 
+
     @Override
-    protected void initDataTracker() {
-        this.dataTracker.startTracking(color, FairyUtil.colors.get(0));
-        this.dataTracker.startTracking(visable, true);
+    protected void initDataTracker(DataTracker.Builder builder) {
+        builder.add(color, FairyUtil.colors.get(0));
+        builder.add(visable, true);
     }
+
     static {
         color = DataTracker.registerData(PlayerFairyCompanion.class, TrackedDataHandlerRegistry.STRING);
         visable = DataTracker.registerData(PlayerFairyCompanion.class, TrackedDataHandlerRegistry.BOOLEAN);
@@ -98,7 +104,7 @@ public class PlayerFairyCompanion extends Entity implements Ownable {
             }
         }
         else {
-            this.updateTrackedPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.getYaw(), this.getPitch(), 20, true);
+            this.updateTrackedPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.getYaw(), this.getPitch(), 20);
         }
 
         this.move(MovementType.SELF, this.getVelocity());
@@ -254,8 +260,12 @@ public class PlayerFairyCompanion extends Entity implements Ownable {
         TrinketComponent trinket = TrinketsApi.getTrinketComponent(player).get();
         if (trinket.isEquipped(ZeldaItems.Fairy_Bell)) {
             ItemStack bell = trinket.getEquipped(ZeldaItems.Fairy_Bell).get(0).getRight();
-            if (bell.hasNbt() && bell.getNbt().contains("Color")) {
-                NbtCompound nbt = bell.getOrCreateNbt();
+
+            NbtComponent nbtCompound = bell.get(DataComponentTypes.CUSTOM_DATA);
+
+
+            if (nbtCompound != null && nbtCompound.getNbt().contains("Color")) {
+                NbtCompound nbt = NBTUtil.getOrCreateNBT(bell);
                 String fairyType = nbt.getString("Color");
                 switch (fairyType) {
                     case "navi" -> {

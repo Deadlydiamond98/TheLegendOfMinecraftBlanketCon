@@ -1,0 +1,22 @@
+{
+  "anvil_cost": 1,
+  "description": {
+    "translate": "enchantment.zeldacraft.lawn_mower"
+  },
+  "effects": {
+  },
+  "max_cost": {
+    "base": 50,
+    "per_level_above_first": 0
+  },
+  "max_level": 2,
+  "min_cost": {
+    "base": 1,
+    "per_level_above_first": 10
+  },
+  "slots": [
+    "mainhand"
+  ],
+  "supported_items": "#zeldacraft:item/bats",
+  "weight": 5
+}

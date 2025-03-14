@@ -12,7 +12,6 @@ import net.deadlydiamond98.model.LootSkullModel;
 import net.deadlydiamond98.model.entity.*;
 import net.deadlydiamond98.networking.ZeldaClientPackets;
 import net.deadlydiamond98.particle.ZeldaParticleFactory;
-import net.deadlydiamond98.renderer.GuiElements;
 import net.deadlydiamond98.renderer.PushBlockEntityRenderer;
 import net.deadlydiamond98.renderer.blocks.CrystalSwitchRenderer;
 import net.deadlydiamond98.renderer.blocks.LootSkullRenderer;
@@ -31,14 +30,13 @@ import net.deadlydiamond98.renderer.entity.monster.*;
 import net.deadlydiamond98.renderer.entity.projectile_items.BoomerangProjectileRenderer;
 import net.deadlydiamond98.renderer.entity.magic.MagicFireProjectileRenderer;
 import net.deadlydiamond98.renderer.entity.projectile_items.ZeldaArrowRenderer;
-import net.deadlydiamond98.screen.MagicWorkbenchScreen;
 import net.deadlydiamond98.screen_handlers.ZeldaScreenHandlers;
+import net.deadlydiamond98.util.NBTUtil;
 import net.deadlydiamond98.util.interfaces.mixin.ZeldaPlayerData;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.rendering.v1.*;
 import net.minecraft.client.color.world.BiomeColors;
-import net.minecraft.client.color.world.GrassColors;
 import net.minecraft.client.gui.screen.ingame.HandledScreens;
 import net.minecraft.client.item.CompassAnglePredicateProvider;
 import net.minecraft.client.item.ModelPredicateProviderRegistry;
@@ -46,16 +44,19 @@ import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactories;
 import net.minecraft.client.render.entity.FlyingItemEntityRenderer;
 import net.minecraft.client.render.entity.model.BatEntityModel;
-import net.minecraft.item.DyeableItem;
+import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.DyedColorComponent;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.util.Identifier;
+import net.minecraft.world.biome.GrassColors;
 
 public class ZeldaCraftClient implements ClientModInitializer {
 
 	@Override
 	public void onInitializeClient() {
 
-		HudRenderCallback.EVENT.register(new GuiElements());
+//		HudRenderCallback.EVENT.register(new GuiElements());
 
 		ZeldacraftMusic.registerMusic();
 		ZeldaClientPackets.registerC2SPackets();
@@ -85,26 +86,29 @@ public class ZeldaCraftClient implements ClientModInitializer {
 	}
 
 	private void registerScreens() {
-		HandledScreens.register(ZeldaScreenHandlers.MAGIC_WORKBENCH_SCREEN_HANDLER, MagicWorkbenchScreen::new);
+//		HandledScreens.register(ZeldaScreenHandlers.MAGIC_WORKBENCH_SCREEN_HANDLER, MagicWorkbenchScreen::new);
 	}
 
 	private void registerModelPredicatees() {
-		ModelPredicateProviderRegistry.register(ZeldaItems.Quiver, new Identifier("filled"), (stack, world, entity, seed) -> {
+		ModelPredicateProviderRegistry.register(ZeldaItems.Quiver, Identifier.of("filled"), (stack, world, entity, seed) -> {
 			return !stack.isItemBarVisible() ? 0 : 1;
 		});
-		ModelPredicateProviderRegistry.register(ZeldaItems.Better_Quiver, new Identifier("filled"), (stack, world, entity, seed) -> {
+		ModelPredicateProviderRegistry.register(ZeldaItems.Better_Quiver, Identifier.of("filled"), (stack, world, entity, seed) -> {
 			return !stack.isItemBarVisible() ? 0 : 1;
 		});
-		ModelPredicateProviderRegistry.register(ZeldaItems.Hylain_Shield, new Identifier("blocking"), ((stack, world, entity, seed) -> {
+		ModelPredicateProviderRegistry.register(ZeldaItems.Hylain_Shield, Identifier.of("blocking"), ((stack, world, entity, seed) -> {
 			return entity != null && entity.isUsingItem() && entity.getActiveItem() == stack ? 1.0f : 0.0f;
 		}));
-		ModelPredicateProviderRegistry.register(ZeldaItems.Mirror_Shield, new Identifier("blocking"), ((stack, world, entity, seed) -> {
+		ModelPredicateProviderRegistry.register(ZeldaItems.Mirror_Shield, Identifier.of("blocking"), ((stack, world, entity, seed) -> {
 			return entity != null && entity.isUsingItem() && entity.getActiveItem() == stack ? 1.0f : 0.0f;
 		}));
 
-		ModelPredicateProviderRegistry.register(ZeldaItems.Fairy_Bottle, new Identifier("fairycolor"), ((stack, world, entity, seed) -> {
-			if (stack.getNbt() != null && stack.getNbt().contains("fairycolor")) {
-				String color = stack.getNbt().getString("fairycolor");
+		ModelPredicateProviderRegistry.register(ZeldaItems.Fairy_Bottle, Identifier.of("fairycolor"), ((stack, world, entity, seed) -> {
+
+			NbtCompound nbt = NBTUtil.getOrCreateNBT(stack);
+
+			if (nbt.contains("fairycolor")) {
+				String color = nbt.getString("fairycolor");
 
 				return switch (color) {
 					case "yellow" -> 0.2f;
@@ -120,23 +124,29 @@ public class ZeldaCraftClient implements ClientModInitializer {
 			}
 		}));
 
-		ModelPredicateProviderRegistry.register(ZeldaItems.Hookshot, new Identifier("shot"), ((stack, world, entity, seed) -> {
-			if (stack.getNbt() != null && stack.getNbt().contains("shot", NbtElement.INT_TYPE)) {
-				return stack.getNbt().getInt("shot");
+		ModelPredicateProviderRegistry.register(ZeldaItems.Hookshot, Identifier.of("shot"), ((stack, world, entity, seed) -> {
+
+			NbtCompound nbt = NBTUtil.getOrCreateNBT(stack);
+
+			if (nbt.contains("shot", NbtElement.INT_TYPE)) {
+				return nbt.getInt("shot");
 			}
 			else {
 				return 0;
 			}
 		}));
-		ModelPredicateProviderRegistry.register(ZeldaItems.Longshot, new Identifier("shot"), ((stack, world, entity, seed) -> {
-			if (stack.getNbt() != null && stack.getNbt().contains("shot", NbtElement.INT_TYPE)) {
-				return stack.getNbt().getInt("shot");
+		ModelPredicateProviderRegistry.register(ZeldaItems.Longshot, Identifier.of("shot"), ((stack, world, entity, seed) -> {
+
+			NbtCompound nbt = NBTUtil.getOrCreateNBT(stack);
+
+			if (nbt.contains("shot", NbtElement.INT_TYPE)) {
+				return nbt.getInt("shot");
 			}
 			else {
 				return 0;
 			}
 		}));
-		ModelPredicateProviderRegistry.register(ZeldaItems.Star_Compass, new Identifier("angle"), new CompassAnglePredicateProvider((world, stack, entity) -> {
+		ModelPredicateProviderRegistry.register(ZeldaItems.Star_Compass, Identifier.of("angle"), new CompassAnglePredicateProvider((world, stack, entity) -> {
 			if (entity.isPlayer()) {
 				ZeldaPlayerData player = (ZeldaPlayerData) entity;
 				return player.shouldSearchStar() ? player.getLastStarPos() : null;
@@ -237,19 +247,19 @@ public class ZeldaCraftClient implements ClientModInitializer {
 
 		ColorProviderRegistry.ITEM.register(((stack, tintIndex) -> {
 			if (tintIndex == 1) {
-				return ((DyeableItem)stack.getItem()).getColor(stack);
+				return DyedColorComponent.getColor(stack, 0x2eb617);
 			}
 			return -1;
 		}), ZeldaItems.Wooden_Boomerang.asItem());
 		ColorProviderRegistry.ITEM.register(((stack, tintIndex) -> {
 			if (tintIndex == 1) {
-				return ((DyeableItem)stack.getItem()).getColor(stack);
+				return DyedColorComponent.getColor(stack, 0x00bcff);
 			}
 			return -1;
 		}), ZeldaItems.Iron_Boomerang.asItem());
 		ColorProviderRegistry.ITEM.register(((stack, tintIndex) -> {
 			if (tintIndex == 1) {
-				return ((DyeableItem)stack.getItem()).getColor(stack);
+				return DyedColorComponent.getColor(stack, 0xff4444);
 			}
 			return -1;
 		}), ZeldaItems.Magic_Boomerang.asItem());

@@ -3,6 +3,8 @@ package net.deadlydiamond98.events;
 import net.deadlydiamond98.entities.fairy.FairyEntity;
 import net.deadlydiamond98.items.ZeldaItems;
 import net.fabricmc.fabric.api.event.player.UseEntityCallback;
+import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.NbtComponent;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -29,7 +31,7 @@ public class ZeldaUseEntityCallbackEvent {
             ItemStack stack = new ItemStack(ZeldaItems.Fairy_Bottle);
             NbtCompound nbt = new NbtCompound();
             nbt.putString("fairycolor", ((FairyEntity) entity).getColor());
-            stack.setNbt(nbt);
+            stack.set(DataComponentTypes.CUSTOM_DATA, NbtComponent.of(nbt));
             player.giveItemStack(stack);
             world.playSound(null, player.getBlockPos(), SoundEvents.ITEM_BOTTLE_FILL, SoundCategory.PLAYERS);
 

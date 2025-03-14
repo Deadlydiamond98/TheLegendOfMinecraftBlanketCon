@@ -1,8 +1,10 @@
 package net.deadlydiamond98.blocks.doors;
 
+import com.mojang.serialization.MapCodec;
 import net.deadlydiamond98.blocks.ZeldaBlocks;
 import net.deadlydiamond98.blocks.entities.ZeldaBlockEntities;
 import net.deadlydiamond98.blocks.entities.doors.DungeonDoorEntity;
+import net.deadlydiamond98.blocks.other.BombFlower;
 import net.deadlydiamond98.util.sounds.ZeldaSounds;
 import net.deadlydiamond98.util.interfaces.block.ILockable;
 import net.minecraft.block.*;
@@ -32,6 +34,7 @@ import org.jetbrains.annotations.Nullable;
 
 public class DungeonDoor extends BlockWithEntity implements ILockable {
 
+    public static final MapCodec<DungeonDoor> CODEC = createCodec(DungeonDoor::new);
     // Collision Shapes
     protected static final VoxelShape NORTH_SOUTH_SHAPE = Block.createCuboidShape(0.0, 0.0, 6.0, 16.0, 16.0, 10.0);
     protected static final VoxelShape EAST_WEST_SHAPE = Block.createCuboidShape(6.0, 0.0, 0.0, 10.0, 16.0, 16.0);
@@ -45,11 +48,20 @@ public class DungeonDoor extends BlockWithEntity implements ILockable {
 
     private final DoorColor color;
 
+    public DungeonDoor(Settings settings) {
+        this(settings, DoorColor.DEFAULT);
+    }
+
     public DungeonDoor(Settings settings, DoorColor color) {
         super(settings);
         this.color = color;
         setDefaultState(this.stateManager.getDefaultState().with(OPEN, false).with(FACING, Direction.NORTH)
                 .with(DOOR_PARTS, DungeonDoorParts.BL).with(LOCKED, LockType.UNLOCKED));
+    }
+
+    @Override
+    protected MapCodec<? extends BlockWithEntity> getCodec() {
+        return CODEC;
     }
 
     @Nullable
@@ -98,7 +110,7 @@ public class DungeonDoor extends BlockWithEntity implements ILockable {
     }
 
     @Override
-    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+    protected ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
         boolean currentOpenState = state.get(OPEN);
         boolean newOpenState = !currentOpenState;
 
@@ -106,7 +118,7 @@ public class DungeonDoor extends BlockWithEntity implements ILockable {
         DungeonDoorParts part = state.get(DOOR_PARTS);
         LockType lockState = state.get(LOCKED);
 
-        ItemStack itemStack = player.getStackInHand(hand);
+        ItemStack itemStack = player.getStackInHand(player.getActiveHand());
 
         if (isLockItem(itemStack) && canLock(state)) {
             updateDoor(part, world, pos, direction, currentOpenState, fromLock(itemStack));
@@ -126,9 +138,10 @@ public class DungeonDoor extends BlockWithEntity implements ILockable {
             return ActionResult.SUCCESS;
         }
         else {
-            return super.onUse(state, world, pos, player, hand, hit);
+            return super.onUse(state, world, pos, player, hit);
         }
     }
+
 
     protected void openCloseDoor(DungeonDoorParts part, World world, BlockPos pos, Direction direction, boolean newOpenState, boolean currentOpenState) {
         if (!currentOpenState) {
@@ -156,12 +169,15 @@ public class DungeonDoor extends BlockWithEntity implements ILockable {
     }
 
     @Override
-    public void onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
-        super.onBreak(world, pos, state, player);
+    public BlockState onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
+        BlockState bl = super.onBreak(world, pos, state, player);
+
         if (!world.isClient) {
             DungeonDoorParts part = state.get(DOOR_PARTS);
             updateTest(true, part, world, pos, state.get(FACING), (w, p, a) -> destroyPart(w, (PlayerEntity) a[0], p), player);
         }
+
+        return bl;
     }
 
     private void destroyPart(World world, PlayerEntity player, BlockPos pos) {
@@ -244,7 +260,7 @@ public class DungeonDoor extends BlockWithEntity implements ILockable {
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
-        return checkType(type, ZeldaBlockEntities.DUNGEON_DOOR, DungeonDoorEntity::tickDungeonDoor);
+        return validateTicker(type, ZeldaBlockEntities.DUNGEON_DOOR, DungeonDoorEntity::tickDungeonDoor);
     }
 
     @Override

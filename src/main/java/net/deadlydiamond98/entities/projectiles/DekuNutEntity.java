@@ -62,9 +62,7 @@ public class DekuNutEntity extends ThrownItemEntity {
             List<LivingEntity> entities = this.getWorld().getEntitiesByClass(LivingEntity.class, box, entity -> true);
 
             for (LivingEntity entity : entities) {
-                StunStatusEffect statusEffect = (StunStatusEffect) ZeldaStatusEffects.Stun_Status_Effect;
-                statusEffect.giveOverlay(StunStatusEffect.OverlayType.DEKU);
-                entity.addStatusEffect(new StatusEffectInstance(statusEffect, 50, 0));
+                entity.addStatusEffect(new StatusEffectInstance(ZeldaStatusEffects.Stun_Status_Effect, 50, 0));
             }
             this.getWorld().getPlayers().forEach(player -> {
                 ZeldaServerPackets.sendParticlePacket((ServerPlayerEntity) player, this.getX(),

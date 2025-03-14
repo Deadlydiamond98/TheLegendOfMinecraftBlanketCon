@@ -44,19 +44,19 @@ import java.util.EnumSet;
 
 public class BubbleEntity extends HostileEntity implements Monster, IRaycast {
 
-    private static final TrackedData<Boolean> attackableState;
+    private static final TrackedData<Boolean> ATTACKABLE_STATE;
     private final BirdNavigation flyNavigation;
     private final MobNavigation groundNavigation;
     private int timeOnFloor;
 
     @Override
-    protected void initDataTracker() {
-        super.initDataTracker();
-        this.dataTracker.startTracking(attackableState, false);
+    protected void initDataTracker(DataTracker.Builder builder) {
+        super.initDataTracker(builder);
+        builder.add(ATTACKABLE_STATE, false);
     }
 
     static {
-        attackableState = DataTracker.registerData(BubbleEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+        ATTACKABLE_STATE = DataTracker.registerData(BubbleEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     }
 
     public BubbleEntity(EntityType<? extends HostileEntity> entityType, World world) {
@@ -138,6 +138,10 @@ public class BubbleEntity extends HostileEntity implements Monster, IRaycast {
         }
     }
 
+    public double getSquaredDistanceToAttackPosOf(LivingEntity target) {
+        return Math.max(this.squaredDistanceTo(target.getPos()), this.squaredDistanceTo(target.getPos()));
+    }
+
     @Override
     protected EntityNavigation createNavigation(World world) {
         return this.flyNavigation;
@@ -192,11 +196,11 @@ public class BubbleEntity extends HostileEntity implements Monster, IRaycast {
     }
 
     public boolean getAttackableState() {
-        return (Boolean) this.dataTracker.get(attackableState);
+        return (Boolean) this.dataTracker.get(ATTACKABLE_STATE);
     }
 
     private void setAttackableState(Boolean bool) {
-        this.dataTracker.set(attackableState, bool);
+        this.dataTracker.set(ATTACKABLE_STATE, bool);
     }
 
     static class LookAtTargetGoal extends Goal {
@@ -284,15 +288,11 @@ public class BubbleEntity extends HostileEntity implements Monster, IRaycast {
         }
 
         @Override
-        protected void attack(LivingEntity target, double squaredDistance) {
-            double d = this.getSquaredMaxAttackDistance(target);
-            if (squaredDistance <= d && this.getCooldown() <= 0) {
-                this.resetCooldown();
-                this.mob.swingHand(Hand.MAIN_HAND);
-                this.mob.tryAttack(target);
-                target.addStatusEffect(new StatusEffectInstance(
-                        ZeldaStatusEffects.Sword_Sick_Status_Effect,
-                        60, 0));
+        protected void attack(LivingEntity target) {
+            super.attack(target);
+
+            if (this.canAttack(target)) {
+                target.addStatusEffect(new StatusEffectInstance(ZeldaStatusEffects.Sword_Sick_Status_Effect, 60, 0));
             }
         }
     }

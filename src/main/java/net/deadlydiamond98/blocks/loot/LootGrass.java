@@ -1,5 +1,7 @@
 package net.deadlydiamond98.blocks.loot;
 
+import com.mojang.serialization.MapCodec;
+import net.deadlydiamond98.blocks.other.BombFlower;
 import net.minecraft.block.*;
 import net.minecraft.entity.ai.pathing.NavigationType;
 import net.minecraft.item.ItemPlacementContext;
@@ -15,10 +17,17 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.WorldView;
 
 public class LootGrass extends PlantBlock {
+
+    public static final MapCodec<LootGrass> CODEC = createCodec(LootGrass::new);
     public static final IntProperty AGE = Properties.AGE_1;
     public LootGrass(Settings settings) {
         super(settings);
         this.setDefaultState(((BlockState) this.stateManager.getDefaultState()).with(AGE, 1));
+    }
+
+    @Override
+    protected MapCodec<? extends PlantBlock> getCodec() {
+        return CODEC;
     }
 
     @Override
@@ -41,7 +50,8 @@ public class LootGrass extends PlantBlock {
         }
     }
 
-    public boolean canPathfindThrough(BlockState state, BlockView world, BlockPos pos, NavigationType type) {
+    @Override
+    protected boolean canPathfindThrough(BlockState state, NavigationType type) {
         return true;
     }
 

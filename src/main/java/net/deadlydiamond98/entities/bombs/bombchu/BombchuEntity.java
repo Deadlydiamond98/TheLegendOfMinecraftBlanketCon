@@ -206,11 +206,11 @@ public class BombchuEntity extends AbstractBombEntity implements ISurfaceSticker
     }
 
     @Override
-    protected void initDataTracker() {
-        super.initDataTracker();
-        this.dataTracker.startTracking(ATTACHED_FACE_CLIENT, Direction.DOWN);
-        this.dataTracker.startTracking(PREV_ATTACHED_FACE, Direction.DOWN);
-        this.dataTracker.startTracking(GRAVITY_CLIENT, true);
+    protected void initDataTracker(DataTracker.Builder builder) {
+        super.initDataTracker(builder);
+        builder.add(ATTACHED_FACE_CLIENT, Direction.DOWN);
+        builder.add(PREV_ATTACHED_FACE, Direction.DOWN);
+        builder.add(GRAVITY_CLIENT, true);
     }
 
     public Direction getAttachedFaceClient() {

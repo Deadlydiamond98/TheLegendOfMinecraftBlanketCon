@@ -1,41 +1,36 @@
 package net.deadlydiamond98.networking;
 
 import net.deadlydiamond98.networking.packets.*;
+import net.deadlydiamond98.networking.packets.client.*;
+import net.deadlydiamond98.networking.packets.server.SmashLootGrassPacket;
+import net.deadlydiamond98.networking.packets.server.SwordSwingPacket;
+import net.deadlydiamond98.networking.packets.server.UseNeckTrinketPacket;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
+import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.util.math.BlockPos;
 
 public class ZeldaClientPackets {
 
     public static void registerC2SPackets() {
-        ClientPlayNetworking.registerGlobalReceiver(ZeldaPacketIDS.ParticlePacket, ParticleS2CPacket::recieve);
-        ClientPlayNetworking.registerGlobalReceiver(ZeldaPacketIDS.PedestalPacket, PedestalS2CPacket::recieve);
-        ClientPlayNetworking.registerGlobalReceiver(ZeldaPacketIDS.DekuStunOverlayPacket, DekuStunOverlayS2CPacket::recieve);
-        ClientPlayNetworking.registerGlobalReceiver(ZeldaPacketIDS.PlayerStatsPacket, PlayerStatsS2CPacket::recieve);
-        ClientPlayNetworking.registerGlobalReceiver(ZeldaPacketIDS.StarCompassPacket, PlayerStatsS2CPacket::recieveCompass);
-        ClientPlayNetworking.registerGlobalReceiver(ZeldaPacketIDS.EntityStatsPacket, EntityStatsS2CPacket::recieve);
-        ClientPlayNetworking.registerGlobalReceiver(ZeldaPacketIDS.PlaySoundPacket, PlaySoundS2CPacket::recieve);
-        ClientPlayNetworking.registerGlobalReceiver(ZeldaPacketIDS.UpdateAdvancmentStatus, AdvancementStatusS2CPacket::recieve);
-        ClientPlayNetworking.registerGlobalReceiver(ZeldaPacketIDS.UpdateMagicWorkbenchClient, MagicWorkbenchS2CPacket::recieve);
+        ClientPlayNetworking.registerGlobalReceiver(AdvancementStatusPacket.ID, AdvancementStatusReceiver::receive);
+        ClientPlayNetworking.registerGlobalReceiver(DekuStunOverlayPacket.ID, DekuStunReceiver::receive);
+        ClientPlayNetworking.registerGlobalReceiver(EntityStatsPacket.ID, EntityStatsReceiver::receive);
+        ClientPlayNetworking.registerGlobalReceiver(ParticlePacket.ID, ParticlePacketReceiver::receive);
+        ClientPlayNetworking.registerGlobalReceiver(PedestalPacket.ID, PedestalReceiver::receive);
+        ClientPlayNetworking.registerGlobalReceiver(PlayerStatsPacket.ID, PlayerStatsReceiver::receive);
+        ClientPlayNetworking.registerGlobalReceiver(StarCompassPacket.ID, StarCompassReceiver::receive);
+        ClientPlayNetworking.registerGlobalReceiver(ZeldaSoundPacket.ID, ZeldaSoundReceiver::receive);
     }
 
     public static void sendSwordSwingPacket() {
-        PacketByteBuf buf = PacketByteBufs.create();
-        ClientPlayNetworking.send(ZeldaPacketIDS.SwordSwingPacket, buf);
+        ClientPlayNetworking.send(new SwordSwingPacket());
     }
     public static void sendSmashLootGrassPacket(BlockPos lookingBlock) {
-        PacketByteBuf buf = PacketByteBufs.create();
-        buf.writeBlockPos(lookingBlock);
-        ClientPlayNetworking.send(ZeldaPacketIDS.SmashLootGrassPacket, buf);
+        ClientPlayNetworking.send(new SmashLootGrassPacket(lookingBlock));
     }
     public static void sendNeckTrinketPacket() {
-        PacketByteBuf buf = PacketByteBufs.create();
-        ClientPlayNetworking.send(ZeldaPacketIDS.NeckTrinketPacket, buf);
-    }
-    public static void updateMagicWorkbench(String switchID) {
-        PacketByteBuf buf = PacketByteBufs.create();
-        buf.writeString(switchID);
-        ClientPlayNetworking.send(ZeldaPacketIDS.UpdateMagicWorkbenchServer, buf);
+        ClientPlayNetworking.send(new UseNeckTrinketPacket());
     }
 }

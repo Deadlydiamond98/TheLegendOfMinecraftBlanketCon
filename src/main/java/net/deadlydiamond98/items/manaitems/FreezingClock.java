@@ -3,10 +3,10 @@ package net.deadlydiamond98.items.manaitems;
 import net.deadlydiamond98.events.ZeldaSeverTickEvent;
 import net.deadlydiamond98.magiclib.items.consumers.MagicItem;
 import net.deadlydiamond98.util.sounds.ZeldaSounds;
-import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
@@ -35,7 +35,8 @@ public class FreezingClock extends MagicItem {
     }
 
     @Override
-    public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
+    public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
+        super.appendTooltip(stack, context, tooltip, type);
         tooltip.add(Text.translatable("item.zeldacraft.frozen_clock.tooltipa").formatted(Formatting.GREEN));
         tooltip.add(Text.translatable("item.zeldacraft.frozen_clock.tooltipb").formatted(Formatting.GREEN));
     }

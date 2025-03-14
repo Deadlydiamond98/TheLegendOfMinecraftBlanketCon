@@ -15,9 +15,9 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.RotationAxis;
 
 public class BombchuEntityRenderer extends EntityRenderer<BombchuEntity> {
-    private static final Identifier TEXTURE = new Identifier(ZeldaCraft.MOD_ID, "textures/entity/bombchu_entity.png");
+    private static final Identifier TEXTURE = Identifier.of(ZeldaCraft.MOD_ID, "textures/entity/bombchu_entity.png");
 
-    private static final Identifier Low_Fuse_Overlay_Texture = new Identifier(ZeldaCraft.MOD_ID, "textures/entity/low_fuse_overlay.png");
+    private static final Identifier Low_Fuse_Overlay_Texture = Identifier.of(ZeldaCraft.MOD_ID, "textures/entity/low_fuse_overlay.png");
     private static final RenderLayer Low_Fuse_Layer = RenderLayer.getEntityTranslucent(Low_Fuse_Overlay_Texture);
 
     private final BombchuEntityModel<BombchuEntity> entityModel;
@@ -66,13 +66,19 @@ public class BombchuEntityRenderer extends EntityRenderer<BombchuEntity> {
         VertexConsumer vertexConsumer = vertexConsumers.getBuffer(this.entityModel.getLayer(getTexture(entity)));
 
         this.entityModel.setAngles(entity, 0 ,0, tickDelta, 0, 0);
-        this.entityModel.render(matrices, vertexConsumer, light, OverlayTexture.DEFAULT_UV, 1.0F, 1.0F, 1.0F, 1.0F);
+        this.entityModel.render(matrices, vertexConsumer, light, OverlayTexture.DEFAULT_UV, 0xffffff);
 
         if (entity.getFuse() <= 15) {
             VertexConsumer vertexCon = vertexConsumers.getBuffer(Low_Fuse_Layer);
             if (vertexCon != null) {
-                this.entityModel.render(matrices, vertexCon, light, OverlayTexture.DEFAULT_UV, 1.0F, 1.0F, 1.0F,
-                        (float) Math.abs(Math.sin(entity.getFuse() * 0.4) * 0.75));
+
+                float alphaFloat = (float) Math.abs(Math.sin(entity.getFuse() * 0.4) * 0.75);
+
+                int alpha = (int) (alphaFloat * 255);
+
+                int argbColor = (alpha << 24) | 0x00_FF_FF_FF;
+
+                this.entityModel.render(matrices, vertexCon, light, OverlayTexture.DEFAULT_UV, argbColor);
             }
         }
         matrices.pop();

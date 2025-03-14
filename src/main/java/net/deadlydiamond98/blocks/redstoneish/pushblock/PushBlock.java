@@ -1,10 +1,12 @@
 package net.deadlydiamond98.blocks.redstoneish.pushblock;
 
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.deadlydiamond98.entities.PushBlockEntity;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.FallingBlock;
+import net.minecraft.block.*;
 import net.minecraft.block.piston.PistonBehavior;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.registry.Registries;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
@@ -14,13 +16,19 @@ import net.minecraft.world.World;
 
 public class PushBlock extends FallingBlock {
 
+    public static final MapCodec<PushBlock> CODEC = createCodec(PushBlock::new);
+
     public PushBlock(Settings settings) {
         super(settings);
     }
 
     @Override
-    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+    public MapCodec<PushBlock> getCodec() {
+        return CODEC;
+    }
 
+    @Override
+    protected ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
         Direction direction = player.isSneaking() ? player.getHorizontalFacing().getOpposite() : player.getHorizontalFacing();
 
         if (direction.getAxis().isHorizontal()) {
@@ -36,7 +44,7 @@ public class PushBlock extends FallingBlock {
             }
         }
 
-        return super.onUse(state, world, pos, player, hand, hit);
+        return super.onUse(state, world, pos, player, hit);
     }
 
     private boolean canMove(Direction direction, int offset, PlayerEntity player, World world, BlockPos pos) {

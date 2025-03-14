@@ -12,7 +12,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
 
 public class BubbleRenderer<T extends Entity> extends MobEntityRenderer<BubbleEntity, BubbleEntityModel<BubbleEntity>> {
-    private static final Identifier TEXTURE = new Identifier(ZeldaCraft.MOD_ID, "textures/entity/bubble.png");
+    private static final Identifier TEXTURE = Identifier.of(ZeldaCraft.MOD_ID, "textures/entity/bubble.png");
 
     public BubbleRenderer(EntityRendererFactory.Context context) {
            super(context, new BubbleEntityModel<>(context.getPart(BubbleEntityModel.LAYER_LOCATION)), 0.25F);
@@ -33,11 +33,11 @@ public class BubbleRenderer<T extends Entity> extends MobEntityRenderer<BubbleEn
         matrices.scale(1.25f, 1.25f, 1.25f);
     }
 
-    protected void setupTransforms(BubbleEntity batEntity, MatrixStack matrixStack, float f, float g, float h) {
-        if (!batEntity.getAttackableState()) {
-            matrixStack.translate(0.0F, MathHelper.cos(f * 0.3F) * 0.1F, 0.0F);
+    @Override
+    protected void setupTransforms(BubbleEntity entity, MatrixStack matrices, float animationProgress, float bodyYaw, float tickDelta, float scale) {
+        if (!entity.getAttackableState()) {
+            matrices.translate(0.0F, MathHelper.cos(animationProgress * 0.3F) * 0.1F, 0.0F);
         }
-
-        super.setupTransforms(batEntity, matrixStack, f, g, h);
+        super.setupTransforms(entity, matrices, animationProgress, bodyYaw, tickDelta, scale);
     }
 }

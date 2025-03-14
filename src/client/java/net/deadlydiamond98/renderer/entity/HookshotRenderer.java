@@ -21,7 +21,7 @@ import org.joml.Matrix3f;
 import org.joml.Matrix4f;
 
 public class HookshotRenderer extends EntityRenderer<HookshotEntity> implements ChainRender{
-    private static final Identifier TEXTURE = new Identifier("minecraft", "textures/block/anvil.png");
+    private static final Identifier TEXTURE = Identifier.of("minecraft", "textures/block/anvil.png");
     private final HookshotHeadModel<HookshotEntity> entityModel;
     public HookshotRenderer(EntityRendererFactory.Context ctx) {
         super(ctx);
@@ -42,7 +42,7 @@ public class HookshotRenderer extends EntityRenderer<HookshotEntity> implements 
             matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees(entity.getPitch()));
             matrices.translate(0, -0.75f, 0);
             VertexConsumer vertexConsumer = vertexConsumers.getBuffer(this.entityModel.getLayer(getTexture(entity)));
-            this.entityModel.render(matrices, vertexConsumer, brightness, OverlayTexture.DEFAULT_UV, 1, 1, 1, 1);
+            this.entityModel.render(matrices, vertexConsumer, brightness, OverlayTexture.DEFAULT_UV, 0xffffff);
             matrices.pop();
 
             //Chain Rendering

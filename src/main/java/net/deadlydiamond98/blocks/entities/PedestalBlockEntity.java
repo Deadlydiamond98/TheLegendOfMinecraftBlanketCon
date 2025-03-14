@@ -50,6 +50,16 @@ public class PedestalBlockEntity extends LootableContainerBlockEntity implements
     }
 
     @Override
+    public ItemStack getStack() {
+        return this.inventory.get(0);
+    }
+
+    @Override
+    public void setStack(ItemStack stack) {
+        this.inventory.set(0, stack);
+    }
+
+    @Override
     public ItemStack getStack(int slot) {
         return (ItemStack)this.inventory.get(slot);
     }
@@ -73,12 +83,13 @@ public class PedestalBlockEntity extends LootableContainerBlockEntity implements
     }
 
     @Override
-    protected DefaultedList<ItemStack> getInvStackList() {
+    protected DefaultedList<ItemStack> getHeldStacks() {
         return this.inventory;
     }
+
     @Override
-    protected void setInvStackList(DefaultedList<ItemStack> list) {
-        this.inventory = list;
+    protected void setHeldStacks(DefaultedList<ItemStack> inventory) {
+        this.inventory = inventory;
     }
 
     public DefaultedList<ItemStack> getItems() {
@@ -95,44 +106,8 @@ public class PedestalBlockEntity extends LootableContainerBlockEntity implements
         return null;
     }
 
-    @Override
-    public void readNbt(NbtCompound nbt) {
-        super.readNbt(nbt);
-        this.inventory = DefaultedList.ofSize(this.size(), ItemStack.EMPTY);
-        if (!this.deserializeLootTable(nbt)) {
-            Inventories.readNbt(nbt, this.inventory);
-        }
-    }
-    @Override
-    public void writeNbt(NbtCompound nbt) {
-        super.writeNbt(nbt);
-        if (!this.serializeLootTable(nbt)) {
-            Inventories.writeNbt(nbt, this.inventory);
-        }
-    }
-
-    @Override
-    public void checkLootInteraction(@Nullable PlayerEntity player) {
-        if (this.lootTableId != null && this.world != null && !this.world.isClient) {
-            LootTable lootTable = this.world.getServer().getLootManager().getLootTable(this.lootTableId);
-            if (player instanceof ServerPlayerEntity) {
-                Criteria.PLAYER_GENERATES_CONTAINER_LOOT.trigger((ServerPlayerEntity)player, this.lootTableId);
-            }
-
-            this.lootTableId = null;
-            LootContextParameterSet.Builder builder = (new LootContextParameterSet.Builder((ServerWorld)this.world))
-                    .add(LootContextParameters.ORIGIN, Vec3d.ofCenter(this.pos));
-            if (player != null) {
-                builder.luck(player.getLuck()).add(LootContextParameters.THIS_ENTITY, player);
-            }
-
-            lootTable.supplyInventory(this, builder.build(LootContextTypes.CHEST), this.lootTableSeed);
-            this.markDirty();
-        }
-    }
-
     public boolean hasLootTable() {
-        return this.lootTableId != null;
+        return this.getLootTable() != null;
     }
 
     public void setRotation(float rotation) {

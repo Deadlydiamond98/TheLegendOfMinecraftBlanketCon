@@ -25,18 +25,19 @@ public class ZeldaEntityDeathEvent implements ServerLivingEntityEvents.AfterDeat
                     Random random = new Random();
                     int randomNumber = random.nextInt(0, 100);
 
-                    if (randomNumber > 95) {
-                        boolean bl = random.nextBoolean();
-
-                        if (bl) {
-                            world.spawnEntity(new ItemEntity(world, entity.getX(), entity.getY(), entity.getZ(),
-                                    ZeldaItems.Gaurdian_Acorn.getDefaultStack()));
-                        } else {
-                            world.spawnEntity(new ItemEntity(world, entity.getX(), entity.getY(), entity.getZ(),
-                                    ZeldaItems.Piece_Of_Power.getDefaultStack()));
-                        }
-                    }
-                    else if (randomNumber > 75) {
+//                    if (randomNumber > 95) {
+//                        boolean bl = random.nextBoolean();
+//
+//                        if (bl) {
+//                            world.spawnEntity(new ItemEntity(world, entity.getX(), entity.getY(), entity.getZ(),
+//                                    ZeldaItems.Gaurdian_Acorn.getDefaultStack()));
+//                        } else {
+//                            world.spawnEntity(new ItemEntity(world, entity.getX(), entity.getY(), entity.getZ(),
+//                                    ZeldaItems.Piece_Of_Power.getDefaultStack()));
+//                        }
+//                    }
+//                    else
+                    if (randomNumber > 75) {
                         world.spawnEntity(new ItemEntity(world, entity.getX(), entity.getY(), entity.getZ(), 
                                 ZeldaItems.Emerald_Shard.getDefaultStack()));
                     }

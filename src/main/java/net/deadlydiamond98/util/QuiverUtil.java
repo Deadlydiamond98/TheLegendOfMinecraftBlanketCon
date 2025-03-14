@@ -51,15 +51,15 @@ public class QuiverUtil {
 
         if (user.isSneaking() && quiverStack.isPresent() && quiverStack.get().getItem() instanceof CustomBundle bundle) {
 
-            CustomBundleUtil.cycleStack(quiverStack.get());
-
-            Optional<ItemStack> item = CustomBundleUtil.getFirstItem(quiverStack.get());
-
-            if (item.isPresent()) {
-                bundle.playInsertSound(user);
-                user.sendMessage(item.get().getName(), true);
-                return true;
-            }
+//            CustomBundleUtil.cycleStack(quiverStack.get());
+//
+//            Optional<ItemStack> item = CustomBundleUtil.getFirstItem(quiverStack.get());
+//
+//            if (item.isPresent()) {
+//                bundle.playInsertSound(user);
+//                user.sendMessage(item.get().getName(), true);
+//                return true;
+//            }
         }
         return false;
     }

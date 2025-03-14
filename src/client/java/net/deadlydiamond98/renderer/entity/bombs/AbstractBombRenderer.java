@@ -16,7 +16,7 @@ import net.minecraft.util.math.RotationAxis;
 
 public abstract class AbstractBombRenderer<T extends AbstractBombEntity> extends EntityRenderer<T> {
 
-    private static final Identifier Low_Fuse_Overlay_Texture = new Identifier(ZeldaCraft.MOD_ID, "textures/entity/low_fuse_overlay.png");
+    private static final Identifier Low_Fuse_Overlay_Texture = Identifier.of(ZeldaCraft.MOD_ID, "textures/entity/low_fuse_overlay.png");
     private static final RenderLayer Low_Fuse_Layer = RenderLayer.getEntityTranslucent(Low_Fuse_Overlay_Texture);
 
     private final BombEntityModel<AbstractBombEntity> entityModel;
@@ -33,13 +33,19 @@ public abstract class AbstractBombRenderer<T extends AbstractBombEntity> extends
         matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(-(entity.getYaw() + 90)));
         matrices.scale(scale, scale, scale);
         VertexConsumer vertexConsumer = vertexConsumers.getBuffer(this.entityModel.getLayer(getTexture(entity)));
-        this.entityModel.render(matrices, vertexConsumer, light, OverlayTexture.DEFAULT_UV, 1.0F, 1.0F, 1.0F, 1.0F);
+        this.entityModel.render(matrices, vertexConsumer, light, OverlayTexture.DEFAULT_UV, 0xffffff);
 
         if (entity.getFuse() <= 15) {
             VertexConsumer vertexCon = vertexConsumers.getBuffer(Low_Fuse_Layer);
             if (vertexCon != null) {
-                this.entityModel.render(matrices, vertexCon, light, OverlayTexture.DEFAULT_UV, 1.0F, 1.0F, 1.0F,
-                        (float) Math.abs(Math.sin(entity.getFuse() * 0.4) * 0.5));
+
+                float alphaFloat = (float) Math.abs(Math.sin(entity.getFuse() * 0.4) * 0.5);
+
+                int alpha = (int) (alphaFloat * 255);
+
+                int argbColor = (alpha << 24) | 0x00_FF_FF_FF;
+
+                this.entityModel.render(matrices, vertexCon, light, OverlayTexture.DEFAULT_UV, argbColor);
             }
         }
         matrices.pop();

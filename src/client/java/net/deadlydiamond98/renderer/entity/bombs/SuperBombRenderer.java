@@ -12,6 +12,6 @@ public class SuperBombRenderer extends AbstractBombRenderer<SuperBombEntity>{
 
     @Override
     public Identifier getTexture(SuperBombEntity entity) {
-        return new Identifier(ZeldaCraft.MOD_ID, "textures/entity/super_bomb_entity.png");
+        return Identifier.of(ZeldaCraft.MOD_ID, "textures/entity/super_bomb_entity.png");
     }
 }

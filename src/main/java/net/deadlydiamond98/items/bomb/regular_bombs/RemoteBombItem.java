@@ -2,9 +2,9 @@ package net.deadlydiamond98.items.bomb.regular_bombs;
 
 import net.deadlydiamond98.entities.bombs.AbstractBombEntity;
 import net.deadlydiamond98.entities.bombs.RemoteBombEntity;
-import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Hand;
@@ -25,7 +25,8 @@ public class RemoteBombItem extends AbstractBombItem {
     }
 
     @Override
-    public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
+    public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
+        super.appendTooltip(stack, context, tooltip, type);
         tooltip.add(Text.translatable("item.zeldacraft.remote_bomb.tooltip").formatted(Formatting.GREEN));
     }
 }

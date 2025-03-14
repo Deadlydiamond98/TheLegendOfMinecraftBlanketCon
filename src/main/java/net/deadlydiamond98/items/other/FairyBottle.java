@@ -2,9 +2,11 @@ package net.deadlydiamond98.items.other;
 
 import net.deadlydiamond98.entities.ZeldaEntities;
 import net.deadlydiamond98.entities.fairy.FairyEntity;
+import net.deadlydiamond98.util.NBTUtil;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemUsageContext;
 import net.minecraft.item.Items;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.ActionResult;
@@ -19,8 +21,10 @@ public class FairyBottle extends Item {
     public ActionResult useOnBlock(ItemUsageContext context) {
         World world = context.getWorld();
 
-        if (context.getStack().hasNbt() && context.getStack().getNbt().contains("fairycolor")) {
-            String fairyColor = context.getStack().getNbt().getString("fairycolor");
+        NbtCompound nbt = NBTUtil.getOrCreateNBT(context.getStack());
+
+        if (nbt.contains("fairycolor")) {
+            String fairyColor = nbt.getString("fairycolor");
 
             FairyEntity fairy = new FairyEntity(ZeldaEntities.Fairy_Entity, world);
             fairy.setColor(fairyColor);

@@ -2,7 +2,6 @@ package net.deadlydiamond98.mixin.entity;
 
 import net.deadlydiamond98.util.interfaces.item.IPickupSound;
 import net.deadlydiamond98.items.manaitems.restoring.StarFragment;
-import net.deadlydiamond98.util.advancment.ZeldaAdvancementCriterion;
 import net.deadlydiamond98.util.interfaces.mixin.ZeldaPlayerData;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.ItemEntity;
@@ -38,7 +37,7 @@ public abstract class ItemEntityMixin {
 				long currentTime = System.currentTimeMillis();
 				long lastPickupTime = lastPickupTimeMap.getOrDefault(player, 0L);
 				if (currentTime - lastPickupTime > 500) {
-					player.playSound(item.getSound(), SoundCategory.PLAYERS, 1, 1);
+					player.playSoundToPlayer(item.getSound(), SoundCategory.PLAYERS, 1, 1);
 					lastPickupTimeMap.put(player, currentTime);
 				}
 			}
@@ -46,7 +45,7 @@ public abstract class ItemEntityMixin {
 			if (itemEntity.getStack().getItem() instanceof StarFragment) {
 				if (itemEntity.isGlowing()) {
 					if (!itemEntity.getWorld().isClient()) {
-						ZeldaAdvancementCriterion.maw.trigger((ServerPlayerEntity) player);
+//						ZeldaAdvancementCriterion.maw.trigger((ServerPlayerEntity) player);
 						((ZeldaPlayerData) player).setLastStarPos(null);
 					}
 				}

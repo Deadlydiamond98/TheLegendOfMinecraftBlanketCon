@@ -4,16 +4,24 @@ import com.google.common.annotations.VisibleForTesting;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import com.google.gson.*;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import it.unimi.dsi.fastutil.ints.IntList;
 import net.minecraft.inventory.RecipeInputInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.network.PacketByteBuf;
+import net.minecraft.network.RegistryByteBuf;
+import net.minecraft.network.codec.PacketCodec;
 import net.minecraft.recipe.*;
 import net.minecraft.recipe.book.CraftingRecipeCategory;
+import net.minecraft.recipe.input.CraftingRecipeInput;
+import net.minecraft.recipe.input.RecipeInput;
 import net.minecraft.registry.DynamicRegistryManager;
 import net.minecraft.registry.Registries;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
 import net.minecraft.util.collection.DefaultedList;
@@ -23,45 +31,26 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
-public class MagicWorkbenchRecipe implements Recipe<RecipeInputInventory> {
+public class MagicWorkbenchRecipe implements Recipe<CraftingRecipeInput> {
 
-    private final Identifier id;
-    private final String group;
-    private final CraftingRecipeCategory category;
-    private final int width;
-    private final int height;
-    private final DefaultedList<Ingredient> input;
-    private final ItemStack output;
-    private final boolean showNotification;
+    public final RawShapedRecipe raw;
+    public final ItemStack result;
+    public final String group;
+    public final CraftingRecipeCategory category;
+    public final boolean showNotification;
 
     private final boolean bindableId;
     private final int manaCost;
 
-    public MagicWorkbenchRecipe(Identifier id, String group, CraftingRecipeCategory category, int width, int height,
-                                DefaultedList<Ingredient> input, ItemStack output, boolean showNotification,
+    public MagicWorkbenchRecipe(String group, CraftingRecipeCategory category, RawShapedRecipe raw, ItemStack result, boolean showNotification,
                                 boolean bindableId, int manaCost) {
-        this.id = id;
         this.group = group;
         this.category = category;
-        this.width = width;
-        this.height = height;
-        this.input = input;
-        this.output = output;
+        this.raw = raw;
+        this.result = result;
         this.showNotification = showNotification;
         this.bindableId = bindableId;
         this.manaCost = manaCost;
-    }
-
-    public boolean hasBindableId() {
-        return this.bindableId;
-    }
-
-    public int getManaCost() {
-        return this.manaCost;
-    }
-
-    public Identifier getId() {
-        return this.id;
     }
 
     public RecipeSerializer<?> getSerializer() {
@@ -81,12 +70,12 @@ public class MagicWorkbenchRecipe implements Recipe<RecipeInputInventory> {
         return this.category;
     }
 
-    public ItemStack getOutput(DynamicRegistryManager registryManager) {
-        return this.output;
+    public ItemStack getResult(RegistryWrapper.WrapperLookup registriesLookup) {
+        return this.result;
     }
 
     public DefaultedList<Ingredient> getIngredients() {
-        return this.input;
+        return this.raw.getIngredients();
     }
 
     public boolean showNotification() {
@@ -94,119 +83,23 @@ public class MagicWorkbenchRecipe implements Recipe<RecipeInputInventory> {
     }
 
     public boolean fits(int width, int height) {
-        return width >= this.width && height >= this.height;
+        return width >= this.raw.getWidth() && height >= this.raw.getHeight();
     }
 
-    public boolean matches(RecipeInputInventory recipeInputInventory, World world) {
-        for(int i = 0; i <= recipeInputInventory.getWidth() - this.width; ++i) {
-            for(int j = 0; j <= recipeInputInventory.getHeight() - this.height; ++j) {
-                if (this.matchesPattern(recipeInputInventory, i, j, true)) {
-                    return true;
-                }
-
-                if (this.matchesPattern(recipeInputInventory, i, j, false)) {
-                    return true;
-                }
-            }
-        }
-
-        return false;
+    public boolean matches(CraftingRecipeInput craftingRecipeInput, World world) {
+        return this.raw.matches(craftingRecipeInput);
     }
 
-    private boolean matchesPattern(RecipeInputInventory inv, int offsetX, int offsetY, boolean flipped) {
-        for(int i = 0; i < inv.getWidth(); ++i) {
-            for(int j = 0; j < inv.getHeight(); ++j) {
-                int k = i - offsetX;
-                int l = j - offsetY;
-                Ingredient ingredient = Ingredient.EMPTY;
-                if (k >= 0 && l >= 0 && k < this.width && l < this.height) {
-                    if (flipped) {
-                        ingredient = (Ingredient)this.input.get(this.width - k - 1 + l * this.width);
-                    } else {
-                        ingredient = (Ingredient)this.input.get(k + l * this.width);
-                    }
-                }
-
-                if (!ingredient.test(inv.getStack(i + j * inv.getWidth()))) {
-                    return false;
-                }
-            }
-        }
-
-        return true;
-    }
-
-    public ItemStack craft(RecipeInputInventory recipeInputInventory, DynamicRegistryManager dynamicRegistryManager) {
-        return this.getOutput(dynamicRegistryManager).copy();
+    public ItemStack craft(CraftingRecipeInput craftingRecipeInput, RegistryWrapper.WrapperLookup wrapperLookup) {
+        return this.getResult(wrapperLookup).copy();
     }
 
     public int getWidth() {
-        return this.width;
+        return this.raw.getWidth();
     }
 
     public int getHeight() {
-        return this.height;
-    }
-
-    static DefaultedList<Ingredient> createPatternMatrix(String[] pattern, Map<String, Ingredient> symbols, int width, int height) {
-        DefaultedList<Ingredient> defaultedList = DefaultedList.ofSize(width * height, Ingredient.EMPTY);
-        Set<String> set = Sets.newHashSet(symbols.keySet());
-        set.remove(" ");
-
-        for(int i = 0; i < pattern.length; ++i) {
-            for(int j = 0; j < pattern[i].length(); ++j) {
-                String string = pattern[i].substring(j, j + 1);
-                Ingredient ingredient = (Ingredient)symbols.get(string);
-                if (ingredient == null) {
-                    throw new JsonSyntaxException("Pattern references symbol '" + string + "' but it's not defined in the key");
-                }
-
-                set.remove(string);
-                defaultedList.set(j + width * i, ingredient);
-            }
-        }
-
-        if (!set.isEmpty()) {
-            throw new JsonSyntaxException("Key defines symbols that aren't used in pattern: " + set);
-        } else {
-            return defaultedList;
-        }
-    }
-
-    @VisibleForTesting
-    static String[] removePadding(String... pattern) {
-        int i = Integer.MAX_VALUE;
-        int j = 0;
-        int k = 0;
-        int l = 0;
-
-        for(int m = 0; m < pattern.length; ++m) {
-            String string = pattern[m];
-            i = Math.min(i, findFirstSymbol(string));
-            int n = findLastSymbol(string);
-            j = Math.max(j, n);
-            if (n < 0) {
-                if (k == m) {
-                    ++k;
-                }
-
-                ++l;
-            } else {
-                l = 0;
-            }
-        }
-
-        if (pattern.length == l) {
-            return new String[0];
-        } else {
-            String[] strings = new String[pattern.length - l - k];
-
-            for(int o = 0; o < strings.length; ++o) {
-                strings[o] = pattern[o + k].substring(i, j + 1);
-            }
-
-            return strings;
-        }
+        return this.raw.getHeight();
     }
 
     public boolean isEmpty() {
@@ -218,168 +111,64 @@ public class MagicWorkbenchRecipe implements Recipe<RecipeInputInventory> {
         });
     }
 
-    private static int findFirstSymbol(String line) {
-        int i;
-        for(i = 0; i < line.length() && line.charAt(i) == ' '; ++i) {
-        }
-
-        return i;
-    }
-
-    private static int findLastSymbol(String pattern) {
-        int i;
-        for(i = pattern.length() - 1; i >= 0 && pattern.charAt(i) == ' '; --i) {
-        }
-
-        return i;
-    }
-
-    static String[] getPattern(JsonArray json) {
-        String[] strings = new String[json.size()];
-        if (strings.length > 3) {
-            throw new JsonSyntaxException("Invalid pattern: too many rows, 3 is maximum");
-        } else if (strings.length == 0) {
-            throw new JsonSyntaxException("Invalid pattern: empty pattern not allowed");
-        } else {
-            for(int i = 0; i < strings.length; ++i) {
-                String string = JsonHelper.asString(json.get(i), "pattern[" + i + "]");
-                if (string.length() > 3) {
-                    throw new JsonSyntaxException("Invalid pattern: too many columns, 3 is maximum");
-                }
-
-                if (i > 0 && strings[0].length() != string.length()) {
-                    throw new JsonSyntaxException("Invalid pattern: each row must be the same width");
-                }
-
-                strings[i] = string;
-            }
-
-            return strings;
-        }
-    }
-
-    static Map<String, Ingredient> readSymbols(JsonObject json) {
-        Map<String, Ingredient> map = Maps.newHashMap();
-        Iterator var2 = json.entrySet().iterator();
-
-        while(var2.hasNext()) {
-            Map.Entry<String, JsonElement> entry = (Map.Entry)var2.next();
-            if (((String)entry.getKey()).length() != 1) {
-                throw new JsonSyntaxException("Invalid key entry: '" + (String)entry.getKey() + "' is an invalid symbol (must be 1 character only).");
-            }
-
-            if (" ".equals(entry.getKey())) {
-                throw new JsonSyntaxException("Invalid key entry: ' ' is a reserved symbol.");
-            }
-
-            map.put((String)entry.getKey(), Ingredient.fromJson((JsonElement)entry.getValue(), false));
-        }
-
-        map.put(" ", Ingredient.EMPTY);
-        return map;
-    }
-
-    public static ItemStack outputFromJson(JsonObject json) {
-        Item item = getItem(json);
-        if (json.has("data")) {
-            throw new JsonParseException("Disallowed data tag found");
-        } else {
-            int i = JsonHelper.getInt(json, "count", 1);
-            if (i < 1) {
-                throw new JsonSyntaxException("Invalid output count: " + i);
-            } else {
-                return new ItemStack(item, i);
-            }
-        }
-    }
-
-    public static Item getItem(JsonObject json) {
-        String string = JsonHelper.getString(json, "item");
-        Item item = (Item)Registries.ITEM.getOrEmpty(Identifier.tryParse(string)).orElseThrow(() -> {
-            return new JsonSyntaxException("Unknown item '" + string + "'");
-        });
-        if (item == Items.AIR) {
-            throw new JsonSyntaxException("Empty ingredient not allowed here");
-        } else {
-            return item;
-        }
-    }
-
-
-
-
-    // TYPE
-
     public static class Type implements RecipeType<MagicWorkbenchRecipe> {
         private Type() { }
         public static final Type INSTANCE = new Type();
         public static final String ID = "magic_workbench";
     }
-
-    // SERIALIZER
-
     public static class Serializer implements RecipeSerializer<MagicWorkbenchRecipe> {
         public static final Serializer INSTANCE = new Serializer();
         public static final String ID = "magic_workbench";
 
+        public static final MapCodec<MagicWorkbenchRecipe> CODEC = RecordCodecBuilder.mapCodec((instance) -> {
+            return instance.group(Codec.STRING.optionalFieldOf("group", "").forGetter((recipe) -> {
+                return recipe.group;
+            }), CraftingRecipeCategory.CODEC.fieldOf("category").orElse(CraftingRecipeCategory.MISC).forGetter((recipe) -> {
+                return recipe.category;
+            }), RawShapedRecipe.CODEC.forGetter((recipe) -> {
+                return recipe.raw;
+            }), ItemStack.VALIDATED_CODEC.fieldOf("result").forGetter((recipe) -> {
+                return recipe.result;
+            }), Codec.BOOL.optionalFieldOf("show_notification", true).forGetter((recipe) -> {
+                return recipe.showNotification;
+            }), Codec.BOOL.optionalFieldOf("bindable_id", false).forGetter((recipe) -> {
+                return recipe.bindableId;
+            }), Codec.INT.optionalFieldOf("mana_cost", 0).forGetter((recipe) -> {
+                return recipe.manaCost;
+            })).apply(instance, MagicWorkbenchRecipe::new);
+        });
+        public static final PacketCodec<RegistryByteBuf, MagicWorkbenchRecipe> PACKET_CODEC = PacketCodec.ofStatic(MagicWorkbenchRecipe.Serializer::write, MagicWorkbenchRecipe.Serializer::read);
 
-        @Override
-        public MagicWorkbenchRecipe read(Identifier identifier, JsonObject jsonObject) {
-            String string = JsonHelper.getString(jsonObject, "group", "");
-            CraftingRecipeCategory craftingRecipeCategory = (CraftingRecipeCategory)CraftingRecipeCategory.CODEC.byId(JsonHelper.getString(jsonObject, "category", (String)null), CraftingRecipeCategory.MISC);
-            Map<String, Ingredient> map = readSymbols(JsonHelper.getObject(jsonObject, "key"));
-            String[] strings = removePadding(getPattern(JsonHelper.getArray(jsonObject, "pattern")));
-            int i = strings[0].length();
-            int j = strings.length;
-            DefaultedList<Ingredient> defaultedList = createPatternMatrix(strings, map, i, j);
-            ItemStack itemStack = ShapedRecipe.outputFromJson(JsonHelper.getObject(jsonObject, "result"));
-            boolean bl = JsonHelper.getBoolean(jsonObject, "show_notification", true);
-
-            boolean bindableId = JsonHelper.getBoolean(jsonObject, "bindable_id", false);
-            int manaCost = JsonHelper.getInt(jsonObject, "mana_cost", 0);
-
-            return new MagicWorkbenchRecipe(identifier, string, craftingRecipeCategory, i, j, defaultedList, itemStack, bl, bindableId, manaCost);
+        public Serializer() {
         }
 
-        @Override
-        public MagicWorkbenchRecipe read(Identifier identifier, PacketByteBuf packetByteBuf) {
-            int i = packetByteBuf.readVarInt();
-            int j = packetByteBuf.readVarInt();
-            String string = packetByteBuf.readString();
-            CraftingRecipeCategory craftingRecipeCategory = (CraftingRecipeCategory)packetByteBuf.readEnumConstant(CraftingRecipeCategory.class);
-            DefaultedList<Ingredient> defaultedList = DefaultedList.ofSize(i * j, Ingredient.EMPTY);
-
-            for(int k = 0; k < defaultedList.size(); ++k) {
-                defaultedList.set(k, Ingredient.fromPacket(packetByteBuf));
-            }
-
-            ItemStack itemStack = packetByteBuf.readItemStack();
-            boolean bl = packetByteBuf.readBoolean();
-
-            boolean bindableId = packetByteBuf.readBoolean();
-            int manaCost = packetByteBuf.readVarInt();
-
-            return new MagicWorkbenchRecipe(identifier, string, craftingRecipeCategory, i, j, defaultedList, itemStack, bl, bindableId, manaCost);
+        public MapCodec<MagicWorkbenchRecipe> codec() {
+            return CODEC;
         }
 
-        @Override
-        public void write(PacketByteBuf packetByteBuf, MagicWorkbenchRecipe shapedRecipe) {
-            packetByteBuf.writeVarInt(shapedRecipe.width);
-            packetByteBuf.writeVarInt(shapedRecipe.height);
-            packetByteBuf.writeString(shapedRecipe.group);
-            packetByteBuf.writeEnumConstant(shapedRecipe.category);
-            Iterator var3 = shapedRecipe.input.iterator();
+        public PacketCodec<RegistryByteBuf, MagicWorkbenchRecipe> packetCodec() {
+            return PACKET_CODEC;
+        }
 
-            while(var3.hasNext()) {
-                Ingredient ingredient = (Ingredient)var3.next();
-                ingredient.write(packetByteBuf);
-            }
+        private static MagicWorkbenchRecipe read(RegistryByteBuf buf) {
+            String string = buf.readString();
+            CraftingRecipeCategory craftingRecipeCategory = (CraftingRecipeCategory)buf.readEnumConstant(CraftingRecipeCategory.class);
+            RawShapedRecipe rawShapedRecipe = (RawShapedRecipe)RawShapedRecipe.PACKET_CODEC.decode(buf);
+            ItemStack itemStack = (ItemStack)ItemStack.PACKET_CODEC.decode(buf);
+            boolean bl = buf.readBoolean();
+            boolean bl2 = buf.readBoolean();
+            int mana = buf.readInt();
+            return new MagicWorkbenchRecipe(string, craftingRecipeCategory, rawShapedRecipe, itemStack, bl, bl2, mana);
+        }
 
-            packetByteBuf.writeItemStack(shapedRecipe.output);
-            packetByteBuf.writeBoolean(shapedRecipe.showNotification);
-
-            packetByteBuf.writeBoolean(shapedRecipe.bindableId);
-            packetByteBuf.writeVarInt(shapedRecipe.manaCost);
+        private static void write(RegistryByteBuf buf, MagicWorkbenchRecipe recipe) {
+            buf.writeString(recipe.group);
+            buf.writeEnumConstant(recipe.category);
+            RawShapedRecipe.PACKET_CODEC.encode(buf, recipe.raw);
+            ItemStack.PACKET_CODEC.encode(buf, recipe.result);
+            buf.writeBoolean(recipe.showNotification);
+            buf.writeBoolean(recipe.bindableId);
+            buf.writeInt(recipe.manaCost);
         }
     }
 }

@@ -16,16 +16,16 @@ import net.minecraft.util.Identifier;
 public class ZeldaLootTables {
 
     private static final Identifier Sniffer
-            = new Identifier("gameplay/sniffer_digging");
+            = Identifier.of("gameplay/sniffer_digging");
 
     public static void modifyLootTables() {
 
-        LootTableEvents.MODIFY.register((resourceManager, lootManager, id, tableBuilder, source) -> {
-
-            if (Sniffer.equals(id)) {
-                addToLootPool(tableBuilder, Item.fromBlock(ZeldaBlocks.Bomb_Flower), 1, UniformLootNumberProvider.create(0.0f, 1.0f));
-            }
-        });
+//        LootTableEvents.MODIFY.register((resourceManager, lootManager, id, tableBuilder, source) -> {
+//
+//            if (Sniffer.equals(id)) {
+//                addToLootPool(tableBuilder, Item.fromBlock(ZeldaBlocks.Bomb_Flower), 1, UniformLootNumberProvider.create(0.0f, 1.0f));
+//            }
+//        });
     }
 
     private static void addToLootPool(LootTable.Builder tableBuilder, Item item, int weight, UniformLootNumberProvider amountMinMax) {

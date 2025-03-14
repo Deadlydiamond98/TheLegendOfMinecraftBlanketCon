@@ -10,8 +10,9 @@ import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
 
 public class BatItem extends SwordItem {
-    public BatItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
-        super(toolMaterial, attackDamage, attackSpeed, settings);
+
+    public BatItem(ToolMaterial toolMaterial, Settings settings) {
+        super(toolMaterial, settings);
     }
 
     @Override

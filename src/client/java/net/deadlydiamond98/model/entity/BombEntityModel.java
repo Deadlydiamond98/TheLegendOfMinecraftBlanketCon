@@ -14,7 +14,7 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 
 public class BombEntityModel<T extends AbstractBombEntity> extends EntityModel<AbstractBombEntity> {
-	public static final EntityModelLayer LAYER_LOCATION = new EntityModelLayer(new Identifier(ZeldaCraft.MOD_ID, "bomb_entity"), "main");
+	public static final EntityModelLayer LAYER_LOCATION = new EntityModelLayer(Identifier.of(ZeldaCraft.MOD_ID, "bomb_entity"), "main");
 	private final ModelPart top;
 	private final ModelPart cube_r1;
 	private final ModelPart base;
@@ -36,9 +36,10 @@ public class BombEntityModel<T extends AbstractBombEntity> extends EntityModel<A
 	@Override
 	public void setAngles(AbstractBombEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
 	}
+
 	@Override
-	public void render(MatrixStack matrices, VertexConsumer vertexConsumer, int light, int overlay, float red, float green, float blue, float alpha) {
-		top.render(matrices, vertexConsumer, light, overlay, red, green, blue, alpha);
-		base.render(matrices, vertexConsumer, light, overlay, red, green, blue, alpha);
+	public void render(MatrixStack matrices, VertexConsumer vertices, int light, int overlay, int color) {
+		top.render(matrices, vertices, light, overlay, color);
+		base.render(matrices, vertices, light, overlay, color);
 	}
 }

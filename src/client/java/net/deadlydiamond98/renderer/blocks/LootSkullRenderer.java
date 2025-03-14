@@ -41,13 +41,13 @@ public class LootSkullRenderer<T extends BlockEntity> implements BlockEntityRend
         float yaw = RotationPropertyHelper.toDegrees(k);
 
         model.setHeadRotation(0, yaw, 0.0F);
-        model.render(matrices, vertexConsumer, 200, overlay, 1.0f, 1.0f, 1.0f, 1.0f);
+        model.render(matrices, vertexConsumer, 200, overlay, 0xffffff);
 
         matrices.pop();
     }
 
     public Identifier getSkullTexture(String skullType) {
-        return new Identifier(ZeldaCraft.MOD_ID, "textures/block/loot_skull/" + skullType + ".png");
+        return Identifier.of(ZeldaCraft.MOD_ID, "textures/block/loot_skull/" + skullType + ".png");
     }
 
 }

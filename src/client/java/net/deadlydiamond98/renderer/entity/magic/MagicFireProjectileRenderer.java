@@ -32,13 +32,13 @@ public class MagicFireProjectileRenderer<T extends Entity> extends EntityRendere
         VertexConsumer vertexConsumer = vertexConsumers.getBuffer(RenderLayer.getEntityTranslucent(getTexture(entity)));
         MatrixStack.Entry matrixEntry = matrices.peek();
         Matrix4f modelMatrix = matrixEntry.getPositionMatrix();
-        Matrix3f normalMatrix = matrixEntry.getNormalMatrix();
+        MatrixStack.Entry normalMatrix = matrices.peek();
 
         int emissiveLight = 15728880;
-        vertexConsumer.vertex(modelMatrix, -0.25F,  0.25F, 0.0F).color(255, 255, 255, 255).texture(0.0F, 1.0F).overlay(OverlayTexture.DEFAULT_UV).light(emissiveLight).normal(normalMatrix, 0, 1, 0).next();
-        vertexConsumer.vertex(modelMatrix,  0.25F,  0.25F, 0.0F).color(255, 255, 255, 255).texture(1.0F, 1.0F).overlay(OverlayTexture.DEFAULT_UV).light(emissiveLight).normal(normalMatrix, 0, 1, 0).next();
-        vertexConsumer.vertex(modelMatrix,  0.25F, -0.25F, 0.0F).color(255, 255, 255, 255).texture(1.0F, 0.0F).overlay(OverlayTexture.DEFAULT_UV).light(emissiveLight).normal(normalMatrix, 0, 1, 0).next();
-        vertexConsumer.vertex(modelMatrix, -0.25F, -0.25F, 0.0F).color(255, 255, 255, 255).texture(0.0F, 0.0F).overlay(OverlayTexture.DEFAULT_UV).light(emissiveLight).normal(normalMatrix, 0, 1, 0).next();
+        vertexConsumer.vertex(modelMatrix, -0.25F,  0.25F, 0.0F).color(255, 255, 255, 255).texture(0.0F, 1.0F).overlay(OverlayTexture.DEFAULT_UV).light(emissiveLight).normal(normalMatrix, 0, 1, 0);
+        vertexConsumer.vertex(modelMatrix,  0.25F,  0.25F, 0.0F).color(255, 255, 255, 255).texture(1.0F, 1.0F).overlay(OverlayTexture.DEFAULT_UV).light(emissiveLight).normal(normalMatrix, 0, 1, 0);
+        vertexConsumer.vertex(modelMatrix,  0.25F, -0.25F, 0.0F).color(255, 255, 255, 255).texture(1.0F, 0.0F).overlay(OverlayTexture.DEFAULT_UV).light(emissiveLight).normal(normalMatrix, 0, 1, 0);
+        vertexConsumer.vertex(modelMatrix, -0.25F, -0.25F, 0.0F).color(255, 255, 255, 255).texture(0.0F, 0.0F).overlay(OverlayTexture.DEFAULT_UV).light(emissiveLight).normal(normalMatrix, 0, 1, 0);
 
         matrices.pop();
         super.render(entity, yaw, tickDelta, matrices, vertexConsumers, light);
@@ -46,6 +46,6 @@ public class MagicFireProjectileRenderer<T extends Entity> extends EntityRendere
 
     @Override
     public Identifier getTexture(MagicFireProjectileEntity entity) {
-        return new Identifier(ZeldaCraft.MOD_ID, "textures/particle/fire_particle_14.png");
+        return Identifier.of(ZeldaCraft.MOD_ID, "textures/particle/fire_particle_14.png");
     }
 }

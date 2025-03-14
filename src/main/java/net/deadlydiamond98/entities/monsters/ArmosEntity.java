@@ -57,9 +57,14 @@ public class ArmosEntity extends TektiteEntity {
         this.spawnedFromEgg = false;
         this.armosState = ArmosState.BLOCK;
         this.triggerTimer = 20;
-        this.dataTracker.startTracking(TRIGGERED, false);
-        this.dataTracker.startTracking(CAN_MOVE, false);
-        this.dataTracker.startTracking(EYE_ALPHA, 0.0f);
+    }
+
+    @Override
+    protected void initDataTracker(DataTracker.Builder builder) {
+        super.initDataTracker(builder);
+        builder.add(TRIGGERED, false);
+        builder.add(CAN_MOVE, false);
+        builder.add(EYE_ALPHA, 0.0f);
     }
 
     static {
@@ -70,8 +75,7 @@ public class ArmosEntity extends TektiteEntity {
 
     @Nullable
     @Override
-    public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason,
-                                 @Nullable EntityData entityData, @Nullable NbtCompound entityNbt) {
+    public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData) {
         if (spawnReason == SpawnReason.SPAWN_EGG) {
             this.spawnedFromEgg = true;
             if (world instanceof ServerWorld) {
@@ -86,7 +90,7 @@ public class ArmosEntity extends TektiteEntity {
                 }
             }
         }
-        return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
+        return super.initialize(world, difficulty, spawnReason, entityData);
     }
 
     @Override
@@ -175,11 +179,6 @@ public class ArmosEntity extends TektiteEntity {
         this.goalSelector.add(3, new ArmosHopGoal(this));
         this.targetSelector.add(1, new RevengeGoal(this));
         this.targetSelector.add(2, new ActiveTargetGoal<>(this, PlayerEntity.class, false));
-    }
-
-    @Override
-    public boolean canBreatheInWater() {
-        return true;
     }
 
     @Override

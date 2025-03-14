@@ -1,5 +1,6 @@
 package net.deadlydiamond98.blocks.loot;
 
+import com.mojang.serialization.MapCodec;
 import net.deadlydiamond98.blocks.entities.loot.LootPotBlockEntity;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
@@ -17,8 +18,15 @@ import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
 public class LootPot extends BlockWithEntity {
+    public static final MapCodec<LootPot> CODEC = createCodec(LootPot::new);
+
     public LootPot(Settings settings) {
         super(settings);
+    }
+
+    @Override
+    protected MapCodec<? extends BlockWithEntity> getCodec() {
+        return CODEC;
     }
 
     @Override
@@ -27,13 +35,12 @@ public class LootPot extends BlockWithEntity {
     }
 
     @Override
-    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+    protected ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
         if (!world.isClient) {
             LootPotBlockEntity blockEntity = (LootPotBlockEntity) world.getBlockEntity(pos);
             if (blockEntity != null) {
-                ItemStack stack = player.getStackInHand(hand);
+                ItemStack stack = player.getMainHandStack();
                 if (blockEntity.hasLootTable()) {
-                    blockEntity.checkLootInteraction(player);
                     ItemStack loot = blockEntity.getStack(0);
                     if (player.isSneaking() && stack.isEmpty()) {
                         player.giveItemStack(loot);
@@ -65,14 +72,13 @@ public class LootPot extends BlockWithEntity {
     }
 
     @Override
-    public void onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
+    public BlockState onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
         LootPotBlockEntity blockEntity = (LootPotBlockEntity) world.getBlockEntity(pos);
         if (blockEntity instanceof LootPotBlockEntity) {
-            blockEntity.checkLootInteraction(player);
             DefaultedList<ItemStack> items = blockEntity.getItems();
             ItemScatterer.spawn(world, pos, items);
         }
-        super.onBreak(world, pos, state, player);
+        return super.onBreak(world, pos, state, player);
     }
 
     @Nullable

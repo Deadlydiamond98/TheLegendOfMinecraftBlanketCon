@@ -14,9 +14,9 @@ import net.minecraft.world.gen.GenerationStep;
 import net.minecraft.world.gen.feature.*;
 
 public class ZeldaFeatures {
-    public static final Identifier BOMB_FLOWER_FEATURE_ID = new Identifier(ZeldaCraft.MOD_ID, "bomb_flower_feature");
-    public static final Identifier LOOT_GRASS_FEATURE_ID = new Identifier(ZeldaCraft.MOD_ID, "loot_grass_feature");
-    public static final Identifier MASTER_ORE_FEATURE_ID = new Identifier(ZeldaCraft.MOD_ID, "master_ore_feature.json");
+    public static final Identifier BOMB_FLOWER_FEATURE_ID = Identifier.of(ZeldaCraft.MOD_ID, "bomb_flower_feature");
+    public static final Identifier LOOT_GRASS_FEATURE_ID = Identifier.of(ZeldaCraft.MOD_ID, "loot_grass_feature");
+    public static final Identifier MASTER_ORE_FEATURE_ID = Identifier.of(ZeldaCraft.MOD_ID, "master_ore_feature.json");
     public static final BombFlowerFeature BOMB_FLOWER_FEATURE = new BombFlowerFeature(RandomPatchFeatureConfig.CODEC);
     public static final RandomPatchFeature LOOT_GRASS_FEATURE = new RandomPatchFeature(RandomPatchFeatureConfig.CODEC);
     public static final OreFeature MASTER_ORE_FEATURE = new OreFeature(OreFeatureConfig.CODEC);
@@ -35,7 +35,7 @@ public class ZeldaFeatures {
                 GenerationStep.Feature.UNDERGROUND_DECORATION,
                 RegistryKey.of(
                         RegistryKeys.PLACED_FEATURE,
-                        new Identifier(ZeldaCraft.MOD_ID, "bomb_flower_feature_placed")
+                        Identifier.of(ZeldaCraft.MOD_ID, "bomb_flower_feature_placed")
                 )
         );
 
@@ -44,7 +44,7 @@ public class ZeldaFeatures {
                 GenerationStep.Feature.VEGETAL_DECORATION,
                 RegistryKey.of(
                         RegistryKeys.PLACED_FEATURE,
-                        new Identifier(ZeldaCraft.MOD_ID, "loot_grass_feature_placed")
+                        Identifier.of(ZeldaCraft.MOD_ID, "loot_grass_feature_placed")
                 )
         );
 
@@ -53,7 +53,7 @@ public class ZeldaFeatures {
                 GenerationStep.Feature.UNDERGROUND_ORES,
                 RegistryKey.of(
                         RegistryKeys.PLACED_FEATURE,
-                        new Identifier(ZeldaCraft.MOD_ID, "master_ore_feature_placed")
+                        Identifier.of(ZeldaCraft.MOD_ID, "master_ore_feature_placed")
                 )
         );
     }

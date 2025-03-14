@@ -12,6 +12,7 @@ import net.minecraft.block.entity.EndGatewayBlockEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.entity.projectile.ProjectileUtil;
@@ -85,9 +86,7 @@ public class MagicIceProjectileEntity extends ProjectileEntity {
             entity.damage(entity.getDamageSources().freeze(), 3.0F);
             entity.setFireTicks(0);
             if (entity instanceof LivingEntity livingEntity) {
-                StunStatusEffect statusEffect = (StunStatusEffect) ZeldaStatusEffects.Stun_Status_Effect;
-                statusEffect.giveOverlay(StunStatusEffect.OverlayType.ICE);
-                livingEntity.addStatusEffect(new StatusEffectInstance(statusEffect, 20, 0));
+                livingEntity.addStatusEffect(new StatusEffectInstance(ZeldaStatusEffects.Stun_Status_Effect, 20, 0));
             }
         }
     }
@@ -102,22 +101,6 @@ public class MagicIceProjectileEntity extends ProjectileEntity {
         super.tick();
 
         HitResult hitResult = ProjectileUtil.getCollision(this, this::canHit);
-        boolean bl = false;
-        if (hitResult.getType() == HitResult.Type.BLOCK) {
-            BlockPos blockPos = ((BlockHitResult)hitResult).getBlockPos();
-            BlockState blockState = this.getWorld().getBlockState(blockPos);
-            if (blockState.isOf(Blocks.NETHER_PORTAL)) {
-                this.setInNetherPortal(blockPos);
-                bl = true;
-            } else if (blockState.isOf(Blocks.END_GATEWAY)) {
-                BlockEntity blockEntity = this.getWorld().getBlockEntity(blockPos);
-                if (blockEntity instanceof EndGatewayBlockEntity && EndGatewayBlockEntity.canTeleport(this)) {
-                    EndGatewayBlockEntity.tryTeleportingEntity(this.getWorld(), blockPos, blockState, this, (EndGatewayBlockEntity)blockEntity);
-                }
-
-                bl = true;
-            }
-        }
 
         if (this.touchingWater || this.isInLava()) {
             int radius = 3;
@@ -139,7 +122,7 @@ public class MagicIceProjectileEntity extends ProjectileEntity {
             this.discard();
         }
 
-        if (hitResult.getType() != HitResult.Type.MISS && !bl) {
+        if (hitResult.getType() != HitResult.Type.MISS) {
             this.onCollision(hitResult);
         }
 
@@ -171,7 +154,8 @@ public class MagicIceProjectileEntity extends ProjectileEntity {
     }
 
     @Override
-    protected void initDataTracker() {
+    protected void initDataTracker(DataTracker.Builder builder) {
+
     }
 
     @Override

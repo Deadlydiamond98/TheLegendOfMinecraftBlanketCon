@@ -7,7 +7,7 @@ import net.minecraft.client.particle.ParticleTextureSheet;
 import net.minecraft.client.particle.SpriteBillboardParticle;
 import net.minecraft.client.particle.SpriteProvider;
 import net.minecraft.client.world.ClientWorld;
-import net.minecraft.particle.DefaultParticleType;
+import net.minecraft.particle.SimpleParticleType;
 
 public class MagicIceParticle extends SpriteBillboardParticle {
     private int tickCounter = 0;
@@ -50,7 +50,7 @@ public class MagicIceParticle extends SpriteBillboardParticle {
     }
 
     @Environment(EnvType.CLIENT)
-    public static class MagicIceParticleFactory implements ParticleFactory<DefaultParticleType> {
+    public static class MagicIceParticleFactory implements ParticleFactory<SimpleParticleType> {
 
         private final SpriteProvider spriteProvider;
 
@@ -59,7 +59,7 @@ public class MagicIceParticle extends SpriteBillboardParticle {
         }
 
         @Override
-        public MagicIceParticle createParticle(DefaultParticleType type, ClientWorld world, double x, double y, double z, double velocityX, double velocityY, double velocityZ) {
+        public MagicIceParticle createParticle(SimpleParticleType type, ClientWorld world, double x, double y, double z, double velocityX, double velocityY, double velocityZ) {
             return new MagicIceParticle(world, x, y, z, this.spriteProvider);
         }
     }

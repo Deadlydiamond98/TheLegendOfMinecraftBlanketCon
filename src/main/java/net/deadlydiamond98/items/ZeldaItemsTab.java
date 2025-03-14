@@ -4,6 +4,8 @@ import net.deadlydiamond98.ZeldaCraft;
 import net.deadlydiamond98.blocks.ZeldaBlocks;
 import net.deadlydiamond98.util.FairyUtil;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
+import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.NbtComponent;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
@@ -14,7 +16,7 @@ import net.minecraft.util.Identifier;
 
 public class ZeldaItemsTab {
     public static final ItemGroup ZeldaCraftItemsGroup = Registry.register(Registries.ITEM_GROUP,
-            new Identifier(ZeldaCraft.MOD_ID, "zeldacraft_items_group"),
+            Identifier.of(ZeldaCraft.MOD_ID, "zeldacraft_items_group"),
             FabricItemGroup.builder().displayName(Text.translatable("itemgroup.zeldacraft_items"))
                     .icon(ZeldaItems.Master_Sword::getDefaultStack).entries((displayContext, entry) -> {
                         //Swords
@@ -45,13 +47,13 @@ public class ZeldaItemsTab {
                         entry.add(ZeldaItems.Bombchu);
                         entry.add(ZeldaItems.Deku_Nut);
                         //Bags
-                        entry.add(ZeldaItems.Bomb_Bag);
-                        entry.add(ZeldaItems.Better_Bomb_Bag);
-                        entry.add(ZeldaItems.Quiver);
-                        entry.add(ZeldaItems.Better_Quiver);
+//                        entry.add(ZeldaItems.Bomb_Bag);
+//                        entry.add(ZeldaItems.Better_Bomb_Bag);
+//                        entry.add(ZeldaItems.Quiver);
+//                        entry.add(ZeldaItems.Better_Quiver);
                         //Arrows
-                        entry.add(ZeldaItems.Silver_Arrow);
-                        entry.add(ZeldaItems.Bomb_Arrow);
+//                        entry.add(ZeldaItems.Silver_Arrow);
+//                        entry.add(ZeldaItems.Bomb_Arrow);
                         //Grapples
                         entry.add(ZeldaItems.Hookshot);
                         entry.add(ZeldaItems.Longshot);
@@ -68,8 +70,8 @@ public class ZeldaItemsTab {
                         entry.add(ZeldaItems.Magic_Powder);
 //                        entry.add(ZeldaItems.Clock_Of_Time_Freeze);
                         //Equipment
-                        entry.add(ZeldaItems.Red_Ring);
-                        entry.add(ZeldaItems.Blue_Ring);
+//                        entry.add(ZeldaItems.Red_Ring);
+//                        entry.add(ZeldaItems.Blue_Ring);
                         entry.add(ZeldaItems.Fairy_Bell);
                         entry.add(ZeldaItems.Shield_Pendant);
 //                        entry.add(ZeldaItems.Jump_Pendant);
@@ -97,7 +99,7 @@ public class ZeldaItemsTab {
 //                        entry.add(ZeldaItems.Master_Key);
                         entry.add(ZeldaItems.Star_Compass);
                         //Misc / Materials
-                        entry.add(ZeldaItems.Music_Disc_Legend);
+//                        entry.add(ZeldaItems.Music_Disc_Legend);
                         entry.add(ZeldaItems.Music_Disc_Legend_Fragment);
                         entry.add(ZeldaItems.Red_Tektite_Chitin);
                         entry.add(ZeldaItems.Blue_Tektite_Chitin);
@@ -119,7 +121,7 @@ public class ZeldaItemsTab {
                                 ItemStack stack = new ItemStack(ZeldaItems.Fairy_Bottle);
                                 NbtCompound nbt = new NbtCompound();
                                 nbt.putString("fairycolor", color);
-                                stack.setNbt(nbt);
+                                stack.set(DataComponentTypes.CUSTOM_DATA, NbtComponent.of(nbt));
 
                                 entry.add(stack);
                             }

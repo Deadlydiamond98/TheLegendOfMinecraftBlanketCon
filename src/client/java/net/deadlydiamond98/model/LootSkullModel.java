@@ -15,7 +15,7 @@ import net.minecraft.util.Identifier;
 
 public class LootSkullModel extends EntityModel<Entity> {
 
-	public static final EntityModelLayer LAYER_LOCATION = new EntityModelLayer(new Identifier(ZeldaCraft.MOD_ID, "loot_skull"), "main");
+	public static final EntityModelLayer LAYER_LOCATION = new EntityModelLayer(Identifier.of(ZeldaCraft.MOD_ID, "loot_skull"), "main");
 
 	private final ModelPart main;
 
@@ -36,8 +36,8 @@ public class LootSkullModel extends EntityModel<Entity> {
 	}
 
 	@Override
-	public void render(MatrixStack matrices, VertexConsumer vertexConsumer, int light, int overlay, float red, float green, float blue, float alpha) {
-		this.main.render(matrices, vertexConsumer, light, overlay, red, green, blue, alpha);
+	public void render(MatrixStack matrices, VertexConsumer vertices, int light, int overlay, int color) {
+		main.render(matrices, vertices, light, overlay, color);
 	}
 
 	public void setHeadRotation(float animationProgress, float yaw, float pitch) {

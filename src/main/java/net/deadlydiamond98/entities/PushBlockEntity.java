@@ -1,7 +1,5 @@
 package net.deadlydiamond98.entities;
 
-import net.deadlydiamond98.ZeldaCraft;
-import net.deadlydiamond98.util.interfaces.mixin.ZeldaEntityData;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.Entity;
@@ -21,6 +19,7 @@ import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.s2c.play.BlockUpdateS2CPacket;
 import net.minecraft.network.packet.s2c.play.EntitySpawnS2CPacket;
 import net.minecraft.registry.RegistryKeys;
+import net.minecraft.server.network.EntityTrackerEntry;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.BlockPos;
@@ -29,7 +28,6 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
-import org.joml.Vector3f;
 
 import java.util.Iterator;
 import java.util.List;
@@ -109,23 +107,23 @@ public class PushBlockEntity extends Entity {
                 }
 
                 if (this.getWorld().setBlockState(blockPos, this.block, 3)) {
-                    ((ServerWorld)this.getWorld()).getChunkManager().threadedAnvilChunkStorage.sendToOtherNearbyPlayers(this, new BlockUpdateS2CPacket(blockPos, this.getWorld().getBlockState(blockPos)));
+                    ((ServerWorld)this.getWorld()).getChunkManager().chunkLoadingManager.sendToOtherNearbyPlayers(this,
+                            new BlockUpdateS2CPacket(blockPos, this.getWorld().getBlockState(blockPos)));
 
                     if (this.blockEntityData != null && this.block.hasBlockEntity()) {
                         BlockEntity blockEntity = this.getWorld().getBlockEntity(blockPos);
                         if (blockEntity != null) {
-                            NbtCompound nbtCompound = blockEntity.createNbt();
+                            NbtCompound nbtCompound = blockEntity.createNbt(this.getWorld().getRegistryManager());
                             Iterator var13 = this.blockEntityData.getKeys().iterator();
 
-                            while (var13.hasNext()) {
+                            while(var13.hasNext()) {
                                 String string = (String)var13.next();
                                 nbtCompound.put(string, this.blockEntityData.get(string).copy());
                             }
 
                             try {
-                                blockEntity.readNbt(nbtCompound);
-                            } catch (Exception var15) {
-                                ZeldaCraft.LOGGER.error("Failed to load block entity from pushed block", var15);
+                                blockEntity.read(nbtCompound, this.getWorld().getRegistryManager());
+                            } catch (Exception ignored) {
                             }
 
                             blockEntity.markDirty();
@@ -212,12 +210,14 @@ public class PushBlockEntity extends Entity {
     public BlockPos getPushBlockPos() {
         return this.dataTracker.get(BLOCK_POS);
     }
-    protected void initDataTracker() {
-        this.dataTracker.startTracking(BLOCK_POS, BlockPos.ORIGIN);
+    @Override
+    protected void initDataTracker(DataTracker.Builder builder) {
+        builder.add(BLOCK_POS, BlockPos.ORIGIN);
     }
 
-    public Packet<ClientPlayPacketListener> createSpawnPacket() {
-        return new EntitySpawnS2CPacket(this, Block.getRawIdFromState(this.getBlockState()));
+    @Override
+    public Packet<ClientPlayPacketListener> createSpawnPacket(EntityTrackerEntry entityTrackerEntry) {
+        return new EntitySpawnS2CPacket(this, entityTrackerEntry, Block.getRawIdFromState(this.getBlockState()));
     }
 
     public void onSpawnPacket(EntitySpawnS2CPacket packet) {

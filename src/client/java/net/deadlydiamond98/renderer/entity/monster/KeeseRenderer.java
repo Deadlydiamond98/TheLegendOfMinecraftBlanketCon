@@ -11,7 +11,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
 
 public class KeeseRenderer<T extends Entity> extends MobEntityRenderer<KeeseEntity, KeeseEntityModel> {
-    private static final Identifier TEXTURE = new Identifier(ZeldaCraft.MOD_ID, "textures/entity/keese.png");
+    private static final Identifier TEXTURE = Identifier.of(ZeldaCraft.MOD_ID, "textures/entity/keese.png");
 
     public KeeseRenderer(EntityRendererFactory.Context context) {
            super(context, new KeeseEntityModel(context.getPart(KeeseEntityModel.LAYER_LOCATION)), 0.25F);
@@ -25,9 +25,9 @@ public class KeeseRenderer<T extends Entity> extends MobEntityRenderer<KeeseEnti
         matrixStack.scale(0.5F, 0.5F, 0.5F);
     }
 
-    protected void setupTransforms(KeeseEntity batEntity, MatrixStack matrixStack, float f, float g, float h) {
-        matrixStack.translate(0.0F, MathHelper.cos(f * 0.3F) * 0.1F, 0.0F);
-
-        super.setupTransforms(batEntity, matrixStack, f, g, h);
+    @Override
+    protected void setupTransforms(KeeseEntity entity, MatrixStack matrices, float animationProgress, float bodyYaw, float tickDelta, float scale) {
+        matrices.translate(0.0F, MathHelper.cos(animationProgress * 0.3F) * 0.1F, 0.0F);
+        super.setupTransforms(entity, matrices, animationProgress, bodyYaw, tickDelta, scale);
     }
 }

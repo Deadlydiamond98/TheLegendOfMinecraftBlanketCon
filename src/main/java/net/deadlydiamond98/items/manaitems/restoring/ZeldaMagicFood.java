@@ -1,7 +1,6 @@
 package net.deadlydiamond98.items.manaitems.restoring;
 
 import net.deadlydiamond98.magiclib.items.consumables.MagicFood;
-import net.deadlydiamond98.util.advancment.ZeldaAdvancementCriterion;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -15,7 +14,7 @@ public class ZeldaMagicFood extends MagicFood {
     @Override
     public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
         if (!world.isClient()) {
-            ZeldaAdvancementCriterion.inv.trigger((ServerPlayerEntity) user);
+//            ZeldaAdvancementCriterion.inv.trigger((ServerPlayerEntity) user);
         }
         return super.finishUsing(stack, world, user);
     }

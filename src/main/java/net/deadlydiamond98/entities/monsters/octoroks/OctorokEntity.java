@@ -13,6 +13,7 @@ import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.mob.MobEntity;
+import net.minecraft.entity.passive.SquidEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.entity.projectile.ProjectileUtil;
@@ -53,7 +54,7 @@ public class OctorokEntity extends HostileEntity implements RangedAttackMob {
     }
 
     @Override
-    public void attack(LivingEntity target, float pullProgress) {
+    public void shootAt(LivingEntity target, float pullProgress) {
         AbstractBallEntity ballEntity = new OctoRockEntity(this.getWorld(), this, true);
         ballEntity.setPos(ballEntity.getX(), ballEntity.getY() - 0.33, ballEntity.getZ());
         double d = target.getX() - this.getX();
@@ -63,11 +64,6 @@ public class OctorokEntity extends HostileEntity implements RangedAttackMob {
         ballEntity.setVelocity(d, e, f, this.rockSpeed, 0.02f);
         this.playSound(SoundEvents.ENTITY_LLAMA_SPIT, 1.0F, 1.0F / (this.getRandom().nextFloat() * 0.4F + 0.8F));
         this.getWorld().spawnEntity(ballEntity);
-    }
-
-    @Override
-    public boolean canBreatheInWater() {
-        return true;
     }
 
     @Override
@@ -196,7 +192,7 @@ public class OctorokEntity extends HostileEntity implements RangedAttackMob {
                 float distanceFactor = (float) Math.sqrt(distanceSquared) / this.maxShootRange;
                 float clampedDistanceFactor = MathHelper.clamp(distanceFactor, 0.1F, 1.0F);
 
-                this.owner.attack(this.target, clampedDistanceFactor);
+                this.owner.shootAt(this.target, clampedDistanceFactor);
 
                 this.hasJumped = false;
 

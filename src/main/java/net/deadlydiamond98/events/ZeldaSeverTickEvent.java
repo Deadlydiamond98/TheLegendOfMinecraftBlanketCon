@@ -31,13 +31,13 @@ public class ZeldaSeverTickEvent {
 
     private static void onEndServerTick() {
         ServerTickEvents.END_SERVER_TICK.register(server -> {
-            if (ZeldaConfig.shootingStars) {
-                shootingStarsAtNight(server);
-            }
-            if (ZeldaConfig.doMeteorShowerWeatherEvent) {
-                meteorShowerEvent(server);
-            }
-            timeBoxSlowing(server);
+//            if (ZeldaConfig.shootingStars) {
+//                shootingStarsAtNight(server);
+//            }
+//            if (ZeldaConfig.doMeteorShowerWeatherEvent) {
+//                meteorShowerEvent(server);
+//            }
+//            timeBoxSlowing(server);
         });
     }
 
@@ -89,9 +89,7 @@ public class ZeldaSeverTickEvent {
 
     public static void addEntityToFrozen(Entity entity, int time) {
         if (entity instanceof LivingEntity livingEntity) {
-            StunStatusEffect stunStatusEffect = (StunStatusEffect) ZeldaStatusEffects.Stun_Status_Effect;
-            stunStatusEffect.giveOverlay(StunStatusEffect.OverlayType.CLOCK);
-            livingEntity.addStatusEffect(new StatusEffectInstance(stunStatusEffect, 10, 0, false, false));
+            livingEntity.addStatusEffect(new StatusEffectInstance(ZeldaStatusEffects.Stun_Status_Effect, 10, 0, false, false));
         }
         entity.setYaw(entity.getYaw());
         entity.setPitch(entity.getPitch());
@@ -120,9 +118,7 @@ public class ZeldaSeverTickEvent {
                         entity.setVelocity(entityVelocity);
                     } else {
                         if (entity instanceof LivingEntity livingEntity) {
-                            StunStatusEffect stunStatusEffect = (StunStatusEffect) ZeldaStatusEffects.Stun_Status_Effect;
-                            stunStatusEffect.giveOverlay(StunStatusEffect.OverlayType.CLOCK);
-                            livingEntity.addStatusEffect(new StatusEffectInstance(stunStatusEffect, 10, 0, false, false));
+                            livingEntity.addStatusEffect(new StatusEffectInstance(ZeldaStatusEffects.Stun_Status_Effect, 10, 0, false, false));
                         }
                         entity.setYaw(entity.prevYaw);
                         entity.setPitch(entity.prevPitch);

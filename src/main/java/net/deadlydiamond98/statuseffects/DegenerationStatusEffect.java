@@ -15,8 +15,8 @@ public class DegenerationStatusEffect extends InstantStatusEffect {
     }
 
     @Override
-    public void onApplied(LivingEntity entity, AttributeContainer attributes, int amplifier) {
-        super.onApplied(entity, attributes, amplifier);
+    public void onApplied(LivingEntity entity, int amplifier) {
+        super.onApplied(entity, amplifier);
         if (entity instanceof PlayerEntity user) {
             if (!user.getWorld().isClient()) {
                 user.removeMana(20 * (amplifier + 1));

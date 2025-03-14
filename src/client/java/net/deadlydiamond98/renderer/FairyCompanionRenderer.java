@@ -15,7 +15,7 @@ import org.joml.Matrix3f;
 import org.joml.Matrix4f;
 
 public class FairyCompanionRenderer extends EntityRenderer<PlayerFairyCompanion> {
-    private static final Identifier TEXTURE = new Identifier(ZeldaCraft.MOD_ID, "textures/entity/blue_fairy.png");
+    private static final Identifier TEXTURE = Identifier.of(ZeldaCraft.MOD_ID, "textures/entity/blue_fairy.png");
     private String color;
     private final FairyEntityModel<PlayerFairyCompanion> entityModel;
 
@@ -43,9 +43,9 @@ public class FairyCompanionRenderer extends EntityRenderer<PlayerFairyCompanion>
             matrixStack.translate(0, 1.5, 0);
             matrixStack.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(180));
             VertexConsumer vertexConsumer = vertexConsumerProvider.getBuffer(this.entityModel.getLayer(getTexture(mobEntity)));
-            this.entityModel.animateModel(mobEntity, f, g, MinecraftClient.getInstance().getTickDelta());
+            this.entityModel.animateModel(mobEntity, f, g, g);
             this.entityModel.setAngles(mobEntity, f, g, mobEntity.age, mobEntity.getYaw(), mobEntity.getPitch());
-            this.entityModel.render(matrixStack, vertexConsumer, i, OverlayTexture.DEFAULT_UV, 1.0F, 1.0F, 1.0F, 1.0F);
+            this.entityModel.render(matrixStack, vertexConsumer, i, OverlayTexture.DEFAULT_UV, 0xffffff);
             matrixStack.pop();
         }
         super.render(mobEntity, f, g, matrixStack, vertexConsumerProvider, i);
@@ -62,30 +62,30 @@ public class FairyCompanionRenderer extends EntityRenderer<PlayerFairyCompanion>
 
         MatrixStack.Entry entry = matrixStack.peek();
         Matrix4f modelMatrix = entry.getPositionMatrix();
-        Matrix3f normalMatrix = entry.getNormalMatrix();
+        MatrixStack.Entry normalMatrix = matrixStack.peek();
 
         VertexConsumer vertexConsumer;
         vertexConsumer = vertexConsumerProvider.getBuffer(RenderLayer.getEntityTranslucent(
-                new Identifier(ZeldaCraft.MOD_ID, "textures/entity/" + fairy.getColor() + "_fairy.png")
+                Identifier.of(ZeldaCraft.MOD_ID, "textures/entity/" + fairy.getColor() + "_fairy.png")
         ));
         float minUV = 0.0F;
         float maxUV = 0.375F;
 
         int light = 15728880;
-        vertexConsumer.vertex(modelMatrix, -0.15F,  0.15F, 0.01F).color(255, 255, 255, 255).texture(minUV, maxUV).overlay(OverlayTexture.DEFAULT_UV).light(light).normal(normalMatrix, 0, 1, 0).next();
-        vertexConsumer.vertex(modelMatrix,  0.15F,  0.15F, 0.01F).color(255, 255, 255, 255).texture(maxUV, maxUV).overlay(OverlayTexture.DEFAULT_UV).light(light).normal(normalMatrix, 0, 1, 0).next();
-        vertexConsumer.vertex(modelMatrix,  0.15F, -0.15F, 0.01F).color(255, 255, 255, 255).texture(maxUV, minUV).overlay(OverlayTexture.DEFAULT_UV).light(light).normal(normalMatrix, 0, 1, 0).next();
-        vertexConsumer.vertex(modelMatrix, -0.15F, -0.15F, 0.01F).color(255, 255, 255, 255).texture(minUV, minUV).overlay(OverlayTexture.DEFAULT_UV).light(light).normal(normalMatrix, 0, 1, 0).next();
+        vertexConsumer.vertex(modelMatrix, -0.15F,  0.15F, 0.01F).color(255, 255, 255, 255).texture(minUV, maxUV).overlay(OverlayTexture.DEFAULT_UV).light(light).normal(normalMatrix, 0, 1, 0);
+        vertexConsumer.vertex(modelMatrix,  0.15F,  0.15F, 0.01F).color(255, 255, 255, 255).texture(maxUV, maxUV).overlay(OverlayTexture.DEFAULT_UV).light(light).normal(normalMatrix, 0, 1, 0);
+        vertexConsumer.vertex(modelMatrix,  0.15F, -0.15F, 0.01F).color(255, 255, 255, 255).texture(maxUV, minUV).overlay(OverlayTexture.DEFAULT_UV).light(light).normal(normalMatrix, 0, 1, 0);
+        vertexConsumer.vertex(modelMatrix, -0.15F, -0.15F, 0.01F).color(255, 255, 255, 255).texture(minUV, minUV).overlay(OverlayTexture.DEFAULT_UV).light(light).normal(normalMatrix, 0, 1, 0);
 
-        vertexConsumer.vertex(modelMatrix, -0.17F,  0.17F, 0.0F).color(255, 255, 255, 50).texture(minUV, maxUV).overlay(OverlayTexture.DEFAULT_UV).light(light).normal(normalMatrix, 0, 1, 0).next();
-        vertexConsumer.vertex(modelMatrix,  0.17F,  0.17F, 0.0F).color(255, 255, 255, 50).texture(maxUV, maxUV).overlay(OverlayTexture.DEFAULT_UV).light(light).normal(normalMatrix, 0, 1, 0).next();
-        vertexConsumer.vertex(modelMatrix,  0.17F, -0.17F, 0.0F).color(255, 255, 255, 50).texture(maxUV, minUV).overlay(OverlayTexture.DEFAULT_UV).light(light).normal(normalMatrix, 0, 1, 0).next();
-        vertexConsumer.vertex(modelMatrix, -0.17F, -0.17F, 0.0F).color(255, 255, 255, 50).texture(minUV, minUV).overlay(OverlayTexture.DEFAULT_UV).light(light).normal(normalMatrix, 0, 1, 0).next();
+        vertexConsumer.vertex(modelMatrix, -0.17F,  0.17F, 0.0F).color(255, 255, 255, 50).texture(minUV, maxUV).overlay(OverlayTexture.DEFAULT_UV).light(light).normal(normalMatrix, 0, 1, 0);
+        vertexConsumer.vertex(modelMatrix,  0.17F,  0.17F, 0.0F).color(255, 255, 255, 50).texture(maxUV, maxUV).overlay(OverlayTexture.DEFAULT_UV).light(light).normal(normalMatrix, 0, 1, 0);
+        vertexConsumer.vertex(modelMatrix,  0.17F, -0.17F, 0.0F).color(255, 255, 255, 50).texture(maxUV, minUV).overlay(OverlayTexture.DEFAULT_UV).light(light).normal(normalMatrix, 0, 1, 0);
+        vertexConsumer.vertex(modelMatrix, -0.17F, -0.17F, 0.0F).color(255, 255, 255, 50).texture(minUV, minUV).overlay(OverlayTexture.DEFAULT_UV).light(light).normal(normalMatrix, 0, 1, 0);
 
-        vertexConsumer.vertex(modelMatrix, -0.18F,  0.18F, 0.0F).color(255, 255, 255, 10).texture(minUV, maxUV).overlay(OverlayTexture.DEFAULT_UV).light(light).normal(normalMatrix, 0, 1, 0).next();
-        vertexConsumer.vertex(modelMatrix,  0.18F,  0.18F, 0.0F).color(255, 255, 255, 10).texture(maxUV, maxUV).overlay(OverlayTexture.DEFAULT_UV).light(light).normal(normalMatrix, 0, 1, 0).next();
-        vertexConsumer.vertex(modelMatrix,  0.18F, -0.18F, 0.0F).color(255, 255, 255, 10).texture(maxUV, minUV).overlay(OverlayTexture.DEFAULT_UV).light(light).normal(normalMatrix, 0, 1, 0).next();
-        vertexConsumer.vertex(modelMatrix, -0.18F, -0.18F, 0.0F).color(255, 255, 255, 10).texture(minUV, minUV).overlay(OverlayTexture.DEFAULT_UV).light(light).normal(normalMatrix, 0, 1, 0).next();
+        vertexConsumer.vertex(modelMatrix, -0.18F,  0.18F, 0.0F).color(255, 255, 255, 10).texture(minUV, maxUV).overlay(OverlayTexture.DEFAULT_UV).light(light).normal(normalMatrix, 0, 1, 0);
+        vertexConsumer.vertex(modelMatrix,  0.18F,  0.18F, 0.0F).color(255, 255, 255, 10).texture(maxUV, maxUV).overlay(OverlayTexture.DEFAULT_UV).light(light).normal(normalMatrix, 0, 1, 0);
+        vertexConsumer.vertex(modelMatrix,  0.18F, -0.18F, 0.0F).color(255, 255, 255, 10).texture(maxUV, minUV).overlay(OverlayTexture.DEFAULT_UV).light(light).normal(normalMatrix, 0, 1, 0);
+        vertexConsumer.vertex(modelMatrix, -0.18F, -0.18F, 0.0F).color(255, 255, 255, 10).texture(minUV, minUV).overlay(OverlayTexture.DEFAULT_UV).light(light).normal(normalMatrix, 0, 1, 0);
 
         matrixStack.pop();
     }

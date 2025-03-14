@@ -14,7 +14,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.RotationAxis;
 
 public class ArmosRenderer<T extends Entity> extends MobEntityRenderer<ArmosEntity, ArmosEntityModel<ArmosEntity>> {
-    private static final Identifier TEXTURE = new Identifier(ZeldaCraft.MOD_ID, "textures/entity/armos.png");
+    private static final Identifier TEXTURE = Identifier.of(ZeldaCraft.MOD_ID, "textures/entity/armos.png");
 
     public ArmosRenderer(EntityRendererFactory.Context context) {
         super(context, new ArmosEntityModel<>(context.getPart(ArmosEntityModel.LAYER_LOCATION)), 0.25F);
@@ -26,9 +26,9 @@ public class ArmosRenderer<T extends Entity> extends MobEntityRenderer<ArmosEnti
     }
 
     @Override
-    protected void setupTransforms(ArmosEntity entity, MatrixStack matrices, float animationProgress, float bodyYaw, float tickDelta) {
+    protected void setupTransforms(ArmosEntity entity, MatrixStack matrices, float animationProgress, float bodyYaw, float tickDelta, float scale) {
         bodyYaw = entity.getYawClient();
-        super.setupTransforms(entity, matrices, animationProgress, bodyYaw, tickDelta);
+        super.setupTransforms(entity, matrices, animationProgress, bodyYaw, tickDelta, scale);
     }
 
     @Override

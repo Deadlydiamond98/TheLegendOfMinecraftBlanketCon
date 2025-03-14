@@ -11,7 +11,7 @@ import org.joml.Matrix4f;
 public interface ChainRender {
 
     default Identifier getChainTexture() {
-        return new Identifier("minecraft", "textures/block/chain.png");
+        return Identifier.of("minecraft", "textures/block/chain.png");
     }
 
     default void renderChain(Vec3d end, MatrixStack matrices, VertexConsumer buffer, int light, int overlayCoords) {
@@ -37,38 +37,38 @@ public interface ChainRender {
         buffer.vertex(matrix4f, chainOffset, 0, 0).color(255, 255, 255, 255)
                 .texture(0, chainLength)
                 .overlay(overlayCoords).light(light)
-                .normal(matrix3f, 0.0F, -1.0F, 0.0F).next();
+                .normal(entry, 0.0F, -1.0F, 0.0F);
         buffer.vertex(matrix4f, chainWidth + chainOffset, 0, 0).color(255, 255, 255, 255)
                 .texture(chainWidth, chainLength)
                 .overlay(overlayCoords).light(light)
-                .normal(matrix3f, 0.0F, -1.0F, 0.0F).next();
+                .normal(entry, 0.0F, -1.0F, 0.0F);
         buffer.vertex(matrix4f, chainWidth + chainOffset, chainLength, 0).color(255, 255, 255, 255)
                 .texture(chainWidth, 0)
                 .overlay(overlayCoords).light(light)
-                .normal(matrix3f, 0.0F, -1.0F, 0.0F).next();
+                .normal(entry, 0.0F, -1.0F, 0.0F);
         buffer.vertex(matrix4f, chainOffset, chainLength, 0).color(255, 255, 255, 255)
                 .texture(0, 0)
                 .overlay(overlayCoords).light(light)
-                .normal(matrix3f, 0.0F, -1.0F, 0.0F).next();
+                .normal(entry, 0.0F, -1.0F, 0.0F);
 
         // z links
 
         buffer.vertex(matrix4f, 0, 0, chainOffset).color(255, 255, 255, 255).
                 texture(chainWidth, chainLength + 0)
                 .overlay(overlayCoords).light(light)
-                .normal(matrix3f, 0.0F, -1.0F, 0.0F).next();
+                .normal(entry, 0.0F, -1.0F, 0.0F);
         buffer.vertex(matrix4f, 0, 0, chainWidth + chainOffset).color(255, 255, 255, 255)
                 .texture(chainWidth * 2, chainLength + 0)
                 .overlay(overlayCoords).light(light)
-                .normal(matrix3f, 0.0F, -1.0F, 0.0F).next();
+                .normal(entry, 0.0F, -1.0F, 0.0F);
         buffer.vertex(matrix4f, 0, chainLength, chainWidth + chainOffset).color(255, 255, 255, 255)
                 .texture(chainWidth * 2, 0)
                 .overlay(overlayCoords).light(light)
-                .normal(matrix3f, 0.0F, -1.0F, 0.0F).next();
+                .normal(entry, 0.0F, -1.0F, 0.0F);
         buffer.vertex(matrix4f, 0, chainLength, chainOffset).color(255, 255, 255, 255)
                 .texture(chainWidth, 0)
                 .overlay(overlayCoords).light(light)
-                .normal(matrix3f, 0.0F, -1.0F, 0.0F).next();
+                .normal(entry, 0.0F, -1.0F, 0.0F);
 
         matrices.pop();
     }

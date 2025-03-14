@@ -20,7 +20,7 @@ import net.minecraft.util.math.Vec3d;
 
 public class BeamosEntityModel<T extends HostileEntity> extends EntityModel<BeamosEntity> {
 
-	public static final EntityModelLayer LAYER_LOCATION = new EntityModelLayer(new Identifier(ZeldaCraft.MOD_ID, "beamos_entity"), "main");
+	public static final EntityModelLayer LAYER_LOCATION = new EntityModelLayer(Identifier.of(ZeldaCraft.MOD_ID, "beamos_entity"), "main");
 	private final ModelPart body;
 	private final ModelPart eye;
 	private final ModelPart connector;
@@ -97,9 +97,10 @@ public class BeamosEntityModel<T extends HostileEntity> extends EntityModel<Beam
 			this.eye.pivotX = -MathHelper.sqrt((float)Math.abs(e)) * 2.0F * (float)Math.signum(e);
 		}
 	}
+
 	@Override
-	public void render(MatrixStack matrices, VertexConsumer vertexConsumer, int light, int overlay, float red, float green, float blue, float alpha) {
-		body.render(matrices, vertexConsumer, light, overlay, red, green, blue, alpha);
-		connector.render(matrices, vertexConsumer, light, overlay, red, green, blue, alpha);
+	public void render(MatrixStack matrices, VertexConsumer vertices, int light, int overlay, int color) {
+		body.render(matrices, vertices, light, overlay, color);
+		connector.render(matrices, vertices, light, overlay, color);
 	}
 }

@@ -28,13 +28,13 @@ public class BombArrowEntity extends PersistentProjectileEntity {
         super(entityType, world);
     }
 
-    public BombArrowEntity(World world, LivingEntity owner) {
-        super(ZeldaEntities.Bomb_Arrow, owner, world);
-    }
-
-    public BombArrowEntity(World world, double x, double y, double z) {
-        super(ZeldaEntities.Bomb_Arrow, x, y, z, world);
-    }
+//    public BombArrowEntity(World world, LivingEntity owner) {
+//        super(ZeldaEntities.Bomb_Arrow, owner, world);
+//    }
+//
+//    public BombArrowEntity(World world, double x, double y, double z) {
+//        super(ZeldaEntities.Bomb_Arrow, x, y, z, world);
+//    }
 
     @Override
     protected void onCollision(HitResult hitResult) {
@@ -87,7 +87,7 @@ public class BombArrowEntity extends PersistentProjectileEntity {
     }
 
     @Override
-    protected ItemStack asItemStack() {
+    protected ItemStack getDefaultItemStack() {
         return new ItemStack(ZeldaItems.Bomb_Arrow);
     }
 }

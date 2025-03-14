@@ -6,7 +6,7 @@ import net.minecraft.client.particle.*;
 import net.minecraft.client.render.Camera;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.world.ClientWorld;
-import net.minecraft.particle.DefaultParticleType;
+import net.minecraft.particle.SimpleParticleType;
 
 public class SmaaashParticle extends SpriteBillboardParticle {
     private int tickCounter = 0;
@@ -50,7 +50,7 @@ public class SmaaashParticle extends SpriteBillboardParticle {
     }
 
     @Environment(EnvType.CLIENT)
-    public static class SmaaashParticleFactory implements ParticleFactory<DefaultParticleType> {
+    public static class SmaaashParticleFactory implements ParticleFactory<SimpleParticleType> {
 
         private final SpriteProvider spriteProvider;
 
@@ -59,7 +59,7 @@ public class SmaaashParticle extends SpriteBillboardParticle {
         }
 
         @Override
-        public SmaaashParticle createParticle(DefaultParticleType type, ClientWorld world, double x, double y, double z, double velocityX, double velocityY, double velocityZ) {
+        public SmaaashParticle createParticle(SimpleParticleType type, ClientWorld world, double x, double y, double z, double velocityX, double velocityY, double velocityZ) {
             return new SmaaashParticle(world, x, y, z, this.spriteProvider);
         }
     }
