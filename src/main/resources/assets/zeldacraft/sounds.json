@@ -8,6 +8,15 @@
     ]
   },
 
+  "dungeon": {
+    "sounds": [
+      {
+        "name": "zeldacraft:dungeon",
+        "stream": true
+      }
+    ]
+  },
+
   "emeraldshardpickedup": {
     "sounds": [
       "zeldacraft:emerald_shard_picked_up"

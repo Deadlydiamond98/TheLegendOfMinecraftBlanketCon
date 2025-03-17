@@ -64,12 +64,6 @@ public abstract class LivingEntityMixin implements ZeldaLivingEntityData {
             notifyPlayers(entity, false);
             this.sendDeku = false;
         }
-        if (!entity.getWorld().isClient()) {
-            entity.getWorld().getPlayers().forEach(player -> {
-                ZeldaServerPackets.sendEntityStatsPacket((ServerPlayerEntity) player,
-                        this.flip, entity.getId());
-            });
-        }
     }
 
     @Unique

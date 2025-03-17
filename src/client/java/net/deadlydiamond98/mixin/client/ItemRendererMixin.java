@@ -33,10 +33,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class ItemRendererMixin {
 
 
-    @Unique
-    private static final CrystalSwitchBlockEntity RENDER_CRYSTAL_SWITCH = new CrystalSwitchBlockEntity(BlockPos.ORIGIN, ZeldaBlocks.Crystal_Switch.getDefaultState());
-
-
     @Inject(method = "renderItem(Lnet/minecraft/item/ItemStack;Lnet/minecraft/client/render/model/json/ModelTransformationMode;ZLnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;IILnet/minecraft/client/render/model/BakedModel;)V",
             at = @At(
                     value = "INVOKE",
@@ -63,7 +59,10 @@ public class ItemRendererMixin {
                     matrices.translate(-0.5, -0.5, -0.5);
                 }
 
-                MinecraftClient.getInstance().getBlockEntityRenderDispatcher().renderEntity((BlockEntity) RENDER_CRYSTAL_SWITCH,
+                CrystalSwitchBlockEntity switchToRender =
+                        new CrystalSwitchBlockEntity(BlockPos.ORIGIN, ZeldaBlocks.Crystal_Switch.getDefaultState());
+
+                MinecraftClient.getInstance().getBlockEntityRenderDispatcher().renderEntity((BlockEntity) switchToRender,
                         matrices, vertexConsumers, light, overlay);
             }
 
@@ -88,9 +87,9 @@ public class ItemRendererMixin {
         matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(-45));
         matrices.translate(-0.5, -0.5, -0.5);
 
-        matrices.scale(0.4f, 0.4f, 1);
+        matrices.scale(0.8f, 0.8f, 1);
 
-        matrices.translate(2.1, 1.35, -0.5);
+        matrices.translate(1, 0.8, -0.5);
 
         MatrixStack.Entry entry = matrices.peek();
         Matrix4f modelMatrix = entry.getPositionMatrix();

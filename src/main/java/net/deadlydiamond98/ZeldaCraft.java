@@ -43,8 +43,6 @@ public class ZeldaCraft implements ModInitializer {
 
 	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
-	public static final Identifier HYLIAN = Identifier.of(MOD_ID, "hylian");
-
 	@Override
 	public void onInitialize() {
 

@@ -30,13 +30,13 @@ public class ZeldaBlockEntities {
 
         LOOT_POT = Registry.register(Registries.BLOCK_ENTITY_TYPE,
                 Identifier.of(ZeldaCraft.MOD_ID, "loot_pot"),
-                FabricBlockEntityTypeBuilder.create(LootPotBlockEntity::new,
+                BlockEntityType.Builder.create(LootPotBlockEntity::new,
                         ZeldaBlocks.Loot_Pots.getAll(ZeldaBlocks.Plain_Pot)
                 ).build(null));
 
         LOOT_SKULL = Registry.register(Registries.BLOCK_ENTITY_TYPE,
                 Identifier.of(ZeldaCraft.MOD_ID, "loot_skull"),
-                FabricBlockEntityTypeBuilder.create(LootSkullBlockEntity::new,
+                BlockEntityType.Builder.create(LootSkullBlockEntity::new,
                         ZeldaBlocks.Loot_Skull, ZeldaBlocks.Withered_Loot_Skull
                 ).build(null));
 
@@ -44,7 +44,7 @@ public class ZeldaBlockEntities {
 
         DUNGEON_DOOR = Registry.register(Registries.BLOCK_ENTITY_TYPE,
                 Identifier.of(ZeldaCraft.MOD_ID, "dungeon_door"),
-                FabricBlockEntityTypeBuilder.create(DungeonDoorEntity::new,
+                BlockEntityType.Builder.create(DungeonDoorEntity::new,
                         ZeldaBlocks.Dungeon_Door,
                         ZeldaBlocks.Red_Dungeon_Door,
                         ZeldaBlocks.Blue_Dungeon_Door,
@@ -53,7 +53,7 @@ public class ZeldaBlockEntities {
 
         OPENING_DUNGEON_DOOR = Registry.register(Registries.BLOCK_ENTITY_TYPE,
                 Identifier.of(ZeldaCraft.MOD_ID, "opening_dungeon_door"),
-                FabricBlockEntityTypeBuilder.create(OpeningDungeonDoorEntity::new,
+                BlockEntityType.Builder.create(OpeningDungeonDoorEntity::new,
                         ZeldaBlocks.Opening_Dungeon_Door,
                         ZeldaBlocks.Red_Opening_Dungeon_Door,
                         ZeldaBlocks.Blue_Opening_Dungeon_Door,
@@ -64,19 +64,19 @@ public class ZeldaBlockEntities {
 
         PEDESTAL = Registry.register(Registries.BLOCK_ENTITY_TYPE,
                 Identifier.of(ZeldaCraft.MOD_ID, "pedestal"),
-                FabricBlockEntityTypeBuilder.create(PedestalBlockEntity::new,
+                BlockEntityType.Builder.create(PedestalBlockEntity::new,
                         ZeldaBlocks.Stone_Pedestal).build(null));
 
         // On OFF
 
         CRYSTAL_SWITCH = Registry.register(Registries.BLOCK_ENTITY_TYPE,
                 Identifier.of(ZeldaCraft.MOD_ID, "crystal_switch"),
-                FabricBlockEntityTypeBuilder.create(CrystalSwitchBlockEntity::new,
+                BlockEntityType.Builder.create(CrystalSwitchBlockEntity::new,
                         ZeldaBlocks.Crystal_Switch).build(null));
 
         ON_OFF_BLOCK = Registry.register(Registries.BLOCK_ENTITY_TYPE,
                 Identifier.of(ZeldaCraft.MOD_ID, "on_off_block"),
-                FabricBlockEntityTypeBuilder.create(OnOffBlockEntity::new,
+                BlockEntityType.Builder.create(OnOffBlockEntity::new,
                         ZeldaBlocks.On_Block, ZeldaBlocks.Off_Block
                 ).build(null));
     }

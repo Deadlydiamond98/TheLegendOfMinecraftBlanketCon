@@ -378,14 +378,12 @@ public abstract class AbstractBallEntity extends ThrownItemEntity {
                         Vec3d lookVec = player.getRotationVector();
                         double launchPower = 0.7 * sourceEntity.distanceTo(this);
 
-//                        double updraft = EnchantmentHelper.getLevel(ZeldaEnchantments.Updraft, heldItem) * 0.25;
-                        double updraft = 0;
+                        double updraft = 0.25;
+//                        double updraft = 0;
 
                         double velocityY = lookVec.y * launchPower;
 
-                        if (updraft > 0) {
-                            velocityY = Math.max(0.5, velocityY);
-                        }
+                        velocityY = Math.max(0.5, velocityY);
 
                         this.setVelocity(lookVec.x * launchPower, velocityY, lookVec.z * launchPower);
 

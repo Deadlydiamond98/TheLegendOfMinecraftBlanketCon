@@ -34,6 +34,7 @@ public class ZeldaSounds {
 
     //Music & music-like
     public static SoundEvent MusicDiscLegend = registerSoundEvent("musicdisclegend");
+    public static SoundEvent Dungeon = registerSoundEvent("dungeon");
     public static SoundEvent SecretRoom = registerSoundEvent("secretroom");
 
     //Sword
