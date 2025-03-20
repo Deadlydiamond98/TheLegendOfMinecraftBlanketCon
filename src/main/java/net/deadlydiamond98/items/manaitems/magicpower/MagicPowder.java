@@ -111,6 +111,7 @@ public class MagicPowder extends TransformationItem {
     @Override
     protected void initializeEntityBlacklist() {
         super.initializeEntityBlacklist();
+        entityBlacklistConversionMap.add(EntityType.PLAYER);
     }
 
     @Override
@@ -121,6 +122,9 @@ public class MagicPowder extends TransformationItem {
 
     @Override
     public ActionResult useOnEntity(ItemStack stack, PlayerEntity user, LivingEntity entity, Hand hand) {
+        if (!user.canRemoveMana(this.getManaCost(stack)) && !user.isCreative()) {
+            this.doNoManaEvent(user, user.getWorld());
+        }
         this.particlePos = entity.getBlockPos();
         return super.useOnEntity(stack, user, entity, hand);
     }

@@ -20,11 +20,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
-import net.minecraft.text.MutableText;
-import net.minecraft.text.Text;
+import net.minecraft.state.StateManager;
+import net.minecraft.state.property.BooleanProperty;
+import net.minecraft.state.property.Properties;
 import net.minecraft.util.ActionResult;
-import net.minecraft.util.Formatting;
-import net.minecraft.util.Hand;
 import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
@@ -33,21 +32,20 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.List;
-
 public class CrystalSwitch extends AbstractOnOffBlock {
 
     public static final MapCodec<CrystalSwitch> CODEC = createCodec(CrystalSwitch::new);
+    public static final BooleanProperty POWERED;
 
     public CrystalSwitch(Settings settings) {
         super(settings);
+        this.setDefaultState(this.getDefaultState().with(POWERED, false));
     }
 
     @Override
     protected MapCodec<? extends BlockWithEntity> getCodec() {
         return CODEC;
     }
-
 
     @Override
     public void onPlaced(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack itemStack) {
@@ -82,7 +80,7 @@ public class CrystalSwitch extends AbstractOnOffBlock {
     protected ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
         BlockEntity blockEntity = world.getBlockEntity(pos);
 
-        if (blockEntity instanceof CrystalSwitchBlockEntity switchBlock && player.isSneaking()) {
+        if (blockEntity instanceof CrystalSwitchBlockEntity switchBlock) {
             if (!world.isClient()) {
                 ZeldaWorldDataManager.applyOnOff((ServerWorld) world, switchBlock.getID(), !switchBlock.getTriggerState());
                 world.playSound(null, pos, ZeldaSounds.CrystalSwitchToggle, SoundCategory.BLOCKS);
@@ -90,6 +88,22 @@ public class CrystalSwitch extends AbstractOnOffBlock {
             return ActionResult.SUCCESS;
         }
         return super.onUse(state, world, pos, player, hit);
+    }
+
+    @Override
+    protected void neighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock, BlockPos sourcePos, boolean notify) {
+        boolean bl = world.isReceivingRedstonePower(pos);
+        BlockEntity blockEntity = world.getBlockEntity(pos);
+
+        if (bl != state.get(POWERED) && blockEntity instanceof CrystalSwitchBlockEntity switchBlock) {
+            if (!state.get(POWERED)) {
+                if (!world.isClient()) {
+                    ZeldaWorldDataManager.applyOnOff((ServerWorld) world, switchBlock.getID(), !switchBlock.getTriggerState());
+                    world.playSound(null, pos, ZeldaSounds.CrystalSwitchToggle, SoundCategory.BLOCKS);
+                }
+            }
+            world.setBlockState(pos, state.with(POWERED, bl), 3);
+        }
     }
 
     @Nullable
@@ -109,4 +123,13 @@ public class CrystalSwitch extends AbstractOnOffBlock {
         return Block.createCuboidShape(1.5, 0.0, 1.5, 14.5, 10.0, 14.5);
     }
 
+    @Override
+    protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
+        super.appendProperties(builder);
+        builder.add(POWERED);
+    }
+
+    static {
+        POWERED = Properties.POWERED;
+    }
 }

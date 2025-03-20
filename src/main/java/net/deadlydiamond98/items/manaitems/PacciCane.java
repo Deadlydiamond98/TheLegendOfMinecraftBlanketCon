@@ -30,10 +30,12 @@ public class PacciCane extends Item implements MagicItemData {
                     SoundCategory.PLAYERS, 1.0f, 2.0f);
             user.removeMana(this.magicCost);
 
+            ((ZeldaLivingEntityData) entity).setflipped(!((ZeldaLivingEntityData) entity).flipped());
+
             if (!entity.getWorld().isClient()) {
                 entity.getWorld().getPlayers().forEach(player ->
                         ZeldaServerPackets.sendEntityStatsPacket((ServerPlayerEntity) player,
-                                !((ZeldaLivingEntityData) entity).flipped(), entity.getId()));
+                                ((ZeldaLivingEntityData) entity).flipped(), entity.getId()));
             }
 
             return ActionResult.SUCCESS;
