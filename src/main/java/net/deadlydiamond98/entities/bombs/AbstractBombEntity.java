@@ -1,16 +1,11 @@
 package net.deadlydiamond98.entities.bombs;
 
-import net.deadlydiamond98.blocks.other.BombFlower;
-import net.deadlydiamond98.blocks.dungeon.SecretStone;
-import net.deadlydiamond98.blocks.ZeldaBlocks;
-import net.deadlydiamond98.enchantments.ZeldaEnchantments;
 import net.deadlydiamond98.items.bats.BatItem;
 import net.deadlydiamond98.networking.ZeldaServerPackets;
 import net.deadlydiamond98.util.interfaces.block.IBombBreakInteraction;
 import net.deadlydiamond98.util.sounds.ZeldaSounds;
 import net.deadlydiamond98.util.ZeldaTags;
 import net.minecraft.block.Block;
-import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.MovementType;
@@ -29,8 +24,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
-
-import static net.deadlydiamond98.blocks.other.BombFlower.AGE;
 
 public abstract class AbstractBombEntity extends Entity implements Ownable {
 
@@ -132,7 +125,7 @@ public abstract class AbstractBombEntity extends Entity implements Ownable {
     protected boolean onExplodeBlockDamage(BlockPos blockPos, Block block, boolean playSecret, int x, int y, int z) {
         if (block.getDefaultState().isIn(ZeldaTags.Blocks.Bomb_Breakable)) {
             this.getWorld().breakBlock(blockPos, true);
-            if (block instanceof SecretStone) {
+            if (block.getDefaultState().isIn(ZeldaTags.Blocks.Secret_Stone)) {
                 playSecret = true;
             }
         }

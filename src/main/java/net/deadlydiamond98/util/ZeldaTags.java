@@ -11,6 +11,7 @@ public class ZeldaTags {
     public static class Blocks {
         public static final TagKey<Block> Bomb_Breakable = createTag("bomb_breakable");
         public static final TagKey<Block> Hookshotable = createTag("hookshotable");
+        public static final TagKey<Block> Secret_Stone = createTag("secret_block");
         private static TagKey<Block> createTag(String name) {
             return TagKey.of(RegistryKeys.BLOCK, Identifier.of(ZeldaCraft.MOD_ID, name));
         }

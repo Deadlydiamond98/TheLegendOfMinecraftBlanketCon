@@ -31,9 +31,11 @@ import net.minecraft.util.math.*;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.RaycastContext;
 import net.minecraft.world.World;
+import net.minecraft.world.event.GameEvent;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 
 public abstract class AbstractBallEntity extends ThrownItemEntity {
 
@@ -466,5 +468,39 @@ public abstract class AbstractBallEntity extends ThrownItemEntity {
         this.setAirDrag(nbt.getFloat("airDrag"));
         this.setDrag(nbt.getFloat("drag"));
         this.setBounce(nbt.getFloat("bounce"));
+    }
+
+
+    // This is done to prevent crash with particular, will likely be removed once particular is fixed
+    @Override
+    protected void onSwimmingStart() {
+        Entity entity = (Entity) Objects.requireNonNullElse(this.getControllingPassenger(), this);
+        float f = entity == this ? 0.2F : 0.9F;
+        Vec3d vec3d = entity.getVelocity();
+        float g = Math.min(1.0F, (float)Math.sqrt(vec3d.x * vec3d.x * 0.20000000298023224 + vec3d.y * vec3d.y + vec3d.z * vec3d.z * 0.20000000298023224) * f);
+        if (g < 0.25F) {
+            this.playSound(this.getSplashSound(), g, 1.0F + (this.random.nextFloat() - this.random.nextFloat()) * 0.4F);
+        } else {
+            this.playSound(this.getHighSpeedSplashSound(), g, 1.0F + (this.random.nextFloat() - this.random.nextFloat()) * 0.4F);
+        }
+
+        float h = (float)MathHelper.floor(this.getY());
+
+        int i;
+        double d;
+        double e;
+        for(i = 0; (float)i < 1.0F + this.getWidth() * 20.0F; ++i) {
+            d = (this.random.nextDouble() * 2.0 - 1.0) * (double)this.getWidth();
+            e = (this.random.nextDouble() * 2.0 - 1.0) * (double)this.getWidth();
+            this.getWorld().addParticle(ParticleTypes.BUBBLE, this.getX() + d, (double)(h + 1.0F), this.getZ() + e, vec3d.x, vec3d.y - this.random.nextDouble() * 0.20000000298023224, vec3d.z);
+        }
+
+        for(i = 0; (float)i < 1.0F + this.getWidth() * 20.0F; ++i) {
+            d = (this.random.nextDouble() * 2.0 - 1.0) * (double)this.getWidth();
+            e = (this.random.nextDouble() * 2.0 - 1.0) * (double)this.getWidth();
+            this.getWorld().addParticle(ParticleTypes.SPLASH, this.getX() + d, (double)(h + 1.0F), this.getZ() + e, vec3d.x, vec3d.y, vec3d.z);
+        }
+
+        this.emitGameEvent(GameEvent.SPLASH);
     }
 }

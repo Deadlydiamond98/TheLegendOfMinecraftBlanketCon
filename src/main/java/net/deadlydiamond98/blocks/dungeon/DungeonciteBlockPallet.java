@@ -43,7 +43,7 @@ public class DungeonciteBlockPallet {
         this.crackedBrick = registerDungeonciteBlock("cracked_" + color + "_dungeoncite_bricks",
                 settings -> new Dungeoncite(settings, advancementID));
         this.secretBrick = registerDungeonciteBlock("secret_cracked_" + color + "_dungeoncite_bricks",
-                settings -> new SecretDungeoncite(settings, advancementID));
+                settings -> new Dungeoncite(settings, advancementID));
 
         // Tiles
         this.tile = registerDungeonciteBlock(color + "_dungeoncite_tile",
@@ -141,24 +141,6 @@ public class DungeonciteBlockPallet {
         private final String advancementID;
 
         public DungeonciteTile(Settings settings, String advancementID) {
-            super(settings);
-            this.advancementID = advancementID;
-        }
-
-        @Override
-        public float calcBlockBreakingDelta(BlockState state, PlayerEntity player, BlockView world, BlockPos pos) {
-            if (!((ZeldaPlayerData) player).hasAdvancement(this.advancementID)) {
-                return -1;
-            }
-            return super.calcBlockBreakingDelta(state, player, world, pos);
-        }
-    }
-
-    public class SecretDungeoncite extends SecretStone {
-
-        private final String advancementID;
-
-        public SecretDungeoncite(Settings settings, String advancementID) {
             super(settings);
             this.advancementID = advancementID;
         }

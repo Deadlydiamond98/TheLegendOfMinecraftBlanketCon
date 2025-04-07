@@ -13,7 +13,6 @@ import net.deadlydiamond98.blocks.redstoneish.WarpTile;
 import net.deadlydiamond98.blocks.redstoneish.onoff.OnOffBlock;
 import net.deadlydiamond98.blocks.redstoneish.onoff.CrystalSwitch;
 import net.deadlydiamond98.blocks.dungeon.DungeonciteBlockPallet;
-import net.deadlydiamond98.blocks.dungeon.SecretStone;
 import net.minecraft.block.*;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
@@ -55,23 +54,23 @@ public class ZeldaBlocks {
                     .sounds(BlockSoundGroup.BONE).nonOpaque().breakInstantly()));
 
     public static final Block Secret_Cracked_Stone_Brick = registerBlock("secret_cracked_stone_bricks",
-            new SecretStone(AbstractBlock.Settings.copy(Blocks.CRACKED_STONE_BRICKS).strength(1.5F, 6.0F)
+            new Block(AbstractBlock.Settings.copy(Blocks.CRACKED_STONE_BRICKS).strength(1.5F, 6.0F)
                     .sounds(BlockSoundGroup.STONE)));
 
     public static final Block Secret_Cracked_Deepslate_Brick = registerBlock("secret_cracked_deepslate_bricks",
-            new SecretStone(AbstractBlock.Settings.copy(Blocks.CRACKED_STONE_BRICKS).strength(1.5F, 6.0F)
+            new Block(AbstractBlock.Settings.copy(Blocks.CRACKED_STONE_BRICKS).strength(1.5F, 6.0F)
                     .sounds(BlockSoundGroup.DEEPSLATE_BRICKS)));
 
     public static final Block Secret_Cracked_Deepslate_Tile = registerBlock("secret_cracked_deepslate_tiles",
-            new SecretStone(AbstractBlock.Settings.copy(Blocks.CRACKED_STONE_BRICKS).strength(1.5F, 6.0F)
+            new Block(AbstractBlock.Settings.copy(Blocks.CRACKED_STONE_BRICKS).strength(1.5F, 6.0F)
                     .sounds(BlockSoundGroup.DEEPSLATE_TILES)));
 
     public static final Block Secret_Cracked_Nether_Brick = registerBlock("secret_cracked_nether_bricks",
-            new SecretStone(AbstractBlock.Settings.copy(Blocks.CRACKED_STONE_BRICKS).strength(1.5F, 6.0F)
+            new Block(AbstractBlock.Settings.copy(Blocks.CRACKED_STONE_BRICKS).strength(1.5F, 6.0F)
                     .sounds(BlockSoundGroup.NETHER_BRICKS)));
 
     public static final Block Secret_Cracked_Polished_Blackstone_Brick = registerBlock("secret_cracked_polished_blackstone_bricks",
-            new SecretStone(AbstractBlock.Settings.copy(Blocks.CRACKED_STONE_BRICKS).strength(1.5F, 6.0F)
+            new Block(AbstractBlock.Settings.copy(Blocks.CRACKED_STONE_BRICKS).strength(1.5F, 6.0F)
                     .sounds(BlockSoundGroup.DEEPSLATE_BRICKS)));
 
     // On / Off

@@ -82,11 +82,13 @@ public class MagicIceProjectileEntity extends ProjectileEntity {
     protected void onEntityHit(EntityHitResult entityHitResult) {
         super.onEntityHit(entityHitResult);
         Entity entity = entityHitResult.getEntity();
-        if (!entityHitResult.getEntity().equals(this.getOwner())) {
-            entity.damage(entity.getDamageSources().freeze(), 3.0F);
-            entity.setFireTicks(0);
-            if (entity instanceof LivingEntity livingEntity) {
-                livingEntity.addStatusEffect(new StatusEffectInstance(ZeldaStatusEffects.Stun_Status_Effect, 20, 0));
+        if (!this.getWorld().isClient) {
+            if (!entityHitResult.getEntity().equals(this.getOwner())) {
+                entity.damage(entity.getDamageSources().freeze(), 3.0F);
+                entity.setFireTicks(0);
+                if (entity instanceof LivingEntity livingEntity) {
+                    livingEntity.addStatusEffect(new StatusEffectInstance(ZeldaStatusEffects.Stun_Status_Effect, 20, 0));
+                }
             }
         }
     }

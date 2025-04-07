@@ -2,9 +2,9 @@ package net.deadlydiamond98.mixin.client;
 
 import net.deadlydiamond98.ZeldaCraft;
 import net.deadlydiamond98.blocks.ZeldaBlocks;
-import net.deadlydiamond98.blocks.dungeon.SecretStone;
 import net.deadlydiamond98.blocks.entities.onoff.CrystalSwitchBlockEntity;
 import net.deadlydiamond98.blocks.redstoneish.pushblock.PushBlock;
+import net.deadlydiamond98.util.ZeldaTags;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
@@ -67,7 +67,7 @@ public class ItemRendererMixin {
             }
 
             if (renderMode == ModelTransformationMode.GUI) {
-                if (block instanceof SecretStone) {
+                if (block.getDefaultState().isIn(ZeldaTags.Blocks.Secret_Stone)) {
                     renderSpecialZeldaBlockIcon(matrices, vertexConsumers, "secret");
                 }
                 else if (block instanceof PushBlock) {

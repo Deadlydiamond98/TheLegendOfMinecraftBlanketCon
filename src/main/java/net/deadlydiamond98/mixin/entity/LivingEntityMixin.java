@@ -57,12 +57,16 @@ public abstract class LivingEntityMixin implements ZeldaLivingEntityData {
 
             this.tickStatusEffects();
 
-            this.sendDeku = true;
+            if (!entity.getWorld().isClient) {
+                this.sendDeku = true;
+            }
 
             ci.cancel();
         } else if (this.sendDeku) {
             notifyPlayers(entity, false);
-            this.sendDeku = false;
+            if (!entity.getWorld().isClient) {
+                this.sendDeku = false;
+            }
         }
     }
 

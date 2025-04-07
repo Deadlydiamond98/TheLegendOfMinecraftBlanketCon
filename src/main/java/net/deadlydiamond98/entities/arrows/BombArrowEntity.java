@@ -1,9 +1,7 @@
 package net.deadlydiamond98.entities.arrows;
 
 import net.deadlydiamond98.blocks.other.BombFlower;
-import net.deadlydiamond98.blocks.dungeon.SecretStone;
 import net.deadlydiamond98.blocks.ZeldaBlocks;
-import net.deadlydiamond98.entities.ZeldaEntities;
 import net.deadlydiamond98.entities.bombs.BombEntity;
 import net.deadlydiamond98.items.ZeldaItems;
 import net.deadlydiamond98.networking.ZeldaServerPackets;
@@ -11,7 +9,6 @@ import net.deadlydiamond98.util.sounds.ZeldaSounds;
 import net.deadlydiamond98.util.ZeldaTags;
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -57,7 +54,7 @@ public class BombArrowEntity extends PersistentProjectileEntity {
                         Block block = this.getWorld().getBlockState(blockPos).getBlock();
                         if (block.getDefaultState().isIn(ZeldaTags.Blocks.Bomb_Breakable)) {
                             this.getWorld().breakBlock(blockPos, true);
-                            if (block instanceof SecretStone) {
+                            if (block.getDefaultState().isIn(ZeldaTags.Blocks.Secret_Stone)) {
                                 playSecret = true;
                             }
                         }
